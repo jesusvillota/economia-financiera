@@ -136,6 +136,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
+| Bond YTM / maturity | $y$, $T$ | `\Rate{y}` | Chapter 19 uses annual coupons and annual effective YTM; $T$ in years |
+| Bond present-value weight | $w_t$ | | $C_t/(1+y)^t$ divided by price; not a portfolio allocation or probability |
+| Macaulay / modified duration | $D_{\mathrm{Mac}}$, $D_{\mathrm{mod}}$ | | Years; annual convention: $D_{\mathrm{mod}}=D_{\mathrm{Mac}}/(1+y)$ |
+| Bond convexity / rate shock | $K$, $\Delta y$ | | $K=P''(y)/P(y)$ in years squared; shock in decimal units, not percentage points |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
