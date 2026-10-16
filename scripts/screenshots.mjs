@@ -22,6 +22,11 @@ function pages() {
   const found = [''];
   const dir = 'dist/chapters';
   if (existsSync(dir)) for (const d of readdirSync(dir)) if (statSync(join(dir, d)).isDirectory()) found.push(`chapters/${d}/`);
+  const ses = 'dist/sesiones';
+  if (existsSync(ses)) {
+    found.push('sesiones/');
+    for (const d of readdirSync(ses)) if (statSync(join(ses, d)).isDirectory()) found.push(`sesiones/${d}/`);
+  }
   return filter ? found.filter((p) => p.includes(filter) || (filter === 'home' && p === '')) : found;
 }
 
