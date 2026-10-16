@@ -84,6 +84,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Beta | $\beta_j$ | | |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |
+| Asset price / dividend | $P_{j,t}$, $D_{j,t}$ | | Asset `j`, date `t`; initial price is $P_{j,t-1}$ |
+| Scenario / scenario count / probability | $s$, $S$, $p_s$ | | $r_{j,s}$ is the return of asset `j` in scenario `s` |
+| Population / sample standard deviation | $\sigma_j$, $s_j$ | | Sample variance $s_j^2$ uses $n-1$ for $n$ observations |
+| Affine scale / shift | $a$, $b$ | | Constants in $a r_j+b$; shift is in return units |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
