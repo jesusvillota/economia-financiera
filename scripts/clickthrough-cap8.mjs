@@ -100,7 +100,7 @@ try {
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 - 30, { steps: 8 });
     await page.mouse.up();
     assert.notEqual(await curve.getByTestId('frontier-return').textContent(), pct(0.09), 'drag changes the return');
-    await targetSlider.fill('0.10'); await verifyCurve(0.2, false, 0.10);
+    await targetSlider.fill('0.1'); await verifyCurve(0.2, false, 0.10);
     await targetSlider.focus(); await page.keyboard.press('ArrowLeft');
     await verifyCurve(0.2, false, 0.099);
 
