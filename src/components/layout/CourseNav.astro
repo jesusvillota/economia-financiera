@@ -29,6 +29,10 @@ const available = new Map((await getCollection('chapters')).map((c) => [c.data.c
       </ol>
     </section>
   ))}
+  <section>
+    <h2>Consulta</h2>
+    <a href={url('glosario/')}>Glosario</a>
+  </section>
 </nav>
 
 <style>
