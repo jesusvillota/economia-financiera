@@ -72,6 +72,9 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Portfolio return | $r_p$ | | |
 | Cost of equity / debt | $k_e$, $k_d$ | `\ke`, `\kd` | Never `R_e` |
 | Weights | $w_j$ | | Never `x_j` |
+| Risky fund / tangent fund | $c$, $T$ | | Returns $r_c$, $r_T$ and volatilities $\sigma_c$, $\sigma_T$ |
+| Risky fund / risk-free allocation | $w_c$, $w_f$ | | $w_f=1-w_c$; these allocate wealth between a fund and cash |
+| Fund Sharpe ratio / risk-free volatility | $S_c$, $\sigma_f$ | | $S_c=(\E[r_c]-r_f)/\sigma_c$ for positive volatility; $\sigma_f=0$ |
 | Expected dividend per share at t | $D_t$ | | $D_0$ just paid; $D_1$ next payment |
 | Share price after the dividend at t | $P_t$ | | $P_N$ continuation or resale price at horizon $N$ |
 | Projection horizon | $N$ | | Years of explicit dividends before continuation value |

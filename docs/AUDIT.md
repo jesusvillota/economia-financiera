@@ -44,6 +44,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
 
+### Note 03: CAL branch requires a nonnegative risky weight
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §4, “Ecuación de la CAL”, derives `w = sigma_p / sigma_c` from `sigma_p² = w² sigma_c²` without stating `w >= 0`. In general, `sigma_p = |w| sigma_c`. At `r_f = 2 %`, fund return `10 %`, fund variance `2/225`, and `w = -0.5`, the actual expected return is `-2 %` with positive volatility `4.71 %`; the upper CAL formula would give `6 %` at that same volatility. Chapter 9 states the branch restriction and keeps its allocation control nonnegative. Regression test: `tests/capitulo9.test.ts`, “audit: shorting the fund needs the absolute weight and the lower branch”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
