@@ -1,0 +1,171 @@
+---
+title: "Valorar una acción: modelo de descuento de dividendos"
+part: 2
+chapter: 4
+difficulty: 2
+prerequisites: [2]
+sessions: []
+summary: "El precio de una acción como valor actual de sus dividendos: crecimiento nulo, constante y en dos etapas."
+---
+import DividendDiscount from '../../components/plots/DividendDiscount';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Pagarías por un dividendo que aún no existe?
+
+Una empresa ficticia, Lumbre, espera pagar 3 € por acción dentro de un año. Después, sus dividendos crecerían un 4 % anual. Tú exiges una rentabilidad anual del 10 % para asumir su riesgo. ¿Qué precio podrías pagar hoy?
+
+El modelo de este capítulo da 50 €. Si el dividendo nunca creciera, daría 30 €. La diferencia procede de los pagos futuros esperados. No basta con mirar el próximo ingreso: también necesitas saber qué viene después y qué riesgo asumes.
+
+Una acción es una participación en una empresa. Su **dividendo** es el dinero que esta reparte por acción. El pago depende de sus resultados y decisiones. Aquí trabajamos con previsiones, sin impuestos personales ni costes de compraventa. El resultado es una valoración bajo unos supuestos, no una promesa de cobro ni una recomendación de compra.
+
+## <span class="section-tag">Intuición</span>Comprar una corriente de pagos
+
+Imagina los dividendos como una fila de cobros sobre una línea temporal. Para compararlos con el precio de hoy, debes traer cada cobro al presente. Ya aprendiste a hacerlo en el [capítulo de valor actual](/economia-financiera/chapters/02-valor-actual/). Un pago lejano pesa menos porque lo descuentas durante más tiempo.
+
+Hay dos fuerzas. Si crecen los dividendos esperados, la fila contiene más dinero y su valor aumenta. Si sube la rentabilidad exigida, descuentas más cada pago y su valor disminuye. La rentabilidad exigida es la compensación anual que pides por inmovilizar tu dinero y asumir el riesgo de la acción. No es necesariamente el tipo de un depósito.
+
+Las curvas de la zona de juego muestran esas fuerzas por separado. La curva superior cambia el crecimiento y mantiene fija la rentabilidad exigida. La inferior cambia la rentabilidad exigida y mantiene fijo el crecimiento. El punto azul corresponde a tu selección en ambas curvas. No leas su pendiente como una previsión del precio en el tiempo: el eje horizontal representa un supuesto, no una fecha.
+
+### Vender también es cobrar
+
+Puedes recibir dividendos y vender la acción después. El comprador pagará por los cobros que espere recibir a partir de entonces. Por eso el precio de venta resume la parte de la corriente que tú ya no cobrarás directamente. No debes sumar otra vez esos dividendos después de incluir ese precio.
+
+Esto distingue tres conceptos. El **valor contable** procede del balance. El **valor de liquidación** estima lo que queda tras vender los activos y pagar las deudas. El **precio de mercado** es el precio al que se negocia la acción. Nuestro modelo estima un valor a partir de pagos futuros. No obliga a que ese valor coincida con los otros tres.
+
+Tampoco confundas beneficio y dividendo. Una empresa puede retener beneficios para invertir. Esa decisión cambia el reparto actual y puede cambiar los pagos futuros. Un dividendo bajo hoy no significa, por sí solo, un valor bajo. Debes examinar cuándo llegará el dinero al accionista y qué supuestos sostienen esa previsión.
+
+## <span class="section-tag">Formalización</span>Del cobro al precio
+
+Escribimos $D_t$ para el dividendo esperado por acción al final del año $t$. Usamos $P_t$ para el precio justo después de cobrar ese dividendo. Hoy es $t=0$. La tasa $\Rate{r}$ es la rentabilidad exigida, efectiva anual, que mantenemos constante. Los dividendos de las fórmulas son previsiones, aunque no repitamos la palabra «esperado» en cada símbolo.
+
+### Un horizonte de venta
+
+Si vendes al final del año $N$, recibes los dividendos hasta esa fecha y luego $P_N$. Descuenta cada cobro según su fecha:
+
+$$P_0=\sum_{t=1}^{N}\frac{D_t}{(1+\Rate{r})^t}+\frac{P_N}{(1+\Rate{r})^N}.$$
+
+El último dividendo y la venta llegan en la misma fecha. Por ejemplo, espera 3 € el primer año, 4 € el segundo y vende por 48 € justo después del segundo dividendo. Con una rentabilidad exigida del 10 %:
+
+$$P_0=\frac{3}{1{,}10}+\frac{4+48}{1{,}10^2}\approx45{,}70\,€.$$
+
+La venta no añade una ganancia segura. Su precio también es una estimación. Si lo cambias, cambia tu valoración actual. Para una empresa que seguirá operando, necesitarás justificar ese precio con los pagos posteriores, en lugar de elegirlo para obtener el resultado deseado.
+
+### Una corriente sin fecha de venta
+
+El **modelo de descuento de dividendos** (*dividend discount model*, DDM) valora todos los dividendos futuros. Al extender el horizonte, necesitamos que el precio de venta descontado tienda a cero:
+
+$$\lim_{N\to\infty}\frac{P_N}{(1+r)^N}=0.$$
+
+Bajo esa condición, y si la serie converge, queda:
+
+$$P_0=\sum_{t=1}^{\infty}\frac{D_t}{(1+\Rate{r})^t}.$$
+
+<Callout type="warn" title="Descontar no basta por sí solo">
+Una tasa positiva no garantiza que desaparezca el precio de venta descontado. También importa cómo crece ese precio. La condición del límite es un supuesto adicional: excluye un componente de precio sostenido solo por futuras reventas.
+</Callout>
+
+### Crecimiento nulo
+
+Si cada año esperas el mismo dividendo positivo $D_1$, tienes la perpetuidad del capítulo anterior. Para $r>0$:
+
+$$P_0=\frac{D_1}{\Rate{r}}.$$
+
+Con un dividendo anual de 3 € y una rentabilidad exigida del 10 %, obtienes $3/0{,}10=30$ €. El dividendo llega al final de cada año. No estás incluyendo un pago inmediato. La fórmula resume una corriente sin fin, no un contrato con una fecha de vencimiento.
+
+### Crecimiento constante: Gordon
+
+Supón ahora que los dividendos crecen cada año a la misma tasa $g$. Entonces $D_t=D_1(1+g)^{t-1}$. El **modelo de Gordon** suma esa perpetuidad creciente:
+
+$$\boxed{P_0=\frac{D_1}{\Rate{r}-g}},\qquad r>g.$$
+
+En estos ejemplos los dividendos son positivos y $g>-1$. La condición $r>g$ hace que el descuento domine al crecimiento. Si $r=g$, los valores actuales de los dividendos no se reducen. Si $g>r$, aumentan. En ambos casos la suma infinita no tiene un valor finito.
+
+<details>
+<summary>Cómo se obtiene la fórmula</summary>
+
+Sustituye la trayectoria de dividendos y saca el primer término:
+
+$$P_0=\frac{D_1}{1+r}\sum_{t=1}^{\infty}\left(\frac{1+g}{1+r}\right)^{t-1}.$$
+
+Define $q=(1+g)/(1+r)$. Con nuestros supuestos, $0<q<1$. Si $S=1+q+q^2+\cdots$, entonces $qS=q+q^2+\cdots$. Restar da $(1-q)S=1$, de donde $S=1/(1-q)$. Sustituye y simplifica:
+
+$$P_0=\frac{D_1}{1+r}\frac{1}{1-\frac{1+g}{1+r}}=\frac{D_1}{r-g}.$$
+
+</details>
+
+Para Lumbre, el próximo dividendo de 3 €, el crecimiento del 4 % y la rentabilidad exigida del 10 % dan:
+
+$$P_0=\frac{3}{0{,}10-0{,}04}=50\,€.$$
+
+El numerador es $D_1$, el **próximo** dividendo. Si te dan el dividendo recién pagado $D_0$, calcula primero $D_1=D_0(1+g)$. No cobras otra vez $D_0$: ese pago ya ocurrió. Esta diferencia de fechas es pequeña al escribirla y relevante al calcular el precio.
+
+También puedes despejar $r=D_1/P_0+g$. En Lumbre, $3/50=6\,\%$ es la rentabilidad por dividendo; al sumar el crecimiento del 4 % recuperas el 10 %. Bajo Gordon, con supuestos constantes, el precio esperado crece a la misma tasa que los dividendos. Esto no asegura esa rentabilidad en el mercado.
+
+### Dos etapas: crecer rápido y después estabilizarse
+
+Un crecimiento alto puede durar un tiempo sin poder mantenerse para siempre. Proyecta primero los dividendos de esa fase. Después aplica Gordon al dividendo siguiente, usando el crecimiento estable $g$. El precio de continuación en el año $N$ es:
+
+$$P_N=\frac{D_{N+1}}{\Rate{r}-g}.$$
+
+Ese precio está en el año $N$, no en el presente. Descuéntalo junto con los dividendos de la primera etapa. El crecimiento inicial puede superar $r$ porque dura un número finito de años. La restricción $r>g$ afecta a la etapa perpetua.
+
+Otra empresa ficticia, Brasa, acaba de pagar 2,50 €. Sus dividendos crecen un 20 % durante dos años. Después crecen un 4 % para siempre. Exiges un 10 % anual:
+
+| Fecha | Cobro esperado por acción |
+|---|---|
+| Año 1 | $D_1=2{,}50\cdot1{,}20=3$ € |
+| Año 2 | $D_2=3\cdot1{,}20=3{,}60$ € |
+| Año 3 | $D_3=3{,}60\cdot1{,}04=3{,}744$ € |
+
+Al final del segundo año, justo después de $D_2$, el precio de continuación es $P_2=3{,}744/(0{,}10-0{,}04)=62{,}40$ €. El próximo pago de esa perpetuidad es $D_3$. Ahora trae todo al presente:
+
+$$P_0=\frac{3}{1{,}10}+\frac{3{,}60+62{,}40}{1{,}10^2}\approx57{,}27\,€.$$
+
+No sumes $D_3$ por separado: ya está dentro de $P_2$. Tampoco uses el crecimiento inicial en la perpetuidad. El modelo permite describir una transición, pero aún exige justificar cuándo termina la fase rápida y qué crecimiento resulta sostenible después.
+
+## <span class="section-tag">Zona de juego</span>Separa las dos fuerzas
+
+Empieza con los datos de Lumbre. La lectura «Sin crecimiento» mantiene tu dividendo y tu rentabilidad exigida, pero fija $g=0$. Te permite medir cuánto aporta el crecimiento supuesto. El deslizador del dividendo cambia el próximo pago, no el que acaba de repartirse.
+
+<DividendDiscount client:visible />
+
+**Prueba esto:**
+
+1. Mantén $D_1=3$ € y $r=10\,\%$. Sube $g$ del 4 % al 6 %: el precio pasa de 50 € a 75 €. Después pon $g=r$. Lee la advertencia: la fórmula deja de valorar una suma convergente.
+2. Vuelve a $g=4\,\%$ y sube $r$ al 12 %. El precio baja a 37,50 €. Después prueba un crecimiento negativo. Compara la valoración con la lectura sin crecimiento.
+
+Cerca de $r=g$, un cambio pequeño produce un cambio grande del precio. Es una relación inversa con la diferencia $r-g$, no un crecimiento exponencial del precio respecto a esa diferencia. Si tu valoración depende mucho de un supuesto difícil de defender, presenta varios escenarios. Un resultado con muchos decimales no elimina la incertidumbre de los datos.
+
+## <span class="section-tag">Compruébalo</span>Tres preguntas
+
+<Quiz client:visible
+  question="Esperas 3 € cada año para siempre y exiges un 10 % anual. ¿Cómo valoras la acción?"
+  options={['Como una perpetuidad sin crecimiento', 'Como un único dividendo', 'Como su valor contable']}
+  answer={0}
+  explanation="Con crecimiento nulo, $P_0=D_1/r=3/0{,}10=30$ €. Un solo dividendo omitiría los pagos posteriores."
+/>
+
+<Quiz client:visible
+  question="Con dividendos positivos, ¿puedes usar Gordon si el crecimiento perpetuo iguala la rentabilidad exigida?"
+  options={['Sí, el precio es cero', 'No, la suma no converge', 'Sí, basta cambiar el signo']}
+  answer={1}
+  explanation="Con $r=g$, los dividendos descontados no disminuyen. Su suma infinita no tiene un valor finito."
+/>
+
+<Quiz client:visible
+  question="En el ejemplo de Brasa, ¿qué dividendo entra en el numerador del precio de continuación al final del segundo año?"
+  options={['El que acaba de pagarse', 'El del tercer año', 'El dividendo inicial']}
+  answer={1}
+  explanation="Usas $D_3=3{,}744$ € y obtienes $P_2=62{,}40$ €. Después descuentas $P_2$ dos años. El pago $D_2$ se suma por separado."
+/>
+
+## <span class="section-tag">Resumen</span>El precio sigue a los cobros esperados
+
+- Valora dividendos y venta en sus fechas. El precio de venta resume los pagos posteriores.
+- Sin crecimiento, una perpetuidad de dividendos vale $D_1/r$, con $r>0$.
+- Con crecimiento constante, Gordon da $D_1/(r-g)$ y exige $r>g$ para dividendos positivos.
+- Con dos etapas, proyecta los primeros dividendos y descuenta el precio de continuación desde su fecha.
+- Distingue una valoración condicionada a supuestos del precio observado en el mercado.
+
+**Siguiente:** pasaremos de los dividendos a la caja que genera la empresa. Eso permitirá estudiar su valor y su financiación.

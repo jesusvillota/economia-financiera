@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CashFlowTimeline from '../../components/plots/CashFlowTimeline';
 import GrowthCurves from '../../components/plots/GrowthCurves';
 import AnnuityBuilder from "../../components/plots/AnnuityBuilder";
+import EfficientFrontier from '../../components/plots/EfficientFrontier';
 ---
 <BaseLayout title="Galería de widgets (desarrollo)">
   <main id="main" class="gallery">
@@ -10,6 +11,12 @@ import AnnuityBuilder from "../../components/plots/AnnuityBuilder";
     <CashFlowTimeline client:visible />
     <GrowthCurves client:visible />
     <AnnuityBuilder client:visible />
+    <EfficientFrontier client:visible />
+    <EfficientFrontier client:visible title="Frontera eficiente: tres activos" assets={[
+      { name: 'A', expectedReturn: 0.08, sigma: 0.2 },
+      { name: 'B', expectedReturn: 0.16, sigma: 0.1 },
+      { name: 'C', expectedReturn: 0.11, sigma: 0.15 },
+    ]} />
   </main>
 </BaseLayout>
 

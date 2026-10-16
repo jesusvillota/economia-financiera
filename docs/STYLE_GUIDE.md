@@ -72,6 +72,11 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Portfolio return | $r_p$ | | |
 | Cost of equity / debt | $k_e$, $k_d$ | `\ke`, `\kd` | Never `R_e` |
 | Weights | $w_j$ | | Never `x_j` |
+| Expected dividend per share at t | $D_t$ | | $D_0$ just paid; $D_1$ next payment |
+| Share price after the dividend at t | $P_t$ | | $P_N$ continuation or resale price at horizon $N$ |
+| Projection horizon | $N$ | | Years of explicit dividends before continuation value |
+| Geometric-series ratio | $q$ | | In DDM: $(1+g)/(1+r)$ |
+| Geometric-series sum | $S$ | | In the Gordon derivation only |
 | Growth rate | $g$ | | Also for growing annuities |
 | Present value | $\VA$, $V_0$ | `\VA` | `V_0` for annuities; `P_0` for a share price |
 | Future value | $\VF$ | `\VF` | |
@@ -88,6 +93,16 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Scenario / scenario count / probability | $s$, $S$, $p_s$ | | $r_{j,s}$ is the return of asset `j` in scenario `s` |
 | Population / sample standard deviation | $\sigma_j$, $s_j$ | | Sample variance $s_j^2$ uses $n-1$ for $n$ observations |
 | Affine scale / shift | $a$, $b$ | | Constants in $a r_j+b$; shift is in return units |
+| Operating value / excess cash | $V_{\mathrm{op}}$, $X$ | | Operations exclude excess cash and its income |
+| Equity / debt market value | $E$, $D$ | | Financing weights $w_E$, $w_D$; $\Delta D$ is borrowing less principal repayments |
+| Corporate tax rate / interest | $T_c$, $I_t$ | | Interest expense during period t |
+| Free cash flow: firm / equity | $\mathrm{FCFF}_t$, $\mathrm{FCFE}_t$ | | Discount at WACC / $k_e$ respectively |
+| Operating / net income | $\mathrm{EBIT}_t$, $\mathrm{BN}_t$ | | Before interest and taxes / after both |
+| Depreciation / capital expenditure | $\mathrm{Dep}_t$, $\mathrm{Capex}_t$ | | Dep is a noncash accounting expense |
+| Operating working capital change | $\Delta\mathrm{WC}_t$ | | Excludes cash and financial debt |
+| Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
+| Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
+| Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
