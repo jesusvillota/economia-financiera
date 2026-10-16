@@ -22,6 +22,7 @@ const idOf = new Map(all.map((c) => [c.data.chapter, c.id]));
 const nextPlanned = parts.flatMap((p) => p.chapters).find((c) => c.number === chapter + 1);
 const dots = '●'.repeat(difficulty);
 const difficultyLabel = ['introductorio', 'intermedio', 'avanzado'][difficulty - 1];
+const relatedSessions = (await getCollection('sesiones')).filter((session) => entry.data.sessions.includes(session.id));
 ---
 <BaseLayout title={title} description={summary}>
   <details class="mobile-nav" slot="header-actions">
@@ -54,6 +55,14 @@ const difficultyLabel = ['introductorio', 'intermedio', 'avanzado'][difficulty -
           </p>
         </header>
         <Content />
+        {relatedSessions.length > 0 && (
+          <nav aria-label="Sesiones para practicar">
+            <p>Practica estos conceptos:</p>
+            <ul>
+              {relatedSessions.map((session) => <li><a href={url(`sesiones/${session.id}/`)}>{session.data.title}</a></li>)}
+            </ul>
+          </nav>
+        )}
       </article>
       <nav class="prev-next" aria-label="Navegación entre capítulos">
         {prev ? (

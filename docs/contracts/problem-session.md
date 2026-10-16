@@ -1,6 +1,6 @@
 # Contract: problem session
 
-Collection `sesiones` (DEC-001: a separate track from chapters), files `src/content/sesiones/*.{md,mdx}`. Schema: `src/content.config.ts`. The exercises live in the frontmatter, so components (TASK-006) and tests read the same data. The body is optional intro text.
+Collection `sesiones` (DEC-001: a separate track from chapters), files `src/content/sesiones/*.{md,mdx}`. Schema: `src/schemas/problem-session.ts`, used by `src/content.config.ts`. The exercises live in the frontmatter, so components (TASK-006) and tests read the same data. The body is optional intro text.
 
 ## Session frontmatter
 
@@ -8,7 +8,7 @@ Collection `sesiones` (DEC-001: a separate track from chapters), files `src/cont
 |---|---|---|
 | `title` | string | Session title, in Spanish. |
 | `number` | integer ≥ 1 | Session order (1–4 for ps1–ps4). |
-| `source` | string `ps<N>` | Source problem set, e.g. `ps1`. |
+| `source` | string `ps<N>` or `examen` | Source problem set, e.g. `ps1`, or the final-exam preparation page. |
 | `chapters` | string[] (default `[]`) | Slugs of the chapters this session practises. |
 | `difficulty` | 1 \| 2 \| 3 | 1 = intro, 2 = intermediate, 3 = advanced. |
 | `summary` | string | One-sentence description. |
@@ -19,6 +19,7 @@ Collection `sesiones` (DEC-001: a separate track from chapters), files `src/cont
 | Field | Type | Meaning |
 |---|---|---|
 | `id` | string `[a-z][a-z0-9_]*` | Unique within the session. |
+| `difficulty` | 1 \| 2 \| 3, optional | Exercise level: 1 = intro, 2 = intermediate, 3 = advanced. Omit when only the session level is needed. |
 | `statement` | string | Problem text (Markdown + KaTeX). Refers to parameters by their `id`. |
 | `parameters` | Parameter[] (default `[]`) | Values that can vary between variants. |
 | `seed` | integer (default `1`) | Seed for the variant generator; the same seed gives the same numbers. |
@@ -52,6 +53,10 @@ Collection `sesiones` (DEC-001: a separate track from chapters), files `src/cont
 ## Answer ↔ `src/lib` link
 
 `tests/sesiones.test.ts` reads every session, calls `lib.fn(...lib.args.map(id => parameter default))` and asserts the result is within `tolerance` of `value`. The same function computes the answer for any seeded variant, so the checker and the tests never disagree. Every new answer must have a `lib` entry; do not hard-code numbers in components.
+
+## Solution placeholders
+
+Solution step bodies can use `{{parameter_id}}` and `{{answer_id}}`, where the name is an actual parameter or answer `id`. For example, an answer with `id: res_a` is inserted with `{{res_a}}`. Answers are recomputed through `answers[].lib` for the current variant. They are rounded to two decimals for `unit: '€'`, and four decimals otherwise. Text uses a decimal comma; math uses `{,}`. These placeholders show computed answers, so do not copy canonical answer numbers into steps. Statements and hints only receive parameter values.
 
 ## Cross-links
 

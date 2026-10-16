@@ -2,17 +2,16 @@
  * Click-through of chapter 3: each widget's readout must change and equal src/lib/finance.
  * Needs a build (npm run build). Run: npm run clickthrough:van-tir
  */
-import { spawn } from 'node:child_process';
+import { startPreview } from './preview.mjs';
 import { chromium } from 'playwright';
 import { crossoverRate, irr, npv, payback } from '../src/lib/finance/appraisal.ts';
 import { flowsPV } from '../src/lib/finance/curves.ts';
 import { convencional, dosTir, lento, rapido } from '../src/lib/finance/examples.ts';
 
-const PORT = 4332;
-const URL_ = `http://localhost:${PORT}/economia-financiera/chapters/03-van-tir/`;
+const server = await startPreview();
+const URL_ = `${server.base}chapters/03-van-tir/`;
 const num = (v, d = 2) => v.toFixed(d).replace('.', ',');
 const pct = (v) => `${num(v * 100, 2)} %`;
-const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', String(PORT), '--ignore-lock'], { stdio: 'ignore' });
 let ok = true;
 const check = (name, got, want) => {
   const pass = got.replace(/\s/g, ' ').startsWith(want);
@@ -20,10 +19,6 @@ const check = (name, got, want) => {
   console.log(`${pass ? '✓' : '✗'} ${name}: ${got} (expected ${want})`);
 };
 try {
-  for (let i = 0; i < 60; i++) {
-    try { if ((await fetch(URL_)).ok) break; } catch { /* not up yet */ }
-    await new Promise((r) => setTimeout(r, 500));
-  }
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.goto(URL_, { waitUntil: 'networkidle' });
@@ -71,7 +66,7 @@ try {
   check('dos TIR roots', await t('tir-0'), irr(dosTir).roots.map(pct).join(' y '));
   await browser.close();
 } finally {
-  server.kill();
+  await server.stop();
 }
 console.log(ok ? '✓ chapter 3 readouts match src/lib/finance' : '✗ readouts differ');
 process.exit(ok ? 0 : 1);

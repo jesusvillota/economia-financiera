@@ -2,20 +2,15 @@
  * Click-through: each GrowthCurves widget of chapter 1 must change its readout when the sliders move,
  * and the values must equal src/lib/finance. Needs a build (npm run build). Run: npm run clickthrough
  */
-import { spawn } from 'node:child_process';
+import { startPreview } from './preview.mjs';
 import { chromium } from 'playwright';
 import { compoundGrowth, doublingTime, simpleGrowth } from '../src/lib/finance/curves.ts';
 
-const PORT = 4330;
-const URL_ = `http://localhost:${PORT}/economia-financiera/chapters/01-interes/`;
+const server = await startPreview();
+const URL_ = `${server.base}chapters/01-interes/`;
 const fmt = (v) => v.toFixed(2).replace('.', ',');
-const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', String(PORT), '--ignore-lock'], { stdio: 'ignore' });
 let ok = true;
 try {
-  for (let i = 0; i < 60; i++) {
-    try { if ((await fetch(URL_)).ok) break; } catch { /* not up yet */ }
-    await new Promise((r) => setTimeout(r, 500));
-  }
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.goto(URL_, { waitUntil: 'networkidle' });
@@ -40,7 +35,7 @@ try {
   }
   await browser.close();
 } finally {
-  server.kill();
+  await server.stop();
 }
 function check(name, got, want) {
   const pass = got.replace(/\s/g, ' ').startsWith(want);

@@ -2,14 +2,13 @@
  * Click-through: moving the rate slider on /dev/widgets must give readouts equal to src/lib/finance.
  * Needs a build (npm run build). Run: npm run clickthrough:widgets
  */
-import { spawn } from 'node:child_process';
+import { startPreview } from './preview.mjs';
 import { chromium } from 'playwright';
 import { flowsFV, flowsPV, compoundGrowth, doublingTime, simpleGrowth } from '../src/lib/finance/curves.ts';
 
-const PORT = 4331;
-const URL_ = `http://localhost:${PORT}/economia-financiera/dev/widgets/`;
+const server = await startPreview();
+const URL_ = `${server.base}dev/widgets/`;
 const fmt = (v) => v.toFixed(2).replace('.', ',');
-const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', String(PORT), '--ignore-lock'], { stdio: 'ignore' });
 let ok = true;
 const check = (name, got, want) => {
   const pass = got.replace(/\s/g, ' ').startsWith(want);
@@ -17,10 +16,6 @@ const check = (name, got, want) => {
   console.log(`${pass ? '✓' : '✗'} ${name}: ${got} (expected ${want})`);
 };
 try {
-  for (let i = 0; i < 60; i++) {
-    try { if ((await fetch(URL_)).ok) break; } catch { /* not up yet */ }
-    await new Promise((r) => setTimeout(r, 500));
-  }
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.goto(URL_, { waitUntil: 'networkidle' });
@@ -48,7 +43,7 @@ try {
   check('duplicar', await gc.locator('[data-testid=doubling]').textContent(), `${doublingTime(0.1, 1).toFixed(1).replace('.', ',')} años`);
   await browser.close();
 } finally {
-  server.kill();
+  await server.stop();
 }
 console.log(ok ? '✓ readouts match src/lib/finance' : '✗ readouts differ');
 process.exit(ok ? 0 : 1);
