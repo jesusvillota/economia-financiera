@@ -1,0 +1,179 @@
+---
+title: "Más allá del CAPM: estudios de eventos, Fama-French y APT"
+part: 3
+chapter: 11
+difficulty: 3
+prerequisites: [10]
+summary: "Separa noticias y movimientos del mercado con rendimientos anormales. Descubre qué aportan los modelos de factores y qué límites tienen."
+sessions: []
+---
+import EventWindow from '../../components/plots/EventWindow';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿La noticia explica toda la subida?
+
+Una empresa ficticia de transporte anuncia un contrato importante. Su acción sube un 2,80 % durante esa sesión. ¿Es toda la subida una respuesta al anuncio?
+
+Ese día, el mercado también sube un 1 %. Quizá la acción habría subido incluso sin contrato. Necesitas una referencia: cuánto habría rendido normalmente, dado el movimiento del mercado. En nuestro ejemplo, esa referencia es un 1,30 %. La diferencia es de 1,50 puntos porcentuales.
+
+Esa diferencia abre una pregunta más amplia. El CAPM relaciona rentabilidad esperada y riesgo de mercado. Pero una rentabilidad realizada también recoge noticias y ruido. Además, el mercado puede ser una referencia incompleta. Vamos a separar estas ideas antes de interpretar una subida como éxito empresarial o habilidad de inversión.
+
+## <span class="section-tag">Intuición</span>Una regla para medir la sorpresa
+
+Imagina una regla que acompaña al mercado. Cuando el mercado sube, la referencia de la acción también cambia. El **rendimiento anormal**, o **AR** (*abnormal return*), es la distancia entre el resultado observado y esa referencia. «Anormal» significa inesperado según el modelo elegido. No significa ilegal ni imposible.
+
+La tabla muestra la forma de nuestro ejemplo. El día del anuncio es el día cero. Los días negativos lo preceden; los positivos lo siguen. Todos los rendimientos son **diarios**, expresados en porcentaje. No son tipos anuales.
+
+| Día relativo | Mercado | Acción | Referencia normal | AR |
+|---|---|---|---|---|
+| −2 | −1,00 % | −1,30 % | −1,10 % | −0,20 % |
+| −1 | 0,50 % | 0,90 % | 0,70 % | 0,20 % |
+| 0 | 1,00 % | 2,80 % | 1,30 % | 1,50 % |
+| +1 | −0,50 % | −0,70 % | −0,50 % | −0,20 % |
+| +2 | 0,00 % | 0,10 % | 0,10 % | 0,00 % |
+
+La sorpresa positiva destaca en el anuncio. Después aparece una pequeña corrección. Para ver el balance, acumulamos las distancias. El **CAR** (*cumulative abnormal return*) suma los AR de una ventana, es decir, un intervalo de días. En toda la tabla suma 1,30 %. La línea del gráfico seguirá esa suma, no el precio de la acción.
+
+Un **estudio de eventos** compara estas sorpresas alrededor de una noticia fechada. Puede estudiar contratos, dividendos, fusiones o cambios regulatorios. Primero debe fijar cuándo pudo conocer la noticia el mercado. Si el anuncio llega después del cierre, la sesión relevante puede ser la siguiente.
+
+<Callout type="note">
+Una subida observada, un AR positivo y una rentabilidad esperada alta responden a preguntas distintas. El AR siempre depende de una referencia.
+</Callout>
+
+## <span class="section-tag">Formalización</span>De una referencia a varios factores
+
+### Modelo de mercado y ventana del evento
+
+Usamos $r_{j,t}$ para la rentabilidad de la acción y $r_{M,t}$ para la del mercado. El **modelo de mercado** ajusta una relación estadística entre ambas:
+
+$$r_{j,t}=a_j+\beta_j r_{M,t}+\varepsilon_{j,t}.$$
+
+El intercepto $a_j$ recoge el nivel de la recta. La beta mide su pendiente. El residuo $\varepsilon_{j,t}$ es la parte que la recta no explica. Estimamos los parámetros con una **ventana de estimación**, separada de la ventana del evento. Así evitamos que la propia noticia determine la referencia con la que la medimos.
+
+Los mínimos cuadrados ordinarios, u OLS, eligen la recta que minimiza la suma de residuos al cuadrado. Para aplicar el ajuste necesitamos observaciones alineadas y variación en el mercado. También suponemos que la relación sigue siendo útil durante el evento. Si cambia el negocio o el riesgo, la referencia puede fallar.
+
+Con parámetros estimados, indicados por un sombrero, la predicción normal condicional al mercado observado es:
+
+$$\widehat r_{j,t}=\widehat a_j+\widehat\beta_j r_{M,t}.$$
+
+$$\mathrm{AR}_{j,t}=r_{j,t}-\widehat r_{j,t}.$$
+
+Nuestro ejemplo fija $\widehat a_j=0{,}001$ diario y $\widehat\beta_j=1{,}2$. Son parámetros ilustrativos; la tabla no pretende estimarlos. En el anuncio:
+
+$$\widehat r_{j,0}=0{,}001+1{,}2\cdot0{,}01=0{,}013,$$
+
+$$\mathrm{AR}_{j,0}=0{,}028-0{,}013=0{,}015.$$
+
+En palabras: la referencia es 1,30 % y la sorpresa es 1,50 %. Las restas de porcentajes se leen como diferencias en puntos porcentuales.
+
+<details>
+<summary>Cómo se acumula la sorpresa</summary>
+
+Para una ventana inclusiva desde $T_a$ hasta $T_b$:
+
+$$\mathrm{CAR}_j[T_a,T_b]=\sum_{t=T_a}^{T_b}\mathrm{AR}_{j,t}.$$
+
+«Inclusiva» significa que cuenta ambos extremos. En la ventana completa:
+
+$$\mathrm{CAR}_j[-2,2]=-0{,}002+0{,}002+0{,}015-0{,}002+0=0{,}013.$$
+
+No multiplicamos factores de crecimiento. El CAR convencional es una suma de rendimientos anormales. Una rentabilidad de comprar y mantener, ajustada por una referencia, requeriría otra medida.
+</details>
+
+### Qué puedes concluir
+
+Un CAR positivo no demuestra por sí solo que el contrato causara toda la diferencia. Puede coincidir otra noticia. Puede haber información anticipada. También puede estar mal especificado el rendimiento normal. Conviene elegir la ventana antes de mirar el resultado, justificarla y comprobar ventanas alternativas. Escoger solo la que da el mayor CAR introduce un sesgo.
+
+Para estudiar significación estadística necesitamos cuantificar la incertidumbre. Un error estándar mide cuánto puede variar una estimación por el muestreo. No lo obtenemos simplemente mirando el tamaño del CAR. Las observaciones de empresas expuestas a una misma noticia pueden estar relacionadas. Ignorar esa dependencia hace que una prueba parezca más precisa de lo que es.
+
+La reacción rápida a información nueva es compatible con eficiencia informativa. No exige que el precio quede inmóvil después. Pueden llegar noticias adicionales. Además, una prueba de eficiencia también prueba el modelo de rendimiento normal. Si falla la comparación, no sabemos automáticamente cuál de las dos hipótesis falla.
+
+### CAPM y modelo de mercado no son la misma ecuación
+
+El CAPM establece una relación de equilibrio entre **rentabilidades esperadas** y riesgo sistemático. El modelo de mercado anterior describe una relación estadística entre **rentabilidades realizadas**. Su intercepto en rendimientos brutos no es automáticamente un alfa de Jensen.
+
+Para comparar con CAPM, trabaja con excesos sobre el activo libre de riesgo del mismo periodo:
+
+$$r_{j,t}-\rf=\alpha_j+\beta_j(r_{M,t}-\rf)+\varepsilon_{j,t}.$$
+
+Si el tipo libre de riesgo es constante, el intercepto bruto cumple $a_j=\alpha_j+(1-\beta_j)\rf$. Cambiar entre estas ecuaciones sin ajustar el intercepto cambia la referencia. Esta distinción también importa al ampliar el modelo.
+
+### Fama-French y Carhart: ampliar la referencia
+
+El modelo de Fama-French de tres factores añade tamaño y valor al exceso de mercado. Un **factor** es una serie común que ayuda a describir los rendimientos de muchos activos. Una **exposición** mide cuánto se mueve la rentabilidad del activo con ese factor, manteniendo los demás constantes.
+
+El factor **SMB**, *Small Minus Big*, compara carteras de empresas pequeñas y grandes. El factor **HML**, *High Minus Low*, compara acciones con alta y baja relación entre valor contable y valor de mercado. Esa relación clasifica empresas; no garantiza que una acción esté barata.
+
+La regresión usa excesos de rentabilidad a la izquierda y factores del mismo periodo a la derecha:
+
+$$r_{j,t}-\rf=\alpha_j+\beta_{j,M}(r_{M,t}-\rf)+\beta_{j,S}\mathrm{SMB}_t+\beta_{j,H}\mathrm{HML}_t+\varepsilon_{j,t}.$$
+
+SMB y HML ya son diferencias entre rentabilidades de carteras. No se les resta de nuevo el tipo libre de riesgo. Tampoco mezcles rendimientos diarios de una acción con factores mensuales. Aquí describimos la estructura; no descargamos datos ni estimamos primas nuevas.
+
+Carhart añade un cuarto factor, **UMD**, *Up Minus Down*. Compara ganadores y perdedores según rendimientos pasados. Su exposición recoge el **momentum**, la persistencia observada de rendimientos relativos. La ecuación anterior añade el término $\beta_{j,U}\mathrm{UMD}_t$. Esa pauta histórica puede cambiar o invertirse. No es una promesa de beneficios.
+
+El alfa es el intercepto que queda tras controlar los factores elegidos. Puede cambiar al ampliar la referencia. Un alfa positivo y significativo aporta evidencia condicionada al modelo y a los datos. No demuestra por sí solo habilidad: también influyen costes, selección de muestras y factores omitidos. Añadir variables tampoco asegura mejores predicciones fuera de la muestra.
+
+### APT: una restricción por ausencia de arbitraje
+
+La **teoría de valoración por arbitraje**, o **APT**, parte de una estructura con varios factores comunes. El arbitraje es una estrategia sin inversión neta que obtiene una ganancia segura sin riesgo de pérdida. La idea es comparar carteras con las mismas exposiciones, después de diversificar el riesgo específico.
+
+Si esas carteras ofrecen rentabilidades esperadas diferentes, la diferencia puede permitir una operación de arbitraje bajo los supuestos del modelo. Por eso la ausencia de arbitraje restringe las rentabilidades esperadas:
+
+$$\E[r_j]=\rf+\sum_{k=1}^{K}b_{j,k}\lambda_k.$$
+
+Aquí $b_{j,k}$ es la exposición al factor $k$ y $\lambda_k$ es su prima esperada. El número de factores es $K$. La prima es una compensación esperada por exposición; no es la realización del factor en una fecha concreta.
+
+APT requiere una estructura factorial y suficiente diversificación del riesgo específico, además de ausencia de arbitraje. No basta con que dos acciones tengan betas iguales para asegurar una ganancia sin riesgo: sus residuos pueden seguir siendo distintos. La relación de precios se entiende para carteras suficientemente diversificadas, con las condiciones del modelo.
+
+APT no decide por sí sola qué factores debes usar. Fama-French propone factores concretos y medibles. CAPM vincula la prima a la cartera de mercado bajo sus supuestos de equilibrio. Estas ideas comparten la atención al riesgo común, pero sus fundamentos y sus usos difieren.
+
+## <span class="section-tag">Zona de juego</span>Elige qué días cuentan
+
+El gráfico mantiene fijas las rentabilidades observadas. Tú cambias la referencia o los extremos de la ventana. Cada punto suma los AR desde el inicio elegido hasta ese día. Por eso mover el inicio cambia también el origen de la acumulación. La tabla deja un guion en los días excluidos.
+
+<EventWindow client:visible />
+
+**Prueba esto:**
+
+1. Conserva los parámetros iniciales. Selecciona desde −1 hasta +1: el CAR es 1,50 %. Aísla después el día 0: sigue en 1,50 %. La coincidencia ocurre porque los AR de los días vecinos se compensan.
+2. Selecciona solo el día 0. Baja beta de 1,2 a 0,8. La referencia baja a 0,90 % y el AR sube a 1,90 %. Después sube el intercepto diario de 0,10 % a 0,20 %: el AR pasa a 1,80 %.
+
+Los extremos siempre forman un intervalo válido. Si cruzas un extremo con el otro, el otro se mueve hasta coincidir. Una ventana de un solo día sigue siendo inclusiva. No pierde la observación del anuncio.
+
+Ampliar la ventana puede captar información anticipada o reacciones posteriores. También incorpora más ruido y otras noticias. Una ventana mayor no implica un CAR mayor. Si seleccionas desde +1 hasta +2 con los parámetros iniciales, el CAR es −0,20 %. Ese dato no borra la sorpresa positiva del anuncio: responde a otra pregunta temporal.
+
+La práctica larga de estudios de eventos corresponde a la sesión de problemas de mercados. Todavía no existe en el sitio. Este ejemplo sirve para aprender la medida, no para evaluar una empresa real.
+
+## <span class="section-tag">Compruébalo</span>Comprueba la referencia
+
+<Quiz client:visible
+  question="En el anuncio, la acción rinde 2,80 % y la referencia normal es 1,30 %. ¿Cuál es su AR?"
+  options={['La rentabilidad observada completa', '1,50 %', 'La rentabilidad del mercado']}
+  answer={1}
+  explanation="Restamos la referencia al resultado observado: 2,80 − 1,30 = 1,50 puntos porcentuales. Es una sorpresa respecto al modelo."
+/>
+
+<Quiz client:visible
+  question="¿Cómo calculas el CAR convencional de una ventana?"
+  options={['Multiplicas factores de crecimiento', 'Usas solo el último AR', 'Sumas los AR, incluidos ambos extremos']}
+  answer={2}
+  explanation="El CAR suma los rendimientos anormales. No es una rentabilidad compuesta de comprar y mantener."
+/>
+
+<Quiz client:visible
+  question="Un fondo presenta alfa positivo y significativo frente a Carhart. ¿Qué puedes afirmar?"
+  options={['Su habilidad queda demostrada', 'Hay evidencia condicionada a ese modelo y esos datos', 'Ya no existe riesgo específico']}
+  answer={1}
+  explanation="El resultado depende de los factores y de la calidad de la muestra. Factores omitidos y selección pueden afectar a la interpretación."
+/>
+
+## <span class="section-tag">Resumen</span>Qué mide cada herramienta
+
+- El AR resta una referencia normal a la rentabilidad observada. El CAR suma los AR de una ventana inclusiva.
+- Un estudio de eventos necesita una fecha, una referencia y una medida de incertidumbre. Un CAR positivo no prueba causalidad.
+- Fama-French incorpora mercado, tamaño y valor. Carhart añade momentum. El alfa depende de esa elección.
+- APT relaciona primas y exposiciones bajo estructura factorial, diversificación y ausencia de arbitraje. No selecciona los factores por ti.
+
+**Siguiente:** estructura de mercado. Pasamos de medir rendimientos a entender dónde y cómo se negocian los activos.

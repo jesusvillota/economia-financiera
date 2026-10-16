@@ -1,0 +1,151 @@
+---
+title: "Activo libre de riesgo: CAL y cartera tangente"
+part: 3
+chapter: 9
+difficulty: 3
+prerequisites: [8]
+summary: "Combina un fondo con riesgo y un activo seguro, compara pendientes y separa la elección del fondo de tu exposición."
+---
+import CapitalAllocation from '../../components/plots/CapitalAllocation';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Tienes que cambiar de fondo para reducir el riesgo?
+
+Tienes 1000 € para invertir durante un año. Un fondo ofrece una rentabilidad esperada del 10 % y una desviación típica del 9,43 %. Puedes invertir también en un activo que paga un 2 % seguro al final de ese año.
+
+No quieres asumir todo el riesgo del fondo. ¿Necesitas buscar otras acciones? Puedes empezar por algo más sencillo: invertir 500 € en el fondo y dejar 500 € en el activo seguro. La rentabilidad esperada conjunta baja al 6 %. El riesgo baja al 4,71 %.
+
+La composición interna del fondo no cambia. Solo cambia cuánto dinero expones a sus resultados. Esa diferencia permite separar dos preguntas: **qué fondo eliges** y **cuánto inviertes en él**. Primero veremos la recta que aparece al mezclar. Después buscaremos el fondo que da la mejor pendiente.
+
+## <span class="section-tag">Intuición</span>De una curva a una recta
+
+La frontera eficiente de Markowitz reúne las carteras con menor riesgo para cada rentabilidad esperada. Ahora añadimos un punto sobre el eje vertical: el activo libre de riesgo. Su rentabilidad es conocida y su desviación típica es cero. No es otra acción dentro de la nube de carteras.
+
+**Libre de riesgo** significa seguro para el plazo y la unidad monetaria del modelo. Un pago nominal seguro no garantiza poder adquisitivo. Si vendes antes del vencimiento, su precio puede variar. Aquí mantienes la inversión hasta el final del año e ignoras impuestos y costes de operación.
+
+Al combinar ese punto con un fondo fijo aparece la **línea de asignación de capital**, o CAL por *Capital Allocation Line*. El tramo entre ambos representa inversión parcial en el fondo. La continuación más allá del fondo representa inversión financiada con deuda.
+
+Imagina una mesa de mezclas. Un control selecciona el fondo; otro regula su presencia en tu cartera. El primer control cambia la dirección de la recta. El segundo mueve tu posición sobre esa recta. Cambiar el volumen no mejora el fondo que has elegido.
+
+En el gráfico, el punto naranja selecciona el fondo con riesgo. El punto azul P muestra tu cartera final. Puedes arrastrar P horizontalmente. Su movimiento queda limitado a la CAL del fondo seleccionado. Los controles de abajo permiten hacer lo mismo con el teclado.
+
+El ejemplo usa dos activos: A tiene rentabilidad esperada del 8 % y riesgo del 10 %; B, del 14 % y del 20 %. Inicialmente su correlación es cero. Los datos son anuales y las rentabilidades son expectativas, no promesas.
+
+La referencia turquesa señala T, la **cartera tangente**: el fondo que maximiza la pendiente entre el activo seguro y la frontera sin restricciones. Inicialmente el fondo naranja coincide con T. Cambia su rentabilidad para ver una CAL menos inclinada. No confundas la recta con la curva verde de carteras formadas solo con activos arriesgados.
+
+## <span class="section-tag">Formalización</span>La pendiente resume el intercambio
+
+### Rentabilidad y riesgo de la mezcla
+
+Llamamos $c$ al fondo con riesgo y $w_c$ a la fracción de tu patrimonio invertida en él. El peso del activo seguro es $w_f=1-w_c$. La rentabilidad del fondo es $r_c$; la del activo seguro es $\rf$.
+
+El presupuesto se reparte entre ambos. Por tanto, la rentabilidad final cumple:
+
+$$r_p=(1-w_c)\rf+w_c r_c.$$
+
+Tomar la esperanza conserva los pesos y deja intacta la cantidad segura:
+
+$$\E[r_p]=(1-w_c)\rf+w_c\E[r_c]=\rf+w_c\bigl(\E[r_c]-\rf\bigr).$$
+
+La diferencia $\E[r_c]-\rf$ es la prima esperada por asumir el riesgo del fondo. La cobras en proporción a tu exposición. No es una ganancia garantizada: el resultado realizado puede quedar por debajo del tipo seguro.
+
+Como $\rf$ es constante, su varianza y su covarianza con el fondo son cero. Al expandir la varianza de la suma desaparecen esos términos:
+
+$$\sigma_p^2=(1-w_c)^2\cdot 0+w_c^2\sigma_c^2+2(1-w_c)w_c\cdot 0=w_c^2\sigma_c^2.$$
+
+Tomar la raíz cuadrada exige un valor absoluto:
+
+$$\sigma_p=|w_c|\sigma_c.$$
+
+La desviación típica nunca es negativa. Para $w_c\geq 0$ podemos escribir $w_c=\sigma_p/\sigma_c$, siempre que $\sigma_c>0$. Sustituimos ese peso en la esperanza anterior:
+
+$$\E[r_p]=\rf+\frac{\E[r_c]-\rf}{\sigma_c}\sigma_p.$$
+
+Esta es la rama de la CAL que dibuja el widget. Parte del activo seguro y aumenta la inversión en el fondo. No describe la venta en corto del fondo completo.
+
+<Callout type="warning" title="El signo del peso importa">
+Si vendes el fondo en corto, $w_c$ es negativo. Con los datos iniciales, un peso del −50 % produce rentabilidad esperada del −2 % y riesgo del 4,71 %. El riesgo sigue siendo positivo. Esa mezcla queda en otra rama, por debajo del activo seguro. El widget limita el peso del fondo a valores no negativos.
+</Callout>
+
+### El ratio de Sharpe y la cartera tangente
+
+La pendiente es el **ratio de Sharpe**, la prima esperada por unidad de desviación típica:
+
+$$S_c=\frac{\E[r_c]-\rf}{\sigma_c}.$$
+
+Usa rentabilidades y riesgos del mismo periodo, expresados en la misma escala. El ratio no es un porcentaje. No lo calculamos cuando la desviación típica es cero: no tiene sentido dividir entre cero.
+
+Cada activo del ejemplo, tomado por separado, tiene Sharpe 0,6000. A ofrece una prima menor, pero también menos riesgo. Una combinación diversificada puede mejorar esa relación sin mejorar la rentabilidad de cada activo por separado.
+
+Con correlación cero, T invierte el 66,67 % en A y el 33,33 % en B. Los pesos exactos son $2/3$ y $1/3$. Su rentabilidad esperada es el 10 %, su riesgo es aproximadamente el 9,43 % y su Sharpe es 0,8485. Los cálculos conservan los pesos exactos; las lecturas se redondean al mostrarse.
+
+Buscar T significa comparar todas las CAL admisibles y elegir la de mayor pendiente. Para un riesgo dado, esa recta ofrece mayor rentabilidad esperada. Para una rentabilidad esperada dada, necesita menos riesgo. La tangencia describe el contacto con la frontera, no una predicción sobre el próximo resultado del mercado.
+
+Aquí calculamos la tangente sin restricciones de ventas en corto. Su cálculo requiere una matriz de covarianzas no singular y una solución superior finita. En las correlaciones extremas el widget avisa de que no calcula T. No inventa una tangente donde esa fórmula deja de ser válida.
+
+### Separación de fondos: una elección común, una exposición personal
+
+El **teorema de separación de fondos** distingue la composición del fondo y su peso en tu patrimonio. Dentro del modelo media-varianza, inversores aversos al riesgo pueden elegir el mismo T y exposiciones distintas.
+
+La conclusión necesita supuestos: comparten expectativas y oportunidades, pueden prestar y pedir prestado al mismo tipo seguro, y tienen las mismas restricciones. También suponemos una solución tangente válida. Bajo esas condiciones, una CAL con menor pendiente resulta dominada por la tangente para una exposición positiva al riesgo.
+
+Primero se elige T a partir de los datos. Después cada inversor elige su posición sobre su CAL según sus preferencias. El teorema no determina por sí solo tu peso óptimo. Para obtenerlo necesitaríamos conocer cómo valoras el riesgo y la rentabilidad.
+
+Si pedir prestado cuesta más que prestar, la oportunidad cambia al endeudarte. Si los inversores usan expectativas distintas, pueden obtener fondos distintos. Por eso no presentamos la separación como una descripción universal del comportamiento humano. Tampoco identificamos todavía T con el mercado: esa identificación necesita los supuestos de equilibrio del CAPM.
+
+## <span class="section-tag">Zona de juego</span>Elige el fondo y después su peso
+
+<CapitalAllocation client:visible />
+
+**Prueba esto:** mantén la correlación en cero y la rentabilidad del fondo en el 10 %. Así seleccionas T. Mueve el peso del fondo entre las posiciones de esta tabla:
+
+| Peso del fondo | Peso seguro | Rentabilidad esperada final | Riesgo final |
+|---|---|---|---|
+| 0 % | 100 % | 2 % | 0 % |
+| 50 % | 50 % | 6 % | 4,71 % |
+| 100 % | 0 % | 10 % | 9,43 % |
+| 150 % | −50 % | 14 % | 14,14 % |
+
+La última fila invierte 1500 € en el fondo con un patrimonio inicial de 1000 €. Los 500 € adicionales son deuda al tipo seguro. El peso seguro negativo registra esa obligación. No significa que el riesgo se vuelva negativo ni que tengas dinero gratis.
+
+El apalancamiento aumenta las ganancias y las pérdidas del fondo respecto al patrimonio que aportas. La tabla solo muestra esperanzas y desviaciones típicas. No muestra la peor pérdida posible ni todos los detalles de un préstamo real.
+
+**Prueba esto:** deja el peso final al 50 % y selecciona el activo A con el control de rentabilidad. La mezcla ofrece ahora un 5 % esperado y un riesgo del 5 %. El mismo peso no implica el mismo riesgo cuando cambia el fondo. Regresa al fondo con rentabilidad del 10 % para comparar.
+
+Después cambia la correlación. Observa cómo se mueve la frontera aunque las rentabilidades de A y B permanezcan fijas. El interruptor de cortos limita el fondo naranja y la frontera mostrada. La referencia T sigue calculándose sin esa restricción; no representa necesariamente una solución admisible si prohíbes cortos.
+
+La práctica extensa de este tema corresponde a la futura sesión de carteras. Este capítulo se concentra en leer la figura y comprobar las relaciones entre pesos, riesgo y rentabilidad.
+
+## <span class="section-tag">Compruébalo</span>Comprueba qué has mezclado
+
+<Quiz client:visible
+  question="Con los datos iniciales de T, inviertes la mitad en el fondo y la mitad al tipo seguro. ¿Qué obtienes?"
+  options={['La rentabilidad esperada del fondo completo y la mitad de su riesgo', 'Un 6 % esperado y un riesgo del 4,71 %', 'Una rentabilidad segura igual a la esperanza de la mezcla']}
+  answer={1}
+  explanation="La parte segura también rinde: la media de 2 % y 10 % es 6 %. La desviación típica es la mitad de la del fondo. El resultado sigue siendo incierto."
+/>
+
+<Quiz client:visible
+  question="Tu peso en el fondo supera el total de tu patrimonio. ¿Cómo interpretas el peso seguro negativo?"
+  options={['Has eliminado la incertidumbre del fondo', 'El riesgo final tiene signo negativo', 'Has pedido prestado para aumentar tu exposición al fondo']}
+  answer={2}
+  explanation="El préstamo completa el presupuesto. Su coste se incluye en la rentabilidad esperada mediante el peso seguro negativo. El riesgo aumenta con la exposición."
+/>
+
+<Quiz client:visible
+  question="Dos inversores comparten los supuestos de separación, pero toleran riesgos distintos. ¿Qué puede cambiar?"
+  options={['Necesariamente la composición interna de T', 'El peso invertido en T y en el activo seguro', 'La rentabilidad segura pasa a depender de las preferencias']}
+  answer={1}
+  explanation="Los datos comunes determinan T. Las preferencias determinan cuánto se invierte en él. Con expectativas o restricciones distintas, la conclusión puede cambiar."
+/>
+
+## <span class="section-tag">Resumen</span>Un fondo y un control de exposición
+
+- El activo libre de riesgo tiene una rentabilidad conocida para el plazo y la moneda elegidos.
+- Mezclarlo con un fondo fijo forma una CAL. Para pesos no negativos, su pendiente es el Sharpe del fondo.
+- La tangente maximiza esa pendiente dentro de las restricciones y supuestos del problema.
+- La separación distingue elegir el fondo y decidir cuánto invertir en él. Endeudarte aumenta la exposición.
+- La desviación típica usa el valor absoluto del peso. Un peso negativo no produce riesgo negativo.
+
+**Siguiente:** CAPM, CML, SML y beta. Estudiaremos cuándo la cartera tangente coincide con la cartera de mercado.

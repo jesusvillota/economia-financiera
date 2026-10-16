@@ -34,6 +34,10 @@ interface EfficientFrontierProps {
   title?: string;
   /** Mafs elements in percentage-point coordinates; use a React wrapper for a dynamic CAL/SML overlay. */
   overlay?: ReactNode | ((context: FrontierOverlayContext) => ReactNode);
+  /** Optional composition slots for a CAL wrapper; coordinates remain percentage points. */
+  extraControls?: ReactNode;
+  extraReadout?: (context: FrontierOverlayContext) => ReactNode;
+  plotBounds?: { x: [number, number]; y: [number, number] };
 }
 
 const DEFAULT_ASSETS: readonly [FrontierAsset, FrontierAsset] = [
@@ -49,6 +53,7 @@ const clamp = (value: number, min: number, max: number) => Math.max(min, Math.mi
 export default function EfficientFrontier({
   assets = DEFAULT_ASSETS, initialRho = 0.2, initialShortSales = false,
   initialTarget = 0.12, title = 'Frontera eficiente: dos activos', overlay,
+  extraControls, extraReadout, plotBounds,
 }: EfficientFrontierProps) {
   const [rho, setRho] = useState(initialRho);
   const [shortSales, setShortSales] = useState(initialShortSales);
@@ -61,8 +66,9 @@ export default function EfficientFrontier({
     const minimum = globalMinimumVariance(returns, covariance, longOnly);
     const low = Math.min(...returns), high = Math.max(...returns);
     const span = high - low || 0.04;
-    const minTarget = longOnly ? low : Math.min(low - span / 2, minimum.expectedReturn);
-    const maxTarget = longOnly ? high : Math.max(high + span / 2, minimum.expectedReturn);
+    // Stable decimal bounds keep native range steps valid after floating-point optimisation.
+    const minTarget = Number((longOnly ? low : Math.min(low - span / 2, minimum.expectedReturn)).toFixed(12));
+    const maxTarget = Number((longOnly ? high : Math.max(high + span / 2, minimum.expectedReturn)).toFixed(12));
     const targets = Array.from({ length: 101 }, (_, i) => minTarget + (maxTarget - minTarget) * i / 100);
     // Include the turning point exactly so neither branch skips the minimum.
     targets.push(minimum.expectedReturn);
@@ -75,7 +81,9 @@ export default function EfficientFrontier({
   const { returns, covariance, minimum, minTarget, maxTarget, points, xMax, y } = model;
   const selectedTarget = clamp(target, minTarget, maxTarget);
   const selected = frontierPoint(returns, covariance, selectedTarget, longOnly);
-  const x: [number, number] = [0, xMax];
+  const x: [number, number] = plotBounds?.x ?? [0, xMax];
+  const plotY = plotBounds?.y ?? y;
+  const context = { assets, covariance, minimum, selected, rho, longOnly, x, y: plotY };
   const project = ([, vertical]: [number, number]): [number, number] => {
     const point = frontierPoint(returns, covariance, clamp(vertical / 100, minTarget, maxTarget), longOnly);
     return [point.sigma * 100, point.expectedReturn * 100];
@@ -87,9 +95,9 @@ export default function EfficientFrontier({
       ariaLabel="Riesgo y rentabilidad de las carteras: activos individuales, mínimo de varianza y cartera seleccionada arrastrable"
       plotHeight={300}
       plot={
-        <PlotFrame x={x} y={y} height={300}
-          xTicks={[0, xMax / 3, xMax * 2 / 3, xMax]}
-          yTicks={[minTarget * 100, (minTarget + maxTarget) * 50, maxTarget * 100]}
+        <PlotFrame x={x} y={plotY} height={300}
+          xTicks={plotBounds ? [x[0], (x[0] + x[1]) / 2, x[1]] : [0, xMax / 3, xMax * 2 / 3, xMax]}
+          yTicks={plotBounds ? [plotY[0], (plotY[0] + plotY[1]) / 2, plotY[1]] : [minTarget * 100, (minTarget + maxTarget) * 50, maxTarget * 100]}
           formatX={value => num(value, 1)} formatY={value => num(value, 1)}
           xLabel="riesgo σ (%)" yLabel="E[rₚ] (%)">
           {points.slice(1).map((point, i) => (
@@ -98,7 +106,6 @@ export default function EfficientFrontier({
               color={point.branch === 'efficient' ? 'var(--c-return)' : 'var(--text-muted)'}
               style={point.branch === 'efficient' ? 'solid' : 'dashed'} weight={2.5} />
           ))}
-          {typeof overlay === 'function' ? overlay({ assets, covariance, minimum, selected, rho, longOnly, x, y }) : overlay}
           {assets.map((asset, i) => (
             <Fragment key={i}>
               <Point x={asset.sigma * 100} y={asset.expectedReturn * 100} color={COLORS[i]} />
@@ -107,10 +114,11 @@ export default function EfficientFrontier({
           ))}
           <Point x={minimum.sigma * 100} y={minimum.expectedReturn * 100} color="var(--c-risk)" />
           <Label x={minimum.sigma * 100} y={minimum.expectedReturn * 100} attach="s" attachDistance={12} color="var(--c-risk)">Mín.</Label>
-          <g data-testid="frontier-portfolio" aria-label="Cartera seleccionada; arrastra verticalmente">
+          <g data-testid="frontier-portfolio" data-target={selectedTarget} aria-label="Cartera seleccionada; arrastra verticalmente">
             <MovablePoint point={[selected.sigma * 100, selected.expectedReturn * 100]} constrain={project}
               onMove={point => setTarget(point[1] / 100)} color="var(--c-rate)" />
           </g>
+          {typeof overlay === 'function' ? overlay(context) : overlay}
         </PlotFrame>
       }
       controls={<>
@@ -125,6 +133,7 @@ export default function EfficientFrontier({
           }} />
           Permitir ventas en corto
         </label>
+        {extraControls}
       </>}
       readout={<>
         <dl className="readout-grid">
@@ -143,6 +152,7 @@ export default function EfficientFrontier({
         <p className="muted">Verde continuo: eficiente. Gris discontinuo: ineficiente. Naranja: tu cartera. Rojo: mínimo.</p>
         <p className="muted">{assets.map(asset => `${asset.name}: retorno ${pct(asset.expectedReturn)}, riesgo ${pct(asset.sigma)}`).join(' · ')}</p>
         {assets.length === 3 && <p className="muted">El tercer activo tiene correlación cero con los otros dos.</p>}
+        {extraReadout?.(context)}
       </>}
       caption="Prueba esto: cambia la correlación y permite ventas en corto. Un peso negativo representa una venta en corto. Arrastra el punto naranja hacia arriba o abajo, o usa el control de rentabilidad. La curva muestra la cartera de menor riesgo para cada rentabilidad."
     />
