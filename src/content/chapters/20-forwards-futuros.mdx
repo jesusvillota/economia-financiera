@@ -62,7 +62,12 @@ En nuestro ejemplo original, el precio justo es $60\cdot1{,}05=63$ €. El tipo
 
 Para valorar el acuerdo antiguo, compara recibir el activo con pagar $K$ en $T$. El factor de descuento es $D(t,T)=(1+\rf)^{-\tau}$. La unidad que recibirás vale $S_t$ bajo nuestros supuestos. La obligación de pago vale hoy $K D(t,T)$. Por tanto:
 
-$$V_t=S_t-KD(t,T)=(F_{t,T}-K)D(t,T).$$
+$$
+\begin{aligned}
+V_t&=S_t-KD(t,T)\\
+&=(F_{t,T}-K)D(t,T).
+\end{aligned}
+$$
 
 La segunda igualdad sale al sustituir $S_t=F_{t,T}D(t,T)$ y sacar el factor común. El vendedor tiene el valor opuesto, $-V_t$. En un acuerdo nuevo sin pago inicial se fija $K=F_{t,T}$; por eso su valor inicial es cero.
 
@@ -82,7 +87,13 @@ $$D(t,T)=1{,}04^{-1{,}5}\approx0{,}9429,$$
 
 $$
 KD(t,T)\approx45{,}26\,€,
-\qquad V_t=50-48\cdot1{,}04^{-1{,}5}\approx4{,}74\,€.
+$$
+
+$$
+\begin{aligned}
+V_t&=50-48\cdot1{,}04^{-1{,}5}\\
+&\approx4{,}74\,€.
+\end{aligned}
 $$
 
 El valor es positivo para el comprador. El documento fuente da 4,76 € por un error numérico del descuento. Aquí usamos 4,74 €, conforme a la auditoría. Además, reservamos $F_{t,T}$ para el precio nuevo y $V_t$ para el valor: no son dos nombres de la misma cantidad.
@@ -101,8 +112,9 @@ En este ejemplo no retiramos efectivo y no hay intereses ni comisiones. Si $B_{d
 
 $$
 A_d=\begin{cases}M_0-B_d^-,&B_d^-<M_{\mathrm{mant}},\\0,&B_d^-\geq M_{\mathrm{mant}},\end{cases}
-\qquad B_d=B_d^-+A_d.
 $$
+
+$$B_d=B_d^-+A_d.$$
 
 La **llamada de margen** pide aportar $A_d$. Reponemos hasta el margen inicial, no solo hasta mantenimiento. En igualdad con el umbral no hay llamada. Las reglas reales dependen del contrato y del intermediario. La compensación reduce el riesgo bilateral, pero no elimina todos los riesgos.
 

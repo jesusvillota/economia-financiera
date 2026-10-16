@@ -125,6 +125,8 @@ try {
         assert.match(await quiz.getByRole('status').textContent(), /Correcto/);
       }
       assert.equal(await page.locator('.katex-error').count(), 0);
+      assert.deepEqual(await page.locator('.katex-display').evaluateAll((els) => els
+        .filter((el) => el.scrollWidth > el.clientWidth + 1).map((el) => el.textContent)), [], 'equations fit the viewport');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'horizontal overflow');
       assert.deepEqual(errors, []);
       console.log(`✓ ${theme} ${width}px: all controls, table, keyboard, resets, three quizzes and six sections; no console, KaTeX or overflow errors`);
