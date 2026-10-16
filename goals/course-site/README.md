@@ -101,6 +101,7 @@ flowchart TD
     TASK_052["TASK-052 Glossary page /glosario: terms and notation from the style guide, linked from the nav"]
     TASK_053["TASK-053 Link and consistency QA: internal links, anchors, chapter-session cross-links, curriculum sync checked on the built site"]
     TASK_054["TASK-054 Audit trace: every AUDIT.md fix lists its test, checked by a script"]
+    TASK_055["TASK-055 Deploy check: clean-checkout build, Pages workflow, base path and content licence"]
   end
   TASK_004 --> DEC_001
   TASK_004 --> DEC_002
