@@ -26,7 +26,7 @@ Combined command exit: 0. Output excerpts and final tail:
  Test Files  44 passed (44)
       Tests  1525 passed (1525)
 Audit: 65 audited errors, all with a test.
-Result (126 files):
+Result (157 files):
 - 0 errors
 - 0 warnings
 - 0 hints
