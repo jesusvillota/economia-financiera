@@ -50,8 +50,10 @@ export const shortSale = (n: number, p0: number, initialRate: number, p1 = p0, d
   const initialMargin = initialRate * proceeds;
   const liability = n * p1;
   const dividends = n * dividend;
-  const equity = initialMargin + proceeds - liability - dividends;
+  const assets = initialMargin + proceeds - dividends;
+  const equity = assets - liability;
   return {
+    assets,
     proceeds,
     initialMargin,
     liability,
@@ -135,6 +137,23 @@ export const marketOrder = (book: Book, side: Side, size: number) => {
     avgPrice: filled > 0 ? total / filled : NaN,
     book: side === 'buy' ? { bids: book.bids, asks: left } : { bids: left, asks: book.asks },
   };
+};
+
+/** Limit order: cross eligible opposite levels; rest the remainder at the investor's limit.
+ * Static price-priority model: no time queue, cancellations, hidden liquidity or later arrivals.
+ */
+export const limitOrder = (book: Book, side: Side, size: number, limit: number) => {
+  check(size, limit);
+  const opposite = side === 'buy' ? book.asks : book.bids;
+  const eligible = (level: Level) => side === 'buy' ? level.price <= limit : level.price >= limit;
+  const executable = sorted(opposite, side === 'sell').filter(eligible);
+  const result = marketOrder(side === 'buy' ? { bids: [], asks: executable } : { bids: executable, asks: [] }, side, size);
+  const remaining = [...(side === 'buy' ? result.book.asks : result.book.bids), ...opposite.filter(l => !eligible(l))];
+  const own = [...(side === 'buy' ? book.bids : book.asks)];
+  if (result.unfilled > 0) own.push({ price: limit, size: result.unfilled });
+  return { ...result, book: side === 'buy'
+    ? { bids: sorted(own, true), asks: sorted(remaining, false) }
+    : { bids: sorted(remaining, true), asks: sorted(own, false) } };
 };
 
 const depth = (buys: Level[], sells: Level[], p: number) => {
