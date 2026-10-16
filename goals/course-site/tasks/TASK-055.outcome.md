@@ -35,7 +35,7 @@ Proposed follow-ups: none beyond the existing TASK-059 owner launch, which handl
 ### Verify output tail
 
 ```text
-00:43:47   ├─ /index.html (+1ms) 
+00:43:47   ├─ /index.html (+1ms)
 00:43:47 ✓ Completed in 481ms.
 
 00:43:47 [build] ✓ Completed in 4.21s.
