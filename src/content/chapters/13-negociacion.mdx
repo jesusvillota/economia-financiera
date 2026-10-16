@@ -1,0 +1,163 @@
+---
+title: "Negociación: órdenes, margen, ventas en corto y costes"
+part: 4
+chapter: 13
+difficulty: 2
+prerequisites: [12]
+summary: "Aprende a enviar órdenes, medir sus costes y seguir el capital de una compra financiada o una venta en corto."
+sessions: []
+---
+import OrderBook from '../../components/plots/OrderBook';
+import MarginAccount from '../../components/plots/MarginAccount';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Qué significa comprar al precio de pantalla?
+
+Quieres comprar 150 acciones de una empresa ficticia de sensores. Ves una oferta a 40 €. Multiplicas mentalmente y preparas tu orden. Pero esa oferta solo contiene 100 acciones. ¿Quién te vende el resto y a qué precio?
+
+El precio visible describe una oportunidad concreta, con una cantidad disponible. No es una promesa para cualquier tamaño. Si aceptas todas las ofertas necesarias, puedes pagar precios diferentes dentro de una misma orden. Si impones un precio máximo, puedes quedarte con parte de la compra pendiente.
+
+Después aparece otra pregunta: ¿con qué dinero compras? Un préstamo reduce el capital que aportas, pero añade deuda e intereses. Vender acciones prestadas cambia incluso la dirección del riesgo. Una subida que favorece al comprador perjudica a quien vende en corto. Vamos a seguir las acciones, el efectivo y las obligaciones por separado.
+
+## <span class="section-tag">Intuición</span>Un libro con cantidades finitas
+
+El **libro de órdenes** reúne propuestas de compra y venta pendientes. El **bid** es el precio ofrecido por un comprador. El **ask** es el precio pedido por un vendedor. La mejor compra es la más alta; la mejor venta, la más baja. Esta tabla representa el libro inicial de nuestro simulador:
+
+| Compra: precio | Acciones | Venta: precio | Acciones |
+|---|---|---|---|
+| 39 € | 100 | 40 € | 100 |
+| 38 € | 100 | 41 € | 100 |
+| 37 € | 200 | 42 € | 200 |
+
+Una compra **a mercado** acepta las ventas disponibles, de menor a mayor precio. Para comprar 150 acciones, toma 100 a 40 € y 50 a 41 €. El efectivo negociado suma 6050 €. El precio medio resulta 40,33 €, redondeado. La mejor oferta inicial sigue siendo correcta, pero no describe toda la operación.
+
+Una **orden limitada** de compra fija el máximo que aceptas pagar. Con límite de 40 €, solo compras las 100 acciones ofrecidas a ese precio. Las otras 50 quedan pendientes en nuestro modelo. Una venta limitada funciona al revés: fija un precio mínimo aceptable. Una orden puede ejecutarse a un precio mejor que su límite.
+
+<OrderBook client:visible />
+
+**Prueba esto:** envía la compra inicial a mercado. Después elige Limitada y conserva el límite de 40 €. Compara las acciones ejecutadas y pendientes. Finalmente selecciona Vender: ahora tu orden encuentra las compras del libro.
+
+El simulador representa una foto estática. Cada envío recupera el libro inicial para facilitar comparaciones. Tras ejecutar, enseña el libro restante. La parte pendiente de una limitada se incorpora al lado correspondiente. No simulamos el paso del tiempo ni órdenes posteriores. Un resto de mercado aparece sin ejecutar; no se convierte automáticamente en una limitada.
+
+En un mercado real también importan las colas. Entre órdenes al mismo precio suele tener prioridad la que llegó antes, según las reglas del centro. Ver una operación al precio de tu límite no demuestra que hubiera cantidad suficiente para alcanzarte. Además, una suspensión puede impedir negociar. Una orden a mercado prioriza rapidez; no garantiza ejecución completa.
+
+## <span class="section-tag">Formalización</span>Precio, costes y capital propio
+
+### Qué debes especificar
+
+Una orden identifica el valor, el sentido, la cantidad y las condiciones de precio. También puede establecer una vigencia y restricciones de ejecución. Una condición de ejecutar todo o nada rechaza las ejecuciones parciales. No la confundas con una orden que cancela inmediatamente la cantidad restante: son instrucciones diferentes.
+
+En la negociación española, una orden **por lo mejor** llega sin precio y toma el mejor nivel disponible. Su resto queda limitado al precio de esa primera ejecución. Una orden a mercado puede recorrer varios niveles. Una **limitada ejecutable**, o *marketable limit order*, sí lleva un límite del inversor que permite cruzar ofertas existentes. Estos nombres no son equivalentes.
+
+Una **orden stop** espera un precio de activación. Un stop de venta puede servir para intentar salir tras una caída. Al activarse como orden a mercado, el precio final puede ser peor que el de activación. Una orden stop limitada añade una restricción de precio, pero puede quedar sin ejecutar. Ninguna de estas instrucciones elimina el riesgo de saltos entre precios.
+
+### Medir el coste sin contarlo dos veces
+
+El **spread** es la diferencia entre mejor ask y mejor bid. Aquí vale 1 €. El punto medio, nuestra referencia fija, es 39,50 €. Comprar y vender inmediatamente 100 acciones en los mejores niveles pierde 100 €, sin comisiones, si ambos niveles siguen disponibles. Ese es el coste de ida y vuelta por spread.
+
+Llama $q_k$ a la cantidad ejecutada en el nivel $k$, y $p_k$ a su precio. Para una cantidad ejecutada $n_{\mathrm{ej}}$, el precio medio ponderado es:
+
+$$\overline P=\frac{\sum_k q_k p_k}{n_{\mathrm{ej}}},\qquad n_{\mathrm{ej}}=\sum_k q_k.$$
+
+Conserva toda la precisión antes de redondear. En nuestra compra:
+
+$$\overline P=\frac{100\cdot40+50\cdot41}{150}=40{,}333\ldots\,€.$$
+
+Los **costes explícitos** aparecen como cargos: comisiones, tasas o impuestos cuando procedan. El simulador cobra un 0,10 % del efectivo ejecutado, con mínimo de 2 € por envío con ejecución. La compra a mercado paga 6,05 € de comisión. Una orden sin ejecución no paga comisión en este ejemplo. No afirmamos que todos los intermediarios apliquen esta tarifa.
+
+El **coste implícito** compara tu ejecución con una referencia elegida. Para una compra:
+
+$$K_{\mathrm{imp}}=n_{\mathrm{ej}}(\overline P-P_{\mathrm{ref}}).$$
+
+Para una venta cambia el signo: una venta por debajo de la referencia supone coste positivo. Nuestra compra cuesta implícitamente 125 € respecto a 39,50 €. La limitada ejecutada cuesta 50 € y paga 4 € de comisión. Su menor coste viene acompañado de una compra incompleta.
+
+Este coste implícito ya recoge la diferencia entre la referencia y los precios consumidos. No añadas otra vez el spread completo. Recorrer niveles más caros mide el efecto mecánico de consumir liquidez visible. No demuestra que hayas causado un cambio permanente del precio. Esperar también tiene un coste de oportunidad: quizá el mercado se aleje antes de completar tu orden.
+
+### Compra al margen: una deuda que permanece
+
+Una **compra al margen** financia parte de las acciones con un préstamo del intermediario. Nuestro ejemplo compra 200 acciones a 40 €: un valor de 8000 €. Aportas 4000 € y pides prestados otros 4000 €. El margen inicial es el capital propio dividido por el valor comprado: 50 %.
+
+Al final del periodo, el préstamo devenga un 5 %. La deuda final $D$ es 4200 €. Con precio final $P$, cantidad $n$ y capital propio $E$, la cuenta cumple:
+
+$$E=nP-D,\qquad m=\frac{E}{nP},\qquad r_E=\frac{E-E_0}{E_0}.$$
+
+Aquí $m$ es el porcentaje de margen y $E_0$ el capital inicial. La rentabilidad $r_E$ usa tu aportación como denominador. No usa el valor total de las acciones. Si el precio acaba en 40 €, conservas 3800 €: margen del 47,50 % y rentabilidad del −5 %. Un precio estable no evita el coste financiero.
+
+El **margen de mantenimiento**, $m_{\mathrm{mant}}$, es el mínimo exigido durante la posición. Usamos 30 % como supuesto del ejemplo. No es una regla universal. Hay **llamada de margen** cuando el porcentaje cae por debajo. El intermediario puede exigir aportaciones o liquidar posiciones según el contrato.
+
+<details>
+<summary>Obtén el precio umbral de la compra</summary>
+
+Iguala el margen al mantenimiento y despeja el precio:
+
+$$\frac{nP-D}{nP}=m_{\mathrm{mant}}.$$
+
+$$nP(1-m_{\mathrm{mant}})=D,\qquad P^*_{\mathrm{compra}}=\frac{D}{n(1-m_{\mathrm{mant}})}.$$
+
+En el ejemplo, $P^*_{\mathrm{compra}}=4200/[200(1-0{,}30)]=30\,€$. A ese precio quedan 1800 € y el margen es exactamente 30 %. Nuestro criterio estricto todavía no produce llamada. Por debajo sí la produce. La rentabilidad propia en el umbral ya es −55 %.
+</details>
+
+### Venta en corto: debes acciones
+
+Una **venta en corto** vende acciones que has tomado prestadas. Después debes recomprarlas para devolverlas. El efectivo recibido queda como garantía junto con tu aportación. No es un beneficio disponible para gastar. Si el precio sube, aumenta el coste de cerrar la posición.
+
+Vendemos 200 acciones a 40 €. La venta genera 8000 € y aportamos un margen inicial del 50 %: 4000 €. Suponemos que pagamos al prestamista un dividendo de 1 € por acción. Tras esos 200 €, los activos de la cuenta, $A_{\mathrm{corto}}$, quedan en 11.800 €. La cuenta no remunera ese efectivo.
+
+$$E=A_{\mathrm{corto}}-nP,\qquad m=\frac{E}{nP},\qquad P^*_{\mathrm{corto}}=\frac{A_{\mathrm{corto}}}{n(1+m_{\mathrm{mant}})}.$$
+
+El denominador del margen es ahora el valor de las acciones que debes. Igualar el margen al mantenimiento da $A_{\mathrm{corto}}=nP(1+m_{\mathrm{mant}})$. El umbral es 45,38 €, redondeado. La llamada aparece por encima del umbral exacto. Si el precio llega a 55 €, quedan 800 €: margen del 7,27 % y rentabilidad propia del −80 %.
+
+El beneficio bruto de recomprar más barato puede desaparecer al pagar dividendos, comisiones y préstamo de acciones. Aquí omitimos estos últimos costes. La pérdida potencial del corto no tiene un límite fijo si el precio sigue subiendo. Además, pueden reclamar las acciones prestadas antes de que quieras cerrar. Tener una previsión correcta no asegura poder mantener la operación.
+
+## <span class="section-tag">Zona de juego</span>¿En qué dirección aparece la llamada?
+
+<MarginAccount client:visible />
+
+**Prueba esto:**
+
+1. En Compra al margen, baja el precio a 30 €. Lee el capital restante y el mantenimiento. Baja un paso más.
+2. Selecciona Venta en corto y lleva el precio a 55 €. Compara margen y rentabilidad con la compra al mismo precio.
+
+El gráfico representa el margen frente al precio. La línea horizontal indica el mantenimiento. La línea vertical muestra el precio que lo iguala. La curva de compra sube con el precio; la del corto baja. La deuda de la compra permanece fija en esta foto. En el corto permanecen fijos los activos, pero cambia la obligación de devolver acciones.
+
+<Callout type="note">
+El control muestra una foto al cierre del periodo, después del interés o del dividendo. No representa una trayectoria diaria. No simula liquidaciones anteriores ni aportaciones adicionales. Algunos tramos de la curva quedan fuera del área visible; los valores de la cuenta siguen apareciendo debajo.
+</Callout>
+
+Antes de comparar rentabilidades, identifica siempre la inversión inicial. En la compra es tu aportación tras descontar el préstamo. En el corto es la garantía que aportas, no el efectivo de vender acciones ajenas. Separar activos, deuda y capital evita interpretar el dinero recibido como riqueza creada.
+
+Estas herramientas preparan los ejercicios de margen, corto y libro de órdenes de la futura sesión de mercados. Esa sesión todavía no está publicada. Los ejemplos son originales y sus supuestos están indicados; no describen tarifas ni requisitos de una cuenta real.
+
+## <span class="section-tag">Compruébalo</span>Comprueba qué debes y qué controlas
+
+<Quiz client:visible
+  question="Compras 150 acciones con límite de 40 € en el libro inicial. ¿Qué ocurre?"
+  options={['Se compran todas al límite', 'Se ejecutan 100 y quedan 50 pendientes', 'No puede haber ejecución parcial']}
+  answer={1}
+  explanation="Solo hay 100 acciones ofrecidas a 40 €. La limitada no acepta las ofertas más caras. Su resto queda pendiente."
+/>
+
+<Quiz client:visible
+  question="En la compra financiada, el precio termina en 30 €. ¿Hay llamada con mantenimiento del 30 %?"
+  options={['Sí, porque la rentabilidad es negativa', 'No: el margen iguala el mantenimiento', 'El préstamo desaparece cuando baja el precio']}
+  answer={1}
+  explanation="El capital es 1800 € y representa el 30 % de las acciones. En este modelo la llamada exige caer por debajo."
+/>
+
+<Quiz client:visible
+  question="¿Qué efecto tiene pagar el dividendo al prestamista de las acciones en una venta en corto?"
+  options={['Aumenta el capital propio', 'No afecta al margen', 'Reduce los activos y acerca la llamada de margen']}
+  answer={2}
+  explanation="El pago sale de la cuenta. A igual precio, queda menos capital frente a la misma obligación de devolver acciones."
+/>
+
+## <span class="section-tag">Resumen</span>Una orden y una cuenta son cosas distintas
+
+- Una orden a mercado consume las ofertas disponibles. Una limitada controla el precio y puede quedar pendiente.
+- El precio medio depende de las cantidades. Distingue comisión explícita y coste implícito frente a una referencia.
+- En una compra financiada, resta la deuda para obtener tu capital. Los intereses reducen la rentabilidad propia.
+- En un corto, resta el valor de las acciones debidas a los activos de garantía. Las subidas reducen tu capital.
+- La llamada compara capital y valor actual de la posición. El umbral depende del contrato y de los pagos acumulados.
+
+**Siguiente:** ofertas públicas iniciales. Pasamos de negociar acciones existentes a estudiar su primera colocación entre inversores.

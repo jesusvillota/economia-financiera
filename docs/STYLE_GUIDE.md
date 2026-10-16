@@ -123,6 +123,19 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Prospect curvature / loss aversion | $\alpha$, $\beta$, $\lambda$ | | Chapter 16: $0<\alpha,\beta\leq1$, $\lambda\geq1$; not CAPM alpha or beta, nor an APT premium |
 | Probability weight / curvature | $w(p)$, $\gamma$ | | Decision weight, not a portfolio weight; $\gamma=1$ gives $w(p)=p$; chapter 16 optionally uses $0{,}61$ |
 | Monetary gamble / expected payoff | $X$, $\E[X]$ | | Random euro change; scenario probabilities $p_s$ sum to one |
+| Executed shares / fill size and price / average execution | $n_{\mathrm{ej}}$, $q_k$, $p_k$, $\overline P$ | | Chapter 13: level index $k$; weighted average over executed shares only |
+| Execution reference / implicit cost | $P_{\mathrm{ref}}$, $K_{\mathrm{imp}}$ | | Positive for buying above or selling below the stated reference |
+| Margin account capital / margin ratio / maintenance | $E$, $E_0$, $m$, $m_{\mathrm{mant}}$ | | Chapter 13: account capital, not company equity; $m$ is not a target portfolio return here |
+| Account shares / final debt / own-capital return | $n$, $D$, $r_E$ | | Chapter 13: fixed share count; debt includes period interest |
+| Short account assets / call threshold prices | $A_{\mathrm{corto}}$, $P^*_{\mathrm{compra}}$, $P^*_{\mathrm{corto}}$ | | Assets after dividend compensation; strict inequality triggers a call |
+| IPO offer shares / offer price / first-day close | $n_{\mathrm{of}}$, $P_{\mathrm{of}}$, $P_c$ | | Offer size differs from total company shares; close is not fundamental value |
+| IPO limit request / demand | $p_j$, $q_j$, $Q(p)$ | | Incremental requests; accumulate limits at or above the offer price |
+| IPO gross / fee / net | $G$, $F$, $N_{\mathrm{OPI}}$, $f$ | | Net after proportional placement fee only |
+| IPO initial return / money left | $u$, $M$ | | Close relative to offer; both may be negative |
+| Log return / sample mean | $\ell_t$, $\bar\ell$ | | $\ell_t=\ln(P_t/P_{t-1})$; use simple returns $r_t$ for wealth |
+| Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
+| Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
+| Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 

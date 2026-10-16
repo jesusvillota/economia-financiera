@@ -67,6 +67,18 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:541` says MiFID II classifies trading venues into two types, regulated markets and OTC. MiFID II defines three trading venues: regulated market, MTF and OTF; OTC dealing is outside them. Line 610 adds that systematic internalisers “can operate as dark pools”. An SI is an investment firm dealing on own account with its clients, so it is bilateral and not a trading venue; an EU dark pool is normally an MTF using pre-trade transparency waivers. Chapter 12 uses the three-venue classification. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §4”.
 
+### Note 05 §3: market, limit and por-lo-mejor orders
+
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:303–328` equates a market order with a por-lo-mejor order, claims market orders guarantee execution, and calls a por-lo-mejor order a marketable limit order. Distinguish them: a market order can consume several price levels; a Spanish por-lo-mejor order uses the best level and rests its remainder there; a marketable limit carries an investor limit that crosses existing quotes. Liquidity and trading interruptions can prevent execution. Lines 334/336 also need a queue and available-quantity qualification: touching a limit does not guarantee a fill. Chapter 13 makes these distinctions. Regression tests: `tests/capitulo13.test.ts`, “audit note 05 §3: market depth cannot guarantee execution” and “audit note 05 §3: investor limit differs from best-level execution”, check an exhausted book and a crossing limit that consumes multiple levels, plus resting and non-crossing remainders.
+
+### Note 05 §3: short-sale profit is gross of payments and fees
+
+The same source, line 448, says repurchasing below the sale price produces profit without qualifying costs. A lower repurchase price produces a gross trading gain; dividend compensation and borrowing fees can erase it. Chapter 13 states this qualification. Regression: `tests/capitulo13.test.ts`, “audit note 05 §3: a lower repurchase price need not yield a net profit”, uses `shortSale(200, 40, 0.5, 39.5, 1)`: the price falls but the own-capital return is −2.5 %, after dividend compensation alone.
+
+### Note 04: underpricing is not universal
+
+`source/class_notes/04_ofertas_publicas_iniciales/04_ofertas_publicas_iniciales.tex:479` calls underpricing a universal phenomenon. A positive sample average does not imply that every offer rises. With 1000 offered shares at 16 € and a first-day close of 16 €, `underpricing` returns zero; at a close of 12 €, it returns −25 % and −4000 € of signed money left. These are original counterexamples, not empirical estimates. Chapter 14 distinguishes sample patterns from guarantees, and the offer price from fundamental value. Regression test: `tests/capitulo14.test.ts`, “audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
@@ -149,6 +161,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 ### Note 08 §4: classical utility need not treat equal gains and losses symmetrically
 
 `source/class_notes/08_eficiencia_mercado_finanzas_conductuales/08_eficiencia_mercado_finanzas_conductuales.tex:454` claims classical utility assumes equal sensitivity to gains and losses. A concave utility of final wealth can already make an equal loss matter more than an equal gain. Chapter 16 distinguishes risk aversion from reference-dependent loss aversion; a rejected positive-mean gamble alone does not identify a psychological bias. Regression test: `tests/capitulo16.test.ts`, “audit note 08 §4”, compares log-utility changes around positive wealth and verifies that a positive monetary mean can coexist with negative expected utility change.
+
+### Note 08 §3.1: abnormal returns can be negative
+
+The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
 ## 3. Notation inventory
 

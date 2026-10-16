@@ -1,0 +1,3 @@
+/* Keep the chapter's order and account controls usable on touch screens. */
+.trading-controls { display: contents; }
+.trading-controls button { min-height: 44px; }
