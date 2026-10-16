@@ -3,7 +3,7 @@ id: TASK-008
 title: Landing page and course map
 milestone: M-1
 state: approved
-depends_on: [TASK-007, DEC-002]
+depends_on: [TASK-007]
 delivery: pr
 ---
 
