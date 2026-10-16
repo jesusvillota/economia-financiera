@@ -1,68 +1,32 @@
 # TASK-022 outcome
 
-Status: BLOCKED — acceptance requires an outside weight for PS3 Exercise 2, but both source correlations give inside weights.
+Status: BLOCKED — GitHub account billing or spending limit prevents the build check from starting. All four acceptance requirements pass locally.
 
 ## Acceptance
 
-- [ ] `npm test` passes with at least 30 new assertions. Baseline only: `npm test` exited 0 with 181 tests in 10 files. No implementation or new assertions were added pending the decision below.
-- [ ] Correlation properties and weights summing to 1. The requested outside-weight property contradicts the audited Exercise 2 inputs. Exact arithmetic below proves the conflict. The other properties are not implemented yet.
-- [ ] A non-PSD correlation matrix throws. Not implemented pending the acceptance decision.
-- [x] `npm run build` passes. Baseline build exited 0: Astro check reported 0 errors, and Astro built 8 pages. This verifies the existing site, not the requested library.
+- [x] `npm test` passes with at least 30 new assertions. In this session, `npm test` exited 0: 227 tests passed in 11 files, compared with the recorded baseline of 181 tests in 10 files. `tests/portfolio.test.ts` adds 46 test cases and 128 explicit `expect(...)` statements, with further assertions from deterministic property grids.
+- [x] Correlation properties and weights sum to 1. Four volatility pairs, each with 21 weights, verify that `rho = 1` gives linear sigma on `[0,1]`. A separate short-sale check verifies the absolute-linear continuation. The same four volatility pairs verify zero variance at the minimum for `rho = -1`. Per accepted DEC-003, the separately named PS3 Exercise 2 `rho = 0.95` variant asserts unrestricted `wS = -0.375` and long-only `wS = 0`. Both original audited Exercise 2 cases remain: `rho = 0.8` gives `wS = 4/15`, and `rho = -0.2` gives `wS = 122/265`. Weight sweeps and 21 frontier targets in each trading mode verify full investment; frontier tests also verify target returns and variance never below the global minimum.
+- [x] A non-PSD correlation matrix throws. Tests use `[[1, 0.9, 0.9], [0.9, 1, -0.9], [0.9, -0.9, 1]]`. Conversion to covariance throws `RangeError` with `PSD`, including when all volatilities are zero. Variance, global-minimum and target-frontier entry points reject the matrix too.
+- [x] `npm run build` passes. In this session, the final implementation build exited 0. Astro check reported 0 errors, 0 warnings and 0 hints across 57 files; Astro built all 8 pages.
 
 ## Summary
 
-Read the task, worker protocol, repository rules, `docs/audit/ps3_findings.md`, the audit script and the original PS3 solution. No portfolio code or task specifications were changed. This outcome records a material acceptance conflict before implementation.
+Added `src/lib/finance/portfolio.ts`, `src/lib/finance/matrix.ts`, and `tests/portfolio.test.ts`. No UI or dependencies changed.
 
-Verified baseline revision: `bb3a185eaa24bfd8dac32850197f920eb3828720` on `goal/course-site/task-022`, after syncing with `origin/main`. Only this outcome file is added by this task. `TASK-016.outcome.md` is absent; the goal decision log records TASK-016 completed by the owner on 2026-10-16 at 12:40 UTC.
+The library supplies two-asset return, variance, unrestricted and long-only minimum-variance weights, inclusive weight sweeps, and correlation/diversification tables. For n assets it supplies covariance construction, return and variance, a global minimum-variance portfolio, target-return frontier points and both branch labels. Returns and volatilities use decimals; weights must sum to one.
 
-Installed the locked dependencies with `npm ci` (exit 0), then ran both required commands successfully. No pages changed, so screenshot verification does not apply. GitHub Actions were not inspected, per the owner's instruction. The PR remains a draft because acceptance is unresolved.
+Matrix validation uses symmetric pivoted elimination with relative tolerance and permits singular positive semidefinite matrices. Frontier optimization uses the Lagrange closed form, with a rank-aware equality-system fallback for singular matrices and equal expected returns. The long-only solver enumerates active sets while preserving the return and investment constraints. It prunes feasible faces except when singular global-minimum ties require selecting the highest-return minimum. Its worst-case cost is exponential; it is intended for small teaching portfolios. Singular unrestricted frontiers also detect a zero-risk direction that increases return, so dominated points are not labelled efficient.
 
-### Evidence
+Tests cover hand calculations and the audited PS3 Exercises 1–3, correlation endpoints, short sales, feasible and infeasible targets, boundary optima, four assets, constant returns, singular covariance, scale/order invariance, invalid input and input immutability. An independent feasible weight grid checks long-only target optimality on three Gram matrices. Source intermediate variances retain the audit's `1e-5` tolerance; separate assertions check exact arithmetic values.
 
-The minimum-variance weight in the first asset is:
+DEC-003 was accepted by jesusvillota on 2026-10-16. Its option 1 is implemented without changing the original audited cases or the task specification. No material decision remains. `TASK-016.outcome.md` is absent; `goals/course-site/decisions.jsonl` records TASK-016 completed by the owner at 12:40 UTC.
 
-```text
-wS = (sigmaT² - rho * sigmaS * sigmaT)
-     / (sigmaS² + sigmaT² - 2 * rho * sigmaS * sigmaT)
-```
+Verified implementation revision: `154d2f399c676f474dcd386810eb1ff6b98c763b`. The branch was rebased successfully onto `origin/main` at `c08f9b5225b239e92db374e935c2acfefc94a56f`, without conflicts. Both required commands passed after the final implementation changes. `git diff --check` passed. No pages changed, so screenshot verification does not apply. The build emitted existing KaTeX euro-glyph messages but completed successfully.
 
-Exercise 2 uses `sigmaS = 0.22`, `sigmaT = 0.20` and correlations `0.8` and `-0.2`. See `source/problem_sets/ps3/ps3_solutions.tex:260`, `:268`, `:287` and `:320`. The source explicitly says both weights are inside the permitted range at lines 313 and 348. The audit confirms the same in `docs/audit/ps3.py`, and `docs/audit/ps3_findings.md` recommends a separate variant to make the short-sale cases differ.
+PR: https://github.com/jesusvillota/economia-financiera/pull/14, base `main`, label `goal:course-site`. No review threads were present when checked after pushing the implementation. No merge performed.
 
-Recomputed in this session with Python's exact `fractions.Fraction` arithmetic:
+## Delivery blocker
 
-```text
-rho=0.8: wS=4/15 = 0.266666666667; wT=0.733333333333; outside [0,1]: False
-rho=-0.2: wS=122/265 = 0.460377358491; wT=0.539622641509; outside [0,1]: False
-rho=0.95: wS=-3/8 = -0.375000000000; wT=1.375000000000; outside [0,1]: True
-```
+The build check for verified implementation `154d2f399c676f474dcd386810eb1ff6b98c763b` concluded `FAILURE` without starting. Its check annotation states: "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings". Check ID: `116981704511`; completed 2026-10-16 at 12:52:46 UTC. The deploy check was skipped.
 
-For these volatilities, the first weight becomes negative only when `rho > 10/11`, approximately `0.90909`. Neither original correlation meets that condition.
-
-Command results:
-
-```text
-npm test — exit 0
-Test Files  10 passed (10)
-Tests       181 passed (181)
-
-npm run build — exit 0
-Result (54 files):
-0 errors
-0 warnings
-0 hints
-[build] 8 page(s) built in 1.31s
-[build] Complete!
-```
-
-## Decision request
-
-May TASK-022 keep the audited PS3 Exercise 2 answers and use a separate `rho = 0.95` variant for the outside-weight property?
-
-1. Keep the original PS3 regression cases and add a clearly named variant with the same volatilities and `rho = 0.95`. This preserves the audited answers and tests the difference between unrestricted and long-only portfolios. It requires clarifying the acceptance wording in the task instruction.
-2. Correct the acceptance property to require inside weights for the original Exercise 2 correlations. This matches the source directly, but that property alone does not test the effect of forbidding short sales.
-
-### Recommendation
-
-Choose option 1. Retain both audited Exercise 2 cases. Use the separate `rho = 0.95` variant to assert unrestricted `wS = -0.375` and long-only `wS = 0`. The owner or copilot must approve this interpretation before work resumes. No task spec, source exercise, policy, route or decision file was edited.
-
-After approval, implement the portfolio and matrix modules, add at least 30 assertions, run `npm test` and `npm run build`, update this outcome with implementation evidence, and prepare the PR for review. Never merge it.
+The resume instruction explicitly makes failed or pending checks block delivery. Only check status and its failure annotation were read to establish this external access blocker; no workflow definitions or execution logs were read or changed. Account billing cannot be repaired within this task's authorization. The owner must resolve account billing or spending limits; then this branch can be resumed and the build check retried. No implementation decision is missing. The PR remains open and draft with `Goal-Blocked: GitHub account billing or spending limit prevents the build check from starting`. All code and outcome changes are pushed on the existing task branch.
