@@ -6,6 +6,7 @@ state: approved
 depends_on: [TASK-002]
 delivery: pr
 kind: discovery
+route: {platform: claude, model: sonnet, effort: high}
 ---
 
 ## Why
