@@ -59,6 +59,14 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”.
 
+### Note 05 §2: speculators and arbitrageurs listed as brokers
+
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:228–240` defines brokers as mediators who take no risk, then lists arbitrageurs and speculators as types of broker. It also says speculators “control risk through hedging and diversification”. Both fail. Speculation and arbitrage are strategies that require positions on one's own account; a broker acts only for clients. Reducing an existing risk with an offsetting position is hedging, not speculation. Chapter 12 classifies broker as an agency mediator and speculation, hedging and arbitrage as own-account strategies. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §2”.
+
+### Note 05 §4: MiFID II venue types and systematic internalisers
+
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:541` says MiFID II classifies trading venues into two types, regulated markets and OTC. MiFID II defines three trading venues: regulated market, MTF and OTF; OTC dealing is outside them. Line 610 adds that systematic internalisers “can operate as dark pools”. An SI is an investment firm dealing on own account with its clients, so it is bilateral and not a trading venue; an EU dark pool is normally an MTF using pre-trade transparency waivers. Chapter 12 uses the three-venue classification. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §4”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
