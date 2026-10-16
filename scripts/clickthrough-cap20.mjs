@@ -4,7 +4,7 @@ import { createServer } from 'vite';
 import { startPreview } from './preview.mjs';
 
 const server = await startPreview();
-const loader = await createServer({ configFile: false, server: { middlewareMode: true, hmr: false }, appType: 'custom' });
+const loader = await createServer({ configFile: false, server: { middlewareMode: true, hmr: false, ws: false }, appType: 'custom' });
 let browser;
 let comparisons = 0;
 try {
@@ -32,6 +32,7 @@ try {
       const forward = page.locator('.widget').nth(0);
       await forward.scrollIntoViewIfNeeded();
       await forward.locator('xpath=ancestor::astro-island[not(@ssr)]').waitFor();
+      await forward.locator('.MafsView svg').waitFor();
       let f = { spot: 50, delivery: 48, rate: 4, remaining: 1.5, position: 'long' };
       const verifyForward = async () => {
         const wants = {
@@ -68,6 +69,8 @@ try {
       const futures = page.locator('.widget').nth(1);
       await futures.scrollIntoViewIfNeeded();
       await futures.locator('xpath=ancestor::astro-island[not(@ssr)]').waitFor();
+      // PlotFrame measures its width with ResizeObserver after island hydration.
+      await futures.locator('.MafsView svg').waitFor();
       let s = { seed: 2710, position: 'short', contracts: 2, maintenance: 120, day: 2 };
       const verifyFutures = async () => {
         const prices = lib.seededFuturesPrices(s.seed);
