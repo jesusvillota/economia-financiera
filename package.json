@@ -13,6 +13,7 @@
     "clickthrough:widgets": "node scripts/clickthrough-widgets.mjs",
     "clickthrough:frontier": "node scripts/clickthrough-frontier.mjs",
     "clickthrough:cap2": "node scripts/clickthrough-cap2.mjs",
+    "clickthrough:cap6": "node scripts/clickthrough-cap6.mjs",
     "clickthrough:cap5": "node scripts/clickthrough-cap5.mjs",
     "clickthrough:van-tir": "node scripts/clickthrough-van-tir.mjs",
     "clickthrough:cap4": "node scripts/clickthrough-cap4.mjs"

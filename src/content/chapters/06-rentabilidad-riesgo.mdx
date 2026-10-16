@@ -1,0 +1,251 @@
+---
+title: "Rentabilidad y riesgo de un activo"
+part: 2
+chapter: 6
+difficulty: 2
+prerequisites: [4]
+summary: "Del precio y el dividendo a la rentabilidad; de los escenarios a la esperanza y la volatilidad."
+sessions: []
+---
+import ScenarioRisk from '../../components/plots/ScenarioRisk';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>Ganar de media no es ganar siempre
+
+Compras una acción por 80 €. Al terminar el año la vendes por 86 € y cobras un dividendo de 2 €.
+Has ganado 8 € sobre tu inversión inicial: una **rentabilidad** del 10 %.
+La rentabilidad expresa la ganancia por cada euro invertido. Así puedes comparar inversiones de tamaños distintos.
+
+Ahora vuelve al día de la compra. Todavía no sabes el precio de venta ni el dividendo que cobrarás.
+Una empresa puede vender menos de lo previsto, perder un cliente o encontrar un mercado nuevo.
+El resultado realizado será concreto; el resultado futuro admite varios valores.
+Una cifra media resume esos futuros, pero no dice cuánto pueden separarse de ella.
+
+En este capítulo medirás las dos cosas: la rentabilidad que esperas y la dispersión de los resultados posibles.
+Usaremos una sola acción, un mismo horizonte anual y escenarios inventados.
+Ignoramos impuestos, comisiones e inflación. El dividendo se cobra al final del periodo, sin reinversión intermedia.
+
+## <span class="section-tag">Intuición</span>Una media entre futuros posibles
+
+Imagina tres escenarios para otra acción. En caída pierde un 10 %; en estabilidad gana un 6 %; en expansión gana un 22 %.
+Asignamos probabilidades del 25 %, 50 % y 25 %, respectivamente.
+Son supuestos del ejemplo, no frecuencias observadas ni una predicción sobre una empresa real.
+Cada escenario reúne un resultado posible y el peso que le das antes de invertir.
+
+La **esperanza** o rentabilidad esperada es el centro de esos resultados, teniendo en cuenta sus probabilidades.
+Aquí vale un 6 %. Ese valor coincide con un escenario por la simetría del ejemplo; no tiene que ocurrir en general.
+Tampoco es una promesa. En un año concreto puedes perder dinero aunque la esperanza sea positiva.
+
+Piensa en la esperanza como el punto donde se equilibra una balanza.
+Un resultado lejano tira más; una probabilidad mayor también.
+Si todos los escenarios tienen el mismo peso, basta la media aritmética habitual.
+Si sus pesos difieren, una media sin probabilidades da una respuesta distinta.
+
+La **volatilidad**, también llamada desviación estándar, mide la separación respecto a ese centro.
+Las subidas inesperadas cuentan tanto como las caídas inesperadas.
+En nuestro ejemplo vale 11,31 %. En este contexto leemos esa cifra como una distancia en puntos porcentuales de rentabilidad.
+No es la probabilidad de perder, ni una pérdida máxima, ni un intervalo que el resultado deba respetar.
+
+En la zona de juego verás las barras de los escenarios y una línea discontinua para la esperanza.
+La altura representa rentabilidad; la tabla indica probabilidad.
+La anchura de las barras no representa probabilidad. Lee ambos elementos para interpretar el gráfico.
+Cambiar un peso mueve el centro sin cambiar los resultados posibles.
+
+## <span class="section-tag">Formalización</span>Del resultado a sus momentos
+
+### Precio, dividendo y rentabilidad
+
+Llamamos $P_{j,t-1}$ al precio inicial de la acción $j$, $P_{j,t}$ al precio final y $D_{j,t}$ al dividendo.
+La ganancia monetaria es el cambio de precio más el dividendo. Dividimos por el precio inicial para obtener una proporción:
+
+$$r_{j,t}=\frac{P_{j,t}-P_{j,t-1}+D_{j,t}}{P_{j,t-1}}.$$
+
+Con los datos del gancho:
+
+$$r_{j,t}=\frac{86-80+2}{80}=0{,}10=10\,\%.$$
+
+El cambio de precio aporta 7,50 % y el dividendo aporta 2,50 %.
+No divides por el precio final: quieres medir la ganancia respecto al dinero que pusiste al inicio.
+Esta es una rentabilidad de un periodo. Para comparar activos, usa el mismo periodo y las mismas reglas sobre dividendos.
+
+### Variable aleatoria y esperanza
+
+Una **variable aleatoria** asigna un número a cada resultado incierto.
+Aquí asigna una rentabilidad a cada escenario. Antes de conocerlo, escribimos $r_j$; después observamos una realización.
+En un modelo discreto enumeras los posibles valores.
+En un modelo continuo usas una densidad: la probabilidad de un intervalo es el área bajo esa curva.
+Su área total debe ser la unidad. La densidad en un punto no es la probabilidad de ese punto.
+La distribución acumulada indica la probabilidad de no superar un umbral.
+
+En la tabla, $s$ identifica el escenario, $S$ cuenta los escenarios y $p_s$ es su probabilidad.
+Los escenarios son excluyentes y cubren todos los casos del modelo:
+
+$$p_s\geq 0,\qquad \sum_{s=1}^{S}p_s=1.$$
+
+La esperanza, o primer momento, es:
+
+$$\mu_j=\E[r_j]=\sum_{s=1}^{S}p_s r_{j,s}.$$
+
+Con la tabla central, multiplica cada resultado por su probabilidad y suma:
+
+$$\E[r_j]=0{,}25(-0{,}10)+0{,}50(0{,}06)+0{,}25(0{,}22)=0{,}06.$$
+
+Trabajamos en tanto por uno: el porcentaje dividido entre cien.
+Calculamos con todos los decimales y redondeamos al mostrar el resultado.
+Las probabilidades expresan lo que supone el modelo. Una esperanza calculada sin errores puede ser poco útil si esos supuestos fallan.
+
+### Varianza y desviación estándar
+
+La **varianza** es el promedio de las distancias al centro elevadas al cuadrado.
+El cuadrado evita que una desviación negativa cancele una positiva:
+
+$$\Var(r_j)=\sigma_j^2=\sum_{s=1}^{S}p_s(r_{j,s}-\mu_j)^2.$$
+
+En nuestro ejemplo:
+
+$$\sigma_j^2=0{,}25(-0{,}10-0{,}06)^2+0{,}50(0{,}06-0{,}06)^2+0{,}25(0{,}22-0{,}06)^2=0{,}0128.$$
+
+La varianza está en unidades de rentabilidad al cuadrado. Su raíz vuelve a las unidades originales:
+
+$$\sigma_j=\sqrt{0{,}0128}\approx 0{,}1131=11{,}31\,\%.$$
+
+<details>
+<summary>Otra forma de calcular la varianza</summary>
+
+Desarrolla el cuadrado dentro de la esperanza. Como $\mu_j$ es constante:
+
+$$\sigma_j^2=\E[r_j^2]-2\mu_j\E[r_j]+\mu_j^2.$$
+
+Sustituye $\E[r_j]=\mu_j$ y combina los términos:
+
+$$\sigma_j^2=\E[r_j^2]-\mu_j^2.$$
+
+El segundo momento es $\E[r_j^2]=0{,}0164$; el cuadrado de la esperanza es $0{,}0036$.
+Su diferencia vuelve a dar $0{,}0128$. No confundas la esperanza del cuadrado con el cuadrado de la esperanza.
+</details>
+
+<Callout type="warning" title="La volatilidad no describe todo el riesgo">
+Dos distribuciones pueden compartir esperanza y varianza, pero tener pérdidas extremas distintas.
+Estas medidas no bastan para describir las colas de la distribución ni la facilidad de vender el activo.
+Una volatilidad mayor tampoco garantiza una rentabilidad esperada mayor.
+</Callout>
+
+### Qué cambia al trasladar o ampliar los resultados
+
+Si añades una constante $b$ a cada resultado, el centro se traslada y las distancias se conservan.
+Si multiplicas por una constante $a$, las distancias se multiplican por su valor absoluto:
+
+$$\E[a r_j+b]=a\E[r_j]+b,$$
+$$\Var(a r_j+b)=a^2\sigma_j^2,\qquad \sigma(a r_j+b)=|a|\sigma_j.$$
+
+Sumar tres puntos porcentuales a todos los escenarios lleva la esperanza al 9 % y conserva la volatilidad del 11,31 %.
+Duplicar las rentabilidades lleva la esperanza al 12 % y la volatilidad al 22,63 %.
+La varianza se cuadruplica: pasa a $0{,}0512$.
+Estas son propiedades de los momentos, no una recomendación para aumentar tu exposición.
+
+La **prima de riesgo esperada** es $\E[r_j]-\rf$.
+Con un tipo libre de riesgo del 2 % para el mismo horizonte, nuestra tabla central ofrece una prima de cuatro puntos porcentuales.
+Es una diferencia esperada. La prima realizada puede ser negativa.
+
+### Si tienes historia en lugar de probabilidades
+
+Una muestra es una lista de observaciones. Con $n$ rentabilidades históricas estimamos la media y la varianza poblacionales mediante:
+
+$$\bar r_j=\frac{1}{n}\sum_{t=1}^{n}r_{j,t},\qquad s_j^2=\frac{1}{n-1}\sum_{t=1}^{n}(r_{j,t}-\bar r_j)^2.$$
+
+El divisor $n-1$ corrige el sesgo de estimar el centro con la misma muestra.
+La varianza así calculada es insesgada bajo observaciones independientes e idénticamente distribuidas, con varianza finita.
+La desviación muestral $s_j=\sqrt{s_j^2}$ no hereda automáticamente esa propiedad.
+No sustituyas este divisor en una tabla completa de escenarios con probabilidades conocidas.
+
+Por ejemplo, tres meses con rentabilidades de −2 %, 4 % y 10 % tienen media mensual del 4 %.
+Su varianza muestral es $0{,}0036$ y su desviación muestral es 6 % mensual.
+Tratar esos mismos valores como escenarios equiprobables daría varianza $0{,}0024$ y desviación 4,90 %.
+La diferencia viene del problema que intentas resolver: estimar con una muestra o describir una distribución dada.
+
+Con meses no correlacionados y de igual varianza, la volatilidad de la suma de rentabilidades mensuales se escala así:
+
+$$\sigma_{\text{anual}}=\sigma_{\text{mensual}}\sqrt{12}.$$
+
+La estimación mensual del 6 % se transforma en 20,78 % anual.
+Esta regla es exacta para la suma bajo esos supuestos. Para la rentabilidad simple anual compuesta es una aproximación.
+No multipliques la volatilidad mensual por doce. Tampoco supongas que una muestra corta permite predecir bien el futuro.
+
+<details>
+<summary>Puente del apéndice: covarianza y correlación</summary>
+
+La **covarianza** mide si dos variables se alejan de sus centros en el mismo sentido.
+Para rentabilidades de activos $j$ y $k$, observadas bajo los mismos escenarios:
+
+$$\Cov(r_j,r_k)=\sum_s p_s(r_{j,s}-\mu_j)(r_{k,s}-\mu_k).$$
+
+Desarrolla el producto, aplica la linealidad de la esperanza y recoge las constantes. Obtienes:
+
+$$\Cov(r_j,r_k)=\E[r_j r_k]-\mu_j\mu_k.$$
+
+Intercambiar las variables no cambia el producto: la covarianza es simétrica.
+También es lineal en cada argumento. La covarianza de una variable consigo misma es su varianza.
+La **correlación** divide la covarianza entre las desviaciones:
+
+$$\rho_{jk}=\frac{\Cov(r_j,r_k)}{\sigma_j\sigma_k},\qquad -1\leq\rho_{jk}\leq 1.$$
+
+Solo está definida cuando ambas desviaciones son positivas.
+Los extremos indican una relación lineal perfecta; el signo indica su dirección.
+Una correlación nula no implica independencia en general.
+Con observaciones históricas alineadas, sustituyes las medias por medias muestrales y divides la suma de productos por $n-1$.
+La correlación muestral usa esa covarianza y las desviaciones muestrales.
+En el siguiente capítulo usarás estas medidas para estudiar la diversificación.
+</details>
+
+## <span class="section-tag">Zona de juego</span>Cambia el futuro que imaginas
+
+Mueve cada rentabilidad y cambia el reparto de probabilidades.
+Los nombres son etiquetas: puedes incluso hacer que el escenario llamado caída tenga una ganancia.
+La tabla siempre conserva probabilidades no negativas que suman la unidad.
+Cada cambio recalcula esperanza, varianza y volatilidad con los valores completos.
+
+<ScenarioRisk client:visible />
+
+**Prueba esto:**
+
+1. Mantén las rentabilidades iniciales y elige «Más peso en caída». La esperanza baja al 2 % y la volatilidad sube al 13,27 %.
+2. Elige «Más peso en expansión». La esperanza sube al 10 %, pero la volatilidad también vale 13,27 %.
+3. Pon todas las rentabilidades al 6 %. La esperanza será 6 % y la volatilidad será cero con cualquier reparto.
+
+Explica lo que cambia antes de mirar las cifras. Después comprueba tu explicación con la línea y la tabla.
+Si una media sube, mira también dónde quedan las pérdidas posibles.
+Si la volatilidad baja, comprueba qué supuestos has cambiado para conseguirlo.
+
+## <span class="section-tag">Compruébalo</span>Comprueba tu lectura del riesgo
+
+<Quiz client:visible
+  question="Compras por 80 €, vendes por 86 € y cobras 2 € de dividendo al final. ¿Cuál es tu rentabilidad?"
+  options={['7,50 %', '10 %', '2,50 %']}
+  answer={1}
+  explanation="La ganancia total es 8 €: cambio de precio más dividendo. Al dividir entre los 80 € iniciales obtienes 10 %. Las otras opciones cuentan solo una parte."
+/>
+
+<Quiz client:visible
+  question="La tabla central tiene una esperanza del 6 %. ¿Qué puedes afirmar sobre el próximo año?"
+  options={['Ganarás exactamente esa rentabilidad.', 'No puedes perder dinero.', 'El resultado puede diferir de la esperanza, incluso ser negativo.']}
+  answer={2}
+  explanation="La esperanza pondera futuros posibles. El escenario de caída sigue siendo posible aunque la media sea positiva."
+/>
+
+<Quiz client:visible
+  question="Estimas la varianza poblacional con una muestra de observaciones independientes e idénticamente distribuidas. ¿Qué divisor corrige el sesgo?"
+  options={['El número de observaciones.', 'El número de observaciones menos uno.', 'La rentabilidad media.']}
+  answer={1}
+  explanation="Usas el número de observaciones menos uno porque has estimado la media con la misma muestra. En una distribución de escenarios conocida ponderas por sus probabilidades."
+/>
+
+## <span class="section-tag">Resumen</span>Centro y dispersión
+
+- La rentabilidad incluye el cambio de precio y el dividendo, divididos por el precio inicial.
+- La esperanza pondera los resultados por sus probabilidades; no garantiza el resultado futuro.
+- La varianza mide distancias al cuadrado. La volatilidad vuelve a las unidades de rentabilidad y cuenta subidas y caídas.
+- Distingue la distribución supuesta de la muestra histórica. La estimación exige supuestos sobre las observaciones.
+- Covarianza y correlación describen el movimiento conjunto. Necesitarás ambas para combinar activos.
+
+**Siguiente:** dos activos, correlación y diversificación. Estudiarás por qué el riesgo conjunto depende de cómo se mueven sus resultados.

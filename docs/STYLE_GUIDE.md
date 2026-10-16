@@ -89,6 +89,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Beta | $\beta_j$ | | |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |
+| Asset price / dividend | $P_{j,t}$, $D_{j,t}$ | | Asset `j`, date `t`; initial price is $P_{j,t-1}$ |
+| Scenario / scenario count / probability | $s$, $S$, $p_s$ | | $r_{j,s}$ is the return of asset `j` in scenario `s` |
+| Population / sample standard deviation | $\sigma_j$, $s_j$ | | Sample variance $s_j^2$ uses $n-1$ for $n$ observations |
+| Affine scale / shift | $a$, $b$ | | Constants in $a r_j+b$; shift is in return units |
 | Operating value / excess cash | $V_{\mathrm{op}}$, $X$ | | Operations exclude excess cash and its income |
 | Equity / debt market value | $E$, $D$ | | Financing weights $w_E$, $w_D$; $\Delta D$ is borrowing less principal repayments |
 | Corporate tax rate / interest | $T_c$, $I_t$ | | Interest expense during period t |
