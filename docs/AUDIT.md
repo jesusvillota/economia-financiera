@@ -166,6 +166,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
+### ps4 Ex 10: forward quote and contract value use different symbols
+
+The solution at lines 606–632 uses `F_0` and `F_t` for the value of an existing forward, while calling the delivery price `K`. Chapter 20 uses `F_{t,T}` for the delivery quote of a new zero-value contract and `V_t` for an existing contract. At inception, setting `K=F_{t,T}` makes `V_t=0`; the delivery quote itself is not zero. The existing Ex 10b correction remains **0.9429 / €45.26 / €4.74**, not €4.76, with **1.5 years remaining**. Regression tests: `tests/capitulo20.test.ts`, “gancho y quiz 1”, “PS4 Ex 10a” and “audit PS4 Ex 10b”. The chapter adds an original seeded futures exercise; it does not attribute it to the source PS4.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.

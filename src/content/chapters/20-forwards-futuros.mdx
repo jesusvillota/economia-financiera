@@ -1,0 +1,158 @@
+---
+title: "Forwards y futuros"
+part: 5
+chapter: 20
+difficulty: 3
+prerequisites: [18]
+summary: "Fijar hoy una entrega futura, valorar un contrato ya firmado y seguir las garantías de un futuro día a día."
+sessions: []
+---
+import ForwardExplorer from '../../components/plots/ForwardExplorer';
+import FuturesMargin from '../../components/plots/FuturesMargin';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>Comprar mañana con un precio de hoy
+
+Necesitas una unidad de un activo dentro de un año. Hoy cuesta 60 €. Puedes comprarla ahora y guardarla. También puedes acordar hoy cuánto pagarás cuando la recibas. ¿Qué precio haría equivalentes esas alternativas?
+
+Supón que el activo no genera ingresos ni cuesta almacenarlo. Puedes prestar o pedir prestado al 5 % efectivo anual. Comprar hoy con dinero prestado obliga a devolver 63 € dentro de un año. Esa cifra da una referencia para pactar la entrega futura.
+
+Un **forward** es un acuerdo para intercambiar un activo en una fecha futura a un precio fijado hoy. La **posición larga** se compromete a comprar. La **posición corta** se compromete a vender. Ambas tienen una obligación: ninguna puede abandonar el contrato porque el mercado cambie.
+
+El acuerdo permite fijar un precio, pero no elimina cualquier riesgo. El comprador renuncia a aprovechar una caída del contado. El vendedor renuncia a aprovechar una subida. Además, puede existir riesgo de impago de la contraparte. Primero aislaremos el precio; después veremos cómo los futuros gestionan parte de ese riesgo con garantías diarias.
+
+## <span class="section-tag">Intuición</span>El precio de entrega no es el valor del contrato
+
+El **contado**, o precio spot, es lo que pagas por recibir el activo ahora. El **precio forward** es el precio de entrega que pactarías en un contrato nuevo. El **valor del contrato** mide cuánto vale hoy un acuerdo que ya existe. Son cantidades distintas.
+
+Imagina dos rectas frente al contado actual. Para quien compra, un contado más alto hace más atractivo el contrato antiguo. Su precio de entrega sigue fijo. Para quien vende ocurre lo contrario. La recta del comprador sube; la del vendedor baja. No hay un suelo que limite la pérdida al dinero pagado al firmar.
+
+El siguiente gráfico representa esa comparación por unidad del activo. La recta azul valora el contrato con el plazo que todavía queda. La amarilla muestra el pago que correspondería si venciera hoy. No representa una predicción del contado futuro. Al llevar el plazo restante a cero, las rectas coinciden.
+
+<ForwardExplorer client:visible />
+
+**Prueba esto:** cambia el contado sin cambiar la entrega pactada. Después cambia entre posición larga y corta. ¿Qué magnitud conserva su signo y cuál lo invierte?
+
+Un contrato nuevo puede tener valor inicial nulo aunque su precio de entrega sea positivo. No compras hoy el activo por ese precio. Pactas pagarlo al recibirlo. Tampoco significa que cualquier intermediario deba ofrecer financiación o negociar sin garantías.
+
+<Callout type="key">
+Al revisar un contrato antiguo, mantén fijo su precio de entrega. El mercado cambia el valor del acuerdo, no reescribe lo firmado.
+</Callout>
+
+## <span class="section-tag">Formalización</span>Replicar la entrega y descontar lo pactado
+
+### El precio de un contrato nuevo
+
+Llamamos $S_t$ al contado en la fecha $t$, $T$ al vencimiento y $\tau=T-t$ al plazo restante en años. $K$ es el precio de entrega firmado. $F_{t,T}$ es el precio forward de un acuerdo nuevo. $V_t$ es el valor del contrato existente para el comprador.
+
+Suponemos un tipo libre de riesgo $\rf$ efectivo anual, conocido para el plazo considerado. No hay dividendos, almacenamiento, impuestos, costes de negociación ni impagos. Podemos comprar y vender el activo, incluso en corto, y financiar ambas operaciones al mismo tipo. Son supuestos de valoración, no una descripción de cualquier mercado real.
+
+La **réplica** es una operación que produce la misma entrega que otra. Para recibir una unidad en $T$, compra hoy el activo y conserva la unidad. Si financias la compra, tendrás que devolver $S_t(1+\rf)^\tau$ al vencimiento. Por ausencia de arbitraje:
+
+$$F_{t,T}=S_t(1+\rf)^\tau.$$
+
+Un **arbitraje** combina operaciones para obtener una ganancia segura sin inversión neta inicial, bajo estos supuestos. Si la entrega forward fuese más cara que la réplica, comprarías el activo financiado y venderías el forward. Entregarías el activo y devolverías el préstamo. La diferencia sería una ganancia segura.
+
+Si la entrega fuese más barata, invertirías la venta en corto del activo y comprarías el forward. Al vencimiento usarías la unidad recibida para devolver el activo prestado. Esta segunda dirección necesita poder vender en corto. Las restricciones y los costes pueden impedir explotar diferencias pequeñas.
+
+En nuestro ejemplo original, el precio justo es $60\cdot1{,}05=63$ €. El tipo conecta la compra inmediata con la entrega futura. Un precio forward superior al contado no demuestra que el mercado espere una subida. Aquí surge del coste de financiar el activo.
+
+### El valor de un contrato firmado
+
+Para valorar el acuerdo antiguo, compara recibir el activo con pagar $K$ en $T$. El factor de descuento es $D(t,T)=(1+\rf)^{-\tau}$. La unidad que recibirás vale $S_t$ bajo nuestros supuestos. La obligación de pago vale hoy $K D(t,T)$. Por tanto:
+
+$$V_t=S_t-KD(t,T)=(F_{t,T}-K)D(t,T).$$
+
+La segunda igualdad sale al sustituir $S_t=F_{t,T}D(t,T)$ y sacar el factor común. El vendedor tiene el valor opuesto, $-V_t$. En un acuerdo nuevo sin pago inicial se fija $K=F_{t,T}$; por eso su valor inicial es cero.
+
+Al vencimiento ya no hay descuento. El **pago neto** del comprador, valorando la unidad recibida al contado final, es:
+
+$$V_T=S_T-K.$$
+
+El vendedor obtiene $K-S_T$. Si la liquidación es física, el comprador paga $K$ y recibe el activo. Si es por diferencias, intercambia el importe neto según el contrato. El pago puede ser negativo. Esta obligación distingue un forward de una opción, que concede un derecho de ejercicio.
+
+### Puente con PS4: corrige el descuento
+
+En el ejercicio 10a de PS4, el contado es 45 €, el tipo es 4 % y el plazo son 2 años. El precio de entrega nuevo es $45\cdot1{,}04^2=48{,}672$ €, aproximadamente 48,67 €. Usamos toda la precisión para calcular y redondeamos solo la presentación.
+
+El apartado siguiente describe otro contrato: se pactó comprar a 48 € con un plazo original de 2 años. Ha transcurrido medio año y el contado actual es 50 €. Quedan 1,5 años. No debes descontar otra vez durante el plazo original completo.
+
+$$D(t,T)=1{,}04^{-1{,}5}\approx0{,}9429,$$
+
+$$KD(t,T)\approx45{,}26\,€,
+\qquad V_t=50-48\cdot1{,}04^{-1{,}5}\approx4{,}74\,€.$$
+
+El valor es positivo para el comprador. El documento fuente da 4,76 € por un error numérico del descuento. Aquí usamos 4,74 €, conforme a la auditoría. Además, reservamos $F_{t,T}$ para el precio nuevo y $V_t$ para el valor: no son dos nombres de la misma cantidad.
+
+### Qué cambia con un futuro
+
+Un **futuro** es un contrato estandarizado, negociado con compensación central. La cámara de compensación organiza las garantías y la liquidación. El **ajuste diario** (*mark-to-market*) transfiere ganancias y pérdidas según los precios diarios de liquidación. No espera hasta la entrega final.
+
+Denotamos por $f_d$ el precio de liquidación del futuro en el día $d$. Para $n$ contratos largos, con multiplicador $q$ unidades por contrato:
+
+$$\Delta G_d=nq(f_d-f_{d-1}).$$
+
+La posición corta recibe el importe opuesto. El **margen inicial** $M_0$ es el depósito de garantía. No es una prima ni el precio del activo. El **margen de mantenimiento** $M_{\mathrm{mant}}$ es el umbral de saldo que vigilamos.
+
+En este ejemplo no retiramos efectivo y no hay intereses ni comisiones. Si $B_{d-1}$ es el saldo anterior, el saldo antes de reponer es $B_d^-=B_{d-1}+\Delta G_d$. Aplicamos esta regla didáctica:
+
+$$A_d=\begin{cases}M_0-B_d^-,&B_d^-<M_{\mathrm{mant}},\\0,&B_d^-\geq M_{\mathrm{mant}},\end{cases}
+\qquad B_d=B_d^-+A_d.$$
+
+La **llamada de margen** pide aportar $A_d$. Reponemos hasta el margen inicial, no solo hasta mantenimiento. En igualdad con el umbral no hay llamada. Las reglas reales dependen del contrato y del intermediario. La compensación reduce el riesgo bilateral, pero no elimina todos los riesgos.
+
+## <span class="section-tag">Zona de juego</span>Una ganancia final puede exigir efectivo antes
+
+Este ejercicio de futuros es nuevo: PS4 anuncia futuros en su título, pero no incluye un ejercicio sobre ellos. La trayectoria es didáctica y reproducible mediante una **semilla**, un número que fija la secuencia generada. No representa datos históricos ni una previsión.
+
+Abres una posición corta de 2 contratos, con multiplicador de 10 unidades por contrato. El precio inicial es 100 € por unidad. Los precios diarios son 103, 108, 104 y 99 €. Depositas 200 € de margen inicial total; el mantenimiento total es 120 €. No retiramos los excedentes.
+
+<FuturesMargin client:visible />
+
+**Prueba esto:** selecciona cada día y compara la variación con la reposición. Después cambia a posición larga. Usa «Otra trayectoria» y «Restablecer futuros» para comprobar que el ejemplo se reproduce.
+
+El primer día, la subida perjudica al vendedor: pierde 60 € y el saldo baja a 140 €. No hay llamada. El segundo pierde otros 100 €; quedan 40 €. Debe aportar 160 € para volver a 200 €. La pérdida del día es 100 €, aunque el ingreso exigido sea 160 €.
+
+El tercer día gana 80 € y el saldo llega a 280 €. El cuarto gana 100 € y acaba con 380 €. La suma de ganancias y pérdidas es 20 €. El saldo final incluye el depósito inicial y la reposición: no es todo beneficio. Si cierras y recuperas el saldo, debes restar ambas aportaciones para medir la ganancia.
+
+<Callout type="warning" title="Cubrir un precio no asegura tener efectivo">
+Puedes terminar con una ganancia y necesitar dinero durante el camino. Si no atiendes una llamada, el intermediario puede cerrar la posición antes del resultado esperado.
+</Callout>
+
+La suma nominal de ajustes coincide con el pago de un forward con la misma posición, precio inicial y precio final. Los cambios intermedios se cancelan al sumar. Eso no iguala automáticamente la riqueza final: adelantar pagos tiene costes de financiación y oportunidades de reinversión. Sin intereses, como aquí, esa diferencia desaparece.
+
+Con tipos deterministas y bajo los supuestos habituales, los precios teóricos de futuros y forwards coinciden. Con tipos inciertos pueden diferir por la relación entre tipos y ajustes diarios. Tampoco debes confundir el precio de liquidación del futuro con el contado observado ese día.
+
+## <span class="section-tag">Compruébalo</span>Precio, obligación y liquidez
+
+<Quiz client:visible
+  question="Con contado de 60 €, tipo del 5 % y entrega dentro de un año, ¿qué precio pactas sin pago inicial?"
+  options={['60 €', '63 €', 'El precio no depende del interés']}
+  answer={1}
+  explanation="La compra financiada exige devolver 63 €. Ese es el precio de entrega sin arbitraje bajo los supuestos del capítulo. El contrato nuevo tiene valor inicial cero."
+/>
+
+<Quiz client:visible
+  question="Tu forward largo vence hoy: el contado es 45 € y debes pagar 48 €. ¿Qué ocurre?"
+  options={['Lo abandonas sin pagar', 'El pago neto es cero', 'El pago neto es −3 €']}
+  answer={2}
+  explanation="El pago es 45 − 48 = −3 €. Un forward obliga a comprar. La posibilidad de renunciar corresponde a una opción."
+/>
+
+<Quiz client:visible
+  question="En el segundo día del ejemplo, el saldo antes de reponer es 40 €. ¿Cuánto debes aportar?"
+  options={['80 €', '160 €', '100 €']}
+  answer={1}
+  explanation="Repones hasta los 200 € iniciales: aportas 160 €. Aportar 80 € solo llevaría a mantenimiento, 120 €. Los 100 € son la pérdida del día."
+/>
+
+## <span class="section-tag">Resumen</span>Fijar el precio y seguir el efectivo
+
+- El precio forward corresponde a una entrega futura en un contrato nuevo. El valor mide un acuerdo ya firmado.
+- Sin ingresos ni costes, replica la entrega con el activo financiado. Descuenta el pago pactado con el plazo restante.
+- El comprador de un forward gana con una subida del contado. Su obligación también puede producir pérdidas.
+- Un futuro liquida las variaciones cada día. Las garantías son efectivo aportado, no una medida del beneficio.
+- La misma ganancia nominal final puede exigir distinta financiación durante el camino. Revisa siempre las fechas de los pagos.
+
+**Siguiente:** opciones, pagos y estrategias. Cambiaremos una obligación de comprar por un derecho que puedes ejercer.

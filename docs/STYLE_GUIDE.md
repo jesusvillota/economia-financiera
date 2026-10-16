@@ -137,6 +137,13 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
 
+| Forward spot / delivery / new quote / value | $S_t$, $K$, $F_{t,T}$, $V_t$ | | Chapter 20: quote and contract value are distinct; value is for the long position |
+| Forward maturity / remaining time / discount factor | $T$, $\tau$, $D(t,T)$ | | $\tau=T-t$ in years; annual effective risk-free rate |
+| Futures daily settlement / variation | $f_d$, $\Delta G_d$ | | Lowercase $f_d$ is a futures price, not a forward interest rate; $d$ counts settlement days |
+| Futures contracts / multiplier | $n$, $q$ | | $q$ units per contract; margin figures are totals for all $n$ contracts |
+| Futures initial / maintenance margin | $M_0$, $M_{\mathrm{mant}}$ | | Deposits, not a premium or trading profit |
+| Futures balance / balance before call / top-up | $B_d$, $B_d^-$, $A_d$ | | Chapter 20: no withdrawals; a strict breach restores the initial margin |
+
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
 ## Colours
