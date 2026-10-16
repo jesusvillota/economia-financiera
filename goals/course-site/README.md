@@ -93,7 +93,6 @@ flowchart TD
     TASK_046["TASK-046 Chapter 19: duration and interest-rate risk"]
     TASK_047["TASK-047 Chapter 20: forwards and futures"]
     TASK_048["TASK-048 Chapter 21: options, payoffs and strategies"]
-    TASK_049["TASK-049 Problem Session 4 (ps4) as an interactive session"]
     TASK_050["TASK-050 Problem Session 4 (ps4) as an interactive session"]
   end
   subgraph M_6["M-6 · Polish and launch"]
@@ -167,7 +166,6 @@ flowchart TD
   TASK_042 --> TASK_046
   TASK_043 --> TASK_047
   TASK_043 --> TASK_048
-  TASK_035 --> TASK_049
   TASK_035 --> TASK_050
   TASK_036 --> TASK_050
   TASK_042 --> TASK_050
