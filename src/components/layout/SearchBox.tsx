@@ -61,7 +61,7 @@ export default function SearchBox({ indexUrl }: { indexUrl: string }) {
       onFocus={() => { ensureIndex(); setOpen(true); }}
       onChange={(event) => { setQuery(event.target.value); setActive(-1); setOpen(true); ensureIndex(); }}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') { event.preventDefault(); setOpen(false); setActive(-1); }
+        if (event.key === 'Escape' && open) { event.preventDefault(); setOpen(false); setActive(-1); }
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           event.preventDefault(); setOpen(true);
           if (results.length) setActive((previous) => event.key === 'ArrowDown'
