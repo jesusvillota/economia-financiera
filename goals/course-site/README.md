@@ -86,6 +86,7 @@ flowchart TD
   end
   subgraph M_5["M-5 · Fixed income"]
     TASK_018["TASK-018 Plan: decompose M-5"]
+    TASK_042["TASK-042 Finance maths library: fixed income (bonds, YTM, accrued, spot and forward curve, duration, convexity)"]
   end
   subgraph M_6["M-6 · Polish and launch"]
     TASK_019["TASK-019 Plan: decompose M-6"]
@@ -151,6 +152,7 @@ flowchart TD
   TASK_035 --> TASK_039
   TASK_036 --> TASK_040
   TASK_036 --> TASK_041
+  TASK_018 --> TASK_042
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
