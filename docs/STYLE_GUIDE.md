@@ -119,6 +119,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
 | Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
 | Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
+| Log return / sample mean | $\ell_t$, $\bar\ell$ | | $\ell_t=\ln(P_t/P_{t-1})$; use simple returns $r_t$ for wealth |
+| Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
+| Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
+| Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
