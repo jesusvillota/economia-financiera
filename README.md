@@ -2,12 +2,17 @@
 
 Curso interactivo, en español y al estilo 3Blue1Brown, de Economía Financiera. Primero ves la imagen, después la fórmula, y puedes mover los deslizadores tú mismo.
 
-![Vista previa](public/course-preview.svg)
+[Abrir el curso](https://jesusvillota.github.io/economia-financiera/) · [Sesiones de problemas](https://jesusvillota.github.io/economia-financiera/sesiones/) · [Glosario](https://jesusvillota.github.io/economia-financiera/glosario/)
+
+![Vista previa: crecimiento compuesto frente a interés simple](public/og.png)
 
 ## Qué es
 
-- **Capítulos** (21, en cinco partes): valor del dinero en el tiempo, valoración, carteras y CAPM, mercados, renta fija y derivados.
-- **Sesiones de problemas**: una pista aparte, con ejercicios de datos variables, pistas graduales y solución paso a paso.
+- **21 capítulos en cinco partes**: valor del dinero en el tiempo; acciones y empresas; carteras y CAPM; mercados; renta fija y derivados.
+- **Cuatro sesiones de problemas**: ejercicios de datos variables, pistas graduales y solución paso a paso.
+- **Preparación del examen final**: ejercicios mixtos en tres niveles de dificultad.
+
+Empieza por el capítulo 1 y sigue los requisitos indicados en el índice. Usa las sesiones para practicar y el glosario para consultar términos y símbolos.
 
 ## Para quién
 
@@ -21,6 +26,15 @@ Modelo: [options-explained](https://github.com/jesusvillota/options-explained). 
 2. `npm run dev` (servidor local)
 3. `npm test && npm run build` (pruebas y compilación)
 4. `npm run preview` (ver el sitio compilado)
+5. `npx playwright install chromium` (preparar el navegador para las capturas, una sola vez)
+6. `npm run screenshots home` (revisar la portada en ambos temas y tamaños; requiere `dist/`)
+
+Las capturas quedan en `screenshots/`. El comando falla si encuentra errores de consola, fórmulas KaTeX o desbordamiento horizontal.
+`npm run screenshots dev` revisa la página de componentes. Sin filtro, `npm run screenshots` revisa todo el curso.
+
+Las páginas del curso incluyen descripción, URL canónica y etiquetas Open Graph y Twitter. Las descripciones de capítulos y sesiones usan su campo `summary`.
+La tarjeta social `public/og.png` (1200 × 600) procede de `public/course-preview.svg`.
+La compilación genera `dist/404.html` y `dist/sitemap-index.xml`; el mapa excluye la página de desarrollo y la de error.
 
 Más detalle del proceso en `CLAUDE.md` y `docs/STYLE_GUIDE.md`. El plan vive en `goals/course-site/`.
 

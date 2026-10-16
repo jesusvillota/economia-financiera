@@ -5,6 +5,16 @@ import { parts, sessions, finalExam, url } from '../data/curriculum';
 
 const available = new Map((await getCollection('chapters')).map((c) => [c.data.chapter, c]));
 const first = available.get(1);
+const practice = new Map((await getCollection('sesiones')).map((s) => [s.data.number, s]));
+// Update this date when the course overview or its published content changes.
+const lastUpdated = '2026-10-17';
+const partSummaries = [
+  'Compara dinero de fechas distintas y decide si una inversión crea valor.',
+  'Relaciona dividendos, flujos de caja y riesgo con el valor de una inversión.',
+  'Combina activos y descubre cómo la diversificación cambia el riesgo.',
+  'Explora cómo se negocia, cómo llega la información a los precios y cómo decidimos.',
+  'Valora bonos y estudia cómo cubrir riesgos con futuros y opciones.',
+];
 const dots = (n: number) => '●'.repeat(n);
 const levels = ['introductorio', 'intermedio', 'avanzado'];
 ---
@@ -21,8 +31,13 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
       <p class="lede">
         Un curso interactivo y visual. Primero ves la imagen, después la fórmula, y puedes mover los deslizadores tú mismo.
       </p>
-      <p class="pitch">21 capítulos en cinco partes, más una pista aparte de sesiones de problemas con ejercicios que cambian cada vez.</p>
+      <p class="pitch">Aprende a valorar inversiones, combinar activos y entender los mercados. Recorre 21 capítulos en cinco partes y practica en cuatro sesiones y un examen final.</p>
       {first && <a class="cta" href={url(`chapters/${first.id}/`)}>Empezar por el capítulo 1 →</a>}
+      <nav class="quick-links" aria-label="Explorar el curso">
+        <a href="#track-title">Practicar con ejercicios</a>
+        <a href={url('glosario/')}>Consultar el glosario</a>
+      </nav>
+      <p class="updated">Última actualización: <time datetime={lastUpdated}>17 de octubre de 2026</time></p>
       <ul class="legend" aria-label="Código de colores del curso">
         <li><span class="sw" style="background: var(--c-pv)"></span>valor actual <i>VA</i></li>
         <li><span class="sw" style="background: var(--c-fv)"></span>valor futuro <i>VF</i></li>
@@ -42,6 +57,7 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
               <h3>{part.title}</h3>
               <span class="diff" title="Dificultad">{part.difficulty}</span>
             </header>
+            <p class="part-summary">{partSummaries[part.number - 1]}</p>
             <ol>
               {part.chapters.map((ch) => {
                 const entry = available.get(ch.number);
@@ -69,14 +85,19 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
       <h2 id="track-title">Sesiones de problemas</h2>
       <p class="map-intro">Una segunda pista, independiente de los capítulos: ejercicios con datos que cambian, pistas graduales y solución paso a paso.</p>
       <div class="parts">
-        {sessions.map((s) => (
-          <section class="part">
-            <header><h3>{s.title}</h3></header>
-            <p class="meta"><span>Usa los capítulos {s.chapters.join(', ')}</span><span class="badge">Próximamente</span></p>
-          </section>
-        ))}
+        {sessions.map((s) => {
+          const entry = practice.get(s.number)!;
+          return (
+            <section class="part">
+              <header><h3><a href={url(`sesiones/${entry.id}/`)}>{s.title}</a></h3></header>
+              <p class="part-summary">{entry.data.summary}</p>
+              <p class="meta"><span>Usa los capítulos {s.chapters.join(', ')}</span><span class="badge">{entry.data.exercises.length} ejercicios</span></p>
+            </section>
+          );
+        })}
         <section class="part">
           <header><h3><a href={url(`sesiones/${finalExam.slug}/`)}>{finalExam.title}</a></h3></header>
+          <p class="part-summary">Repasa con ejercicios de rentas, inversión, valoración, carteras y bonos. Elige entre tres niveles de dificultad.</p>
           <p class="meta"><span>Usa los capítulos {finalExam.chapters.join(', ')}</span><span class="badge">Niveles 1–3</span></p>
         </section>
       </div>
@@ -96,6 +117,9 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
     background: var(--c-pv); color: var(--bg); font-family: var(--font-ui); font-weight: 600; text-decoration: none;
   }
   .cta:hover { filter: brightness(1.1); }
+  .quick-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; margin: 1rem 0 0; font: 0.9rem var(--font-ui); }
+  .quick-links a { display: inline-flex; align-items: center; min-height: 44px; }
+  .updated { color: var(--text-muted); font: 0.8rem var(--font-ui); margin: 0.5rem 0 0; }
   .legend { list-style: none; padding: 0; margin: 2.2rem 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.1rem; font-family: var(--font-ui); font-size: 0.85rem; color: var(--text-muted); }
   .legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
   .sw { width: 0.8rem; height: 0.8rem; border-radius: 3px; display: inline-block; }
@@ -107,6 +131,7 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
   .part header { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.6rem; }
   .roman { color: var(--c-fv); font-weight: 700; font-size: 0.9rem; min-width: 2.2em; }
   .part h3 { font-family: var(--font-ui); font-size: 1rem; margin: 0; flex: 1; }
+  .part-summary { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin: 0 0 0.8rem; }
   .diff { color: var(--c-time); font-size: 0.7rem; letter-spacing: 0.1em; white-space: nowrap; }
   ol { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; line-height: 1.4; }
   li { display: flex; gap: 0.6rem; padding: 0.25rem 0; }
