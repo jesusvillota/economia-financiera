@@ -56,6 +56,7 @@ flowchart TD
     TASK_015["TASK-015 Owner review of the reference slice"]
   end
   subgraph M_3["M-3 · Valuation"]
+    DEC_003{{"DEC-003 May TASK-022 keep the audited PS3 Exercise 2 answers and use a separate rho = 0.95 variant for the outside-weight property?"}}
     TASK_016["TASK-016 Plan: decompose M-3"]
     TASK_020["TASK-020 M-2 follow-ups: screenshots port, contract docs, ps1 links, audit entry"]
     TASK_021["TASK-021 Finance maths library: valuation and single-asset risk"]
@@ -116,6 +117,7 @@ flowchart TD
   TASK_016 --> TASK_020
   TASK_016 --> TASK_021
   TASK_016 --> TASK_022
+  DEC_003 --> TASK_022
   TASK_022 --> TASK_023
   TASK_022 --> TASK_024
   TASK_021 --> TASK_025
@@ -136,6 +138,7 @@ flowchart TD
   classDef decision fill:#f3e8ff,stroke:#7c3aed
   class DEC_001 decision
   class DEC_002 decision
+  class DEC_003 decision
 ```
 <!-- goal:graph:end -->
 

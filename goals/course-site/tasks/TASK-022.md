@@ -3,7 +3,7 @@ id: TASK-022
 title: 'Finance maths library: portfolio core (two assets, n assets, frontier)'
 milestone: M-3
 state: approved
-depends_on: [TASK-016]
+depends_on: [TASK-016, DEC-003]
 delivery: pr
 ---
 
