@@ -2,10 +2,11 @@
 id: TASK-015
 title: Owner review of the reference slice
 milestone: M-2
-state: approved
+state: done
 depends_on: [TASK-011, TASK-012, TASK-013, TASK-014]
 delivery: manual
 route: {platform: claude, model: sonnet, effort: high}
+reason: Owner approved the reference slice on 2026-10-16 ('its good so far'); no follow-up tasks filed.
 ---
 
 ## Why
