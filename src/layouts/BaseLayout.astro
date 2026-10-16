@@ -64,8 +64,17 @@ const previewImage = new URL(url('course-preview.svg'), Astro.site ?? 'https://j
   </body>
 </html>
 
+<script>
+  // Wide tables and display equations need keyboard scrolling on small screens.
+  const tables = document.querySelectorAll<HTMLElement>('.prose > table, .katex-display');
+  const observer = new ResizeObserver(() => {
+    for (const table of tables) table.tabIndex = table.scrollWidth > table.clientWidth + 1 ? 0 : -1;
+  });
+  for (const table of tables) observer.observe(table);
+</script>
+
 <style>
-  .skip-link { position: absolute; left: -999px; top: 0; }
+  .skip-link { position: fixed; left: -999px; top: 0; }
   .skip-link:focus { left: 1rem; top: 0.5rem; z-index: 100; background: var(--bg-raised); padding: 0.5rem 1rem; }
   .site-header {
     position: sticky; top: 0; z-index: 20;

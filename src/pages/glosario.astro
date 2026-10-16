@@ -10,7 +10,7 @@ const letters = [...new Set(glossary.map((entry) => entry.term[0].normalize('NFD
 const initial = (term: string) => term[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
 ---
 <BaseLayout title="Glosario" description="Términos y símbolos de Economía Financiera, con definiciones y enlaces a los capítulos del curso.">
-  <main id="main" class="glossary">
+  <main id="main" tabindex="-1" class="glossary">
     <a href={url()}>← Mapa del curso</a>
     <h1>Glosario</h1>
     <p>¿Qué significa este término? Busca su inicial y vuelve al capítulo para ver cómo se usa.</p>

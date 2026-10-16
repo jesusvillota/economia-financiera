@@ -49,7 +49,7 @@ export default function CapitalAllocation() {
         <Line.Segment point1={[0, RF * 100]} point2={[end.sigma * 100, end.expectedReturn * 100]} color="var(--c-rate)" />
         <Point x={0} y={RF * 100} color="var(--c-rate)" />
         <Label x={0} y={RF * 100} attach="ne" attachDistance={10}>r_f</Label>
-        <g data-testid="cal-portfolio" data-weight={weight} style={{ pointerEvents: 'auto' }} aria-label="Cartera final P; arrastra o usa el control de peso">
+        <g role="group" data-testid="cal-portfolio" data-weight={weight} style={{ pointerEvents: 'auto' }} aria-label="Cartera final P; arrastra o usa el control de peso">
           <MovablePoint point={[mix.sigma * 100, mix.expectedReturn * 100]} color="var(--c-pv)"
             constrain={point => {
               const allocation = fund.sigma > 1e-10

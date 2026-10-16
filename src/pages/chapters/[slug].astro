@@ -31,7 +31,7 @@ const relatedSessions = (await getCollection('sesiones')).filter((session) => en
   </details>
   <div class="page">
     <aside class="sidebar"><CourseNav current={chapter} /></aside>
-    <main id="main">
+    <main id="main" tabindex="-1">
       <article class="prose">
         <header class="chapter-header">
           <p class="eyebrow">
@@ -86,6 +86,21 @@ const relatedSessions = (await getCollection('sesiones')).filter((session) => en
     </main>
   </div>
 </BaseLayout>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+  menu?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.open && !event.defaultPrevented) {
+      event.preventDefault();
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+  // Close the overlay before keyboard focus moves to the page behind it.
+  menu?.addEventListener('focusout', (event) => {
+    if (!menu.contains(event.relatedTarget as Node | null)) menu.open = false;
+  });
+</script>
 
 <style>
   .page {

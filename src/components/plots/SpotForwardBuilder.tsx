@@ -35,7 +35,7 @@ export default function SpotForwardBuilder() {
       {forwards.slice(1).map((f, i) => <Line.Segment key={`forward-line-${i}`} point1={[i + 1, forwards[i] * 100]}
         point2={[i + 2, f * 100]} color="var(--c-rate)" style="dashed" />)}
       {forwards.map((f, i) => <Point key={`forward-${i}`} x={i + 1} y={f * 100} color="var(--c-rate)" />)}
-      {curve.map((node, i) => <g key={node.t} data-testid={`spot-point-${i}`} data-rate={node.rate}
+      {curve.map((node, i) => <g role="group" key={node.t} data-testid={`spot-point-${i}`} data-rate={node.rate}
         aria-label={`Spot a ${node.t} años; también disponible en el deslizador`}>
         <MovablePoint point={[node.t, node.rate * 100]} color="var(--c-pv)"
           constrain={p => [node.t, clampSpot(p[1] / 100) * 100]} onMove={p => update(i, p[1] / 100)} />

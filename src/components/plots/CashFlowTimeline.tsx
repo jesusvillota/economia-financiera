@@ -28,7 +28,7 @@ function FlowHandle({ flow, onChange }: { flow: Flow; onChange: (f: Flow) => voi
   useEffect(() => {
     if (p.x !== flow.t || p.y !== flow.amount) onChange({ t: p.x, amount: p.y });
   }, [p.x, p.y]);
-  return p.element;
+  return <g role="group" aria-label={`Flujo en el año ${flow.t}: ${euro(flow.amount)}. Usa las flechas para cambiar la fecha y el importe.`}>{p.element}</g>;
 }
 
 /** Cash-flow timeline: drag arrows, change the rate, slide every flow to t = 0. */

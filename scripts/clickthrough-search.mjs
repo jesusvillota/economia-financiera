@@ -53,10 +53,10 @@ try {
       await box.fill('duración');
       await page.waitForFunction(() => [...document.querySelectorAll('[role="option"]')].some((option) => option.textContent.includes('Duración y riesgo')));
       assert.match(await options.first().textContent(), /Duración y riesgo de tipo de interés/);
-      const durationUrl = await options.first().locator('a').getAttribute('href');
+      const durationUrl = await options.first().getAttribute('href');
       assert.match(durationUrl, /chapters\/19-duracion\/$/);
       await box.fill('DURACION');
-      assert.equal(await options.first().locator('a').getAttribute('href'), durationUrl);
+      assert.equal(await options.first().getAttribute('href'), durationUrl);
       await box.press('ArrowDown');
       assert.equal(await options.first().getAttribute('aria-selected'), 'true');
       await box.press('ArrowDown');
@@ -71,7 +71,7 @@ try {
         const rect = element.getBoundingClientRect();
         return document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2) === element;
       }), 'input remains visible after keyboard navigation');
-      assert.ok(await options.first().locator('a').evaluate((element) => {
+      assert.ok(await options.first().evaluate((element) => {
         const rect = element.getBoundingClientRect();
         return element.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
       }), 'first result is visible and clickable');
@@ -103,11 +103,11 @@ try {
       const session = index.find((entry) => entry.kind === 'session');
       await nextBox.fill(session.title);
       await nextSearch.getByRole('option').first().waitFor();
-      assert.equal(await nextSearch.getByRole('option').first().locator('a').getAttribute('href'), session.url);
+      assert.equal(await nextSearch.getByRole('option').first().getAttribute('href'), session.url);
       const term = index.find((entry) => entry.kind === 'glossary' && entry.title === 'Sesgo de confirmación');
       await nextBox.fill(term.title);
-      assert.equal(await nextSearch.getByRole('option').first().locator('a').getAttribute('href'), term.url);
-      await nextSearch.getByRole('option').first().locator('a').click();
+      assert.equal(await nextSearch.getByRole('option').first().getAttribute('href'), term.url);
+      await nextSearch.getByRole('option').first().click();
       await page.waitForURL(`**${term.url}`);
       await page.waitForLoadState('networkidle');
       assert.ok(await page.locator(`#${term.url.split('#')[1]}`).isVisible(), 'glossary term reached');

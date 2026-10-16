@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { chromium } from 'playwright';
 import { startPreview } from './preview.mjs';
+import { checkInteractions, checkSkipLink } from './a11y-interactions.mjs';
 
 function pages(directory = 'dist', prefix = '') {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -22,6 +23,20 @@ let browser;
 let serious = 0;
 let critical = 0;
 let scans = 0;
+async function audit(page, label) {
+  const { violations } = await page.evaluate(() => window.axe.run(document, {
+    runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'] },
+  }));
+  const failures = violations.filter(({ impact }) => impact === 'serious' || impact === 'critical');
+  for (const violation of failures) {
+    if (violation.impact === 'serious') serious += violation.nodes.length;
+    else critical += violation.nodes.length;
+    console.error(`${label}: ${violation.impact}: ${violation.id} (${violation.nodes.length})`);
+    for (const node of violation.nodes) console.error(`  ${node.target.join(' ')}: ${node.failureSummary}`);
+  }
+  scans++;
+  console.log(`${failures.length ? '✗' : '✓'} ${label}`);
+}
 try {
   browser = await chromium.launch();
   for (const theme of ['dark', 'light']) {
@@ -30,8 +45,10 @@ try {
       await context.addInitScript((value) => localStorage.setItem('theme', value), theme);
       for (const route of routes) {
         const page = await context.newPage();
+        page.setDefaultTimeout(10000);
         const response = await page.goto(server.base + route, { waitUntil: 'networkidle' });
         assert.equal(response.status(), 200, route);
+        await checkSkipLink(page);
         // client:visible islands must be mounted before axe sees their controls and plots.
         await page.evaluate(async () => {
           for (let y = 0; y < document.body.scrollHeight; y += 600) {
@@ -43,19 +60,14 @@ try {
         await page.waitForFunction(() => [...document.querySelectorAll('astro-island[client]')]
           .every((island) => !island.hasAttribute('ssr')));
         await page.evaluate(() => document.fonts.ready);
+        await page.evaluate(() => {
+          for (const details of document.querySelectorAll('.prose details')) details.open = true;
+        });
         await page.addScriptTag({ path: axePath });
-        const { violations } = await page.evaluate(() => window.axe.run(document, {
-          runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'] },
-        }));
-        const failures = violations.filter(({ impact }) => impact === 'serious' || impact === 'critical');
-        for (const violation of failures) {
-          if (violation.impact === 'serious') serious += violation.nodes.length;
-          else critical += violation.nodes.length;
-          console.error(`${violation.impact}: ${violation.id} (${violation.nodes.length})`);
-          for (const node of violation.nodes) console.error(`  ${node.target.join(' ')}: ${node.failureSummary}`);
+        await audit(page, `/${route} ${theme} ${width}px`);
+        if (route === 'chapters/02-valor-actual/') {
+          await checkInteractions(page, width, (target, state) => audit(target, `${state} ${theme} ${width}px`));
         }
-        scans++;
-        console.log(`${failures.length ? '✗' : '✓'} /${route} ${theme} ${width}px`);
         await page.close();
       }
       await context.close();

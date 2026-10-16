@@ -16,7 +16,7 @@ const { title, summary, exercises, number, chapters } = entry.data;
 const relatedChapters = (await getCollection('chapters')).filter((chapter) => chapters.includes(chapter.id));
 ---
 <BaseLayout title={title} description={summary}>
-  <main id="main" class="ses-page">
+  <main id="main" tabindex="-1" class="ses-page">
     <article class="prose">
       <header class="chapter-header">
         <p class="eyebrow">{entry.data.source === 'examen' ? 'Preparación del examen final' : `Sesión ${number}`} · <Progreso client:load slug={entry.id} total={exercises.length} /></p>

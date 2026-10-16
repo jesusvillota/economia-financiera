@@ -53,6 +53,17 @@ export function Segmented<T extends string>({ label, value, options, onChange }:
           type="button"
           role="radio"
           aria-checked={o.value === value}
+          tabIndex={o.value === value ? 0 : -1}
+          onKeyDown={(event) => {
+            const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+            if (!keys.includes(event.key)) return;
+            event.preventDefault();
+            const index = options.findIndex((option) => option.value === o.value);
+            const next = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+              : (index + (event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1) + options.length) % options.length;
+            onChange(options[next].value);
+            event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role="radio"]')[next]?.focus();
+          }}
           className={o.value === value ? 'active' : undefined}
           style={o.color ? { ['--accent' as string]: o.color } : undefined}
           onClick={() => onChange(o.value)}

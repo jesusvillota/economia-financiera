@@ -114,7 +114,7 @@ export default function EfficientFrontier({
           ))}
           <Point x={minimum.sigma * 100} y={minimum.expectedReturn * 100} color="var(--c-risk)" />
           <Label x={minimum.sigma * 100} y={minimum.expectedReturn * 100} attach="s" attachDistance={12} color="var(--c-risk)">Mín.</Label>
-          <g data-testid="frontier-portfolio" data-target={selectedTarget} aria-label="Cartera seleccionada; arrastra verticalmente">
+          <g role="group" data-testid="frontier-portfolio" data-target={selectedTarget} aria-label="Cartera seleccionada; arrastra verticalmente">
             <MovablePoint point={[selected.sigma * 100, selected.expectedReturn * 100]} constrain={project}
               onMove={point => setTarget(point[1] / 100)} color="var(--c-rate)" />
           </g>

@@ -76,8 +76,9 @@ export default function SearchBox({ indexUrl }: { indexUrl: string }) {
         : status !== 'ready' ? 'Cargando…' : results.length ? `${results.length} resultados` : 'Sin resultados.')}
     </p>
     <ul id={`${id}-results`} role="listbox" aria-label="Resultados de búsqueda" hidden={!visible || !results.length}>
-      {results.map((entry, index) => <li key={entry.url} id={`${id}-${index}`} role="option" aria-selected={active === index}>
-        <a href={entry.url} tabIndex={-1} onMouseEnter={() => setActive(index)}>
+      {results.map((entry, index) => <li key={entry.url} role="presentation">
+        <a href={entry.url} id={`${id}-${index}`} role="option" aria-selected={active === index}
+          tabIndex={-1} onMouseEnter={() => setActive(index)}>
           <small>{labels[entry.kind]}</small>
           <strong>{entry.title}</strong>
           <span>{entry.excerpt}</span>
