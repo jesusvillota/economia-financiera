@@ -27,6 +27,7 @@ flowchart TD
     TASK_004["TASK-004 Source audit: coverage map, errors and proposed curriculum"]
     TASK_005["TASK-005 Contract: chapter and problem-session schemas"]
     TASK_006["TASK-006 Problem-session components and routes"]
+    TASK_007["TASK-007 Style guide, notation table and repo CLAUDE.md"]
   end
   subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
   end
@@ -46,6 +47,9 @@ flowchart TD
   DEC_001 --> TASK_005
   TASK_003 --> TASK_005
   TASK_005 --> TASK_006
+  TASK_003 --> TASK_007
+  DEC_001 --> TASK_007
+  DEC_002 --> TASK_007
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
