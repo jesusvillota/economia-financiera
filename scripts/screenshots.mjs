@@ -23,6 +23,7 @@ function pages() {
   const dir = 'dist/chapters';
   if (existsSync(dir)) for (const d of readdirSync(dir)) if (statSync(join(dir, d)).isDirectory()) found.push(`chapters/${d}/`);
   if (existsSync('dist/dev/widgets')) found.push('dev/widgets/');
+  if (existsSync('dist/glosario/index.html')) found.push('glosario/');
   const ses = 'dist/sesiones';
   if (existsSync(ses)) {
     found.push('sesiones/');
@@ -42,10 +43,12 @@ async function launch() {
 
 let problems = 0;
 try {
+  const selectedPages = pages();
+  if (!selectedPages.length) throw new Error(`No pages match screenshot filter: ${filter}`);
   mkdirSync(OUT, { recursive: true });
   const browser = await launch();
   const viewports = { desktop: { width: 1280, height: 900 }, phone: { width: 375, height: 800 } };
-  for (const path of pages()) {
+  for (const path of selectedPages) {
     for (const theme of ['dark', 'light']) {
       for (const [vpName, viewport] of Object.entries(viewports)) {
         const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
