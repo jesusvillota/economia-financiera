@@ -146,6 +146,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.
 - Notation clashes: see section 3.
 
+### Note 08 §4: classical utility need not treat equal gains and losses symmetrically
+
+`source/class_notes/08_eficiencia_mercado_finanzas_conductuales/08_eficiencia_mercado_finanzas_conductuales.tex:454` claims classical utility assumes equal sensitivity to gains and losses. A concave utility of final wealth can already make an equal loss matter more than an equal gain. Chapter 16 distinguishes risk aversion from reference-dependent loss aversion; a rejected positive-mean gamble alone does not identify a psychological bias. Regression test: `tests/capitulo16.test.ts`, “audit note 08 §4”, compares log-utility changes around positive wealth and verifies that a positive monetary mean can coexist with negative expected utility change.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.

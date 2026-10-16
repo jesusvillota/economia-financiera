@@ -1,0 +1,151 @@
+---
+title: "Finanzas conductuales"
+part: 4
+chapter: 16
+difficulty: 1
+prerequisites: [15]
+summary: "Cómo los sesgos, el punto de referencia y la aversión a las pérdidas cambian las decisiones financieras."
+sessions: []
+---
+import ProspectExplorer from '../../components/plots/ProspectExplorer';
+import BiasExamples from '../../components/plots/BiasExamples';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Aceptarías esta apuesta?
+
+Imagina una moneda equilibrada. Si sale cara, ganas 150 €. Si sale cruz, pierdes 100 €. Puedes rechazar la apuesta y conservar tu dinero. No hay comisiones. ¿La aceptarías?
+
+La ganancia media es 25 € por apuesta. Sin embargo, puedes sentir que la posible pérdida pesa más que la ganancia. Ese rechazo no demuestra por sí solo un error. Tu riqueza, tus necesidades y tus preferencias también cuentan. El valor esperado no describe toda una decisión.
+
+Las **finanzas conductuales** estudian cómo pensamos al decidir sobre dinero. Un **sesgo** es una tendencia sistemática en esa forma de pensar. No significa que cualquier pérdida revele un sesgo. Tampoco significa que obtener beneficios confirme una buena decisión. Aquí veremos mecanismos concretos, con ejemplos ficticios que puedes comparar y cambiar.
+
+## <span class="section-tag">Intuición</span>La pérdida pesa de otra manera
+
+### El punto desde el que miras
+
+La **aversión a las pérdidas** consiste en valorar una pérdida más intensamente que una ganancia comparable. La comparación parte de un mismo **punto de referencia**: la situación que usas como origen. Puede ser tu riqueza actual o una expectativa previa. No tiene por qué coincidir siempre con el precio de compra.
+
+Piensa en una curva que pasa por el origen. A la derecha están las ganancias; a la izquierda, las pérdidas. El tramo de pérdidas cae con más fuerza. El valor vertical representa satisfacción o malestar dentro del modelo. No representa dinero que puedas cobrar. Cambiar la escala de esa puntuación cambia sus cifras, pero no el orden de las alternativas.
+
+En la **teoría de la perspectiva** (*prospect theory*), la sensibilidad disminuye al alejarte del origen. La curva se aplana tanto al aumentar las ganancias como al aumentar la magnitud de las pérdidas. Esto combina una curva cóncava para ganancias con una curva convexa para pérdidas. Describe un patrón de elección; no prescribe cómo debes invertir.
+
+<ProspectExplorer client:visible />
+
+**Prueba esto:** mueve solo la aversión a las pérdidas de 2 a 1. La esperanza monetaria sigue en 25 €. El valor subjetivo cambia. Así separas las consecuencias económicas de la forma de valorarlas.
+
+### Cinco motivos que conviene distinguir
+
+El **exceso de confianza** aparece cuando sobreestimas la precisión de tu información o tu capacidad de análisis. Puedes operar demasiado porque apenas consideras la posibilidad de estar equivocado. Tener confianza no basta para identificarlo: debes compararla con la calidad real de tus previsiones. Registrar tus errores ayuda más que recordar solo los aciertos.
+
+El **efecto rebaño** aparece cuando sustituyes tu propio análisis por lo que hacen los demás. Comprar al mismo tiempo que otros no lo prueba. Todos podríais responder razonablemente a la misma noticia. El ejemplo claro es abandonar información propia solo porque el grupo compra. Conviene preguntar qué sabe el grupo y qué evidencia puedes comprobar tú.
+
+El **anclaje** da demasiado peso a una cifra inicial. Puedes seguir defendiendo una valoración antigua aunque hayan cambiado los pagos esperados. El problema no es usar datos pasados. El problema es ajustar demasiado poco ante información nueva y relevante. Pregúntate qué valoración harías hoy si vieras el activo por primera vez.
+
+La **contabilidad mental** separa el dinero en cuentas imaginarias y cambia las decisiones por su etiqueta. Por ejemplo, puedes arriesgar un premio con facilidad y proteger el salario, aunque tu situación económica sea idéntica. Separar presupuestos puede ser útil para organizarte. Hablamos de sesgo cuando la etiqueta domina una comparación que debería considerar el conjunto.
+
+La aversión a las pérdidas completa estos cinco mecanismos. Puede influir en cómo evalúas vender una inversión con pérdidas. Sin embargo, mantenerla no prueba el sesgo: también puede responder a expectativas justificadas sobre sus pagos futuros. Para distinguir motivos necesitas conocer el razonamiento, no solo observar una operación.
+
+## <span class="section-tag">Formalización</span>Del cambio monetario al valor
+
+### Una función por tramos
+
+Llamamos $x$ al cambio en euros desde el punto de referencia y $v(x)$ a su valor subjetivo. Usamos:
+
+$$
+v(x)=\begin{cases}
+x^{\alpha},&x\geq 0,\\
+-\lambda(-x)^{\beta},&x<0.
+\end{cases}
+$$
+
+Los parámetros $\alpha$ y $\beta$ controlan la curvatura. En el ejemplo ambos valen $0{,}88$. El parámetro $\lambda$ controla la intensidad relativa de las pérdidas. Con $\lambda=2$ y curvaturas iguales, una pérdida tiene el doble de magnitud subjetiva que una ganancia del mismo importe.
+
+Para 100 € obtenemos $v(100)=100^{0{,}88}\approx57{,}54$. Para −100 €, $v(-100)=-2\cdot100^{0{,}88}\approx-115{,}09$. La razón entre magnitudes es 2. El origen cumple $v(0)=0$: no cambiar nada conserva la referencia.
+
+Si bajas $\lambda$ a 1, desaparece esta asimetría cuando las curvaturas son iguales. La curva sigue siendo no lineal. Por tanto, eliminar la asimetría no convierte automáticamente al decisor en neutral ante el riesgo.
+
+<Callout type="warning" title="Aversión al riesgo y a las pérdidas son distintas">
+La aversión al riesgo compara una cantidad segura con una alternativa incierta. La aversión a las pérdidas compara cambios positivos y negativos desde una referencia. Una utilidad clásica cóncava también puede hacer que perder dinero afecte más que ganar la misma cantidad. Esa observación aislada no identifica el modelo psicológico.
+</Callout>
+
+### Evaluar los resultados posibles
+
+Sea $x_s$ el cambio de dinero en el escenario $s$ y $p_s$ su probabilidad. Las probabilidades son no negativas y suman 1. La esperanza monetaria es:
+
+$$\E[X]=\sum_s p_s x_s.$$
+
+En la moneda del inicio, cada probabilidad es $0{,}5$. Así, $\E[X]=0{,}5\cdot150+0{,}5\cdot(-100)=25$ €. Esta media no es el resultado que vas a cobrar en una sola apuesta.
+
+El evaluador usa una puntuación subjetiva:
+
+$$V=\sum_s w(p_s)v(x_s).$$
+
+Primero transforma cada cambio con $v$. Después aplica el peso $w$ a su probabilidad. Finalmente suma los productos. La comparación es con no apostar, cuyo valor es cero. Un $V$ negativo coloca la apuesta por debajo de conservar la referencia dentro de este modelo.
+
+Sin distorsionar probabilidades, $w(p)=p$. Con los parámetros iniciales, la puntuación es aproximadamente −16,44. La esperanza positiva y la puntuación negativa son compatibles: miden cosas distintas. La primera se expresa en euros; la segunda, en unidades subjetivas. No sumes ambas ni interpretes la segunda como un precio justo.
+
+<details>
+<summary>La ponderación opcional de probabilidades</summary>
+
+El selector permite sustituir las probabilidades por pesos de decisión:
+
+$$w(p)=\frac{p^\gamma}{\left[p^\gamma+(1-p)^\gamma\right]^{1/\gamma}}.$$
+
+Con $\gamma=1$ recuperas $w(p)=p$. La alternativa usa $\gamma=0{,}61$, una calibración ilustrativa de la biblioteca. Puede sobreponderar probabilidades pequeñas e infraponderar probabilidades grandes. Los pesos de resultados distintos no tienen por qué sumar 1. Por eso no son una nueva distribución de probabilidades.
+
+El programa pondera cada resultado por separado. No implementa la teoría de la perspectiva acumulativa completa, que depende del orden de los resultados. Tampoco estima tus preferencias personales. Mantiene una referencia fija y omite costes e impuestos. Los parámetros sirven para explorar el mecanismo, no para clasificar a una persona.
+
+</details>
+
+## <span class="section-tag">Zona de juego</span>Reconoce el proceso de decisión
+
+Vuelve al explorador y cambia una entrada cada vez. Si modificas la probabilidad de ganar, cambian la esperanza y la puntuación subjetiva. Si modificas solo la aversión a las pérdidas, cambia la puntuación, pero no los pagos ni sus probabilidades. Esta separación permite explicar qué provoca cada movimiento del resultado.
+
+**Prueba esto:** restaura el ejemplo y sube $\lambda$ a 3. Después vuelve a 1. La esperanza sigue en 25 €; con el último ajuste, $V$ pasa a 12,34. Activa la ponderación opcional y observa por separado los pesos de ganar y perder.
+
+Ahora clasifica las cinco situaciones. Cada una destaca un motivo distinto. Puedes corregir una respuesta o borrarlas todas. Explica primero el motivo con tus palabras y después elige su nombre.
+
+<BiasExamples client:visible />
+
+**Prueba esto:** compara el caso del grupo con el de la valoración antigua. En el primero manda la conducta ajena. En el segundo manda una cifra inicial. Ambos pueden acabar en la misma compra, pero requieren preguntas distintas para revisar la decisión.
+
+### Del individuo al mercado
+
+El capítulo previo estudia la eficiencia: cómo los precios incorporan información. Un sesgo individual no demuestra por sí solo que puedas obtener beneficios extraordinarios de forma repetida. Otras personas pueden operar en sentido contrario. Además, una anomalía aparente depende del modelo utilizado para medir el rendimiento normal.
+
+El **arbitraje** busca aprovechar diferencias de precios entre pagos equivalentes. Corregir una valoración dudosa suele ser más arriesgado que ese caso ideal. Puedes equivocarte sobre el valor, pagar costes o necesitar financiación mientras el precio sigue alejándose. Las restricciones a vender en corto también limitan la operación. Por eso reconocer una posible desviación no garantiza corregirla ni ganar dinero.
+
+Una revisión útil empieza por el proceso. Escribe qué información sostiene tu valoración y qué noticia te haría cambiarla. Considera tu cartera conjunta antes de separar premios y salario. Contrasta opiniones sin contar votos como si fueran pruebas independientes. Estas prácticas ayudan a detectar problemas; no eliminan el riesgo ni prometen superar al mercado.
+
+## <span class="section-tag">Compruébalo</span>Comprueba qué cambia
+
+<Quiz client:visible
+  question="La moneda ofrece ganar 150 € o perder 100 €, con igual probabilidad. ¿Cuál es su esperanza monetaria?"
+  options={['50 €', '25 €', 'Siempre pierdes dinero']}
+  answer={1}
+  explanation="La biblioteca calcula 0,5 × 150 + 0,5 × (−100) = 25 €. El valor subjetivo puede ser negativo sin cambiar esa media."
+/>
+
+<Quiz client:visible
+  question="Una inversora descarta su análisis y compra solo porque su grupo compra. ¿Qué sesgo destaca?"
+  options={['Anclaje', 'Contabilidad mental', 'Efecto rebaño']}
+  answer={2}
+  explanation="La conducta del grupo sustituye a la información propia. Coincidir con otros por una noticia compartida no bastaría para identificarlo."
+/>
+
+<Quiz client:visible
+  question="Tratas un premio como dinero para arriesgar, aunque rechazas la misma apuesta con tu salario. Tu riqueza y objetivos son iguales. ¿Qué destaca?"
+  options={['Exceso de confianza', 'Contabilidad mental', 'Una oportunidad segura de arbitraje']}
+  answer={1}
+  explanation="La etiqueta del dinero cambia la decisión sin cambiar la situación económica. Un presupuesto destinado a otra necesidad sería un caso distinto."
+/>
+
+## <span class="section-tag">Resumen</span>Revisa los motivos, además del resultado
+
+- La referencia separa ganancias y pérdidas. La función de valor permite describir una sensibilidad distinta a cada lado.
+- La esperanza monetaria usa probabilidades y euros. La puntuación subjetiva usa valores y pesos de decisión.
+- Confianza excesiva, rebaño, aversión a las pérdidas, anclaje y contabilidad mental describen mecanismos distintos.
+- Un sesgo individual no prueba una oportunidad de beneficio. Corregir precios puede ser costoso y arriesgado.
+
+**Siguiente:** bonos. Pasamos de cómo decides a cómo valorar pagos prometidos y estudiar sus riesgos.
