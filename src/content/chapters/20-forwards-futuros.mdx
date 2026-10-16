@@ -80,8 +80,10 @@ El apartado siguiente describe otro contrato: se pactó comprar a 48 € con un
 
 $$D(t,T)=1{,}04^{-1{,}5}\approx0{,}9429,$$
 
-$$KD(t,T)\approx45{,}26\,€,
-\qquad V_t=50-48\cdot1{,}04^{-1{,}5}\approx4{,}74\,€.$$
+$$
+KD(t,T)\approx45{,}26\,€,
+\qquad V_t=50-48\cdot1{,}04^{-1{,}5}\approx4{,}74\,€.
+$$
 
 El valor es positivo para el comprador. El documento fuente da 4,76 € por un error numérico del descuento. Aquí usamos 4,74 €, conforme a la auditoría. Además, reservamos $F_{t,T}$ para el precio nuevo y $V_t$ para el valor: no son dos nombres de la misma cantidad.
 
@@ -97,8 +99,10 @@ La posición corta recibe el importe opuesto. El **margen inicial** $M_0$ es el 
 
 En este ejemplo no retiramos efectivo y no hay intereses ni comisiones. Si $B_{d-1}$ es el saldo anterior, el saldo antes de reponer es $B_d^-=B_{d-1}+\Delta G_d$. Aplicamos esta regla didáctica:
 
-$$A_d=\begin{cases}M_0-B_d^-,&B_d^-<M_{\mathrm{mant}},\\0,&B_d^-\geq M_{\mathrm{mant}},\end{cases}
-\qquad B_d=B_d^-+A_d.$$
+$$
+A_d=\begin{cases}M_0-B_d^-,&B_d^-<M_{\mathrm{mant}},\\0,&B_d^-\geq M_{\mathrm{mant}},\end{cases}
+\qquad B_d=B_d^-+A_d.
+$$
 
 La **llamada de margen** pide aportar $A_d$. Reponemos hasta el margen inicial, no solo hasta mantenimiento. En igualdad con el umbral no hay llamada. Las reglas reales dependen del contrato y del intermediario. La compensación reduce el riesgo bilateral, pero no elimina todos los riesgos.
 
