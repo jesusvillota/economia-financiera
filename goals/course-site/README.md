@@ -92,6 +92,7 @@ flowchart TD
     TASK_045["TASK-045 Chapter 18: term structure and forward rates"]
     TASK_046["TASK-046 Chapter 19: duration and interest-rate risk"]
     TASK_047["TASK-047 Chapter 20: forwards and futures"]
+    TASK_048["TASK-048 Chapter 21: options, payoffs and strategies"]
   end
   subgraph M_6["M-6 · Polish and launch"]
     TASK_019["TASK-019 Plan: decompose M-6"]
@@ -163,6 +164,7 @@ flowchart TD
   TASK_042 --> TASK_045
   TASK_042 --> TASK_046
   TASK_043 --> TASK_047
+  TASK_043 --> TASK_048
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
