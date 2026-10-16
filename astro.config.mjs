@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -25,7 +26,7 @@ export default defineConfig({
   base: '/economia-financiera',
   trailingSlash: 'always',
   vite: { plugins: [escapeVendorStrike] },
-  integrations: [mdx(), react()],
+  integrations: [mdx(), react(), sitemap({ filter: (page) => !new URL(page).pathname.includes('/dev/') })],
   markdown: {
     // TeX: $inline$ and $$display$$, rendered to HTML at build time by KaTeX.
     processor: unified({

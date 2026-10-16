@@ -20,6 +20,7 @@ const filter = process.argv[2];
 
 function pages() {
   const found = [''];
+  if (existsSync('dist/404.html')) found.push('404.html');
   const dir = 'dist/chapters';
   if (existsSync(dir)) for (const d of readdirSync(dir)) if (statSync(join(dir, d)).isDirectory()) found.push(`chapters/${d}/`);
   if (existsSync('dist/dev/widgets')) found.push('dev/widgets/');

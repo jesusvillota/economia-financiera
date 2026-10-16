@@ -2,34 +2,43 @@
 import '../styles/global.css';
 import ThemeToggle from '../components/layout/ThemeToggle.astro';
 import { url } from '../data/curriculum';
+import { pageMeta } from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
-const { title, description = 'Curso interactivo y visual de Economía Financiera: teoría y sesiones de problemas.' } = Astro.props;
-const fullTitle = title === 'Economía Financiera' ? title : `${title} · Economía Financiera`;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://jesusvillota.github.io').href;
-const previewImage = new URL(url('course-preview.svg'), Astro.site ?? 'https://jesusvillota.github.io').href;
+const { noindex = false } = Astro.props;
+const meta = pageMeta({ ...Astro.props, pathname: Astro.url.pathname,
+  site: Astro.site!, imagePath: url('og.png') });
 ---
 <!doctype html>
 <html lang="es" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={meta.canonicalUrl} />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Economía Financiera" />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={previewImage} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={meta.canonicalUrl} />
+    <meta property="og:image" content={meta.imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
     <meta property="og:image:alt" content="Economía Financiera: curso interactivo y visual" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="twitter:image" content={meta.imageUrl} />
+    <meta name="twitter:image:alt" content="Economía Financiera: curso interactivo y visual" />
     <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
     <script is:inline>
       try {
