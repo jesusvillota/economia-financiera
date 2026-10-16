@@ -7,11 +7,27 @@ Build an interactive, Spanish-language, 3Blue1Brown-style website for the Econom
 
 ## Context, scope and non-goals
 
-<what exists today, what is included, what is explicitly out of scope>
+**Today.** The course material is LaTeX: 8 class notes (`class_notes/`), 4 problem sets with solutions plus a rentas exam, TikZ figures, and third-party lecture slides L1 to L10 (not ours; not copied). They live in `~/GitHub/_Other_/Teaching/TA_Financial_Markets/`. The reference for the target is `options-explained` (Astro + MDX + KaTeX + React widgets, 73 chapters, house style guide, screenshot QA).
+
+**In scope.** A new repo `economia-financiera` with a Spanish-language 3Blue1Brown-style site: lecture chapters (picture first, interactive widgets, quizzes) and a second track of interactive problem sessions (seeded variants, hint ladder, stepwise solutions, numeric checkers). All maths in `src/lib` with Vitest tests. The notes and problem sets are inputs, not the source of truth: notation, exercises and explanations may change, and errors found are logged in `docs/AUDIT.md`.
+
+**Non-goals.** Copying third-party slides. Rewriting option pricing depth (link to options-explained). A backend, accounts or grading server. Video.
+
+**Assumptions (change me).**
+1. Language is Spanish only (the class is taught in Spanish).
+2. Repo name `economia-financiera`, local at `~/GitHub/economia-financiera`; GitHub remote and Pages are created by the owner (TASK-001).
+3. Same stack and versions as options-explained; deployed to GitHub Pages.
+4. Problem sessions are a separate track (DEC-001, proposed).
+5. Policy and routes are unchanged from defaults; `plan_commits: push` will start pushing once `origin` exists.
 
 ## Risks and open questions
 
-<risks, assumptions, and unknowns; material unknowns become discovery tasks or DEC nodes>
+- Copyright: slides L1 to L10 and the Netscape case are third-party; the audit reads them locally and the site must not reproduce them.
+- Source errors: the notes and problem sets contain numeric mistakes (see `problem_sets/ps2/numerical_errors_report.md`); every answer is recomputed in TASK-004 and tested in the library.
+- Scope unknown: fixed income and derivatives appear in ps4 and the exam but have no class note (DEC-002).
+- Visual QA is manual (screenshots + owner review in TASK-015); Pages needs the owner to enable it.
+- Open question: should chapters ship a printable PDF of each problem set? Not planned.
+- Later milestones M-3 to M-6 hold only a `Plan: decompose` task (rolling wave).
 
 ## Plan structure
 
