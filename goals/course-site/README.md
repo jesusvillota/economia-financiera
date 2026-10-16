@@ -46,6 +46,7 @@ flowchart TD
     TASK_017["TASK-017 Plan: decompose M-4"]
   end
   subgraph M_5["M-5 · Fixed income"]
+    TASK_018["TASK-018 Plan: decompose M-5"]
   end
   subgraph M_6["M-6 · Polish and launch"]
   end
@@ -83,6 +84,7 @@ flowchart TD
   TASK_014 --> TASK_015
   TASK_015 --> TASK_016
   TASK_016 --> TASK_017
+  TASK_017 --> TASK_018
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
