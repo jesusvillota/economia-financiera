@@ -119,6 +119,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
 | Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
 | Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
+| IPO offer shares / offer price / first-day close | $n_{\mathrm{of}}$, $P_{\mathrm{of}}$, $P_c$ | | Offer size differs from total company shares; close is not fundamental value |
+| IPO limit request / demand | $p_j$, $q_j$, $Q(p)$ | | Incremental requests; accumulate limits at or above the offer price |
+| IPO gross / fee / net | $G$, $F$, $N_{\mathrm{OPI}}$, $f$ | | Net after proportional placement fee only |
+| IPO initial return / money left | $u$, $M$ | | Close relative to offer; both may be negative |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 

@@ -67,6 +67,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:541` says MiFID II classifies trading venues into two types, regulated markets and OTC. MiFID II defines three trading venues: regulated market, MTF and OTF; OTC dealing is outside them. Line 610 adds that systematic internalisers “can operate as dark pools”. An SI is an investment firm dealing on own account with its clients, so it is bilateral and not a trading venue; an EU dark pool is normally an MTF using pre-trade transparency waivers. Chapter 12 uses the three-venue classification. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §4”.
 
+### Note 04: underpricing is not universal
+
+`source/class_notes/04_ofertas_publicas_iniciales/04_ofertas_publicas_iniciales.tex:479` calls underpricing a universal phenomenon. A positive sample average does not imply that every offer rises. With 1000 offered shares at 16 € and a first-day close of 16 €, `underpricing` returns zero; at a close of 12 €, it returns −25 % and −4000 € of signed money left. These are original counterexamples, not empirical estimates. Chapter 14 distinguishes sample patterns from guarantees, and the offer price from fundamental value. Regression test: `tests/capitulo14.test.ts`, “audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
