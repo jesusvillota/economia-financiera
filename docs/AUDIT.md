@@ -166,6 +166,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
+### ps4 Ex 9: month fractions are not actual day counts
+
+The solution of Ex 9c describes 15 February to 15 April 2026 as 60 days of a 90-day coupon period. Actual calendar counts are 59 elapsed days and 89 days to 15 May. The stipulated two-thirds month fraction gives 24.17 € accrued on a 36.25 € coupon; Actual/Actual coupon-period gives 24.03 €. The existing PS4 corrected answers above retain the exercise's month fractions. Chapter 17's original example and widget explicitly use Actual/Actual, so they must not substitute those figures into PS4's calculation. Regression: `tests/capitulo17.test.ts`, “audit §2: PS4 Ex 9 month fractions are not actual calendar days”.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.

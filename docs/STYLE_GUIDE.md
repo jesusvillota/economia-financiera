@@ -136,6 +136,11 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
+| Bond face / annual coupon rate / coupon payment | $F$, $c$, $A$ | | Chapter 17: $A=Fc/m$; face repaid at maturity; $c$ is not a fund here |
+| Bond maturity / payments per year / period count | $T$, $m$, $n$ | | Chapter 17: $n=mT$ at a coupon boundary; $T$ is not a tangent fund here |
+| Yield to maturity | $y$ | `\Rate{y}` | Annual effective for annual payments; nominal annual compounded $m$ times when explicitly stated |
+| Clean / dirty bond price / accrued coupon | $P_{\mathrm{limpio}}$, $P_{\mathrm{sucio}}$, $CC$ | | Euros; dirty equals clean plus accrued; no ex-coupon period in chapter 17 |
+| Days elapsed / days in coupon period | $d$, $D$ | | Chapter 17 Actual/Actual coupon-period day counts; $D$ is not corporate debt here |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
