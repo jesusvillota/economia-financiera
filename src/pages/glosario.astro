@@ -1,0 +1,71 @@
+---
+import katex from 'katex';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { parts, url } from '../data/curriculum';
+import { glossary } from '../data/glossary';
+import { katexOptions } from '../lib/katexMacros';
+
+const chapters = new Map(parts.flatMap((part) => part.chapters).map((chapter) => [chapter.number, chapter]));
+const letters = [...new Set(glossary.map((entry) => entry.term[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()))];
+const initial = (term: string) => term[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+---
+<BaseLayout title="Glosario" description="Términos y símbolos de Economía Financiera, con definiciones y enlaces a los capítulos del curso.">
+  <main id="main" class="glossary">
+    <a href={url()}>← Mapa del curso</a>
+    <h1>Glosario</h1>
+    <p>¿Qué significa este término? Busca su inicial y vuelve al capítulo para ver cómo se usa.</p>
+    <p class="note">Un símbolo puede tener varios significados. Cada entrada indica su contexto y el capítulo correspondiente.</p>
+    <nav id="indice" class="alphabet" aria-label="Índice alfabético del glosario">
+      {letters.map((letter) => <a href={`#letra-${letter.toLowerCase()}`}>{letter}</a>)}
+    </nav>
+    {letters.map((letter) => (
+      <section aria-labelledby={`letra-${letter.toLowerCase()}`}>
+        <h2 id={`letra-${letter.toLowerCase()}`}>{letter}</h2>
+        <dl>
+          {glossary.filter((entry) => initial(entry.term) === letter).map((entry) => (
+            <div id={entry.id} class="entry">
+              <dt><a href={`#${entry.id}`}>{entry.term}</a></dt>
+              <dd>
+                {entry.symbols && (
+                  <ul class="symbols" aria-label="Notación">
+                    {entry.symbols.map((symbol) => <li set:html={katex.renderToString(symbol, { ...katexOptions, throwOnError: true })} />)}
+                  </ul>
+                )}
+                <p>{entry.definition}</p>
+                <ul class="chapter-links" aria-label={`Capítulos: ${entry.term}`}>
+                  {entry.chapters.map((number) => {
+                    const chapter = chapters.get(number)!;
+                    return <li><a href={url(`chapters/${chapter.slug}/`)}>Capítulo {number}: {chapter.title}</a></li>;
+                  })}
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <a class="back" href="#indice">Volver al índice ↑</a>
+      </section>
+    ))}
+  </main>
+</BaseLayout>
+
+<style>
+  .glossary { max-width: var(--measure); margin: 2rem auto 4rem; padding: 0 1rem; }
+  h1 { font-size: clamp(2rem, 6vw, 3rem); margin-bottom: 1rem; }
+  .note { color: var(--text-muted); }
+  .alphabet { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 2rem 0; }
+  .alphabet a { display: grid; place-items: center; min-width: 44px; min-height: 44px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-ui); }
+  h2, .entry, #indice { scroll-margin-top: 5rem; }
+  h2 { color: var(--c-fv); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-top: 3rem; }
+  dl { margin: 0; }
+  .entry { padding: 1.3rem 0; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+  dt { font-weight: 600; font-size: 1.25rem; line-height: 1.4; }
+  dt a { color: var(--text); text-decoration: none; }
+  dt a:hover { color: var(--link); text-decoration: underline; }
+  dd { margin: 0; }
+  dd p { margin: 0.7rem 0; }
+  .symbols { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; margin: 0.7rem 0 0; padding: 0; list-style: none; }
+  .symbols li { max-width: 100%; }
+  .chapter-links { padding-left: 1.25rem; margin: 0; font-family: var(--font-ui); font-size: 0.85rem; }
+  .chapter-links a { display: inline-block; padding: 0.35rem 0; }
+  .back { display: inline-block; padding: 0.75rem 0; font-family: var(--font-ui); font-size: 0.85rem; }
+</style>

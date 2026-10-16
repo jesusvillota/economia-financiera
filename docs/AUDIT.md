@@ -30,129 +30,129 @@ Duplicates: `class_notes/main.tex` is almost identical to note 01 (36 differing 
 
 Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `ps4.py`). Tolerance is half a unit of the last printed digit (one unit for numbers marked "aprox."). Line numbers refer to the `*_solutions.tex` file of each set.
 
-**The existing `ps2/numerical_errors_report.md` is wrong.** It reports P0 = 31.00 in Ex 3(b); the file already says 30.00 (line 129). It reports 4.96% in Ex 3(c); the file says 5.01%. It misses the errors below in Ex 5, Ex 7 and the appendix.
+**The existing `ps2/numerical_errors_report.md` is wrong.** It reports P0 = 31.00 in Ex 3(b); the file already says 30.00 (line 129). It reports 4.96% in Ex 3(c); the file says 5.01%. It misses the errors below in Ex 5, Ex 7 and the appendix. Test: `tests/valuation.test.ts` — `audited PS2 answer: %s`
 
 ### Note 01: growing annuity
 
-`source/class_notes/01_fundamentos_basicos/01_fundamentos_basicos.tex:464` reports **7.710 €** for ten growing payments. With first payment 1.000 € at year 1, growth 5 % and discount rate 10 %, the correct present value is **7.439,81 €**: `1000 * (1 - (1.05 / 1.10) ** 10) / (0.10 - 0.05)`. The source overstates the value by 270,19 €. Chapter 2 uses the corrected value. Regression test: `tests/annuities.test.ts`, “growing annuity 1.000 €, g = 5 %, r = 10 %, n = 10 (the source says 7.710: wrong)”, checks `growingAnnuityPV(1000, 0.1, 0.05, 10)` against `7439.81` to two decimals.
+`source/class_notes/01_fundamentos_basicos/01_fundamentos_basicos.tex:464` reports **7.710 €** for ten growing payments. With first payment 1.000 € at year 1, growth 5 % and discount rate 10 %, the correct present value is **7.439,81 €**: `1000 * (1 - (1.05 / 1.10) ** 10) / (0.10 - 0.05)`. The source overstates the value by 270,19 €. Chapter 2 uses the corrected value. Regression test: `tests/annuities.test.ts`, “growing annuity 1.000 €, g = 5 %, r = 10 %, n = 10 (the source says 7.710: wrong)”, checks `growingAnnuityPV(1000, 0.1, 0.05, 10)` against `7439.81` to two decimals. Test: `tests/annuities.test.ts` — `growing annuity 1.000 €, g = 5 %, r = 10 %, n = 10 (the source says 7.710: wrong)`
 
 ### Note 02: incomplete FCFE example
 
-`source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:255–275` asks for year-2 FCFE but supplies neither net income nor interest. EBIT 140, tax 25 %, depreciation 32, capex 60 and working-capital increase 8 determine FCFF = 69. Net borrowing is −2. FCFE is therefore `67 - interest * 0.75`, not a unique number. For interest 0 or 20, FCFE is 67 or 52. Do not silently assume zero interest. Chapter 5 supplies both interest and net income in its original example. Regression test: `tests/capitulo5.test.ts`, “source note FCFE example is underdetermined”.
+`source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:255–275` asks for year-2 FCFE but supplies neither net income nor interest. EBIT 140, tax 25 %, depreciation 32, capex 60 and working-capital increase 8 determine FCFF = 69. Net borrowing is −2. FCFE is therefore `67 - interest * 0.75`, not a unique number. For interest 0 or 20, FCFE is 67 or 52. Do not silently assume zero interest. Chapter 5 supplies both interest and net income in its original example. Regression test: `tests/capitulo5.test.ts`, “source note FCFE example is underdetermined”. Test: `tests/capitulo5.test.ts` — `source note FCFE example is underdetermined: missing interest or net income (AUDIT §2)`
 
 ### Note 02: infinite-horizon dividend valuation
 
-`source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
+`source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`. Test: `tests/capitulo4.test.ts` — `audit note 02 §1.1: r > 0 no basta para anular el precio terminal descontado`
 
 ### Note 03: CAL branch requires a nonnegative risky weight
 
-`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §4, “Ecuación de la CAL”, derives `w = sigma_p / sigma_c` from `sigma_p² = w² sigma_c²` without stating `w >= 0`. In general, `sigma_p = |w| sigma_c`. At `r_f = 2 %`, fund return `10 %`, fund variance `2/225`, and `w = -0.5`, the actual expected return is `-2 %` with positive volatility `4.71 %`; the upper CAL formula would give `6 %` at that same volatility. Chapter 9 states the branch restriction and keeps its allocation control nonnegative. Regression test: `tests/capitulo9.test.ts`, “audit: shorting the fund needs the absolute weight and the lower branch”.
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §4, “Ecuación de la CAL”, derives `w = sigma_p / sigma_c` from `sigma_p² = w² sigma_c²` without stating `w >= 0`. In general, `sigma_p = |w| sigma_c`. At `r_f = 2 %`, fund return `10 %`, fund variance `2/225`, and `w = -0.5`, the actual expected return is `-2 %` with positive volatility `4.71 %`; the upper CAL formula would give `6 %` at that same volatility. Chapter 9 states the branch restriction and keeps its allocation control nonnegative. Regression test: `tests/capitulo9.test.ts`, “audit: shorting the fund needs the absolute weight and the lower branch”. Test: `tests/capitulo9.test.ts` — `audit: shorting the fund needs the absolute weight and the lower branch`
 
 ### Note 03: beta does not rank total volatility
 
-`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:1007` says beta below 1 implies lower total volatility than the market. This fails when specific risk is large (also repeated in the portfolio interpretation at line 1133). With market variance 0.04, asset beta 0.6 and asset variance 0.09, systematic variance is 0.0144 and residual variance is 0.0756. Asset volatility is 30 %, above the market’s 20 %, despite beta below 1. Beta measures linear market sensitivity, not a ranking of total volatility. Chapter 10 uses this distinction. Regression test: `tests/capitulo10.test.ts`, “audit note 03: low beta can coexist with higher total volatility”.
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:1007` says beta below 1 implies lower total volatility than the market. This fails when specific risk is large (also repeated in the portfolio interpretation at line 1133). With market variance 0.04, asset beta 0.6 and asset variance 0.09, systematic variance is 0.0144 and residual variance is 0.0756. Asset volatility is 30 %, above the market’s 20 %, despite beta below 1. Beta measures linear market sensitivity, not a ranking of total volatility. Chapter 10 uses this distinction. Regression test: `tests/capitulo10.test.ts`, “audit note 03: low beta can coexist with higher total volatility”. Test: `tests/capitulo10.test.ts` — `audit note 03: low beta can coexist with higher total volatility`
 ### Note 03 §3: minimum-risk boundary versus efficient frontier
 
-`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §3, “Optimización de Carteras”, says that minimising variance for different equality-constrained return targets gives only efficient portfolios. Targets below the global minimum-variance portfolio's return can instead be dominated. Chapter 8 uses an original three-asset example: means 6/10/14 %, volatilities 12/20/28 %, correlations A–B = 0.20 and A–C = B–C = 0. A target of 7 % has minimum risk 10.68 %, while the global minimum has return 7.83 % and risk 10.33 %. The latter improves both measures. Regression: `tests/capitulo8.test.ts`, “lower target is dominated by the global minimum”. Chapter 8 also makes the short-sale distinction explicit. With unrestricted shorts, weights −1/0/2 already give 22 %; the family (1−t)/0/t has unbounded mean as t grows. The chapter states the long-only restriction and the plot's finite window explicitly.
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §3, “Optimización de Carteras”, says that minimising variance for different equality-constrained return targets gives only efficient portfolios. Targets below the global minimum-variance portfolio's return can instead be dominated. Chapter 8 uses an original three-asset example: means 6/10/14 %, volatilities 12/20/28 %, correlations A–B = 0.20 and A–C = B–C = 0. A target of 7 % has minimum risk 10.68 %, while the global minimum has return 7.83 % and risk 10.33 %. The latter improves both measures. Regression: `tests/capitulo8.test.ts`, “lower target is dominated by the global minimum”. Chapter 8 also makes the short-sale distinction explicit. With unrestricted shorts, weights −1/0/2 already give 22 %; the family (1−t)/0/t has unbounded mean as t grows. The chapter states the long-only restriction and the plot's finite window explicitly. Test: `tests/capitulo8.test.ts` — `lower target is dominated by the global minimum (audit note 03 §3)`
 
 ### Note 03: perfect positive correlation with short sales
 
-`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”.
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”. Test: `tests/capitulo7.test.ts` — `audit note 03: one absolute value preserves short-sale cancellation`
 
 ### Note 05 §2: speculators and arbitrageurs listed as brokers
 
-`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:228–240` defines brokers as mediators who take no risk, then lists arbitrageurs and speculators as types of broker. It also says speculators “control risk through hedging and diversification”. Both fail. Speculation and arbitrage are strategies that require positions on one's own account; a broker acts only for clients. Reducing an existing risk with an offsetting position is hedging, not speculation. Chapter 12 classifies broker as an agency mediator and speculation, hedging and arbitrage as own-account strategies. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §2”.
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:228–240` defines brokers as mediators who take no risk, then lists arbitrageurs and speculators as types of broker. It also says speculators “control risk through hedging and diversification”. Both fail. Speculation and arbitrage are strategies that require positions on one's own account; a broker acts only for clients. Reducing an existing risk with an offsetting position is hedging, not speculation. Chapter 12 classifies broker as an agency mediator and speculation, hedging and arbitrage as own-account strategies. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §2”. Test: `tests/capitulo12.test.ts` — `audit note 05 §2: speculators and arbitrageurs trade on own account, so they are not brokers`
 
 ### Note 05 §4: MiFID II venue types and systematic internalisers
 
-`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:541` says MiFID II classifies trading venues into two types, regulated markets and OTC. MiFID II defines three trading venues: regulated market, MTF and OTF; OTC dealing is outside them. Line 610 adds that systematic internalisers “can operate as dark pools”. An SI is an investment firm dealing on own account with its clients, so it is bilateral and not a trading venue; an EU dark pool is normally an MTF using pre-trade transparency waivers. Chapter 12 uses the three-venue classification. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §4”.
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:541` says MiFID II classifies trading venues into two types, regulated markets and OTC. MiFID II defines three trading venues: regulated market, MTF and OTF; OTC dealing is outside them. Line 610 adds that systematic internalisers “can operate as dark pools”. An SI is an investment firm dealing on own account with its clients, so it is bilateral and not a trading venue; an EU dark pool is normally an MTF using pre-trade transparency waivers. Chapter 12 uses the three-venue classification. Regression test: `tests/capitulo12.test.ts`, “audit note 05 §4”. Test: `tests/capitulo12.test.ts` — `audit note 05 §4: MiFID II has three trading venues; an SI is bilateral and not a venue`
 
 ### Note 05 §3: market, limit and por-lo-mejor orders
 
-`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:303–328` equates a market order with a por-lo-mejor order, claims market orders guarantee execution, and calls a por-lo-mejor order a marketable limit order. Distinguish them: a market order can consume several price levels; a Spanish por-lo-mejor order uses the best level and rests its remainder there; a marketable limit carries an investor limit that crosses existing quotes. Liquidity and trading interruptions can prevent execution. Lines 334/336 also need a queue and available-quantity qualification: touching a limit does not guarantee a fill. Chapter 13 makes these distinctions. Regression tests: `tests/capitulo13.test.ts`, “audit note 05 §3: market depth cannot guarantee execution” and “audit note 05 §3: investor limit differs from best-level execution”, check an exhausted book and a crossing limit that consumes multiple levels, plus resting and non-crossing remainders.
+`source/class_notes/05_microestructura_mercados_secundarios/05_microestructura_mercados_secundarios.tex:303–328` equates a market order with a por-lo-mejor order, claims market orders guarantee execution, and calls a por-lo-mejor order a marketable limit order. Distinguish them: a market order can consume several price levels; a Spanish por-lo-mejor order uses the best level and rests its remainder there; a marketable limit carries an investor limit that crosses existing quotes. Liquidity and trading interruptions can prevent execution. Lines 334/336 also need a queue and available-quantity qualification: touching a limit does not guarantee a fill. Chapter 13 makes these distinctions. Regression tests: `tests/capitulo13.test.ts`, “audit note 05 §3: market depth cannot guarantee execution” and “audit note 05 §3: investor limit differs from best-level execution”, check an exhausted book and a crossing limit that consumes multiple levels, plus resting and non-crossing remainders. Test: `tests/capitulo13.test.ts` — `audit note 05 §3: market depth cannot guarantee execution`; Test: `tests/capitulo13.test.ts` — `audit note 05 §3: investor limit differs from best-level execution`
 
 ### Note 05 §3: short-sale profit is gross of payments and fees
 
-The same source, line 448, says repurchasing below the sale price produces profit without qualifying costs. A lower repurchase price produces a gross trading gain; dividend compensation and borrowing fees can erase it. Chapter 13 states this qualification. Regression: `tests/capitulo13.test.ts`, “audit note 05 §3: a lower repurchase price need not yield a net profit”, uses `shortSale(200, 40, 0.5, 39.5, 1)`: the price falls but the own-capital return is −2.5 %, after dividend compensation alone.
+The same source, line 448, says repurchasing below the sale price produces profit without qualifying costs. A lower repurchase price produces a gross trading gain; dividend compensation and borrowing fees can erase it. Chapter 13 states this qualification. Regression: `tests/capitulo13.test.ts`, “audit note 05 §3: a lower repurchase price need not yield a net profit”, uses `shortSale(200, 40, 0.5, 39.5, 1)`: the price falls but the own-capital return is −2.5 %, after dividend compensation alone. Test: `tests/capitulo13.test.ts` — `audit note 05 §3: a lower repurchase price need not yield a net profit`
 
 ### Note 04: underpricing is not universal
 
-`source/class_notes/04_ofertas_publicas_iniciales/04_ofertas_publicas_iniciales.tex:479` calls underpricing a universal phenomenon. A positive sample average does not imply that every offer rises. With 1000 offered shares at 16 € and a first-day close of 16 €, `underpricing` returns zero; at a close of 12 €, it returns −25 % and −4000 € of signed money left. These are original counterexamples, not empirical estimates. Chapter 14 distinguishes sample patterns from guarantees, and the offer price from fundamental value. Regression test: `tests/capitulo14.test.ts`, “audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3”.
+`source/class_notes/04_ofertas_publicas_iniciales/04_ofertas_publicas_iniciales.tex:479` calls underpricing a universal phenomenon. A positive sample average does not imply that every offer rises. With 1000 offered shares at 16 € and a first-day close of 16 €, `underpricing` returns zero; at a close of 12 €, it returns −25 % and −4000 € of signed money left. These are original counterexamples, not empirical estimates. Chapter 14 distinguishes sample patterns from guarantees, and the offer price from fundamental value. Regression test: `tests/capitulo14.test.ts`, “audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3”. Test: `tests/capitulo14.test.ts` — `audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3`
 
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
-| Ex / part | Line | In document | Corrected | Note |
-|---|---|---|---|---|
-| 4a, annuity PV | 147 | 29,269 | **27,674** | Material. 5,000 x 5.5348 |
-| 4b, growing annuity PV | 148 | 31,885 | **30,354** | Material |
-| 4c, tranche 1 | 150 | 12,674 | **12,657** | Material (small) |
-| 4c, V at t=3 | 152 | 21,351 | **20,546** | Material |
-| 4c, tranche 2 at t=0 | 153 | 16,466 | **15,865** | Material |
-| 4c, total | 154 | 29,140 | **28,522** | Material |
-| 6a, monthly annuity PV | 194 | 55,612 | **48,083** | Material |
-| 6b, growing annuity PV | 195 | 16,756 | **14,989** | Material |
-| 6c, total | 196 | 72,368 | **63,073** | Material |
-| 6d, annuity-due PV | 198 | 56,013 | **48,430** | Material |
-| 8b, cumulative discounted CF | 228 | 69.55; 94.20; 112.95 | **73.55; 111.12; 148.69** | Material |
-| 8b, PRD | 228 | 3.46 years | **3.24 years** | Follows from the line above (2 + (120-73.55)/37.57) |
-| 5c, PV of deferred perpetuity | 172 (also 173) | 31,318 | **31,309** | Small |
-| 2b, i_6 | 84 | 1.2913% | **1.2909%** | Digit slip |
-| 2b, i_3 | 86 | 2.5981% | **2.5986%** | Digit slip |
-| 2d ii, PV | 94 | 9,165 | **9,163** | Rounding of the 18-month factor |
-| 3c, alt. B amount | 130 | 119,500 | **119,509** | Document rounds 1.02^9 to 1.195 |
-| 7, VAN | 213 | 28,684 | **28,685** | Terms truncated, not rounded |
+| Ex / part | Line | In document | Corrected | Note | Test |
+|---|---|---|---|---|---|
+| 4a, annuity PV | 147 | 29,269 | **27,674** | Material. 5,000 x 5.5348 | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 4b, growing annuity PV | 148 | 31,885 | **30,354** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 4c, tranche 1 | 150 | 12,674 | **12,657** | Material (small) | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 4c, V at t=3 | 152 | 21,351 | **20,546** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 4c, tranche 2 at t=0 | 153 | 16,466 | **15,865** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 4c, total | 154 | 29,140 | **28,522** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 4: corrected values (doc 29,269 / 31,885 / ... were wrong)` |
+| 6a, monthly annuity PV | 194 | 55,612 | **48,083** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 6: corrected values (doc 55,612 / 16,756 / ... were wrong)` |
+| 6b, growing annuity PV | 195 | 16,756 | **14,989** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 6: corrected values (doc 55,612 / 16,756 / ... were wrong)` |
+| 6c, total | 196 | 72,368 | **63,073** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 6: corrected values (doc 55,612 / 16,756 / ... were wrong)` |
+| 6d, annuity-due PV | 198 | 56,013 | **48,430** | Material | Test: `tests/timeValue.test.ts` — `ps1 Ex 6: corrected values (doc 55,612 / 16,756 / ... were wrong)` |
+| 8b, cumulative discounted CF | 228 | 69.55; 94.20; 112.95 | **73.55; 111.12; 148.69** | Material | Test: `tests/appraisal.test.ts` — `ps1 Ex 8 (corrected): PR 2.70, PRD 3.24` |
+| 8b, PRD | 228 | 3.46 years | **3.24 years** | Follows from the line above (2 + (120-73.55)/37.57) | Test: `tests/appraisal.test.ts` — `ps1 Ex 8 (corrected): PR 2.70, PRD 3.24` |
+| 5c, PV of deferred perpetuity | 172 (also 173) | 31,318 | **31,309** | Small | Test: `tests/timeValue.test.ts` — `ps1 Ex 5: perpetuities` |
+| 2b, i_6 | 84 | 1.2913% | **1.2909%** | Digit slip | Test: `tests/timeValue.test.ts` — `ps1 Ex 2: compound interest and equivalent rates` |
+| 2b, i_3 | 86 | 2.5981% | **2.5986%** | Digit slip | Test: `tests/timeValue.test.ts` — `ps1 Ex 2: compound interest and equivalent rates` |
+| 2d ii, PV | 94 | 9,165 | **9,163** | Rounding of the 18-month factor | Test: `tests/timeValue.test.ts` — `ps1 Ex 2: compound interest and equivalent rates` |
+| 3c, alt. B amount | 130 | 119,500 | **119,509** | Document rounds 1.02^9 to 1.195 | Test: `tests/timeValue.test.ts` — `ps1 Ex 3: successive rates` |
+| 7, VAN | 213 | 28,684 | **28,685** | Terms truncated, not rounded | Test: `tests/appraisal.test.ts` — `ps1 Ex 7: NPV at 10%` |
 
-Exam (rentas): option (b) is correct. A brute-force sum of 20,000 growing payments matches it; option (a) does not.
+Exam (rentas): option (b) is correct. A brute-force sum of 20,000 growing payments matches it; option (a) does not. Test: `tests/examen.test.ts` — `decides all source options a/b/c by 20,000 payments, then varies both periodicities`
 
 ### ps2 (22 differences; the real ones are in Ex 5c, Ex 7c and the appendix)
 
-| Ex / part | Line | In document | Corrected |
-|---|---|---|---|
-| 5c, PV FCFE_3 | 231 | 72.17 | **72.13** |
-| 5c, equity total | 243 | 1,143.44 | **1,143.39** (price per share 19.06 stays) |
-| 7c low WACC, PV_2', PV_3', PV_4' | 294, 296 | 55.53; 60.54; 64.42 | **55.57; 60.61; 64.33** |
-| 7c low WACC, NPV' | 310 | 2,715.13 | 2,715.14 |
-| 7c high WACC, PV_2'', PV_3'', PV_4'' | 317, 319 | 53.52; 57.33; 59.52 | **53.49; 57.24; 59.60** |
-| 7c high WACC, NPV'' | 333 | 826.41 | 826.37 (decrease 619.92, not 619.88) |
-| Appendix, E[r_B] | 671 | 5.3% | **5.1%** |
-| Rounding only (Ex 1, 3b, 3c, 5c TV, 7b) | 67, 69, 131, 135, 142, 239, 284 | see `ps2_findings.md` | e.g. 3b increase 4.61 |
+| Ex / part | Line | In document | Corrected | Test |
+|---|---|---|---|---|
+| 5c, PV FCFE_3 | 231 | 72.17 | **72.13** | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| 5c, equity total | 243 | 1,143.44 | **1,143.39** (price per share 19.06 stays) | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| 7c low WACC, PV_2', PV_3', PV_4' | 294, 296 | 55.53; 60.54; 64.42 | **55.57; 60.61; 64.33** | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| 7c low WACC, NPV' | 310 | 2,715.13 | 2,715.14 | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| 7c high WACC, PV_2'', PV_3'', PV_4'' | 317, 319 | 53.52; 57.33; 59.52 | **53.49; 57.24; 59.60** | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| 7c high WACC, NPV'' | 333 | 826.41 | 826.37 (decrease 619.92, not 619.88) | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| Appendix, E[r_B] | 671 | 5.3% | **5.1%** | Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
+| Rounding only (Ex 1, 3b, 3c, 5c TV, 7b) | 67, 69, 131, 135, 142, 239, 284 | see `ps2_findings.md` | e.g. 3b increase 4.61 | Test: `tests/valuation.test.ts` — `audited PS2 answer: %s`; Test: `tests/sesion02.test.ts` — `asserts the corrected AUDIT numbers, including Ex 5c, 7c and the appendix` |
 
 Line 338 calls the sensitivity "exponencial"; it is a convex 1/(r-g) effect.
-Exercises 10 to 14 exist only as commented-out LaTeX; there is no Ex 6.
+Exercises 10 to 14 exist only as commented-out LaTeX; there is no Ex 6. Test: `tests/sesion02.test.ts` — `covers the active TeX inventory and every requested answer`; Test: `tests/valuation.test.ts` — `PS2 Ex 7c: discount-rate sensitivity is convex, not exponential`
 
 ### ps3 (5 differences, all in Ex 7)
 
-| Ex / part | Line | In document | Corrected |
-|---|---|---|---|
-| 7a, sd equal-weight portfolio | 912, 953 | 14.87% | **14.83%** |
-| 7d, Sharpe ratio | 957, 960, 1001 | 0.4856 | **0.4854** |
-| 7f, min-variance weight | 989 | 0.6935 | 0.6934 |
-| 7f, weights in % | 992 | 69.35% / 30.65% | 69.34% / 30.66% |
+| Ex / part | Line | In document | Corrected | Test |
+|---|---|---|---|---|
+| 7a, sd equal-weight portfolio | 912, 953 | 14.87% | **14.83%** | Test: `tests/sesion03.test.ts` — `asserts all corrected docs/AUDIT.md Exercise 7 values without intermediate rounding` |
+| 7d, Sharpe ratio | 957, 960, 1001 | 0.4856 | **0.4854** | Test: `tests/sesion03.test.ts` — `asserts all corrected docs/AUDIT.md Exercise 7 values without intermediate rounding` |
+| 7f, min-variance weight | 989 | 0.6935 | 0.6934 | Test: `tests/sesion03.test.ts` — `asserts all corrected docs/AUDIT.md Exercise 7 values without intermediate rounding` |
+| 7f, weights in % | 992 | 69.35% / 30.65% | 69.34% / 30.66% | Test: `tests/sesion03.test.ts` — `asserts all corrected docs/AUDIT.md Exercise 7 values without intermediate rounding` |
 
-Ex 2 parts (b) and (d) give the same numbers as (a) and (c) because the weight is inside [0,1]. The "short sales" case is not exercised.
+Ex 2 parts (b) and (d) give the same numbers as (a) and (c) because the weight is inside [0,1]. The "short sales" case is not exercised. Test: `tests/portfolio.test.ts` — `Ex 2: audited rho=%s keeps the unrestricted and long-only answers`; Test: `tests/portfolio.test.ts` — `DEC-003: separately named Ex 2 rho=0.95 short-sale variant`
 
 ### ps4 (18 differences; Ex 9c and Ex 10b matter)
 
-| Ex / part | Line | In document | Corrected |
-|---|---|---|---|
-| 10b, discount factor / forward value | 629, 632 | 0.9426; F = 4.76 | **0.9429; F = 4.74** |
-| 9c, average sale price | 492 | 99.01% | **98.99%** |
-| 9c, sale per bond; sale + accrued | 494, 509 | 990.14; 1,014.31 | **989.86; 1,014.03** |
-| 9c, constants in the quadratic | 534, 539, 549 | 1,014.17 and 1,014.31 mixed | one value, 1,014.03 |
-| 9c, discriminant | 551 | 4,154,507.78 | **4,153,483** (with 1,014.03) |
-| 9c, TIR | 576, 579 | 8.24% | **8.14%** |
-| 9b, YTM statement | 480 | "algo inferior al 14,5%" | **14.76%** |
-| 8b, f_{2,1} | 369 to 371, 385 to 389 | 5.00% | **5.01%** |
-| 6a, price | 214, 321 | 980.18; 1,028.72 | 980.19; **1,028.73** |
-| 6b, TIR_A | 224 to 226 | 3.976% | 3.975% |
-| LaTeX bug | 579 | `<TAB>extbf{Conclusión:}` | `\textbf{Conclusión:}` |
+| Ex / part | Line | In document | Corrected | Test |
+|---|---|---|---|---|
+| 10b, discount factor / forward value | 629, 632 | 0.9426; F = 4.76 | **0.9429; F = 4.74** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9c, average sale price | 492 | 99.01% | **98.99%** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9c, sale per bond; sale + accrued | 494, 509 | 990.14; 1,014.31 | **989.86; 1,014.03** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9c, constants in the quadratic | 534, 539, 549 | 1,014.17 and 1,014.31 mixed | one value, 1,014.03 | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9c, discriminant | 551 | 4,154,507.78 | **4,153,483** (with 1,014.03) | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9c, TIR | 576, 579 | 8.24% | **8.14%** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 9b, YTM statement | 480 | "algo inferior al 14,5%" | **14.76%** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 8b, f_{2,1} | 369 to 371, 385 to 389 | 5.00% | **5.01%** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 6a, price | 214, 321 | 980.18; 1,028.72 | 980.19; **1,028.73** | Test: `tests/sesion04.test.ts` — `asserts corrected AUDIT values for 6a, 8b, 9b/c and 10b with explicit rounding conventions` |
+| 6b, TIR_A | 224 to 226 | 3.976% | 3.975% | Test: `tests/bonds.test.ts` — `Ex 6b/c: purchased-price yields and Macaulay durations` |
+| LaTeX bug | 579 | `<TAB>extbf{Conclusión:}` | `\textbf{Conclusión:}` | Test: `tests/sesion04.test.ts` — `PS4 Ex 9 solution replaces the malformed source conclusion command` |
 
 Ex 9a: clean cost 354,060 uses the rounded price 101.16%; unrounded gives 354,050.
-Numbers 5 and 7 are missing. Futures are not covered although the section title says so.
+Numbers 5 and 7 are missing. Futures are not covered although the section title says so. Test: `tests/sesion04.test.ts` — `keeps every source exercise, closes numbering gaps, and adds futures`; Test: `tests/bonds.test.ts` — `Ex 9a/b: printed purchase figures and corrected effective annual YTM 14.76%`
 
 ### Other inconsistencies
 
-- **Notes 03 §9 and 07 extensions: raw versus excess factor returns.** Note 03's Fama-French equation labels the left side as the raw asset return, while its market regressor is an excess return. Note 07's Carhart equation also uses raw notation, but its explanation specifies excess returns. Use `r_j - r_f` on the left and `r_M - r_f` for the market factor; SMB, HML and UMD are already return differences. Otherwise a constant risk-free rate shifts the estimated intercept and can create spurious alpha. Chapter 11 states the excess-return convention explicitly. Regression test: `tests/capitulo11.test.ts`, “audit note 03 §9 / note 07”, checks full-rank synthetic factors with zero true alpha: excess returns give zero intercept; adding a constant risk-free return shifts the intercept by that rate in both wrappers.
+- **Notes 03 §9 and 07 extensions: raw versus excess factor returns.** Note 03's Fama-French equation labels the left side as the raw asset return, while its market regressor is an excess return. Note 07's Carhart equation also uses raw notation, but its explanation specifies excess returns. Use `r_j - r_f` on the left and `r_M - r_f` for the market factor; SMB, HML and UMD are already return differences. Otherwise a constant risk-free rate shifts the estimated intercept and can create spurious alpha. Chapter 11 states the excess-return convention explicitly. Regression test: `tests/capitulo11.test.ts`, “audit note 03 §9 / note 07”, checks full-rank synthetic factors with zero true alpha: excess returns give zero intercept; adding a constant risk-free return shifts the intercept by that rate in both wrappers. Test: `tests/capitulo11.test.ts` — `audit note 03 §9 / note 07: excess returns avoid a spurious risk-free intercept`
 
 - Notes 03, 06 and 07 give the same derivations three times (same subsection titles). Pick one source per chapter.
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.
@@ -160,27 +160,27 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 ### Note 08 §4: classical utility need not treat equal gains and losses symmetrically
 
-`source/class_notes/08_eficiencia_mercado_finanzas_conductuales/08_eficiencia_mercado_finanzas_conductuales.tex:454` claims classical utility assumes equal sensitivity to gains and losses. A concave utility of final wealth can already make an equal loss matter more than an equal gain. Chapter 16 distinguishes risk aversion from reference-dependent loss aversion; a rejected positive-mean gamble alone does not identify a psychological bias. Regression test: `tests/capitulo16.test.ts`, “audit note 08 §4”, compares log-utility changes around positive wealth and verifies that a positive monetary mean can coexist with negative expected utility change.
+`source/class_notes/08_eficiencia_mercado_finanzas_conductuales/08_eficiencia_mercado_finanzas_conductuales.tex:454` claims classical utility assumes equal sensitivity to gains and losses. A concave utility of final wealth can already make an equal loss matter more than an equal gain. Chapter 16 distinguishes risk aversion from reference-dependent loss aversion; a rejected positive-mean gamble alone does not identify a psychological bias. Regression test: `tests/capitulo16.test.ts`, “audit note 08 §4”, compares log-utility changes around positive wealth and verifies that a positive monetary mean can coexist with negative expected utility change. Test: `tests/capitulo16.test.ts` — `audit note 08 §4: utilidad cóncava clásica también trata cambios iguales de forma asimétrica`
 
 ### Note 08 §3.1: abnormal returns can be negative
 
-The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
+The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency. Test: `tests/capitulo15.test.ts` — `audit note 08 §3.1: abnormal returns are signed, not only superior returns`
 
 ### ps4 Ex 10: forward quote and contract value use different symbols
 
-The solution at lines 606–632 uses `F_0` and `F_t` for the value of an existing forward, while calling the delivery price `K`. Chapter 20 uses `F_{t,T}` for the delivery quote of a new zero-value contract and `V_t` for an existing contract. At inception, setting `K=F_{t,T}` makes `V_t=0`; the delivery quote itself is not zero. The existing Ex 10b correction remains **0.9429 / €45.26 / €4.74**, not €4.76, with **1.5 years remaining**. Regression tests: `tests/capitulo20.test.ts`, “gancho y quiz 1”, “PS4 Ex 10a” and “audit PS4 Ex 10b”. The chapter adds an original seeded futures exercise; it does not attribute it to the source PS4.
+The solution at lines 606–632 uses `F_0` and `F_t` for the value of an existing forward, while calling the delivery price `K`. Chapter 20 uses `F_{t,T}` for the delivery quote of a new zero-value contract and `V_t` for an existing contract. At inception, setting `K=F_{t,T}` makes `V_t=0`; the delivery quote itself is not zero. The existing Ex 10b correction remains **0.9429 / €45.26 / €4.74**, not €4.76, with **1.5 years remaining**. Regression tests: `tests/capitulo20.test.ts`, “gancho y quiz 1”, “PS4 Ex 10a” and “audit PS4 Ex 10b”. The chapter adds an original seeded futures exercise; it does not attribute it to the source PS4. Test: `tests/capitulo20.test.ts` — `gancho y quiz 1: 60 €, 5 %, un año, 63 € y valor inicial cero`; Test: `tests/capitulo20.test.ts` — `audit PS4 Ex 10b: medio año transcurrido, 1,5 restante, 0,9429; 45,26; 4,74, nunca 4,76`
 
 ### PS4 Ex 6d: absolute versus relative price changes
 
-`source/problem_sets/ps4/ps4_solutions.tex:321` claims the zero-coupon bond has the larger absolute price change. With the source-rounded new spots (3.5%, 4%), corrected old/new prices are 933.51/924.56 for the zero and 1028.73/1019.09 for the coupon bond. Losses are **8.95 euros (0.959%)** and **9.64 euros (0.937%)** respectively. The coupon bond loses more euros; the zero loses more proportionally. Chapter 19 distinguishes both measures and keeps Ex 6c purchase-YTM duration separate from Ex 6d spot-curve repricing. The exact spot implied by the new 4.5% forward is slightly below 4%; the printed Ex 6d prices use the rounded spot. Regression: `tests/capitulo19.test.ts`, “audit PS4 6d”, tests the ordering, all prices and percentages, the existing corrected 6a final-payment PV 980.19, and exact-forward versus rounded-spot conventions.
+`source/problem_sets/ps4/ps4_solutions.tex:321` claims the zero-coupon bond has the larger absolute price change. With the source-rounded new spots (3.5%, 4%), corrected old/new prices are 933.51/924.56 for the zero and 1028.73/1019.09 for the coupon bond. Losses are **8.95 euros (0.959%)** and **9.64 euros (0.937%)** respectively. The coupon bond loses more euros; the zero loses more proportionally. Chapter 19 distinguishes both measures and keeps Ex 6c purchase-YTM duration separate from Ex 6d spot-curve repricing. The exact spot implied by the new 4.5% forward is slightly below 4%; the printed Ex 6d prices use the rounded spot. Regression: `tests/capitulo19.test.ts`, “audit PS4 6d”, tests the ordering, all prices and percentages, the existing corrected 6a final-payment PV 980.19, and exact-forward versus rounded-spot conventions. Test: `tests/capitulo19.test.ts` — `audit PS4 6d: pierde más euros el bono con cupón, más porcentaje el cero; quiz 3`
 
 ### PS4 Ex 8d: implied forwards do not guarantee future spots
 
-`source/problem_sets/ps4/ps4_solutions.tex:385–391` identifies the implied forward with the future spot expected by the market and recommends locking a loan solely from that comparison. No-arbitrage alone relates current discount factors; it does not identify a forecast or ensure that waiting costs more. With the source curve, the corrected annual forward from year 2 to year 3 is 5.01%. A contract at 4.5% is cheaper than that implied fixed rate for otherwise identical terms. A future spot of either 2% or 8% remains possible without changing today’s curve. Chapter 18 states the uncertainty and the extra assumptions needed for an expectations interpretation. Regression: `tests/capitulo18.test.ts`, “audit PS4 Ex 8d: future spots can differ from the locked forward”, compares repayment under both future scenarios with the library. The existing 5.01% correction is also tested there.
+`source/problem_sets/ps4/ps4_solutions.tex:385–391` identifies the implied forward with the future spot expected by the market and recommends locking a loan solely from that comparison. No-arbitrage alone relates current discount factors; it does not identify a forecast or ensure that waiting costs more. With the source curve, the corrected annual forward from year 2 to year 3 is 5.01%. A contract at 4.5% is cheaper than that implied fixed rate for otherwise identical terms. A future spot of either 2% or 8% remains possible without changing today’s curve. Chapter 18 states the uncertainty and the extra assumptions needed for an expectations interpretation. Regression: `tests/capitulo18.test.ts`, “audit PS4 Ex 8d: future spots can differ from the locked forward”, compares repayment under both future scenarios with the library. The existing 5.01% correction is also tested there. Test: `tests/capitulo18.test.ts` — `audit PS4 Ex 8d: future spots can differ from the locked forward`
 
 ### ps4 Ex 9: month fractions are not actual day counts
 
-The solution of Ex 9c describes 15 February to 15 April 2026 as 60 days of a 90-day coupon period. Actual calendar counts are 59 elapsed days and 89 days to 15 May. The stipulated two-thirds month fraction gives 24.17 € accrued on a 36.25 € coupon; Actual/Actual coupon-period gives 24.03 €. The existing PS4 corrected answers above retain the exercise's month fractions. Chapter 17's original example and widget explicitly use Actual/Actual, so they must not substitute those figures into PS4's calculation. Regression: `tests/capitulo17.test.ts`, “audit §2: PS4 Ex 9 month fractions are not actual calendar days”.
+The solution of Ex 9c describes 15 February to 15 April 2026 as 60 days of a 90-day coupon period. Actual calendar counts are 59 elapsed days and 89 days to 15 May. The stipulated two-thirds month fraction gives 24.17 € accrued on a 36.25 € coupon; Actual/Actual coupon-period gives 24.03 €. The existing PS4 corrected answers above retain the exercise's month fractions. Chapter 17's original example and widget explicitly use Actual/Actual, so they must not substitute those figures into PS4's calculation. Regression: `tests/capitulo17.test.ts`, “audit §2: PS4 Ex 9 month fractions are not actual calendar days”. Test: `tests/capitulo17.test.ts` — `audit §2: PS4 Ex 9 month fractions are not actual calendar days`
 
 ## 3. Notation inventory
 
