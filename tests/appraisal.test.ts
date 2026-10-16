@@ -60,6 +60,9 @@ describe('payback, discounted payback, PI', () => {
   it('ps1 Ex 8 (corrected): PR 2.70, PRD 3.24', () => {
     near(payback(ex7)!, 2.7, 0.005);
     near(discountedPayback(0.1, ex7)!, 3.24, 0.005); // doc 3.46 was wrong
+    for (const [year, expected] of [[2, 73.55], [3, 111.12], [4, 148.69]]) {
+      near(npv(0.1, [0, ...ex7.slice(1, year + 1)]) / 1000, expected, 0.005);
+    }
   });
   it('ps1 Ex 10b', () => {
     near(payback([-1000, 1200])!, 0.833, 5e-4);
