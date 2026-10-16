@@ -5,6 +5,7 @@ milestone: M-2
 state: approved
 depends_on: [TASK-011, TASK-012, TASK-013, TASK-014]
 delivery: manual
+route: {platform: claude, model: sonnet, effort: high}
 ---
 
 ## Why
