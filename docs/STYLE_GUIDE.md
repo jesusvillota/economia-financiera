@@ -89,6 +89,16 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Beta | $\beta_j$ | | |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |
+| Operating value / excess cash | $V_{\mathrm{op}}$, $X$ | | Operations exclude excess cash and its income |
+| Equity / debt market value | $E$, $D$ | | Financing weights $w_E$, $w_D$; $\Delta D$ is borrowing less principal repayments |
+| Corporate tax rate / interest | $T_c$, $I_t$ | | Interest expense during period t |
+| Free cash flow: firm / equity | $\mathrm{FCFF}_t$, $\mathrm{FCFE}_t$ | | Discount at WACC / $k_e$ respectively |
+| Operating / net income | $\mathrm{EBIT}_t$, $\mathrm{BN}_t$ | | Before interest and taxes / after both |
+| Depreciation / capital expenditure | $\mathrm{Dep}_t$, $\mathrm{Capex}_t$ | | Dep is a noncash accounting expense |
+| Operating working capital change | $\Delta\mathrm{WC}_t$ | | Excludes cash and financial debt |
+| Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
+| Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
+| Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 

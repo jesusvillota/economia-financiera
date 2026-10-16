@@ -1,0 +1,167 @@
+---
+title: "Valorar una empresa: FCFF, FCFE y WACC"
+part: 2
+chapter: 5
+difficulty: 2
+prerequisites: [4]
+summary: "Del efectivo operativo al precio por acción: flujos para la empresa o el accionista, coste de capital y valor terminal."
+---
+import DcfBuilder from '../../components/plots/DcfBuilder';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Compras el negocio o sus acciones?
+
+Quieres comprar Taller Norte, una empresa ficticia que repara máquinas. Su actividad parece valiosa, pero tiene deuda. ¿Todo el valor del negocio pertenece a quien compra las acciones?
+
+Piensa en una vivienda con hipoteca. El precio de la vivienda y el dinero que recibe su propietario son cantidades distintas. Al vender, una parte sirve para cancelar la hipoteca. En una empresa ocurre algo parecido: los acreedores tienen derechos que debes considerar.
+
+Nuestro negocio generará flujos libres de 80 €, 90 € y 100 € al final de los próximos tres años. Usamos cantidades pequeñas para ver las cuentas. Después seguirá funcionando. Además, tiene 300 € de deuda y 50 € de caja excedente. Vamos a separar el valor de la actividad del valor de las acciones.
+
+## <span class="section-tag">Intuición</span>Dos caminos hacia el accionista
+
+Imagina que cada cobro entra en un depósito. Primero salen los pagos necesarios para trabajar, pagar impuestos y mantener la capacidad productiva. También sale el dinero necesario para financiar existencias y ventas todavía no cobradas. Lo que queda puede remunerar a quienes financiaron el negocio.
+
+> Actividad → flujo libre para todos → valor del negocio → sumar caja y restar deuda → capital propio.
+
+Este primer camino usa el **flujo de caja libre para la empresa**, o **FCFF** (*Free Cash Flow to the Firm*). Pertenece conjuntamente a acreedores y accionistas. No has restado intereses ni devoluciones de préstamos. Por eso no puedes asignarlo entero al accionista.
+
+> Actividad → atender la financiación ajena → flujo libre del accionista → capital propio.
+
+El segundo camino usa el **flujo de caja libre para el accionista**, o **FCFE** (*Free Cash Flow to Equity*). Ya incluye intereses y financiación neta recibida. Su descuento entrega directamente el valor del capital propio. No debes volver a restar la deuda después.
+
+La tasa debe corresponder a quien cobra. Para FCFF usamos el coste medio ponderado de capital, **WACC** (*Weighted Average Cost of Capital*). Para FCFE usamos el coste del capital propio, $\ke$: la rentabilidad exigida por los accionistas. Mezclar un flujo con la otra tasa cambia lo que estás valorando.
+
+Elige FCFF cuando puedas proyectar la actividad y una estructura de financiación objetivo estable. FCFE resulta útil si puedes prever intereses, nuevas emisiones de deuda y amortizaciones. Es frecuente aplicarlo a entidades financieras, donde separar deuda y actividad es más difícil. Ningún camino elimina la necesidad de hacer hipótesis.
+
+## <span class="section-tag">Formalización</span>Del beneficio al efectivo
+
+### Construye los flujos
+
+El **EBIT** es el beneficio antes de intereses e impuestos. Aplicamos el tipo impositivo empresarial $T_c$ como si no hubiera intereses. Sumamos la amortización contable, $\mathrm{Dep}$, porque reduce el beneficio sin ser un pago del periodo. Restamos la inversión en activos, $\mathrm{Capex}$, que sí consume efectivo.
+
+El **capital circulante operativo**, $\mathrm{WC}$, recoge recursos inmovilizados en la actividad corriente, netos de financiación operativa. Aquí excluye caja y deuda financiera. Un aumento, $\Delta\mathrm{WC}>0$, consume efectivo; una reducción lo libera.
+
+$$\mathrm{FCFF}_t=\mathrm{EBIT}_t(1-T_c)+\mathrm{Dep}_t-\mathrm{Capex}_t-\Delta\mathrm{WC}_t.$$
+
+En el primer año de Taller Norte, el EBIT es 160 €, el impuesto es del 25 %, la amortización es 20 €, la inversión es 50 € y el circulante aumenta 10 €:
+
+$$\mathrm{FCFF}_1=160(1-0{,}25)+20-50-10=80\,€.$$
+
+El **beneficio neto**, $\mathrm{BN}$, ya descuenta intereses e impuestos. La **deuda neta emitida**, $\Delta D$, significa nuevos préstamos menos devolución del principal. Aquí «neta» no significa deuda menos caja.
+
+$$\mathrm{FCFE}_t=\mathrm{BN}_t+\mathrm{Dep}_t-\mathrm{Capex}_t-\Delta\mathrm{WC}_t+\Delta D_t.$$
+
+Supón intereses de 20 € y nueva deuda neta de 5 €. El beneficio neto es $(160-20)(1-0{,}25)=105$ €. Así:
+
+$$\mathrm{FCFE}_1=105+20-50-10+5=70\,€.$$
+
+Puedes comprobarlo desde FCFF. Con intereses $I_t$, y bajo la misma hipótesis fiscal:
+
+$$\mathrm{FCFE}_t=\mathrm{FCFF}_t-I_t(1-T_c)+\Delta D_t.$$
+
+En nuestro caso, $80-20(1-0{,}25)+5=70$ €. Los intereses después de impuestos son 15 €. La financiación neta compensa parte de esa salida. El FCFE es efectivo disponible, no necesariamente el dividendo pagado: la empresa puede retenerlo.
+
+### Construye la tasa
+
+El coste de deuda $\kd$ es la rentabilidad exigida por los acreedores, antes del ajuste fiscal. No tiene por qué coincidir con el cupón de préstamos antiguos. Si los intereses son deducibles y la empresa aprovecha la deducción, su coste después de impuestos es $\kd(1-T_c)$.
+
+Sean $E$ y $D$ los valores de mercado del capital propio y la deuda. Los pesos de financiación suman la unidad:
+
+$$w_E=\frac{E}{E+D},\qquad w_D=\frac{D}{E+D},\qquad w_E+w_D=1.$$
+
+$$\mathrm{WACC}=w_E\ke+w_D\kd(1-T_c).$$
+
+Usa valores de mercado o pesos objetivo coherentes con la proyección. El balance registra valores contables, que pueden diferir mucho. El coste propio tampoco es un gasto contable: mide la oportunidad que sacrifican los accionistas al invertir aquí.
+
+Para valorar Taller Norte fijamos pesos objetivo de 60 % de capital propio y 40 % de deuda. Tomamos $\ke=12\,\%$, $\kd=6\,\%$ y $T_c=25\,\%$:
+
+$$\mathrm{WACC}=0{,}60\cdot0{,}12+0{,}40\cdot0{,}06(1-0{,}25)=9\,\%.$$
+
+El coste de deuda después de impuestos es 4,5 %. Las contribuciones al WACC son 7,2 y 1,8 puntos porcentuales. Solo la deuda recibe ese ajuste fiscal. Aplicarlo también al coste propio contaría una ventaja inexistente.
+
+<Callout type="warning" title="Una tasa constante necesita hipótesis">
+Suponemos riesgo operativo, costes y pesos objetivo estables. No estamos calculando una estructura de financiación óptima. Más deuda puede aumentar el riesgo y los costes exigidos. Si cambian mucho los pesos, una única tasa constante deja de ser adecuada. Tampoco debes contar el ahorro fiscal en el flujo y otra vez en el WACC.
+</Callout>
+
+### Añade la continuidad del negocio
+
+**DCF** (*Discounted Cash Flow*) significa descontar flujos de caja. Proyectamos hasta el año $N$. El **valor terminal**, $\mathrm{VT}_N$, resume la actividad posterior, valorada al final de ese año. No es una cantidad adicional que el negocio produzca durante ese año.
+
+Suponemos crecimiento perpetuo $g$ después del horizonte explícito, con $g<\mathrm{WACC}$. El primer flujo de esa etapa es el del año siguiente:
+
+$$\mathrm{VT}_N=\frac{\mathrm{FCFF}_{N+1}}{\mathrm{WACC}-g}=\frac{\mathrm{FCFF}_N(1+g)}{\mathrm{WACC}-g}.$$
+
+<details>
+<summary>Por qué se descuenta dos veces, en fechas distintas</summary>
+
+La perpetuidad creciente del [capítulo 2](/economia-financiera/chapters/02-valor-actual/) reúne los pagos posteriores en la fecha $N$. Su primer pago llega un año después. Para traer ese conjunto a hoy, falta dividir por $(1+\mathrm{WACC})^N$. No repites el mismo descuento: primero agrupas pagos en el horizonte y después cambias la fecha de valoración.
+</details>
+
+Con $N=3$ y $g=2\,\%$, el flujo del cuarto año es $100(1+0{,}02)=102$ €. El terminal vale $102/(0{,}09-0{,}02)=1457{,}14$ € al final del tercer año. Su valor actual es 1125,18 €.
+
+Llamamos $V_{\mathrm{op}}$ al valor de las operaciones, sin la caja excedente:
+
+$$V_{\mathrm{op}}=\sum_{t=1}^{N}\frac{\mathrm{FCFF}_t}{(1+\mathrm{WACC})^t}+\frac{\mathrm{VT}_N}{(1+\mathrm{WACC})^N}.$$
+
+Los tres flujos explícitos valen hoy 73,39 €, 75,75 € y 77,22 €. Con el terminal, el negocio vale **1351,55 €**. Calculamos sin redondear pasos intermedios; las cifras mostradas tienen dos decimales. No restamos una inversión inicial: valoramos operaciones existentes. Para un VAN, sí habría que considerar el precio o desembolso inicial.
+
+### Pasa del negocio a las acciones
+
+La **caja excedente**, $X$, es efectivo que no necesitas para generar los flujos proyectados. La sumas si esos flujos excluyen su rendimiento. Restas la deuda financiera a valor de mercado. Nuestro ejemplo omite otros derechos, como acciones preferentes o participaciones minoritarias.
+
+$$E=V_{\mathrm{op}}+X-D,\qquad P_0=\frac{E}{n_{\mathrm{acc}}}.$$
+
+Aquí $n_{\mathrm{acc}}$ es el número de acciones. Con 50 € de caja, 300 € de deuda y 100 acciones, el capital propio vale **1101,55 €**. El valor por acción es **11,02 €**. Puedes restar deuda menos caja una sola vez; no añadas la caja después si ya usaste esa deuda neta.
+
+El camino FCFE llega directamente a $E$, descontando a $\ke$. Si hay una etapa perpetua, su terminal usa FCFE y $\ke-g$. Ambas rutas concuerdan si las proyecciones de deuda, impuestos y riesgo son coherentes. No basta con cambiar el nombre del flujo manteniendo la misma tasa. Nuestro FCFE del primer año ilustra la conciliación; no hemos proyectado una ruta FCFE completa.
+
+## <span class="section-tag">Zona de juego</span>Construye la valoración
+
+Las barras azules muestran cada FCFF en euros de hoy. La amarilla muestra el terminal también descontado. Sus alturas se pueden sumar porque comparten fecha y unidad. El puente inferior suma caja y resta deuda. Empieza con los datos del ejemplo y cambia una hipótesis cada vez.
+
+<DcfBuilder client:visible />
+
+**Prueba esto:**
+
+1. Sube el coste propio dejando los flujos fijos. Mira cómo sube el WACC y baja el valor de las operaciones.
+2. Sube el crecimiento terminal. Después aumenta solo la deuda actual. ¿Qué cambia en el negocio y qué cambia en las acciones?
+
+El widget mantiene los pesos objetivo aunque cambies la deuda del puente. Sirve para aislar efectos, no para simular una refinanciación completa. Si varías deuda en una empresa real, revisa también los costes y la política futura de financiación.
+
+Fíjate en cuánto pesa la barra terminal. Una pequeña diferencia entre WACC y crecimiento puede producir valores enormes. No demuestra que hayas descubierto una empresa barata: puede indicar que la hipótesis perpetua domina tu resultado. El efecto del denominador es convexo, no una ley de crecimiento exponencial del precio.
+
+El modelo avisa si el crecimiento alcanza la tasa: la perpetuidad deja de converger. También avisa si la deuda supera el negocio más la caja. Ese residual negativo señala los límites del puente simple. Las acciones con responsabilidad limitada no tienen un precio negociable negativo.
+
+## <span class="section-tag">Compruébalo</span>Elige flujo, tasa y propietario
+
+<Quiz client:visible
+  question="Proyectas FCFE después de intereses y financiación neta. ¿Cómo obtienes el capital propio?"
+  options={['Descontar al WACC y restar deuda', 'Descontar al coste propio, sin volver a restar deuda', 'Descontar al coste de deuda']}
+  answer={1}
+  explanation="El FCFE ya pertenece al accionista. Su riesgo exige el coste propio. Restar deuda de nuevo contaría dos veces su efecto."
+/>
+
+<Quiz client:visible
+  question="En el ejemplo, FCFF es 80 €, los intereses son 20 €, el impuesto es 25 % y la deuda neta emitida es 5 €. ¿Qué FCFE obtienes?"
+  options={['Menor que FCFF: 70 €', 'Igual a FCFF', 'Mayor que FCFF']}
+  answer={0}
+  explanation="Restas intereses después de impuestos y sumas financiación neta: $80-20(1-0{,}25)+5=70$ €."
+/>
+
+<Quiz client:visible
+  question="El terminal calculado al final del tercer año es 1457,14 €. ¿Lo sumas directamente a los valores actuales?"
+  options={['Sí, ya está valorado', 'Solo si hay deuda', 'No, primero lo descuentas hasta hoy']}
+  answer={2}
+  explanation="El terminal está fechado en el horizonte. Con WACC del 9 % debes descontarlo tres años; aporta 1125,18 € de hoy."
+/>
+
+## <span class="section-tag">Resumen</span>Una valoración, dos rutas coherentes
+
+- FCFF remunera deuda y capital propio. Descuéntalo al WACC para obtener el valor operativo.
+- FCFE corresponde al accionista. Descuéntalo al coste propio para obtener directamente su capital.
+- El WACC usa pesos de mercado o una política objetivo coherente. El ajuste fiscal afecta al coste de deuda.
+- El terminal empieza después del horizonte explícito. Su fecha exige un descuento adicional hasta hoy.
+- Para llegar a las acciones desde las operaciones, suma caja excedente y resta deuda una sola vez.
+
+**Siguiente:** estudiaremos cómo medir rentabilidad y riesgo. Así podremos entender mejor las tasas que hoy hemos tomado como datos.
