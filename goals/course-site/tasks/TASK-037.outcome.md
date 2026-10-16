@@ -1,0 +1,22 @@
+# TASK-037 outcome: Chapter 12, market structure, venues and participants
+
+## Acceptance
+
+- [x] `npm test` passes, including a new `tests/capitulo12.test.ts` covering every number in the text.
+  Evidence: `Test Files 28 passed (28)`, `Tests 1013 passed (1013)`. `tests/capitulo12.test.ts` has 13 tests. They check every number in the chapter against `src/data/venues.ts`: eight situations and six tiles, items 6 and 8 in the "Prueba esto", the session times 8:30, 9:00, 17:30 and 17:35, T+2 and "dos días hábiles", T+1 in 2024 (US) and October 2027 (EU), MiFID II from 2018, the one-year money-market limit, chapter references 14 and 20, and the five classification rows. They also check every row of the venue, participant and strategy tables against the data flags, the score and seeded shuffle, and the two audit corrections.
+- [x] `npm run build` passes and `/chapters/12-estructura-mercado/` renders the six sections in order.
+  Evidence: `astro check` reports `0 errors, 0 warnings, 0 hints`; `[build] Complete!`. The click-through asserts the rendered `h2 .section-tag` list is Gancho, Intuición, Formalización, Zona de juego, Compruébalo, Resumen at four theme × width combinations.
+- [x] `npm run screenshots 12` is clean (dark/light x desktop/phone: no console, KaTeX or overflow errors).
+  Evidence: `✓ chapters_12-estructura-mercado-{dark,light}-{desktop,phone}.png`, exit 0. I also looked at the widget and table crops at 1280 px dark and 375 px light. One fix came from this: the tiles now form a 3 × 2 grid on desktop instead of 5 + 1.
+- [x] A Playwright click-through script (`npm run clickthrough:cap12`) exercises each widget and compares readouts with the library values.
+  Evidence: `scripts/clickthrough-cap12.mjs` loads `src/data/venues.ts` through Vite. On dark/light × 1280/360 px it uses every select, clears an answer, makes deliberate mistakes, presses "Borrar respuestas" and "Nuevo orden" (seeds 1–3), and answers the three quizzes. After each step it compares the counters, the chips in each tile, the feedback text and the item order with `score`, `shuffledExamples` and the example key. Final line: `✓ 388 readout comparisons against venues.ts; … no console, KaTeX or overflow errors`.
+- [x] No claim contradicts `docs/AUDIT.md`.
+  Evidence: the curriculum row for chapter 12 (section 4) says "keep (note 05 §2, §4, §5)", "Venue classification sorter", "Quiz only". The chapter does exactly that and leaves note 05 §3 (trading) to chapter 13. Two source errors are new entries in section 2, each with a regression test: "Note 05 §2: speculators and arbitrageurs listed as brokers" and "Note 05 §4: MiFID II venue types and systematic internalisers". The chapter text follows the corrected versions.
+
+## Summary
+
+- **What:** `src/content/chapters/12-estructura-mercado.mdx` uses the house template and has three `<Quiz>` blocks, with `sessions: []` because PS4 does not exist yet. The new widget is `src/components/plots/VenueSorter.tsx`, built on `WidgetFrame`, with native `Select` controls and a seeded "Nuevo orden" shuffle (mulberry32 from `src/lib/problems/variant.ts`). Its data lives in `src/data/venues.ts`: six venue types with MiFID II properties, eight original situations, participants, BME session phases and settlement facts. The PR also adds `tests/capitulo12.test.ts`, `scripts/clickthrough-cap12.mjs` (`npm run clickthrough:cap12`), and two entries appended to `docs/AUDIT.md` section 2.
+- **How:** the chapter has no maths, so there is no `src/lib` change. The tests instead check that every number and table row in the text matches the typed data file, and that the widget reads from the same file.
+- **Deviations:** I left out the note's third-party market statistics (LSEG market sizes, dark-pool volume shares, fines). They are dated and hard to verify, and the chapter does not need them. The chapter adds current settlement facts (EU T+2 today; US T+1 since 2024; EU T+1 planned for October 2027). No new notation symbols, so `docs/STYLE_GUIDE.md` is unchanged.
+- **Verified revision:** the branch head of PR #31 after merging `origin/main`; `npm test && npm run build && npm run screenshots 12 && npm run clickthrough:cap12` exits 0.
+- **Proposed follow-ups:** note 05 line 666 gives the original MiFID II double volume cap (4 % per venue, 8 % EU-wide). The 2024 MiFIR review changed it (it removed the per-venue cap and lowered the EU-wide cap to 7 %). Check and record this in the audit when a chapter uses it. Link chapter 12 from PS4 once that session exists (M-5).

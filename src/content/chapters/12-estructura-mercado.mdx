@@ -1,0 +1,192 @@
+---
+title: "Estructura de mercado: mercados y participantes"
+part: 4
+chapter: 12
+difficulty: 1
+prerequisites: []
+summary: "Dónde se negocia un activo, quién interviene y qué cambia entre una bolsa, un sistema multilateral, un dark pool y un acuerdo OTC."
+sessions: []
+---
+import VenueSorter from '../../components/plots/VenueSorter';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Dónde va tu orden?
+
+Abres la aplicación de tu banco y pulsas «comprar» sobre una acción conocida. Unos segundos después, la compra aparece en tu cuenta. ¿Quién te ha vendido esas acciones? ¿Y dónde se ha cruzado tu orden con la suya?
+
+La respuesta no es única. Tu orden puede llegar a la bolsa, a otro sistema electrónico o a la cartera del propio banco. En los tres casos compras la misma acción. Pero cambian las reglas: quién ve tu orden, quién fija el precio y quién es tu contraparte, es decir, la persona o entidad que está al otro lado de la operación.
+
+Este capítulo dibuja ese mapa. Primero clasificamos los mercados. Después vemos quién participa en ellos. Al final ordenas tú varias situaciones en su casilla correcta.
+
+## <span class="section-tag">Intuición</span>Tres preguntas para cualquier mercado
+
+Un **mercado financiero** es un conjunto de reglas y mecanismos para intercambiar activos financieros y fijar su precio. Puede ser un edificio, una plataforma electrónica o una red de llamadas entre bancos. Lo importante no es el lugar, sino las reglas.
+
+Piensa en cómo vendes un coche usado. Puedes buscar tú mismo un comprador. Puedes pagar a un agente para que lo busque. Puedes vendérselo a un concesionario, que lo guarda y lo revende. O puedes llevarlo a una subasta. Los mercados financieros usan esas mismas cuatro formas:
+
+- **Búsqueda directa:** comprador y vendedor se buscan sin ayuda. No pagas comisión, pero buscar cuesta tiempo.
+- **Mercado de brokers:** un **broker** (comisionista) busca la contraparte por ti y cobra una comisión. No compra ni vende con su dinero.
+- **Mercado de dealers:** un **dealer** compra y vende con su propio dinero. Cotiza un precio de compra, el *bid*, y uno de venta, el *ask*. Te da liquidez inmediata y gana con la diferencia.
+- **Mercado de subasta:** muchas órdenes de compra y venta se reúnen y se casan según reglas fijas. Así funciona una bolsa.
+
+Para situar cualquier centro de negociación, hazte tres preguntas:
+
+1. **¿Cuántas partes se encuentran?** Muchas a la vez (multilateral) o solo dos (bilateral).
+2. **¿Quién decide la casación?** Unas reglas fijas, iguales para todos, o un operador con margen de decisión.
+3. **¿Qué se ve antes de operar?** Un libro de órdenes público, unas cotizaciones firmes o nada.
+
+<Callout type="note">
+Mercado «regulado» es un término legal. No significa «el único mercado con reglas». Casi todos los centros que vas a ver están supervisados. Lo que cambia es el tipo de reglas.
+</Callout>
+
+## <span class="section-tag">Formalización</span>El mapa de los mercados
+
+### Cinco formas de clasificar un mercado
+
+Un mismo mercado recibe varias etiquetas a la vez. Cada criterio responde a una pregunta distinta:
+
+| Criterio | Pregunta | Categorías |
+|---|---|---|
+| Derecho | ¿Qué compras? | Deuda (bonos) o renta variable (acciones) |
+| Plazo | ¿Cuándo vence? | Monetario (hasta 1 año) o de capitales (más de 1 año) |
+| Entrega | ¿Cuándo se entrega? | Al contado (*spot*) o a plazo (forwards y futuros) |
+| Organización | ¿Cómo se negocia? | Organizado o no organizado (OTC) |
+| Fase | ¿Quién recibe el dinero? | Primario (el emisor) o secundario (otro inversor) |
+
+El plazo se refiere al vencimiento del activo en su emisión. Una letra del Tesoro pertenece al mercado monetario. Un bono del Estado a largo plazo, al de capitales.
+
+La última fila es la más importante para este bloque. En el **mercado primario** el emisor vende valores nuevos y recibe el dinero. Una salida a bolsa es un ejemplo; la estudiamos en el capítulo 14. En el **mercado secundario** los inversores negocian valores ya emitidos entre ellos. Cuando compras acciones en bolsa, el dinero va al vendedor, no a la empresa.
+
+Los dos mercados se necesitan. Pocos inversores comprarían una emisión nueva si después no pudieran venderla. Un secundario líquido reduce ese riesgo y hace más fácil emitir en el primario.
+
+### Quién participa
+
+Los participantes se distinguen por una pregunta: ¿compran y venden por su propia cuenta? Quien lo hace asume el riesgo de que el precio se mueva en su contra. Quien actúa por cuenta de otros no lo asume.
+
+| Participante | Tipo | ¿Por cuenta propia? |
+|---|---|---|
+| Banco | Intermediario | Sí |
+| Fondo de inversión | Intermediario | Sí |
+| Broker (comisionista) | Mediador | No |
+| Dealer (operador por cuenta propia) | Mediador | Sí |
+| Creador de mercado | Mediador | Sí |
+
+Un **intermediario financiero** transforma activos. Un banco capta depósitos y concede préstamos: crea activos que antes no existían. Un fondo de inversión reúne el ahorro de muchas personas en una cartera común. Los bancos pueden captar depósitos a la vista y acceden a la liquidez del banco central. Los fondos, las aseguradoras y los fondos de pensiones no tienen ninguna de esas dos características.
+
+Un **mediador** no crea activos nuevos. Solo facilita que los activos cambien de manos. El broker cobra una comisión y no arriesga su capital. El dealer sí lo arriesga: mantiene un inventario de títulos. Un **creador de mercado** es un dealer que cotiza de forma continua precios de compra y de venta para un valor. Muchos operadores de alta frecuencia hacen esta función con algoritmos muy rápidos.
+
+Especular, cubrirse y arbitrar no son tipos de participante, sino **estrategias**. Cualquier inversor con capital propio puede usarlas:
+
+- Quien **especula** toma riesgo a propósito porque espera un movimiento del precio.
+- Quien **se cubre** (*hedger*) toma una posición para reducir un riesgo que ya tiene.
+- Quien **arbitra** aprovecha una diferencia de precio entre dos activos o mercados equivalentes.
+
+| Estrategia | ¿Por cuenta propia? |
+|---|---|
+| Especulador | Sí |
+| Cobertura (hedger) | Sí |
+| Arbitrajista | Sí |
+
+<details>
+<summary>Una corrección a los apuntes del curso</summary>
+
+Los apuntes del curso clasifican a especuladores y arbitrajistas como tipos de broker. También dicen que el especulador busca controlar el riesgo con cobertura. Las dos ideas fallan. Un broker no toma posiciones propias. Especular y arbitrar exigen hacerlo. Y controlar un riesgo con una posición opuesta es cubrirse, no especular. La corrección está registrada en `docs/AUDIT.md`.
+</details>
+
+### Centros de negociación en Europa
+
+En la UE, la directiva MiFID II y el reglamento MiFIR se aplican desde 2018. Definen tres **centros de negociación**: el mercado regulado, el sistema multilateral de negociación y el sistema organizado de contratación. Todos son multilaterales: reúnen muchos intereses de compra y venta de terceros. Fuera de ellos quedan las operaciones bilaterales.
+
+| Forma | ¿Centro de negociación? | Partes | ¿Quién casa? | ¿Qué se ve antes? |
+|---|---|---|---|---|
+| Mercado regulado | Sí | Muchas | Reglas fijas | Libro de órdenes |
+| SMN (MTF) | Sí | Muchas | Reglas fijas | Libro de órdenes |
+| SOC (OTF) | Sí | Muchas | El operador, con margen | Cotizaciones y órdenes |
+| Dark pool | Sí | Muchas | Reglas fijas | Nada |
+| Internalizador sistemático | No | Dos | El banco decide si opera | Cotizaciones firmes |
+| OTC bilateral | No | Dos | Las dos partes | Nada |
+
+- Un **mercado regulado** es la bolsa clásica. Exige requisitos estrictos a las empresas que admite y publica sus órdenes y operaciones. En España los gestiona BME, Bolsas y Mercados Españoles.
+- Un **SMN** (sistema multilateral de negociación; en inglés *MTF*) funciona como una bolsa con requisitos de admisión más flexibles. Los segmentos para empresas pequeñas en crecimiento suelen ser SMN.
+- Un **SOC** (sistema organizado de contratación; en inglés *OTF*) da al operador cierto margen para decidir cómo casar órdenes. Solo admite instrumentos que no son acciones, como bonos o derivados.
+- Un **dark pool** no muestra las órdenes antes de ejecutarlas. Sirve a quien quiere vender un bloque grande sin mover el precio en su contra. Las operaciones sí se publican después. En la UE, un dark pool suele ser un SMN que usa exenciones de transparencia previa. No garantiza que tu orden se ejecute.
+- Un **internalizador sistemático** es una entidad, normalmente un banco, que ejecuta órdenes de clientes contra su propia cartera. Lo hace de forma frecuente, organizada y sistemática. Es la contraparte de cada operación. Por eso no es un centro multilateral.
+
+<details>
+<summary>Una segunda corrección a los apuntes</summary>
+
+Los apuntes del curso dicen que MiFID II divide los centros de negociación en dos tipos: mercados regulados y OTC. En realidad define tres centros: mercado regulado, SMN y SOC. El internalizador sistemático no es un centro de negociación, sino una entidad que opera con su propio balance. Los apuntes también lo describen como un posible dark pool. Un dark pool es multilateral; un internalizador, no. La corrección está registrada en `docs/AUDIT.md`.
+</details>
+
+### Una sesión en la bolsa española
+
+La bolsa española combina dos mecanismos. En una **subasta** las órdenes se acumulan durante un periodo sin ejecutarse. Al final se casan todas a un único precio. En la **negociación continua** cada orden se ejecuta en cuanto encuentra contraparte.
+
+| Fase | Desde | Hasta |
+|---|---|---|
+| Subasta de apertura | 8:30 | 9:00 |
+| Mercado continuo | 9:00 | 17:30 |
+| Subasta de cierre | 17:30 | 17:35 |
+
+Las subastas reúnen liquidez en un momento y reducen el impacto de las órdenes grandes. La negociación continua permite entrar y salir en cualquier momento, pero una orden grande puede mover más el precio. Por eso las subastas abren y cierran la sesión.
+
+Después de la operación empieza la **poscontratación**. Una entidad de contrapartida central, BME Clearing, se pone entre comprador y vendedor. Así, si una parte falla, la otra no pierde la operación. Luego llega la **liquidación**: el intercambio real de valores y dinero. En la UE, la liquidación de acciones es hoy T+2, es decir, dos días hábiles después de la operación. Estados Unidos pasó a T+1 en 2024 y la UE lo tiene previsto para octubre de 2027. Iberclear lleva el registro de quién posee cada valor.
+
+En la UE, ESMA coordina la supervisión de los mercados de valores. En España, la CNMV supervisa los mercados y protege a los inversores.
+
+### Mercados OTC
+
+Un mercado **OTC** (*over the counter*, no organizado) es el conjunto de operaciones que se acuerdan fuera de un centro de negociación. Normalmente son bilaterales: dos partes, directamente o con un dealer en medio. Tiene tres rasgos:
+
+- **Contratos a medida.** Las partes eligen plazo, importe y fechas de pago. Un swap de tipos de interés, en el que una parte paga un tipo fijo y la otra uno variable, es el ejemplo típico.
+- **Menos transparencia.** No hay libro de órdenes público antes de operar.
+- **Riesgo de contraparte.** Si no hay contrapartida central, una parte puede quedarse sin cobrar si la otra incumple.
+
+En el mercado OTC se negocian bonos corporativos, divisas al contado y muchos derivados. Tras la crisis financiera global, la regulación europea EMIR obliga a comunicar los derivados OTC y, en algunos casos, a compensarlos en una contrapartida central. Los forwards y los swaps vuelven en el capítulo 20.
+
+## <span class="section-tag">Zona de juego</span>Ordena las situaciones
+
+Cada situación describe una operación ficticia. Elige en qué casilla encaja. El número de la situación aparece en la casilla elegida, con un ✓ si aciertas y un ✗ si no. Después de cada respuesta lees por qué.
+
+<VenueSorter client:visible />
+
+**Prueba esto:**
+
+1. Clasifica las ocho situaciones en el orden inicial. Compara la 6 con la 8: en las dos hay un banco o intermediario al otro lado. ¿Qué palabra decide entre internalizador y OTC?
+2. Pulsa «Nuevo orden» y vuelve a clasificar sin mirar las explicaciones. Busca las seis casillas usando solo las tres preguntas de la Intuición.
+
+Fíjate en que hay dos casillas sin nada visible antes de operar: el dark pool y el OTC bilateral. Las separa la primera pregunta. El dark pool reúne a muchas partes; el acuerdo OTC, solo a dos.
+
+## <span class="section-tag">Compruébalo</span>Comprueba el mapa
+
+<Quiz client:visible
+  question="Compras en bolsa acciones de una empresa que salió a bolsa hace años. ¿Quién recibe tu dinero?"
+  options={['La empresa emisora', 'El inversor que te vende las acciones', 'La CNMV']}
+  answer={1}
+  explanation="Es una operación del mercado secundario. La empresa solo recibe dinero cuando emite valores nuevos en el mercado primario."
+/>
+
+<Quiz client:visible
+  question="¿Quién asume el riesgo de que el precio se mueva en su contra mientras guarda un inventario de títulos?"
+  options={['El broker', 'La contrapartida central', 'El dealer']}
+  answer={2}
+  explanation="El dealer opera por cuenta propia y mantiene inventario. El broker solo busca la contraparte y cobra una comisión."
+/>
+
+<Quiz client:visible
+  question="Un banco ejecuta de forma sistemática las órdenes de sus clientes contra su propia cartera. ¿Qué es?"
+  options={['Un sistema multilateral de negociación', 'Un internalizador sistemático', 'Un mercado regulado']}
+  answer={1}
+  explanation="El banco es la única contraparte de cada operación. Es una ejecución bilateral, así que no es un centro de negociación multilateral."
+/>
+
+## <span class="section-tag">Resumen</span>Qué hemos ordenado
+
+- Un mercado es un conjunto de reglas. Lo clasificamos por derecho, plazo, entrega, organización y fase.
+- En el primario el emisor recibe el dinero; en el secundario lo recibe otro inversor.
+- El broker actúa por cuenta ajena; el dealer y el creador de mercado, por cuenta propia. Especular, cubrirse y arbitrar son estrategias.
+- MiFID II define tres centros de negociación multilaterales: mercado regulado, SMN y SOC. El internalizador y el OTC son bilaterales.
+- Tres preguntas sitúan cualquier operación: cuántas partes, quién casa y qué se ve antes.
+
+**Siguiente:** negociación. Abrimos el libro de órdenes y vemos cómo se ejecuta una orden, qué cuesta y cómo se opera con dinero prestado.
