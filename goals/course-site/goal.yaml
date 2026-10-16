@@ -18,7 +18,7 @@ milestones:
   - {id: M-6, title: Polish and launch, success: [SC-1, SC-2, SC-3], exit: Cross-site QA, search or glossary, accessibility and launch checks done}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
-  orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}
+  orchestrator: {platform: claude, model: sonnet, effort: medium}    # {platform: codex, model: MODEL, effort: LEVEL}
   max_parallel: 7
   default_route: null   # {platform: codex, model: MODEL, effort: LEVEL}
   agent: claude         # claude | codex | opencode | agy

@@ -1,0 +1,1 @@
+{"at":"2026-10-16T10:21:14.928934Z","node":"goal:course-site","action":"policy","actor":"human:jesusvillota","summary":"Set policy orchestrator {\"platform\":\"claude\",\"model\":\"sonnet\",\"effort\":\"medium\"}","rationale":"","refs":{"key":"orchestrator","value":{"platform":"claude","model":"sonnet","effort":"medium"}}}
