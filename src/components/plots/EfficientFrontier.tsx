@@ -66,8 +66,9 @@ export default function EfficientFrontier({
     const minimum = globalMinimumVariance(returns, covariance, longOnly);
     const low = Math.min(...returns), high = Math.max(...returns);
     const span = high - low || 0.04;
-    const minTarget = longOnly ? low : Math.min(low - span / 2, minimum.expectedReturn);
-    const maxTarget = longOnly ? high : Math.max(high + span / 2, minimum.expectedReturn);
+    // Stable decimal bounds keep native range steps valid after floating-point optimisation.
+    const minTarget = Number((longOnly ? low : Math.min(low - span / 2, minimum.expectedReturn)).toFixed(12));
+    const maxTarget = Number((longOnly ? high : Math.max(high + span / 2, minimum.expectedReturn)).toFixed(12));
     const targets = Array.from({ length: 101 }, (_, i) => minTarget + (maxTarget - minTarget) * i / 100);
     // Include the turning point exactly so neither branch skips the minimum.
     targets.push(minimum.expectedReturn);

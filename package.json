@@ -14,10 +14,14 @@
     "clickthrough:frontier": "node scripts/clickthrough-frontier.mjs",
     "clickthrough:cap2": "node scripts/clickthrough-cap2.mjs",
     "clickthrough:cap9": "node scripts/clickthrough-cap9.mjs",
+    "clickthrough:cap8": "node scripts/clickthrough-cap8.mjs",
     "clickthrough:cap6": "node scripts/clickthrough-cap6.mjs",
     "clickthrough:cap5": "node scripts/clickthrough-cap5.mjs",
     "clickthrough:van-tir": "node scripts/clickthrough-van-tir.mjs",
-    "clickthrough:cap4": "node scripts/clickthrough-cap4.mjs"
+    "clickthrough:cap4": "node scripts/clickthrough-cap4.mjs",
+    "clickthrough:cap10": "node scripts/clickthrough-cap10.mjs",
+    "clickthrough:cap7": "node scripts/clickthrough-cap7.mjs",
+    "clickthrough:cap11": "node scripts/clickthrough-cap11.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

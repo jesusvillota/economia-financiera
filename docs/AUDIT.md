@@ -48,6 +48,17 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §4, “Ecuación de la CAL”, derives `w = sigma_p / sigma_c` from `sigma_p² = w² sigma_c²` without stating `w >= 0`. In general, `sigma_p = |w| sigma_c`. At `r_f = 2 %`, fund return `10 %`, fund variance `2/225`, and `w = -0.5`, the actual expected return is `-2 %` with positive volatility `4.71 %`; the upper CAL formula would give `6 %` at that same volatility. Chapter 9 states the branch restriction and keeps its allocation control nonnegative. Regression test: `tests/capitulo9.test.ts`, “audit: shorting the fund needs the absolute weight and the lower branch”.
 
+### Note 03: beta does not rank total volatility
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:1007` says beta below 1 implies lower total volatility than the market. This fails when specific risk is large (also repeated in the portfolio interpretation at line 1133). With market variance 0.04, asset beta 0.6 and asset variance 0.09, systematic variance is 0.0144 and residual variance is 0.0756. Asset volatility is 30 %, above the market’s 20 %, despite beta below 1. Beta measures linear market sensitivity, not a ranking of total volatility. Chapter 10 uses this distinction. Regression test: `tests/capitulo10.test.ts`, “audit note 03: low beta can coexist with higher total volatility”.
+### Note 03 §3: minimum-risk boundary versus efficient frontier
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §3, “Optimización de Carteras”, says that minimising variance for different equality-constrained return targets gives only efficient portfolios. Targets below the global minimum-variance portfolio's return can instead be dominated. Chapter 8 uses an original three-asset example: means 6/10/14 %, volatilities 12/20/28 %, correlations A–B = 0.20 and A–C = B–C = 0. A target of 7 % has minimum risk 10.68 %, while the global minimum has return 7.83 % and risk 10.33 %. The latter improves both measures. Regression: `tests/capitulo8.test.ts`, “lower target is dominated by the global minimum”. Chapter 8 also makes the short-sale distinction explicit. With unrestricted shorts, weights −1/0/2 already give 22 %; the family (1−t)/0/t has unbounded mean as t grows. The chapter states the long-only restriction and the plot's finite window explicitly.
+
+### Note 03: perfect positive correlation with short sales
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
@@ -120,6 +131,8 @@ Ex 9a: clean cost 354,060 uses the rounded price 101.16%; unrounded gives 354,05
 Numbers 5 and 7 are missing. Futures are not covered although the section title says so.
 
 ### Other inconsistencies
+
+- **Notes 03 §9 and 07 extensions: raw versus excess factor returns.** Note 03's Fama-French equation labels the left side as the raw asset return, while its market regressor is an excess return. Note 07's Carhart equation also uses raw notation, but its explanation specifies excess returns. Use `r_j - r_f` on the left and `r_M - r_f` for the market factor; SMB, HML and UMD are already return differences. Otherwise a constant risk-free rate shifts the estimated intercept and can create spurious alpha. Chapter 11 states the excess-return convention explicitly. Regression test: `tests/capitulo11.test.ts`, “audit note 03 §9 / note 07”, checks full-rank synthetic factors with zero true alpha: excess returns give zero intercept; adding a constant risk-free return shifts the intercept by that rate in both wrappers.
 
 - Notes 03, 06 and 07 give the same derivations three times (same subsection titles). Pick one source per chapter.
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.

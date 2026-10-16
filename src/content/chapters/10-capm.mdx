@@ -1,0 +1,184 @@
+---
+title: "CAPM: CML, SML y beta"
+part: 3
+chapter: 10
+difficulty: 3
+prerequisites: [9]
+summary: "Por qué el mercado remunera la exposición común, cómo se distinguen CML y SML y qué mide el alfa."
+---
+import SecurityMarketLine from '../../components/plots/SecurityMarketLine';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Basta con prometer más?
+
+Dos acciones anuncian rentabilidades distintas. ¿Debes elegir siempre la que promete más? Antes necesitas saber qué riesgo asumes para obtenerla. Una previsión alta puede compensar una exposición alta a las caídas del mercado.
+
+Imagina un tipo libre de riesgo del 2 % anual y una rentabilidad esperada del mercado del 8 %. El activo A tiene beta 1,5 y una rentabilidad prevista del 13 %. El CAPM le exige un 11 %. Su previsión supera esa referencia en 2 puntos porcentuales. Esa distancia es su **alfa**. No es una ganancia garantizada: tanto la previsión como el modelo pueden fallar.
+
+El **CAPM**, modelo de valoración de activos de capital (*Capital Asset Pricing Model*), propone una referencia para comparar rentabilidades esperadas. Remunera la exposición al mercado. Para usarlo bien, debes distinguir esa exposición del riesgo total de una acción.
+
+## <span class="section-tag">Intuición</span>Dos ejes para dos preguntas
+
+En el [capítulo sobre el activo libre de riesgo](/economia-financiera/chapters/09-activo-libre-riesgo/) combinaste una cartera tangente con ahorro o deuda. La **cartera tangente** es la cartera con riesgo que maximiza la rentabilidad adicional por unidad de volatilidad. Cada inversor puede elegir una cantidad distinta de esa cartera.
+
+Ahora añade una condición: todos comparten las mismas previsiones y el mercado está en equilibrio. Esto significa que las cantidades que los inversores desean mantener coinciden con las disponibles. Si todos eligen la misma composición con riesgo, esa composición debe coincidir con la oferta agregada de activos.
+
+Así aparece la **cartera de mercado**: todos los activos con riesgo, ponderados por su valor de mercado. Bajo los supuestos del CAPM, coincide con la cartera tangente. Un índice bursátil puede servir como aproximación empírica, pero no contiene necesariamente todos esos activos.
+
+Mira los ejes antes de interpretar una recta:
+
+| Recta | Eje horizontal | Qué representa |
+|---|---|---|
+| CML | Volatilidad total | Combinaciones eficientes del mercado y el activo libre de riesgo |
+| SML | Beta | Rentabilidad exigida a cualquier activo o cartera según el CAPM |
+
+La **CML**, línea del mercado de capitales (*Capital Market Line*), responde: «¿Qué rentabilidad ofrece una combinación eficiente para esta volatilidad?». La **SML**, línea del mercado de valores (*Security Market Line*), responde: «¿Qué rentabilidad exige esta exposición al mercado?». Una acción individual puede cumplir la SML y quedar por debajo de la CML al tener riesgo específico.
+
+En la figura, la recta naranja es la SML. Los puntos A y B son previsiones sobre activos. Cada segmento vertical une una previsión con la rentabilidad exigida para su beta. La posición horizontal no mide cuánto fluctúa toda la acción.
+
+<SecurityMarketLine client:visible />
+
+**Prueba esto:** mantén la beta de A y reduce su rentabilidad prevista hasta la recta. El alfa desaparece. Después cambia la beta sin tocar la previsión. La referencia cambia, aunque tu previsión siga igual.
+
+## <span class="section-tag">Formalización</span>De la cartera común a la beta
+
+### Qué supone el modelo
+
+Trabajamos con un solo periodo y rentabilidades anuales comparables. Los inversores toman precios como dados y deciden mediante esperanza y varianza. Comparten previsiones de rentabilidad, varianza y covarianza. Los activos son divisibles y negociables. Ignoramos impuestos, costes de transacción y restricciones a las posiciones. Todos pueden prestar y pedir prestado al mismo tipo libre de riesgo.
+
+Son condiciones exigentes. En el mundo real, el coste de endeudarse puede superar el de ahorrar. Las previsiones también difieren. Por eso usamos el CAPM como modelo de referencia, sin convertir sus conclusiones en promesas.
+
+### CML: riesgo total de carteras eficientes
+
+La CAL era la línea de asignación de capital de una cartera con riesgo cualquiera. Cuando esa cartera es el mercado, obtenemos la CML:
+
+$$\E[r_p]=\rf+\frac{\E[\rM]-\rf}{\sigma_M}\,\sigma_p.$$
+
+La pendiente es el **ratio de Sharpe del mercado**: prima esperada por unidad de volatilidad. Con los datos iniciales y una volatilidad de mercado del 20 %, vale 0,30. Una combinación eficiente con volatilidad del 10 % ofrece una esperanza del 5 %.
+
+<details>
+<summary>Cómo se obtiene la CML</summary>
+
+Sea $w_M$ la fracción invertida en el mercado. El resto, $1-w_M$, se invierte al tipo libre de riesgo. Para $w_M\geq 0$:
+
+$$\E[r_p]=\rf+w_M(\E[\rM]-\rf),\qquad \sigma_p=w_M\sigma_M.$$
+
+Despeja $w_M=\sigma_p/\sigma_M$ en la segunda igualdad. Sustitúyelo en la primera y obtienes la CML. Con la mitad en el mercado y la mitad sin riesgo, la volatilidad es del 10 % y la esperanza del 5 %. Si pides prestado para invertir más en el mercado, también amplificas las pérdidas posibles. Una posición negativa en el mercado pertenece a la rama opuesta, no a esta recta eficiente.
+</details>
+
+### Beta: exposición común, no fluctuación total
+
+La **beta** mide la sensibilidad lineal al mercado:
+
+$$\beta_j=\frac{\Cov(r_j,\rM)}{\sigma_M^2}.$$
+
+La covarianza mide cómo se mueven juntos los rendimientos; la varianza del mercado fija la escala. Debes calcular ambas con periodos y unidades compatibles. Una covarianza de 0,024 y una varianza del mercado de 0,04 dan beta 0,6.
+
+El mercado tiene beta 1, porque su covarianza consigo mismo es su varianza. El activo libre de riesgo tiene beta 0: su rentabilidad constante no covaría con el mercado. Una beta negativa indica sensibilidad lineal de signo opuesto. No asegura que el activo suba cada vez que cae el mercado.
+
+Una beta entre 0 y 1 indica menor sensibilidad positiva al mercado. No garantiza menor volatilidad total. Por ejemplo, conserva beta 0,6 y volatilidad del mercado del 20 %. Una acción puede tener volatilidad total del 30 % si contiene suficiente riesgo específico.
+
+Para verlo, escribe la parte inesperada de su rendimiento como:
+
+$$r_j-\E[r_j]=\beta_j(\rM-\E[\rM])+\varepsilon_j.$$
+
+El **residuo** $\varepsilon_j$ recoge la parte que esta relación lineal no explica. Tiene media nula y covarianza nula con el mercado. Al calcular la varianza, el término cruzado desaparece:
+
+$$\sigma_j^2=\beta_j^2\sigma_M^2+\sigma_{\varepsilon_j}^2.$$
+
+El primer término es varianza sistemática; el segundo, varianza específica. En el ejemplo, la varianza total es 0,09, la sistemática es 0,0144 y la específica es 0,0756. Sumamos **varianzas**, no volatilidades. Diversificar reduce el riesgo específico cuando los residuos no se mueven todos juntos. No elimina la exposición común al mercado.
+
+### SML: el precio de la exposición al mercado
+
+La ecuación del CAPM es:
+
+$$\E[r_j]=\rf+\beta_j\bigl(\E[\rM]-\rf\bigr).$$
+
+La prima del mercado es la diferencia entre su esperanza y el tipo libre de riesgo. Con los datos iniciales son 6 puntos porcentuales. Para A:
+
+$$2\,\%+1{,}5\,(8\,\%-2\,\%)=11\,\%.$$
+
+¿Por qué aparece la covarianza? Al añadir una pequeña posición a una cartera diversificada, importa cómo modifica su riesgo conjunto. El riesgo propio de la acción que se diversifica no exige una prima adicional en este modelo.
+
+<details>
+<summary>La condición de equilibrio que produce la SML</summary>
+
+Parte del mercado e invierte una fracción pequeña $h$ adicional en el activo $j$, financiada con deuda sin riesgo. La esperanza aumenta en $h(\E[r_j]-\rf)$. La varianza pasa a ser:
+
+$$\sigma_M^2+2h\Cov(r_j,\rM)+h^2\sigma_j^2.$$
+
+En $h=0$, la derivada de la volatilidad es $\Cov(r_j,\rM)/\sigma_M$. Para que el mercado sea tangente, esta variación no puede mejorar su ratio de Sharpe. La derivada de ese ratio debe anularse:
+
+$$(\E[r_j]-\rf)\sigma_M-(\E[\rM]-\rf)\frac{\Cov(r_j,\rM)}{\sigma_M}=0.$$
+
+Divide por $\sigma_M$ y usa la definición de beta. Obtienes $\E[r_j]-\rf=\beta_j(\E[\rM]-\rf)$. Al sumar el tipo libre de riesgo, aparece la SML. Este argumento usa la posibilidad de ajustar posiciones sin restricciones.
+</details>
+
+### Alfa y beta de una cartera
+
+Para evaluar una previsión que puede quedar fuera del equilibrio, llamamos $\widehat r_j$ a tu rentabilidad esperada propuesta. Definimos:
+
+$$\alpha_j=\widehat r_j-\left[\rf+\beta_j(\E[\rM]-\rf)\right].$$
+
+A ofrece una previsión del 13 % frente al 11 % exigido: alfa de +2 puntos porcentuales. B tiene beta 0,5 y previsión del 3 %. Se le exige un 5 %, así que su alfa es de −2 puntos porcentuales.
+
+Un alfa positivo indica infravaloración **según el CAPM y esa previsión**: para unos pagos futuros dados, un precio menor aumenta la rentabilidad esperada. Un alfa negativo indica sobrevaloración bajo esas mismas condiciones. En el equilibrio del modelo todos los activos tienen alfa nulo. Un rendimiento realizado alto durante un año no basta para concluir infravaloración.
+
+La beta también se estima con una regresión histórica: ajustas una recta a los rendimientos del activo y del mercado. Con tipo libre de riesgo constante, restarlo a ambos no cambia la pendiente. El intercepto de la regresión de excesos estima el alfa de Jensen. Las estimaciones tienen error y pueden cambiar con el tiempo.
+
+Para pesos fijos que suman la unidad, la beta de una cartera es:
+
+$$\beta_p=\sum_j w_j\beta_j.$$
+
+Sale al escribir $r_p=\sum_j w_jr_j$ y aplicar la linealidad de la covarianza. Una cartera con 40 % en B y 60 % en A tiene beta 1,1. Su rentabilidad exigida es 8,6 %. La diversificación puede reducir el riesgo específico, pero no borra esta media ponderada de exposiciones.
+
+<Callout type="warning" title="Dos pendientes diferentes">
+La pendiente de la CML divide la prima del mercado por su volatilidad. La pendiente de la SML es la prima del mercado. Sus ejes tienen unidades distintas. Nunca apliques la CML a una acción individual solo porque conoces su volatilidad.
+</Callout>
+
+## <span class="section-tag">Zona de juego</span>Mueve la referencia y la previsión
+
+Usa este segundo gráfico para explorar libremente. Empieza con el mismo ejemplo. A y B conservan previsiones distintas; M marca la referencia del mercado. «Exigida» siempre se calcula con la SML. «Prevista» es una entrada tuya.
+
+<SecurityMarketLine client:visible />
+
+**Prueba esto:**
+
+1. Fija beta 1 en A y rentabilidad prevista del 8 %, con los tipos iniciales. Su alfa será nulo. Luego fija beta 0 y previsión del 2 %. También estará sobre la SML, aunque una beta nula no convierte una acción en un activo seguro.
+2. Restablece el ejemplo y sube la rentabilidad esperada del mercado al 10 %. A pasa a exigir un 14 %: su alfa cambia a −1 punto porcentual. Después prueba beta −0,5 con los datos iniciales. Se exige −1 %. Con prima de mercado positiva, una exposición negativa puede tener rentabilidad exigida inferior al tipo libre de riesgo.
+
+Cambiar una previsión no demuestra que el precio sea incorrecto. Pregúntate siempre cómo estimaste la beta y los pagos futuros. El gráfico muestra las consecuencias de tus supuestos; no verifica que sean ciertos. La práctica extensa de carteras y CAPM corresponde a la sesión de problemas sobre carteras, cuando esté publicada.
+
+## <span class="section-tag">Compruébalo</span>Comprueba el eje y el signo
+
+<Quiz client:visible
+  question="Con tipo libre de riesgo del 2 %, mercado esperado del 8 % y beta 1,5, ¿qué rentabilidad exige el CAPM?"
+  options={['La rentabilidad prevista por el analista', '11 %', 'La volatilidad total de la acción']}
+  answer={1}
+  explanation="La prima del mercado es de 6 puntos porcentuales. Multiplica por la beta y añade el tipo libre de riesgo: la rentabilidad exigida es del 11 %."
+/>
+
+<Quiz client:visible
+  question="Una acción tiene beta 0,6. ¿Qué puedes afirmar sobre su volatilidad total frente al mercado?"
+  options={['Siempre es menor', 'Siempre es igual', 'Puede ser mayor si tiene suficiente riesgo específico']}
+  answer={2}
+  explanation="La beta mide sensibilidad lineal al mercado. El ejemplo con volatilidad del 30 % y mercado del 20 % demuestra que no ordena la volatilidad total."
+/>
+
+<Quiz client:visible
+  question="A tiene rentabilidad prevista del 13 % y exigida del 11 %. ¿Cómo interpretas su posición?"
+  options={['Está sobrevalorada y garantiza una pérdida', 'Alfa de +2 puntos porcentuales: infravalorada según el modelo y la previsión', 'El mercado garantiza la previsión']}
+  answer={1}
+  explanation="La previsión supera la referencia. Eso sugiere infravaloración bajo el CAPM, pero no garantiza la rentabilidad realizada ni valida la previsión."
+/>
+
+## <span class="section-tag">Resumen</span>Qué compara cada recta
+
+- Bajo los supuestos del CAPM, la cartera tangente coincide con la cartera de mercado.
+- La CML relaciona esperanza y volatilidad total para combinaciones eficientes del mercado y el activo libre de riesgo.
+- La SML relaciona rentabilidad exigida y beta para cualquier activo o cartera.
+- Beta mide exposición lineal al mercado; el riesgo específico puede elevar mucho la volatilidad total.
+- Alfa compara una previsión con la rentabilidad exigida. Su signo depende del modelo y de los datos usados.
+
+**Siguiente:** más allá del CAPM. Verás cómo estudiar noticias y añadir otras fuentes comunes de riesgo.
