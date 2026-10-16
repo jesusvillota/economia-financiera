@@ -1,0 +1,367 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#1}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#1}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 1}\\\large Fundamentos de Valoración de Activos}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\R}{\mathbb{R}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+
+\section{Interés simple y compuesto}
+
+\begin{ejercicio}{1 (Capitalización simple anual y fraccionado)}
+\begin{enumerate}[label=\alph*)]
+  \item Una empresa invierte $C_0=\,\text{\euro}\,150{,}000$ al tipo simple anual $i=6\%$ durante $t=3{,}5$ años. Calcule el capital final con interés simple anual.
+  \item Calcule el interés simple fraccionado equivalente al 6\% simple anual para los siguientes periodos: mensual, bimensual, trimestral, cuatrimestral, semestral y bianual.
+  \item Si en la inversión del a) los intereses se pagan por fraccionamientos trimestrales, calcule el interés devengado en el trimestre 1 y en el trimestre 2.
+  \item \textit{Valor actual con capitalización simple:} \; ¿Cuál es el valor presente hoy de un capital futuro de \text{\euro}\,10{,}000 a $t=10$ años al $5\%$ simple anual? ¿Y si $t=1.5$ años y el interés es del 3\% simple semestral?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item Interés simple: $C_{3.5}=C_0(1+it)=150{,}000\,(1+0.06\times 3.5)=\text{\euro}\,181{,}500$.
+  \item Tipos fraccionados simples equivalentes usando $i_k=i/k$, donde $k$ es el número de periodos en que se divide el año (p. ej., trimestre $\Rightarrow k=4$):\\
+        $i_{12}=0.06/12=0.005=0.5\%$.\\
+        $i_{6}=0.06/6=0.01=1\%$.\\
+        $i_{4}=0.06/4=0.015=1.5\%$.\\
+        $i_{3}=0.06/3=0.02=2\%$.\\
+        $i_{2}=0.06/2=0.03=3\%$.\\
+        $i_{1/2}=0.06/(1/2)=0.12=12\%$ (bianual: un periodo cada 2 años).
+  \item En interés simple cada periodo devenga siempre el mismo interés: $I=i C_0$.\\
+        Trimestre 1: \text{\euro}\,2{,}250.\quad Trimestre 2: \text{\euro}\,2{,}250.\; (Acumulado a 2 trimestres: \text{\euro}\,4{,}500.)
+  \item Con interés simple, $C_t=C_0(1+it)\;\Rightarrow\; V_0=\dfrac{C_t}{1+it}$.\\
+        \begin{itemize}
+        \item  Para $C_{10}=10{,}000, i=0.05 \implies V_0=\dfrac{10{,}000}{1+0.05\times10}=\dfrac{10{,}000}{1.5}=\text{\euro}\,6{,}666.67$.\\
+         \item  Para $t=1.5$ con interés del $3\%$ semestral (simple): hay $k=2$ periodos por año y por tanto $n=1.5\times 2=3$ semestres. Así, $V_0=\dfrac{10{,}000}{1+0.03\times 3}=\dfrac{10{,}000}{1.09}=\text{\euro}\,9{,}174.31$.
+        \end{itemize}
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{2 (Capitalización compuesta anual y fraccionada)}
+\begin{enumerate}[label=\alph*)]
+  \item Se deposita $C_0=\,\text{\euro}\,25{,}000$ con interés compuesto. Calcule el montante $C_t$ a $t=5$ años con capitalización anual a $i=8\%$ efectivo anual.
+  \item Interés fraccionado compuesto equivalente al 8\% efectivo anual para los siguientes periodos: mensual, bimensual, trimestral, cuatrimestral, semestral y bianual.
+  \item Si en el depósito del apartado a), los intereses se pagan por fraccionamientos (compuestos) mensuales, calcule el interés devengado en el mes 1 y en el mes 2.
+  \item \textit{Valor presente con capitalización compuesta:} \; i) ¿Cuál es el valor presente hoy de un capital futuro de \text{\euro}\,10{,}000 a $t=10$ años al $5\%$ efectivo anual? \; ii) ¿Y si $t=1.5$ años con tasa efectiva anual del $6\%$, usando capitalización mensual equivalente?}
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item $C_5=C_0(1+i)^5=25{,}000\,(1.08)^5=\text{\euro}\,36{,}734.\,\!\,\,$ (aprox.).
+  \item Intereses fraccionados compuestos equivalentes a $i=8\%$ efectivo anual, usando $i_k=(1+i)^{1/k}-1$ donde $k$ es el número de periodos por año (y para bianual $k=1/2$):\\
+        Mensual ($k=12$): $i_{12}=(1.08)^{1/12}-1\approx0.006434\;(0.6434\%)$.\\
+        Bimensual ($k=6$): $i_{6}=(1.08)^{1/6}-1\approx0.012913\;(1.2913\%)$.\\
+        Trimestral ($k=4$): $i_{4}=(1.08)^{1/4}-1\approx0.019427\;(1.9427\%)$.\\
+        Cuatrimestral ($k=3$): $i_{3}=(1.08)^{1/3}-1\approx0.025981\;(2.5981\%)$.\\
+        Semestral ($k=2$): $i_{2}=(1.08)^{1/2}-1\approx0.039230\;(3.9230\%)$.\\
+        Bianual ($k=1/2$): $i_{1/2}=(1.08)^{2}-1=0.1664\;(16.64\%)$.
+  \item En compuesto el interés crece al capitalizarse. Con $i_{12}\approx0.006434$ del apartado b):\\
+        Mes 1: $I_1=i_{12}\,C_0=0.006434\times25{,}000=\text{\euro}\,160.85$.\\
+        Mes 2: $I_2=i_{12}\,C_1=i_{12}\,C_0(1+i_{12})=0.006434\times25{,}000\times1.006434\approx\text{\euro}\,161.88$.
+  \item Descuento compuesto: $V_0=\dfrac{C_t}{(1+i)^t}$.\
+        i) $V_0=\dfrac{10{,}000}{(1.05)^{10}}=\dfrac{10{,}000}{1.628895}=\text{\euro}\,6{,}139.13$.\\
+        ii) TAE $=6\% \Rightarrow i_{12}=(1.06)^{1/12}-1\approx0.004868$. Hay $n=1.5\times12=18$ meses: $V_0=\dfrac{10{,}000}{(1+i_{12})^{18}}=\dfrac{10{,}000}{(1.004868)^{18}}\approx\text{\euro}\,9{,}165$.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{3 (Mixto: tramo simple y tramo compuesto)}
+Se invierte $C_0=\,\text{\euro}\,100{,}000$ durante $3$ años bajo el siguiente esquema mixto:
+\begin{itemize}
+  \item Primer año: interés simple al $i_2^s=3\%$ semestral con fraccionamiento semestral.
+  \item Años 2 y 3: capitalización compuesta anual al $i_1^c=8\%$ efectivo anual.
+\end{itemize}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el montante al final de los $3$ años.
+  \item Calcule la tasa anual simple equivalente y la tasa anual compuesta equivalente del período total de $3$ años.
+  \item Compare con dos alternativas:
+  \begin{itemize}
+    \item Alternativa A: interés simple trimestral al $i_4^{s,(A)}=2\%$ por trimestre durante $3$ años.
+    \item Alternativa B: capitalización compuesta cuatrimestral al $i_3^{c,(B)}=2\%$ por cuatrimestre durante $3$ años.
+  \end{itemize}
+  Para cada alternativa, calcule el montante final y compare con el esquema mixto. ¿Cuál entrega mayor monto?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Interés simple anual equivalente al $3\%$ semestral: $i_1^s=i_2^s\times 2=0.03\times 2=0.06$ ($6\%$ anual).\\
+Para el primer año (2 semestres) con interés simple: factor $1+i_2^s\times 2=1+0.03\times 2=1.06$.\\
+Para años 2 y 3 (compuesto, dos años): factor $(1+i_1^c)^2=(1.08)^2=1.1664$.\\
+Sea $C_3$ el capital final.
+\begin{enumerate}[label=\alph*)]
+  \item $C_3=C_0\,(1+i_2^s\times 2)\,(1+i_1^c)^2=100{,}000\times1.06\times1.1664=\,\text{\euro}\,123{,}638.40$.
+  \item Tasa simple equivalente a 3 años: $i_{\text{simp,eq}}=\dfrac{C_3/C_0-1}{3}=\dfrac{1.06\times1.1664-1}{3}=0.078794\,\,(7.879\%)$ (aprox.).\\
+        Tasa compuesta equivalente a 3 años: $i_{\text{comp,eq}}=(C_3/C_0)^{1/3}-1=(1.06\times1.1664)^{1/3}-1=(1.236384)^{1/3}-1\approx0.0732\,\,(7.32\%)$ (aprox.).
+  \item \textbf{Alternativa A} (simple trimestral):\\
+        Tasa anual simple equivalente: $i_1^{s,(A)}=i_4^{s,(A)}\times 4=0.02\times 4=0.08$ ($8\%$ anual, mayor que $7.879\%$ del b)).\\
+        Montante: $C_3^{(A)}=C_0(1+i_4^{s,(A)}\times 12)=100{,}000(1+0.02\times 12)=100{,}000\times 1.24=\,\text{\euro}\,124{,}000$.\\
+        \textbf{Alternativa B} (compuesto cuatrimestral):\\
+        Tasa anual compuesta equivalente: $i_1^{c,(B)}=(1+i_3^{c,(B)})^3-1=(1.02)^3-1=1.0612-1=0.0612$ ($6.12\%$ anual, menor que $7.32\%$ del b)).\\
+        Hay $n=3\times 3=9$ cuatrimestres. Calculamos: $(1.02)^9$. Usando que $(1.02)^3=1.0612$ y $(1.02)^6=(1.0612)^2\approx 1.126$, tenemos $(1.02)^9=1.126\times 1.0612\approx 1.195$.\\
+        Montante: $C_3^{(B)}=C_0(1+i_3^{c,(B)})^9=100{,}000\times 1.195=\,\text{\euro}\,119{,}500$ (aprox.).\\
+        Comparación: $C_3=\,\text{\euro}\,123{,}638.40$ (mixto), $C_3^{(A)}=\,\text{\euro}\,124{,}000$ (mejor), $C_3^{(B)}=\,\text{\euro}\,119{,}500$ (peor).
+\end{enumerate}
+\end{solucion}
+
+\section{Rentas finitas y perpetuas}
+
+\begin{ejercicio}{4 (Anualidad ordinaria y creciente)}
+Una anualidad ordinaria paga $A=\,\text{\euro}\,5{,}000$ anuales durante $n=8$ años. La tasa de descuento es $r=9\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el valor presente $V_0$ de la anualidad ordinaria.
+  \item Si los pagos crecen al $g=3\%$ anual (anualidad creciente), calcule $V_0$ (suponga $r>g$).
+  \item Considere una anualidad mixta: durante los primeros $m=3$ años, los pagos son constantes de $A=\,\text{\euro}\,5{,}000$ anuales; desde el año $m+1$ hasta el año $n=8$, los pagos crecen al $g=3\%$ anual partiendo del nivel $A$. Calcule el valor presente $V_0$ de esta anualidad mixta.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item $V_0=A\,\dfrac{1-(1+r)^{-n}}{r}=5{,}000\,\dfrac{1-(1.09)^{-8}}{0.09}=\text{\euro}\,29{,}269$ (aprox.).
+  \item $V_0=A\,\dfrac{1-\left(\tfrac{1+g}{1+r}\right)^{n}}{r-g}=5{,}000\,\dfrac{1-(1.03/1.09)^8}{0.09-0.03}=\text{\euro}\,31{,}885$ (aprox.).
+  \item Dividimos en dos tramos:\\
+        \textbf{Tramo 1 (años 1 a 3, constante):} $V_{0, 1\to3}=A\,\dfrac{1-(1+r)^{-m}}{r}=5{,}000\,\dfrac{1-(1.09)^{-3}}{0.09}=\text{\euro}\,12{,}674$ (aprox.).\\
+        \textbf{Tramo 2 (años 4 a 8, creciente):} La anualidad creciente tiene $n-m=5$ pagos que comienzan en el año $m+1=4$.\\
+        Valor en $t=3$: $V_{3,4\to8}=A\,\dfrac{1-\left(\tfrac{1+g}{1+r}\right)^{n-m}}{r-g}=5{,}000\,\dfrac{1-(1.03/1.09)^5}{0.09-0.03}=\text{\euro}\,21{,}351$ (aprox.).\\
+        Descontado a $t=0$: $V_{0,4\to8}=\dfrac{V_{3,4\to8}}{(1+r)^3}=\dfrac{21{,}351}{(1.09)^3}=\text{\euro}\,16{,}466$ (aprox.).\\
+        \textbf{Total:} $V_0=V_{0, 1\to3}+V_{0,4\to8}\approx12{,}674+16{,}466=\text{\euro}\,29{,}140$ (aprox.).
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{5 (Perpetuidad constante y creciente)}
+Valore:
+\begin{enumerate}[label=\alph*)]
+  \item Una perpetuidad que paga $A=\,\text{\euro}\,2{,}500$ anuales con $r=8\%$.
+  \item Una perpetuidad creciente con pago inicial $A=\,\text{\euro}\,2{,}500$, crecimiento $g=2\%$ y $r=8\%$.
+  \item Una perpetuidad creciente diferida: suponga que la perpetuidad creciente del apartado b) comienza a pagar dentro de $k=5$ años (el primer pago es en $t=6$). La anualidad sigue creciendo al $g=2\%$ anual durante el periodo de diferimiento. Calcule el valor presente hoy de esta perpetuidad diferida.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item $V_0=\dfrac{A}{r}=2{,}500/0.08=\text{\euro}\,31{,}250$.
+  \item $V_0=\dfrac{A}{r-g}=2{,}500/(0.08-0.02)=\text{\euro}\,41{,}667$.
+  \item Si la perpetuidad creciente del apartado b) se difiere $k=5$ años, el primer pago ocurre en $t=6$. Durante el diferimiento, los pagos continúan creciendo al $g=2\%$ anual, por lo que el primer pago en $t=6$ será $A(1+g)^5=2{,}500\times(1.02)^5\approx\text{\euro}\,2{,}760$. \\
+        Valor de la perpetuidad en $t=5$ (un periodo antes del primer pago): $V_5=\dfrac{A(1+g)^5}{r-g}=\dfrac{2{,}500\times(1.02)^5}{0.08-0.02}\approx\text{\euro}\,46{,}004$. \\
+        Valor presente hoy: $V_0=\dfrac{V_5}{(1+r)^5}=\dfrac{46{,}004}{(1.08)^5}\approx\text{\euro}\,31{,}318$. \\
+        \textit{Alternativamente:} $V_0=\dfrac{A}{(r-g)(1+r)^5}\times(1+g)^5=\dfrac{2{,}500\times(1.02)^5}{0.06\times(1.08)^5}\approx\text{\euro}\,31{,}318$.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{6 (Mixto de rentas con interés fraccionado)}
+Un proyecto paga dos flujos simultáneos durante $10$ años:
+\begin{itemize}
+  \item Una anualidad ordinaria mensual de \text{\euro}\,600 al final de cada mes (120 pagos),
+  \item Un pago anual creciente que empieza en \text{\euro}\,2{,}000 y crece al $g=4\%$ (10 pagos anuales).
+\end{itemize}
+La tasa nominal anual efectiva compuesta es $i=9\%$. Calcule el valor presente combinando:
+\begin{enumerate}[label=\alph*)]
+  \item El valor presente de la renta mensual usando el tipo equivalente mensual $i_{12}$,
+  \item El valor presente de la anualidad creciente usando $r=9\%$ anual,
+  \item El valor presente total.
+  \item ¿Cuál es el valor actual de la anualidad constante de \text{\euro}\,600 mensuales del apartado a) si en vez de pagarse al final de cada mes (renta pospagable) se paga al principio de cada mes (renta prepagable)?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Tipo mensual equivalente: $i_{12}=(1+0.09)^{1/12}-1\approx0.007207$.\\
+\begin{enumerate}[label=\alph*)]
+  \item Renta mensual (120 pagos): $V_{0,\,m}=600\,\dfrac{1-(1+i_{12})^{-120}}{i_{12}}=600\,\dfrac{1-(1.007207)^{-120}}{0.007207}=\text{\euro}\,55{,}612$ (aprox.).
+  \item Anualidad creciente (10 pagos): $V_{0,\,g}=2{,}000\,\dfrac{1-(\tfrac{1.04}{1.09})^{10}}{0.09-0.04}=\text{\euro}\,16{,}756$ (aprox.).
+  \item Total: $V_0\approx55{,}612+16{,}756=\text{\euro}\,72{,}368$.
+  \item Para una renta prepagable mensual, cada pago se realiza al inicio del periodo, por lo que el valor presente se calcula multiplicando el valor de la renta pospagable por $(1+i_{12})$:\\
+        $V_{0,\,m}^{\text{prep}}=V_{0,\,m}\times(1+i_{12})=55{,}612\times1.007207\approx\text{\euro}\,56{,}013$.\\
+        \textit{Alternativamente:} $V_{0,\,m}^{\text{prep}}=600\times(1+i_{12})\times\dfrac{1-(1+i_{12})^{-120}}{i_{12}}=600\times1.007207\times\dfrac{1-(1.007207)^{-120}}{0.007207}\approx\text{\euro}\,56{,}013$.
+\end{enumerate}
+\end{solucion}
+
+\section{Evaluación de proyectos}
+
+\begin{ejercicio}{7 (VAN)}
+Una inversión requiere $I_0=\,\text{\euro}\,120{,}000$ y genera $CF_1=40{,}000$, $CF_2=45{,}000$, $CF_3=50{,}000$, $CF_4=55{,}000$. Con $r=10\%$, calcule el VAN y decida.
+\end{ejercicio}
+\begin{solucion}
+\begin{align*}
+\text{VAN}&=-120{,}000+\frac{40{,}000}{1.10}+\frac{45{,}000}{1.10^2}\\
+&\quad+\frac{50{,}000}{1.10^3}+\frac{55{,}000}{1.10^4}\\
+&=-120{,}000+36{,}364+37{,}190+37{,}565+37{,}565\\
+&\approx\text{\euro}\,28{,}684.
+\end{align*}
+Como VAN$>0$, aceptar.
+\end{solucion}
+
+\begin{ejercicio}{8 (Payback simple y descontado)}
+Para el proyecto del Ejercicio 7, calcule:
+\begin{enumerate}[label=\alph*)]
+  \item El período de recuperación simple (PR),
+  \item El período de recuperación descontado (PRD) con $r=10\%$.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item PR: acumulados simples: año 1: 40; año 2: 85; año 3: 135 (miles). Se recupera entre años 2 y 3: PR $=2+\dfrac{120-85}{50}\approx2.70$ años.
+  \item PRD: descontados (miles): 36.36; 69.55; 94.20; 112.95. Se recupera entre años 3 y 4: PRD $=3+\dfrac{120-94.20}{55/1.10^4}\approx3.46$ años.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{9 (TIR)}
+Considere un nuevo proyecto de inversión con los siguientes flujos de caja (en miles de euros):
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$t=0$ & $t=1$ & $t=2$ \\
+\midrule
+$CF_0=-100$ & $CF_1=60$ & $CF_2=60$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+El tipo de descuento requerido para este proyecto es del $10\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la TIR $r^*$ que satisface la ecuación $\sum_{t=0}^{2}\dfrac{CF_t}{(1+r^*)^t}=0$. Resuelva la ecuación analíticamente usando la fórmula cuadrática.
+  \item Tome una decisión sobre el proyecto en función de la TIR obtenida.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item La ecuación de la TIR es:
+  \begin{align*}
+  -100+\frac{60}{1+r^*}+\frac{60}{(1+r^*)^2}&=0
+  \end{align*}
+  Para simplificar la resolución, hacemos el cambio de variable $x=1+r^*$. Sustituyendo, obtenemos:
+  \begin{align*}
+  -100+\frac{60}{x}+\frac{60}{x^2}&=0
+  \end{align*}
+  Multiplicando ambos lados por $x^2$:
+  \begin{align*}
+  -100x^2+60x+60&=0
+  \end{align*}
+  Dividiendo por $-20$:
+  \begin{align*}
+  5x^2-3x-3&=0
+  \end{align*}
+  Aplicando la fórmula cuadrática $x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$ con $a=5$, $b=-3$, $c=-3$:
+  \begin{align*}
+  x&=\frac{3\pm\sqrt{9+60}}{10}=\frac{3\pm\sqrt{69}}{10}\\
+  x&\approx\frac{3+8.3066}{10}\approx1.13066\quad\text{o}\quad x\approx\frac{3-8.3066}{10}\approx-0.53066
+  \end{align*}
+  Como $x=1+r^*$ debe ser positivo (ya que $r^*>-1$ en el contexto económico), tomamos $x\approx1.13066$. Por tanto:
+  \begin{align*}
+  r^*=x-1\approx1.13066-1\approx0.13066\approx13.07\%
+  \end{align*}
+  
+  \item La TIR obtenida es $r^*\approx13.07\%$. Comparando con la tasa de descuento requerida del $10\%$:
+  \begin{itemize}
+    \item Como $r^*\approx13.07\%>10\%$, la TIR supera la tasa de descuento requerida.
+    \item Según el criterio de la TIR, un proyecto se acepta si $r^*>r$, donde $r$ es la tasa de descuento.
+    \item \textbf{Decisión: Se acepta el proyecto}, ya que genera una rentabilidad interna del $13.07\%$, superior al $10\%$ requerido.
+  \end{itemize}
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{10 (Mixto VAN, Payback, TIR)}
+Dos proyectos mutuamente excluyentes (miles de euros) tienen los siguientes flujos de caja:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+& $t=0$ & $t=1$ & $t=2$ \\
+\midrule
+\textbf{Proyecto A} & $-1{,}000$ & $1{,}200$ & --- \\
+\textbf{Proyecto B} & $-1{,}000$ & $200$ & $1{,}100$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Con $r=10\%$:
+\begin{enumerate}[label=\alph*)]
+  \item Calcule VAN de A y B.
+  \item Calcule PR y PRD de ambos.
+  \item Calcule la TIR de cada proyecto analíticamente. 
+  \item ¿Qué proyecto seleccionaría?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{VAN del Proyecto A:}
+        \begin{align*}
+        \text{VAN}_A&=-1{,}000+\frac{1{,}200}{1.10}\\
+        &=-1{,}000+1{,}090.91=\text{\euro}\,90.91\text{ (miles)}
+        \end{align*}
+        \textbf{VAN del Proyecto B:}
+        \begin{align*}
+        \text{VAN}_B&=-1{,}000+\frac{200}{1.10}+\frac{1{,}100}{1.10^2}\\
+        &=-1{,}000+181.82+909.09=\text{\euro}\,90.91\text{ (miles)}
+        \end{align*}
+  \item \textbf{Payback simple (PR):}\\
+        \textbf{Proyecto A:} El flujo de $1{,}200$ en $t=1$ supera la inversión inicial de $1{,}000$. Asumiendo que el flujo se recibe de forma proporcional durante el año, el payback se alcanza en: PR$_A=\dfrac{1{,}000}{1{,}200}\approx0.833$ años (aproximadamente 10 meses).\\
+        \textbf{Proyecto B:} En $t=1$ se recuperan $200$; en $t=2$ se recuperan $1{,}100$. Se recupera entre $t=1$ y $t=2$: PR$_B=1+\dfrac{1{,}000-200}{1{,}100}=1+\dfrac{800}{1{,}100}\approx1.73$ años.\\
+        \textbf{Payback descontado (PRD):}\\
+        \textbf{Proyecto A:} Flujo descontado en $t=1$: $\dfrac{1{,}200}{1.10}=1{,}090.91>1{,}000$. Asumiendo flujo proporcional durante el año: PRD$_A=\dfrac{1{,}000}{1{,}090.91}\approx0.917$ años (aproximadamente 11 meses).\\
+        \textbf{Proyecto B:} Flujos descontados: $t=1$: $181.82$; acumulado hasta $t=1$: $181.82<1{,}000$. En $t=2$: $909.09$; acumulado: $181.82+909.09=1{,}090.91>1{,}000$. Se recupera entre $t=1$ y $t=2$: PRD$_B=1+\dfrac{1{,}000-181.82}{909.09}\approx1.90$ años.
+  \item \textbf{TIR analítica:}\\
+        \textbf{Proyecto A:} La ecuación de la TIR es:
+        \begin{align*}
+        -1{,}000+\frac{1{,}200}{1+r^*_A}&=0
+        \end{align*}
+        Resolviendo: $\dfrac{1{,}200}{1+r^*_A}=1{,}000 \Rightarrow 1+r^*_A=\dfrac{1{,}200}{1{,}000}=1.2 \Rightarrow r^*_A=0.2=20\%$.
+        
+        \textbf{Proyecto B:} La ecuación de la TIR es:
+        \begin{align*}
+        -1{,}000+\frac{200}{1+r^*_B}+\frac{1{,}100}{(1+r^*_B)^2}&=0
+        \end{align*}
+        Haciendo el cambio de variable $x=1+r^*_B$:
+        \begin{align*}
+        -1{,}000+\frac{200}{x}+\frac{1{,}100}{x^2}&=0
+        \end{align*}
+        Multiplicando ambos lados por $x^2$:
+        \begin{align*}
+        -1{,}000x^2+200x+1{,}100&=0
+        \end{align*}
+        Dividiendo por $-100$:
+        \begin{align*}
+        10x^2-2x-11&=0
+        \end{align*}
+        Aplicando la fórmula cuadrática $x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$ con $a=10$, $b=-2$, $c=-11$:
+        \begin{align*}
+        x&=\frac{2\pm\sqrt{4+440}}{20}=\frac{2\pm\sqrt{444}}{20}=\frac{2\pm2\sqrt{111}}{20}\\
+        x&\approx\frac{2+21.071}{20}\approx1.154\quad\text{o}\quad x\approx\frac{2-21.071}{20}\approx-0.954
+        \end{align*}
+        Como $x=1+r^*_B$ debe ser positivo, tomamos $x\approx1.154$. Por tanto:
+        \begin{align*}
+        r^*_B\approx1.154-1=0.154=15.4\%
+        \end{align*}
+        \textbf{Comparación y conflicto:} La TIR del Proyecto A ($20\%$) es mayor que la del Proyecto B ($15.4\%$), sin embargo, ambos proyectos tienen el mismo VAN (€90.91 miles) cuando se descuenta al $10\%$. Este es un ejemplo donde la TIR puede sugerir una preferencia (A sobre B), pero el VAN indica que ambos proyectos crean el mismo valor absoluto. En este caso específico, al ser mutuamente excluyentes y tener el mismo VAN, podríamos considerar otros factores o la preferencia por la liquidez más temprana del Proyecto A.
+  \item \textbf{Decisión:} Según el criterio del VAN, ambos proyectos tienen el mismo valor ($\text{VAN}_A=\text{VAN}_B=\text{\euro}\,90.91$ miles). Sin embargo, dado que son mutuamente excluyentes y tienen VAN positivo pero igual, podríamos considerar factores adicionales. El Proyecto A tiene mayor TIR ($20\%$ vs $15.4\%$) y recuperación mucho más rápida (PR$_A\approx0.833$ años vs PR$_B\approx1.73$ años), lo que sugiere menor riesgo y mayor flexibilidad. \textbf{Se podría seleccionar el Proyecto A} por estas razones, aunque ambos son aceptables según el VAN.
+\end{enumerate}
+\end{solucion}
+
+\end{document}
+
+

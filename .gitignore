@@ -4,3 +4,12 @@ dist/
 screenshots/
 .DS_Store
 scripts/_*.tmp.mjs
+
+# LaTeX build artifacts inside source/
+source/**/*.aux
+source/**/*.log
+source/**/*.fls
+source/**/*.fdb_latexmk
+source/**/*.synctex.gz
+source/**/*.toc
+source/**/*.pdf

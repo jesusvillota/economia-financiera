@@ -1,0 +1,223 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{calc,arrows.meta}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#3}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#3}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 3}\\\large Teoría de Carteras: Modelo de Markowitz y CAPM}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Cov}{\mathbb{C}\text{ov}}
+\newcommand{\EUR}[1]{\ensuremath{#1~\text{EUR}}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+% \maketitle
+
+% \begin{center}
+% \textbf{Objetivo.} Este problem set cubre los conceptos fundamentales de la teoría de carteras, incluyendo el efecto diversificación, el modelo de Markowitz, la construcción de la frontera eficiente, la introducción del activo libre de riesgo y el modelo CAPM. Los ejercicios están diseñados para reforzar la comprensión de estos conceptos mediante cálculos numéricos.
+% \end{center}
+
+% \tableofcontents
+% \newpage
+
+\section{Efecto Diversificación y Carteras de Dos Activos}
+
+\begin{ejercicio}{1 (Efecto de la Correlación en el Riesgo de Cartera)}
+Considere dos activos con riesgo con las siguientes características:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+Activo A & 12\% & 18\% \\
+Activo B & 8\% & 15\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo (desviación estándar) de una cartera equiponderada ($w_A = w_B = 0.5$) para los siguientes valores del coeficiente de correlación: $\rho_{AB} = \{1, ~~ 0.5, ~~ 0, ~~ -0.5, ~~ -1\}$.
+  \item Represente gráficamente cómo varía el riesgo de la cartera en función del coeficiente de correlación. ¿Qué conclusiones puede extraer sobre el efecto diversificación?
+  \item Para $\rho_{AB} = 0.3$, determine los pesos de la cartera de mínima varianza y calcule su rentabilidad esperada y riesgo.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{2 (Cartera de Mínima Varianza con Diferentes Correlaciones)}
+Un gestor de cartera puede invertir en dos acciones del mercado español: SANTANDER y TELEFÓNICA. Las características de estas acciones son:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+SANTANDER & 10\% & 22\% \\
+TELEFÓNICA & 9\% & 20\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Determine la composición de la cartera de mínima varianza y calcule su rentabilidad esperada y riesgo en los siguientes casos:
+\begin{enumerate}[label=\alph*)]
+  \item Correlación $\rho = 0.8$, sin ventas en corto permitidas.
+  \item Correlación $\rho = 0.8$, con ventas en corto permitidas.
+  \item Correlación $\rho = -0.2$, sin ventas en corto permitidas.
+  \item Correlación $\rho = -0.2$, con ventas en corto permitidas.
+\end{enumerate}
+\end{ejercicio}
+
+\section{Modelo de Markowitz y Frontera Eficiente}
+
+\begin{ejercicio}{3 (Cartera de Tres Activos)}
+Un inversor está considerando formar una cartera con tres activos con riesgo. Las características de estos activos son:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ & Peso en cartera \\
+\midrule
+Activo 1 & 14\% & 25\% & $w_1 = 0.40$ \\
+Activo 2 & 11\% & 18\% & $w_2 = 0.35$ \\
+Activo 3 & 9\% & 15\% & $w_3 = 0.25$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La matriz de correlaciones entre los activos es:
+\[
+\rho = \begin{pmatrix}
+1.0 & 0.45 & 0.30 \\
+0.45 & 1.0 & 0.55 \\
+0.30 & 0.55 & 1.0
+\end{pmatrix}
+\]
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada de la cartera.
+  \item Calcule la varianza y la desviación estándar de la cartera.
+  \item Calcule las covarianzas entre todos los pares de activos.
+  \item Si el inversor quiere mantener la misma rentabilidad esperada pero reducir el riesgo, ¿qué recomendación le daría basándose en los coeficientes de correlación?
+\end{enumerate}
+\end{ejercicio}
+
+\section{Activo Libre de Riesgo y Línea de Asignación de Capital (CAL)}
+
+\begin{ejercicio}{4 (Cartera con Activo Libre de Riesgo)}
+Un inversor puede invertir en una cartera con riesgo (cartera $C$) que tiene una rentabilidad esperada del 13\% y una desviación estándar del 18\%. Además, existe un activo libre de riesgo con una rentabilidad del $r_f = 4\%$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera formada invirtiendo 60\% en la cartera con riesgo y 40\% en el activo libre de riesgo.
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera formada invirtiendo 120\% en la cartera con riesgo (es decir, pidiendo prestado al tipo libre de riesgo para invertir más del 100\% en la cartera con riesgo).
+  \item Determine la ecuación de la Línea de Asignación de Capital (CAL) para esta cartera con riesgo.
+  \item Calcule el Ratio de Sharpe de la cartera con riesgo.
+  \item Si el inversor quiere una cartera con un riesgo del 12\%, ¿qué proporción debe invertir en la cartera con riesgo?
+\end{enumerate}
+\end{ejercicio}
+
+\section{Modelo CAPM y Beta}
+
+\begin{ejercicio}{5 (Cálculo de Beta y Aplicación del CAPM)}
+Un analista financiero está evaluando tres acciones. Ha calculado las siguientes estadísticas utilizando datos históricos mensuales de los últimos 24 meses:
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Acción & Covarianza con mercado \\
+\midrule
+Acción X & $\sigma_{X,M} = 0.0028$ \\
+Acción Y & $\sigma_{Y,M} = 0.0012$ \\
+Acción Z & $\sigma_{Z,M} = 0.0036$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Además, se conoce que la rentabilidad esperada del mercado es $\E[r_M] = 11\%$, la tasa libre de riesgo es $r_f = 3.5\%$ y la varianza del mercado es $\sigma_M^2 = 0.0016$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el coeficiente beta de cada acción.
+  \item Clasifique cada acción como defensiva, neutra o agresiva según su beta.
+  \item Calcule la rentabilidad esperada requerida para cada acción según el modelo CAPM.
+  \item Si las rentabilidades esperadas observadas son $\E[r_X] = 14\%$, $\E[r_Y] = 6\%$ y $\E[r_Z] = 15\%$, represente gráficamente la Línea del Mercado de Valores (SML) y sitúe en el gráfico los puntos correspondientes a las rentabilidades observadas y las rentabilidades requeridas según el CAPM para cada acción. Interprete la posición relativa de cada punto.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{6 (Beta de una Cartera)}
+Un fondo de inversión tiene una cartera compuesta por cuatro activos con las siguientes características:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & Beta ($\beta_i$) & Peso en cartera ($w_i$) \\
+\midrule
+Activo 1 & 0.8 & 25\% \\
+Activo 2 & 1.2 & 30\% \\
+Activo 3 & 1.5 & 20\% \\
+Activo 4 & 0.6 & 25\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la beta de la cartera.
+  \item Si la rentabilidad esperada del mercado es $\E[r_M] = 10\%$ y la tasa libre de riesgo es $r_f = 3\%$, calcule la rentabilidad esperada de la cartera según el CAPM.
+  \item Si el gestor del fondo decide cambiar la composición de la cartera a: $w_1 = 30\%$, $w_2 = 25\%$, $w_3 = 25\%$, $w_4 = 20\%$, calcule la nueva beta y rentabilidad esperada de la cartera.
+  \item Compare las dos carteras y explique qué cambio en la composición produce una cartera más agresiva o más defensiva.
+\end{enumerate}
+\end{ejercicio}
+
+\section{Problemas Integrados}
+
+\begin{ejercicio}{7 (Análisis Completo de Cartera: Markowitz y CAPM)}
+Un inversor está considerando formar una cartera invirtiendo en dos acciones españolas: INDITEX y REPSOL. Los datos históricos muestran:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+INDITEX & 12\% & 20\% \\
+REPSOL & 9\% & 16\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El coeficiente de correlación entre las rentabilidades de ambas acciones es $\rho = 0.35$. Además, existe un activo libre de riesgo con $r_f = 3\%$ y la rentabilidad esperada del mercado es $\E[r_M] = 10\%$. Las betas de las acciones son $\beta_{\text{INDITEX}} = 1.3$ y $\beta_{\text{REPSOL}} = 0.9$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera equiponderada (50\% en cada activo).
+  \item Determine los pesos de la cartera de mínima varianza formada solo con estos dos activos con riesgo.
+  \item Calcule la rentabilidad esperada y el riesgo de la cartera de mínima varianza del apartado (b).
+  \item Si el inversor puede combinar la cartera de mínima varianza con el activo libre de riesgo, calcule el Ratio de Sharpe de la cartera de mínima varianza.
+  \item Calcule las rentabilidades esperadas requeridas para INDITEX y REPSOL según el CAPM y compárelas con las rentabilidades esperadas observadas. ¿Están las acciones correctamente valoradas según el CAPM?
+  \item Si el inversor quiere una cartera final con riesgo del 10\% combinando la cartera de mínima varianza con el activo libre de riesgo, ¿qué proporción debe invertir en cada componente?
+\end{enumerate}
+\end{ejercicio}
+
+\end{document}

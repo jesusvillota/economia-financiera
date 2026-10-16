@@ -1,0 +1,60 @@
+\begin{tikzpicture}[
+    node distance=1.2cm and 1.5cm,
+    decision/.style={diamond, draw, fill=yellow!20, text width=2.5cm, align=center, inner sep=2pt, aspect=2},
+    process/.style={rectangle, draw, fill=blue!20, text width=3cm, align=center, minimum height=0.8cm},
+    terminal/.style={rectangle, draw, rounded corners, fill=green!20, text width=2.5cm, align=center, minimum height=0.7cm},
+    reject/.style={rectangle, draw, rounded corners, fill=red!20, text width=2.5cm, align=center, minimum height=0.7cm}
+]
+
+    % Start
+    \node[terminal] (start) {Identificar Oportunidad de Inversión};
+    
+    % Process 1
+    \node[process, below=of start] (cf) {Estimar Flujos de Caja Incrementales $\{CF_t\}$};
+    
+    % Process 2
+    \node[process, below=of cf] (r) {Determinar Tasa de Descuento $r$};
+    
+    % Process 3
+    \node[process, below=of r] (van) {Calcular VAN};
+    
+    % Decision 1
+    \node[decision, below=of van] (vanpos) {VAN $>$ 0?};
+    
+    % Process 4 - left branch
+    \node[process, below left=of vanpos] (tir) {Calcular TIR y Payback (complementario)};
+    
+    % Decision 2
+    \node[decision, below=of tir] (constraints) {¿Restricciones de capital?};
+    
+    % Final decisions
+    \node[terminal, below left=of constraints] (optimize) {Optimizar selección de cartera};
+    \node[terminal, below right=of constraints] (accept) {Aceptar Proyecto};
+    \node[reject, below right=of vanpos] (reject) {Rechazar Proyecto};
+    
+    % Arrows
+    \draw[-Stealth, thick] (start) -- (cf);
+    \draw[-Stealth, thick] (cf) -- (r);
+    \draw[-Stealth, thick] (r) -- (van);
+    \draw[-Stealth, thick] (van) -- (vanpos);
+    
+    \draw[-Stealth, thick, green!70!black] (vanpos) -| node[near start, above] {Sí} (tir);
+    \draw[-Stealth, thick, red!70] (vanpos) -| node[near start, above] {No} (reject);
+    
+    \draw[-Stealth, thick] (tir) -- (constraints);
+    
+    \draw[-Stealth, thick, orange!70] (constraints) -| node[near start, above, font=\scriptsize] {Sí} (optimize);
+    \draw[-Stealth, thick, green!70!black] (constraints) -| node[near start, above, font=\scriptsize] {No} (accept);
+    
+    % Side notes
+    \node[draw, rectangle, dashed, fill=white, text width=3cm, align=left, font=\scriptsize] at (7,0) {
+        \textbf{Consideraciones:}
+        \begin{itemize}
+            \item[$\bullet$] Análisis de sensibilidad
+            \item[$\bullet$] Opciones reales
+            \item[$\bullet$] Riesgo del proyecto
+        \end{itemize}
+    };
+    
+\end{tikzpicture}
+

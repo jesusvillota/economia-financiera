@@ -1,0 +1,1009 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{calc,arrows.meta}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#3}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#3}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 3}\\\large Teoría de Carteras: Modelo de Markowitz y CAPM}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Cov}{\mathbb{C}\text{ov}}
+\newcommand{\EUR}[1]{\ensuremath{#1~\text{EUR}}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+% \maketitle
+
+% \begin{center}
+% \textbf{Objetivo.} Este problem set cubre los conceptos fundamentales de la teoría de carteras, incluyendo el efecto diversificación, el modelo de Markowitz, la construcción de la frontera eficiente, la introducción del activo libre de riesgo y el modelo CAPM. Los ejercicios están diseñados para reforzar la comprensión de estos conceptos mediante cálculos numéricos.
+% \end{center}
+
+% \tableofcontents
+% \newpage
+
+\section{Efecto Diversificación y Carteras de Dos Activos}
+
+\begin{ejercicio}{1 (Efecto de la Correlación en el Riesgo de Cartera)}
+Considere dos activos con riesgo con las siguientes características:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+Activo A & 12\% & 18\% \\
+Activo B & 8\% & 15\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo (desviación estándar) de una cartera equiponderada ($w_A = w_B = 0.5$) para los siguientes valores del coeficiente de correlación: $\rho_{AB} = \{1, ~~ 0.5, ~~ 0, ~~ -0.5, ~~ -1\}$.
+  \item Represente gráficamente cómo varía el riesgo de la cartera en función del coeficiente de correlación. ¿Qué conclusiones puede extraer sobre el efecto diversificación?
+  \item Para $\rho_{AB} = 0.3$, determine los pesos de la cartera de mínima varianza y calcule su rentabilidad esperada y riesgo.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio ilustra el efecto fundamental de la diversificación: la combinación de activos con correlación imperfecta permite reducir el riesgo de la cartera sin reducir necesariamente la rentabilidad esperada. La rentabilidad esperada de la cartera es independiente de la correlación, mientras que el riesgo depende críticamente de este parámetro.
+
+\begin{enumerate}[label=\alph*)]
+  \item Para una cartera de dos activos, la rentabilidad esperada es:
+  \[
+  \E[r_p] = w_A \E[r_A] + w_B \E[r_B] = 0.5 \times 0.12 + 0.5 \times 0.08 = 0.10 = 10\%
+  \]
+  La rentabilidad esperada es independiente de la correlación y siempre será del 10\% para una cartera equiponderada.
+
+  La varianza de la cartera viene dada por:
+  \[
+  \sigma_p^2 = w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2w_A w_B \rho_{AB} \sigma_A \sigma_B
+  \]
+  
+  Sustituyendo los valores conocidos ($w_A = w_B = 0.5$, $\sigma_A = 0.18$, $\sigma_B = 0.15$):
+  \[
+  \sigma_p^2 = (0.5)^2 (0.18)^2 + (0.5)^2 (0.15)^2 + 2 \times 0.5 \times 0.5 \times \rho_{AB} \times 0.18 \times 0.15
+  \]
+  \[
+  \sigma_p^2 = 0.0081 + 0.005625 + 0.0135 \rho_{AB} = 0.013725 + 0.0135 \rho_{AB}
+  \]
+
+  Calculamos para cada valor de correlación:
+
+  \textbf{Caso $\rho_{AB} = 1$:}
+  \[
+  \sigma_p^2 = 0.013725 + 0.0135 \times 1 = 0.027225
+  \]
+  \[
+  \sigma_p = \sqrt{0.027225} = 0.1650 = 16.50\%
+  \]
+  Verificación: $\sigma_p = w_A \sigma_A + w_B \sigma_B = 0.5 \times 0.18 + 0.5 \times 0.15 = 0.165 = 16.5\%$ $\checkmark$
+
+  \textbf{Caso $\rho_{AB} = 0.5$:}
+  \[
+  \sigma_p^2 = 0.013725 + 0.0135 \times 0.5 = 0.013725 + 0.00675 = 0.020475
+  \]
+  \[
+  \sigma_p = \sqrt{0.020475} = 0.1431 = 14.31\%
+  \]
+
+  \textbf{Caso $\rho_{AB} = 0$:}
+  \[
+  \sigma_p^2 = 0.013725 + 0.0135 \times 0 = 0.013725
+  \]
+  \[
+  \sigma_p = \sqrt{0.013725} = 0.1172 = 11.72\%
+  \]
+
+  \textbf{Caso $\rho_{AB} = -0.5$:}
+  \[
+  \sigma_p^2 = 0.013725 + 0.0135 \times (-0.5) = 0.013725 - 0.00675 = 0.006975
+  \]
+  \[
+  \sigma_p = \sqrt{0.006975} = 0.0835 = 8.35\%
+  \]
+
+  \textbf{Caso $\rho_{AB} = -1$:}
+  \[
+  \sigma_p^2 = 0.013725 + 0.0135 \times (-1) = 0.013725 - 0.0135 = 0.000225
+  \]
+  \[
+  \sigma_p = \sqrt{0.000225} = 0.015 = 1.5\%
+  \]
+  Verificación: $\sigma_p = |w_A \sigma_A - w_B \sigma_B| = |0.5 \times 0.18 - 0.5 \times 0.15| = |0.09 - 0.075| = 0.015 = 1.5\%$ $\checkmark$
+
+  \item \textbf{Interpretación gráfica:} Al representar el riesgo de la cartera en función del coeficiente de correlación, observamos que:
+  
+  \begin{center}
+  \begin{tikzpicture}
+    \pgfmathsetmacro{\muone}{0.11}
+    \pgfmathsetmacro{\mutwo}{0.07}
+    \pgfmathsetmacro{\sone}{0.18}
+    \pgfmathsetmacro{\stwo}{0.12}
+    \begin{axis}[
+      width=0.9\textwidth,
+      height=0.48\textwidth,
+      axis lines=middle,
+      xmin=0, xmax=0.23,
+      ymin=0.055, ymax=0.13,
+      xlabel={$\sigma(r_p)$},
+      xlabel style={at={(axis description cs:1.02,0.05)}, anchor=west},
+      ylabel={$\E[r_p]$},
+      xtick=\empty,
+      xticklabels=\empty,
+      yticklabels=\empty,
+      legend columns=2,
+      column sep=0.8em,
+      legend style={draw=none, at={(0.5,-0.15)}, anchor=north, font=\small},
+      legend cell align=left
+    ]
+      % Casos límite: rho = 1 y rho = -1
+      \addplot[domain=0:1, samples=60, thick, green!60!black, dashed]
+        ({abs(x*\sone + (1-x)*\stwo)}, {x*\muone + (1-x)*\mutwo});
+      \addlegendentry{$\rho=1$ (sin diversificación)}
+
+      \addplot[domain=0:1, samples=150, thick, green!60!black]
+        ({abs(x*\sone - (1-x)*\stwo)}, {x*\muone + (1-x)*\mutwo});
+      \addlegendentry{$\rho=-1$ (riesgo nulo factible)}
+
+      % Curvas intermedias
+      \addplot[domain=0:1, samples=120, thick, blue!70!black]
+        ({sqrt(x^2*\sone^2 + (1-x)^2*\stwo^2 + 2*x*(1-x)*\sone*\stwo*0.5)},
+         {x*\muone + (1-x)*\mutwo});
+      \addlegendentry{$\rho=0.5$}
+
+      \addplot[domain=0:1, samples=120, thick, blue]
+        ({sqrt(x^2*\sone^2 + (1-x)^2*\stwo^2 + 2*x*(1-x)*\sone*\stwo*0.0)},
+         {x*\muone + (1-x)*\mutwo});
+      \addlegendentry{$\rho=0$}
+
+      \addplot[domain=0:1, samples=120, thick, blue!40!black]
+        ({sqrt(x^2*\sone^2 + (1-x)^2*\stwo^2 + 2*x*(1-x)*\sone*\stwo*(-0.5))},
+         {x*\muone + (1-x)*\mutwo});
+      \addlegendentry{$\rho=-0.5$}
+
+      % Puntos de los activos
+      \addplot[only marks, mark=*, mark size=2.5pt, blue] coordinates {(\sone,\muone)};
+      \node[anchor=west] at (axis cs:\sone,\muone) {Activo 1};
+      \addplot[only marks, mark=*, mark size=2.5pt, blue] coordinates {(\stwo,\mutwo)};
+      \node[anchor=east] at (axis cs:\stwo,\mutwo) {Activo 2};
+    \end{axis}
+  \end{tikzpicture}
+  \end{center}
+  
+  El gráfico muestra cómo la volatilidad de la cartera disminuye al reducir la correlación entre los activos. Las curvas son más planas y se acercan al eje vertical conforme $\rho$ se vuelve negativa, y en el caso extremo $\rho=-1$ se puede alcanzar una volatilidad prácticamente nula.
+  
+  Adicionalmente:
+  \begin{itemize}
+    \item Cuando $\rho_{AB} = 1$ (correlación perfecta positiva), no hay diversificación: el riesgo es simplemente el promedio ponderado de las volatilidades individuales (16.5\%).
+    \item A medida que la correlación disminuye, el riesgo de la cartera se reduce significativamente debido al efecto diversificación.
+    \item Cuando $\rho_{AB} = -1$ (correlación perfecta negativa), es posible conseguir un riesgo muy bajo (1.5\%) mediante la combinación adecuada de activos.
+    \item El beneficio de la diversificación aumenta a medida que la correlación disminuye, demostrando que la combinación de activos con baja o negativa correlación es fundamental para reducir el riesgo.
+  \end{itemize}
+
+  \item Para encontrar la cartera de mínima varianza con $\rho_{AB} = 0.3$, utilizamos la fórmula:
+  \[
+  w_A^* = \frac{\sigma_B^2 - \rho_{AB} \sigma_A \sigma_B}{\sigma_A^2 + \sigma_B^2 - 2\rho_{AB} \sigma_A \sigma_B}
+  \]
+  
+  Sustituyendo los valores:
+  \[
+  w_A^* = \frac{(0.15)^2 - 0.3 \times 0.18 \times 0.15}{(0.18)^2 + (0.15)^2 - 2 \times 0.3 \times 0.18 \times 0.15}
+  \]
+  \[
+  w_A^* = \frac{0.0225 - 0.0081}{0.0324 + 0.0225 - 0.0162} = \frac{0.0144}{0.0387} = 0.3721
+  \]
+  
+  Por tanto: $w_B^* = 1 - w_A^* = 1 - 0.3721 = 0.6279$
+
+  La cartera de mínima varianza tiene aproximadamente 37.21\% en el Activo A y 62.79\% en el Activo B.
+
+  Rentabilidad esperada de la cartera de mínima varianza:
+  \[
+  \E[r_p^*] = 0.3721 \times 0.12 + 0.6279 \times 0.08 = 0.04465 + 0.05023 = 0.09488 = 9.49\%
+  \]
+
+  Varianza de la cartera de mínima varianza:
+  \[
+  \sigma_p^{*2} = (0.3721)^2 \times (0.18)^2 + (0.6279)^2 \times (0.15)^2 + 2 \times 0.3721 \times 0.6279 \times 0.3 \times 0.18 \times 0.15
+  \]
+  \[
+  \sigma_p^{*2} = 0.1385 \times 0.0324 + 0.3943 \times 0.0225 + 2 \times 0.2337 \times 0.0081
+  \]
+  \[
+  \sigma_p^{*2} = 0.004487 + 0.008872 + 0.003789 = 0.017148
+  \]
+  \[
+  \sigma_p^* = \sqrt{0.017148} = 0.1309 = 13.09\%
+  \]
+
+  \textbf{Observación:} La cartera de mínima varianza tiene un riesgo menor (13.09\%) que la cartera equiponderada con la misma correlación (que tendría un riesgo ligeramente mayor), y favorece al activo con menor volatilidad individual (Activo B) asignándole un peso mayor (62.79\%).
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{2 (Cartera de Mínima Varianza con Diferentes Correlaciones)}
+Un gestor de cartera puede invertir en dos acciones del mercado español: SANTANDER y TELEFÓNICA. Las características de estas acciones son:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+SANTANDER & 10\% & 22\% \\
+TELEFÓNICA & 9\% & 20\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Determine la composición de la cartera de mínima varianza y calcule su rentabilidad esperada y riesgo en los siguientes casos:
+\begin{enumerate}[label=\alph*)]
+  \item Correlación $\rho = 0.8$, sin ventas en corto permitidas.
+  \item Correlación $\rho = 0.8$, con ventas en corto permitidas.
+  \item Correlación $\rho = -0.2$, sin ventas en corto permitidas.
+  \item Correlación $\rho = -0.2$, con ventas en corto permitidas.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio demuestra cómo la correlación y las restricciones de ventas en corto afectan la composición de la cartera de mínima varianza. La fórmula general para los pesos de la cartera de mínima varianza es:
+\[
+w_1^* = \frac{\sigma_2^2 - \rho \sigma_1 \sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho \sigma_1 \sigma_2}
+\]
+donde el activo 1 es SANTANDER y el activo 2 es TELEFÓNICA.
+
+\begin{enumerate}[label=\alph*)]
+  \item Con $\rho = 0.8$ y sin ventas en corto, calculamos:
+  \[
+  w_S^* = \frac{(0.20)^2 - 0.8 \times 0.22 \times 0.20}{(0.22)^2 + (0.20)^2 - 2 \times 0.8 \times 0.22 \times 0.20}
+  \]
+  \[
+  w_S^* = \frac{0.04 - 0.0352}{0.0484 + 0.04 - 0.0704} = \frac{0.0048}{0.0180} = 0.2667
+  \]
+  
+  Por tanto: $w_T^* = 1 - 0.2667 = 0.7333$
+
+  La cartera de mínima varianza tiene 26.67\% en SANTANDER y 73.33\% en TELEFÓNICA.
+
+  Rentabilidad esperada:
+  \[
+  \E[r_p^*] = 0.2667 \times 0.10 + 0.7333 \times 0.09 = 0.02667 + 0.06600 = 0.09267 = 9.27\%
+  \]
+
+  Varianza:
+  \[
+  \sigma_p^{*2} = (0.2667)^2 \times (0.22)^2 + (0.7333)^2 \times (0.20)^2 + 2 \times 0.2667 \times 0.7333 \times 0.8 \times 0.22 \times 0.20
+  \]
+  \[
+  \sigma_p^{*2} = 0.0711 \times 0.0484 + 0.5377 \times 0.04 + 2 \times 0.1956 \times 0.0352
+  \]
+  \[
+  \sigma_p^{*2} = 0.003441 + 0.021508 + 0.013770 = 0.038719
+  \]
+  \[
+  \sigma_p^* = \sqrt{0.038719} = 0.1968 = 19.68\%
+  \]
+
+  \item Con $\rho = 0.8$ y ventas en corto permitidas, el peso calculado $w_S^* = 0.2667$ está dentro del rango permitido (entre 0 y 1), por lo que la solución es la misma que en el apartado (a). No se requiere venta en corto para alcanzar la mínima varianza.
+
+  \item Con $\rho = -0.2$ y sin ventas en corto, calculamos:
+  \[
+  w_S^* = \frac{(0.20)^2 - (-0.2) \times 0.22 \times 0.20}{(0.22)^2 + (0.20)^2 - 2 \times (-0.2) \times 0.22 \times 0.20}
+  \]
+  \[
+  w_S^* = \frac{0.04 + 0.0088}{0.0484 + 0.04 + 0.0176} = \frac{0.0488}{0.1060} = 0.4604
+  \]
+  
+  Por tanto: $w_T^* = 1 - 0.4604 = 0.5396$
+
+  La cartera de mínima varianza tiene 46.04\% en SANTANDER y 53.96\% en TELEFÓNICA.
+
+  Rentabilidad esperada:
+  \[
+  \E[r_p^*] = 0.4604 \times 0.10 + 0.5396 \times 0.09 = 0.04604 + 0.04856 = 0.09460 = 9.46\%
+  \]
+
+  Varianza:
+  \[
+  \sigma_p^{*2} = (0.4604)^2 \times (0.22)^2 + (0.5396)^2 \times (0.20)^2 + 2 \times 0.4604 \times 0.5396 \times (-0.2) \times 0.22 \times 0.20
+  \]
+  \[
+  \sigma_p^{*2} = 0.2120 \times 0.0484 + 0.2912 \times 0.04 - 2 \times 0.2484 \times 0.0088
+  \]
+  \[
+  \sigma_p^{*2} = 0.010260 + 0.011648 - 0.004372 = 0.017536
+  \]
+  \[
+  \sigma_p^* = \sqrt{0.017536} = 0.1324 = 13.24\%
+  \]
+
+  \textbf{Observación importante:} Con correlación negativa, el riesgo de la cartera de mínima varianza (13.24\%) es significativamente menor que con correlación positiva (19.68\%), demostrando el poder de la diversificación cuando los activos están negativamente correlacionados.
+
+  \item Con $\rho = -0.2$ y ventas en corto permitidas, el peso calculado $w_S^* = 0.4604$ está dentro del rango permitido, por lo que la solución es la misma que en el apartado (c). Sin embargo, si permitimos ventas en corto, podríamos explorar combinaciones que reduzcan aún más el riesgo, aunque en este caso la solución sin restricciones ya está dentro de los límites.
+\end{enumerate}
+\end{solucion}
+
+\section{Modelo de Markowitz y Frontera Eficiente}
+
+\begin{ejercicio}{3 (Cartera de Tres Activos)}
+Un inversor está considerando formar una cartera con tres activos con riesgo. Las características de estos activos son:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ & Peso en cartera \\
+\midrule
+Activo 1 & 14\% & 25\% & $w_1 = 0.40$ \\
+Activo 2 & 11\% & 18\% & $w_2 = 0.35$ \\
+Activo 3 & 9\% & 15\% & $w_3 = 0.25$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La matriz de correlaciones entre los activos es:
+\[
+\rho = \begin{pmatrix}
+1.0 & 0.45 & 0.30 \\
+0.45 & 1.0 & 0.55 \\
+0.30 & 0.55 & 1.0
+\end{pmatrix}
+\]
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada de la cartera.
+  \item Calcule la varianza y la desviación estándar de la cartera.
+  \item Calcule las covarianzas entre todos los pares de activos.
+  \item Si el inversor quiere mantener la misma rentabilidad esperada pero reducir el riesgo, ¿qué recomendación le daría basándose en los coeficientes de correlación?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio extiende el análisis de carteras al caso de tres activos, donde debemos considerar todas las covarianzas entre pares. La fórmula general para la varianza de una cartera de $N$ activos es:
+\[
+\sigma_p^2 = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \sigma_{i,j} = \sum_{i=1}^{N} w_i^2 \sigma_i^2 + \sum_{i=1}^{N} \sum_{j \neq i}^{N} w_i w_j \sigma_{i,j}
+\]
+
+\begin{enumerate}[label=\alph*)]
+  \item La rentabilidad esperada de la cartera es la media ponderada de las rentabilidades individuales:
+  \[
+  \E[r_p] = \sum_{i=1}^{3} w_i \E[r_i] = 0.40 \times 0.14 + 0.35 \times 0.11 + 0.25 \times 0.09
+  \]
+  \[
+  \E[r_p] = 0.056 + 0.0385 + 0.0225 = 0.117 = 11.7\%
+  \]
+
+  \item Para calcular la varianza, primero necesitamos las covarianzas. Utilizamos la relación $\sigma_{i,j} = \rho_{i,j} \sigma_i \sigma_j$:
+
+  Covarianzas:
+  \begin{align*}
+  \sigma_{1,2} &= \rho_{1,2} \sigma_1 \sigma_2 = 0.45 \times 0.25 \times 0.18 = 0.02025 \\
+  \sigma_{1,3} &= \rho_{1,3} \sigma_1 \sigma_3 = 0.30 \times 0.25 \times 0.15 = 0.01125 \\
+  \sigma_{2,3} &= \rho_{2,3} \sigma_2 \sigma_3 = 0.55 \times 0.18 \times 0.15 = 0.01485
+  \end{align*}
+
+  Varianzas individuales:
+  \begin{align*}
+  \sigma_1^2 &= (0.25)^2 = 0.0625 \\
+  \sigma_2^2 &= (0.18)^2 = 0.0324 \\
+  \sigma_3^2 &= (0.15)^2 = 0.0225
+  \end{align*}
+
+  Ahora calculamos la varianza de la cartera:
+  \begin{align*}
+  \sigma_p^2 &= w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + w_3^2 \sigma_3^2 \\
+  &\quad + 2w_1 w_2 \sigma_{1,2} + 2w_1 w_3 \sigma_{1,3} + 2w_2 w_3 \sigma_{2,3}
+  \end{align*}
+
+  Sustituyendo los valores:
+  \begin{align*}
+  \sigma_p^2 &= (0.40)^2 \times 0.0625 + (0.35)^2 \times 0.0324 + (0.25)^2 \times 0.0225 \\
+  &\quad + 2 \times 0.40 \times 0.35 \times 0.02025 \\
+  &\quad + 2 \times 0.40 \times 0.25 \times 0.01125 \\
+  &\quad + 2 \times 0.35 \times 0.25 \times 0.01485
+  \end{align*}
+
+  Calculando cada término:
+  \begin{align*}
+  w_1^2 \sigma_1^2 &= 0.16 \times 0.0625 = 0.010000 \\
+  w_2^2 \sigma_2^2 &= 0.1225 \times 0.0324 = 0.003969 \\
+  w_3^2 \sigma_3^2 &= 0.0625 \times 0.0225 = 0.001406 \\
+  2w_1 w_2 \sigma_{1,2} &= 2 \times 0.14 \times 0.02025 = 0.005670 \\
+  2w_1 w_3 \sigma_{1,3} &= 2 \times 0.10 \times 0.01125 = 0.002250 \\
+  2w_2 w_3 \sigma_{2,3} &= 2 \times 0.0875 \times 0.01485 = 0.002599
+  \end{align*}
+
+  Sumando todos los términos:
+  \[
+  \sigma_p^2 = 0.010000 + 0.003969 + 0.001406 + 0.005670 + 0.002250 + 0.002599 = 0.025894
+  \]
+
+  Desviación estándar:
+  \[
+  \sigma_p = \sqrt{0.025894} = 0.1609 = 16.09\%
+  \]
+
+  \item Las covarianzas ya fueron calculadas en el apartado anterior:
+  \begin{align*}
+  \sigma_{1,2} &= 0.02025 \\
+  \sigma_{1,3} &= 0.01125 \\
+  \sigma_{2,3} &= 0.01485
+  \end{align*}
+
+  También podemos verificar que $\sigma_{i,i} = \sigma_i^2$:
+  \begin{align*}
+  \sigma_{1,1} &= \sigma_1^2 = 0.0625 \\
+  \sigma_{2,2} &= \sigma_2^2 = 0.0324 \\
+  \sigma_{3,3} &= \sigma_3^2 = 0.0225
+  \end{align*}
+
+  \item \textbf{Análisis de correlaciones y recomendaciones:}
+  
+  Observando la matriz de correlaciones:
+  \begin{itemize}
+    \item La correlación más alta es entre los Activos 2 y 3 ($\rho_{2,3} = 0.55$), lo que sugiere que estos dos activos se mueven de forma relativamente similar.
+    \item La correlación más baja es entre los Activos 1 y 3 ($\rho_{1,3} = 0.30$), lo que indica mayor potencial de diversificación.
+    \item Todas las correlaciones son positivas y moderadas, lo que limita el beneficio de diversificación pero aún permite reducción de riesgo.
+  \end{itemize}
+
+  \textbf{Recomendaciones para reducir el riesgo manteniendo la rentabilidad esperada:}
+  \begin{enumerate}
+    \item \textbf{Aumentar el peso del Activo 3} (que tiene la menor volatilidad individual, 15\%) y reducir el peso del Activo 1 (mayor volatilidad, 25\%). Sin embargo, esto reduciría la rentabilidad esperada, por lo que habría que ajustar los pesos cuidadosamente.
+    \item \textbf{Explorar combinaciones que aprovechen la menor correlación} entre los Activos 1 y 3 ($\rho_{1,3} = 0.30$), aumentando el peso conjunto de estos dos activos y reduciendo el del Activo 2.
+    \item \textbf{Considerar la construcción de la frontera eficiente} mediante optimización para encontrar la combinación de pesos que minimice el riesgo para la rentabilidad esperada objetivo del 11.7\%.
+    \item Si el inversor puede encontrar activos con correlaciones más bajas o negativas, esto permitiría una mayor reducción del riesgo mediante diversificación.
+  \end{enumerate}
+
+  En general, para mantener la misma rentabilidad esperada pero reducir el riesgo, el inversor debería buscar activos con menor correlación entre sí y considerar rebalancear los pesos hacia activos con menor volatilidad individual, siempre que esto no reduzca demasiado la rentabilidad esperada de la cartera.
+\end{enumerate}
+\end{solucion}
+
+\section{Activo Libre de Riesgo y Línea de Asignación de Capital (CAL)}
+
+\begin{ejercicio}{4 (Cartera con Activo Libre de Riesgo)}
+Un inversor puede invertir en una cartera con riesgo (cartera $C$) que tiene una rentabilidad esperada del 13\% y una desviación estándar del 18\%. Además, existe un activo libre de riesgo con una rentabilidad del $r_f = 4\%$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera formada invirtiendo 60\% en la cartera con riesgo y 40\% en el activo libre de riesgo.
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera formada invirtiendo 120\% en la cartera con riesgo (es decir, pidiendo prestado al tipo libre de riesgo para invertir más del 100\% en la cartera con riesgo).
+  \item Determine la ecuación de la Línea de Asignación de Capital (CAL) para esta cartera con riesgo.
+  \item Calcule el Ratio de Sharpe de la cartera con riesgo.
+  \item Si el inversor quiere una cartera con un riesgo del 12\%, ¿qué proporción debe invertir en la cartera con riesgo?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio introduce el concepto de combinar activos con riesgo y activos libres de riesgo, lo que permite al inversor posicionarse en la Línea de Asignación de Capital (CAL). La CAL representa todas las combinaciones posibles entre una cartera con riesgo y el activo libre de riesgo.
+
+\begin{enumerate}[label=\alph*)]
+  \item Si el inversor invierte una proporción $w = 0.60$ en la cartera con riesgo y $(1-w) = 0.40$ en el activo libre de riesgo:
+  
+  Rentabilidad esperada:
+  \[
+  \E[r_p] = (1-w)r_f + w\E[r_C] = 0.40 \times 0.04 + 0.60 \times 0.13 = 0.016 + 0.078 = 0.094 = 9.4\%
+  \]
+  
+  Varianza (recordando que el activo libre de riesgo tiene varianza cero):
+  \[
+  \sigma_p^2 = w^2 \sigma_C^2 = (0.60)^2 \times (0.18)^2 = 0.36 \times 0.0324 = 0.011664
+  \]
+  
+  Desviación estándar:
+  \[
+  \sigma_p = \sqrt{0.011664} = 0.1080 = 10.80\%
+  \]
+  
+  Alternativamente: $\sigma_p = w \sigma_C = 0.60 \times 0.18 = 0.108 = 10.8\%$ $\checkmark$
+
+  \item Si el inversor invierte $w = 1.20$ (120\%) en la cartera con riesgo, esto implica que pide prestado $(w-1) = 0.20$ (20\%) al tipo libre de riesgo para financiar la inversión adicional.
+  
+  Rentabilidad esperada:
+  \[
+  \E[r_p] = (1-w)r_f + w\E[r_C] = (1-1.20) \times 0.04 + 1.20 \times 0.13
+  \]
+  \[
+  \E[r_p] = -0.20 \times 0.04 + 1.20 \times 0.13 = -0.008 + 0.156 = 0.148 = 14.8\%
+  \]
+  
+  Varianza:
+  \[
+  \sigma_p^2 = w^2 \sigma_C^2 = (1.20)^2 \times (0.18)^2 = 1.44 \times 0.0324 = 0.046656
+  \]
+  
+  Desviación estándar:
+  \[
+  \sigma_p = \sqrt{0.046656} = 0.2160 = 21.60\%
+  \]
+  
+  Alternativamente: $\sigma_p = w \sigma_C = 1.20 \times 0.18 = 0.216 = 21.6\%$ $\checkmark$
+
+  \textbf{Interpretación:} Al pedir prestado al tipo libre de riesgo (4\%) e invertir más del 100\% en la cartera con riesgo (13\%), el inversor aumenta tanto la rentabilidad esperada como el riesgo de su cartera. La rentabilidad neta aumenta porque la cartera con riesgo ofrece un 13\% mientras que el préstamo cuesta solo el 4\%.
+
+  \item La ecuación de la CAL viene dada por:
+  \[
+  \E[r_p] = r_f + \frac{\sigma_p}{\sigma_C} (\E[r_C] - r_f)
+  \]
+  
+  Sustituyendo los valores conocidos:
+  \[
+  \E[r_p] = 0.04 + \frac{\sigma_p}{0.18} (0.13 - 0.04) = 0.04 + \frac{\sigma_p}{0.18} \times 0.09
+  \]
+  \[
+  \E[r_p] = 0.04 + 0.5 \sigma_p
+  \]
+  
+  Esta es la ecuación de una línea recta en el espacio rentabilidad-riesgo $(\sigma_p, \E[r_p])$ con:
+  \begin{itemize}
+    \item Intercepto: $r_f = 4\%$ (cuando $\sigma_p = 0$)
+    \item Pendiente: $\frac{\E[r_C] - r_f}{\sigma_C} = \frac{0.13 - 0.04}{0.18} = \frac{0.09}{0.18} = 0.5$
+  \end{itemize}
+
+  \item El Ratio de Sharpe de la cartera con riesgo es precisamente la pendiente de la CAL:
+  \[
+  \text{Sharpe Ratio} = \frac{\E[r_C] - r_f}{\sigma_C} = \frac{0.13 - 0.04}{0.18} = \frac{0.09}{0.18} = 0.5
+  \]
+  
+  El Ratio de Sharpe mide el exceso de rentabilidad esperada por unidad de riesgo asumido. Un ratio mayor indica un mejor trade-off entre rentabilidad y riesgo.
+
+  \item Si el inversor quiere una cartera con riesgo $\sigma_p = 12\% = 0.12$, despejamos $w$ de la ecuación de la varianza:
+  \[
+  \sigma_p = w \sigma_C \Rightarrow w = \frac{\sigma_p}{\sigma_C} = \frac{0.12}{0.18} = 0.6667
+  \]
+  
+  Por tanto, el inversor debe invertir 66.67\% en la cartera con riesgo y 33.33\% en el activo libre de riesgo.
+
+  Verificación de la rentabilidad esperada:
+  \[
+  \E[r_p] = 0.3333 \times 0.04 + 0.6667 \times 0.13 = 0.01333 + 0.08667 = 0.10 = 10\%
+  \]
+  
+  Verificación usando la ecuación de la CAL:
+  \[
+  \E[r_p] = 0.04 + 0.5 \times 0.12 = 0.04 + 0.06 = 0.10 = 10\% \quad \checkmark
+  \]
+\end{enumerate}
+\end{solucion}
+
+\section{Modelo CAPM y Beta}
+
+\begin{ejercicio}{5 (Cálculo de Beta y Aplicación del CAPM)}
+Un analista financiero está evaluando tres acciones. Ha calculado las siguientes estadísticas utilizando datos históricos mensuales de los últimos 24 meses:
+\begin{center}
+\begin{tabular}{lc}
+\toprule
+Acción & Covarianza con mercado \\
+\midrule
+Acción X & $\sigma_{X,M} = 0.0028$ \\
+Acción Y & $\sigma_{Y,M} = 0.0012$ \\
+Acción Z & $\sigma_{Z,M} = 0.0036$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Además, se conoce que la rentabilidad esperada del mercado es $\E[r_M] = 11\%$, la tasa libre de riesgo es $r_f = 3.5\%$ y la varianza del mercado es $\sigma_M^2 = 0.0016$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el coeficiente beta de cada acción.
+  \item Clasifique cada acción como defensiva, neutra o agresiva según su beta.
+  \item Calcule la rentabilidad esperada requerida para cada acción según el modelo CAPM.
+  \item Si las rentabilidades esperadas observadas son $\E[r_X] = 14\%$, $\E[r_Y] = 6\%$ y $\E[r_Z] = 15\%$, represente gráficamente la Línea del Mercado de Valores (SML) y sitúe en el gráfico los puntos correspondientes a las rentabilidades observadas y las rentabilidades requeridas según el CAPM para cada acción. Interprete la posición relativa de cada punto.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio aplica el modelo CAPM para valorar activos y determinar si están correctamente valorados en el mercado. El CAPM establece que la rentabilidad esperada de un activo depende únicamente de su riesgo sistemático (beta), no de su riesgo específico.
+
+\begin{enumerate}[label=\alph*)]
+  \item El coeficiente beta se calcula como:
+  \[
+  \beta_i = \frac{\Cov(r_i, r_M)}{\V(r_M)} = \frac{\sigma_{i,M}}{\sigma_M^2}
+  \]
+  
+  Para cada acción:
+  \begin{align*}
+  \beta_X &= \frac{0.0028}{0.0016} = 1.75 \\
+  \beta_Y &= \frac{0.0012}{0.0016} = 0.75 \\
+  \beta_Z &= \frac{0.0036}{0.0016} = 2.25
+  \end{align*}
+
+  \item Clasificación según beta:
+  \begin{itemize}
+    \item \textbf{Acción X ($\beta_X = 1.75$):} Agresiva (beta > 1). Es más volátil que el mercado y se espera que tenga movimientos más amplios que el mercado en general.
+    \item \textbf{Acción Y ($\beta_Y = 0.75$):} Defensiva (beta < 1). Es menos volátil que el mercado y se espera que tenga movimientos más suaves que el mercado.
+    \item \textbf{Acción Z ($\beta_Z = 2.25$):} Muy agresiva (beta > 1). Es significativamente más volátil que el mercado y se espera que amplifique los movimientos del mercado.
+  \end{itemize}
+
+  \item Según el modelo CAPM, la rentabilidad esperada requerida es:
+  \[
+  \E[r_i] = r_f + \beta_i (\E[r_M] - r_f)
+  \]
+  
+  La prima de riesgo del mercado es:
+  \[
+  \E[r_M] - r_f = 0.11 - 0.035 = 0.075 = 7.5\%
+  \]
+  
+  Calculamos la rentabilidad requerida para cada acción:
+  \begin{align*}
+  \E[r_X] &= 0.035 + 1.75 \times 0.075 = 0.035 + 0.13125 = 0.16625 = 16.625\% \\
+  \E[r_Y] &= 0.035 + 0.75 \times 0.075 = 0.035 + 0.05625 = 0.09125 = 9.125\% \\
+  \E[r_Z] &= 0.035 + 2.25 \times 0.075 = 0.035 + 0.16875 = 0.20375 = 20.375\%
+  \end{align*}
+
+  \item Para representar gráficamente la SML y las posiciones de las acciones, primero resumimos los datos calculados:
+  
+  \begin{center}
+  \begin{tabular}{lcccc}
+  \toprule
+  Acción & $\beta_i$ & $\E[r_i]$ observada & $\E[r_i]$ requerida (CAPM) & Diferencia \\
+  \midrule
+  Acción X & 1.75 & 14.0\% & 16.625\% & -2.625\% \\
+  Acción Y & 0.75 & 6.0\% & 9.125\% & -3.125\% \\
+  Acción Z & 2.25 & 15.0\% & 20.375\% & -5.375\% \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+  
+  La ecuación de la SML es:
+  \[
+  \E[r_i] = r_f + \beta_i (\E[r_M] - r_f) = 0.035 + \beta_i \times 0.075
+  \]
+  
+  El gráfico muestra la SML (línea azul) y los puntos correspondientes a cada acción. Los puntos sobre la SML representan las rentabilidades requeridas según el CAPM, mientras que los puntos fuera de la SML representan las rentabilidades observadas.
+  
+  \begin{center}
+  \shorthandoff{<>}
+  \begin{tikzpicture}[xscale=2.2,yscale=0.65]
+    % Escala: beta de 0 a 2.5, rentabilidad de 0 a 22 por ciento
+    % x: 1 unidad = 0.5 beta (beta=2.5 en x=5)
+    % y: 1 unidad = 2 por ciento rentabilidad (22 por ciento en y=11)
+    
+    % Ejes
+    \draw[->,thick] (-0.3,0) -- (5.5,0) node[right] {$\beta$};
+    \draw[->,thick] (0,-0.3) -- (0,11.5) node[above] {$\mathbb{E}[r]$ (\%)};
+    
+    % Etiquetas de ejes - Beta (cada 0.5)
+    \foreach \x in {0.5,1,1.5,2,2.5}
+      \draw (\x*2,0.1) -- (\x*2,-0.1) node[below] {\x};
+    
+    % Etiquetas de ejes - Rentabilidad (cada 2%)
+    \foreach \y in {2,6,8,10,12,14,16,18,20,22}
+      \draw (0.1,\y*0.5) -- (-0.1,\y*0.5) node[left] {\y};
+    
+    % Etiqueta especial para 4 (más a la izquierda para evitar solapamiento)
+    \draw (0.1,2) -- (-0.1,2) node[left,xshift=-2pt] {4};
+    
+    % SML: E[r] = 3.5 + beta * 7.5
+    % Conversión: y = (E[r]%) * 0.5
+    % Para beta=0: E[r] = 3.5% -> y = 1.75
+    % Para beta=2.5: E[r] = 3.5 + 2.5*7.5 = 22.25% -> y = 11.125
+    \draw[blue,very thick] (0,1.75) -- (5,11.125) node[above right,blue] {\textbf{SML}};
+    
+    % Punto del mercado (beta=1, E[r]=11%)
+    % x = 1*2 = 2, y = 11*0.5 = 5.5
+    \node[blue] at (2,5.5) {$\bullet$};
+    \node[below right, xshift=4pt, yshift=-6pt] at (2,5.5) {\small Mercado};
+    
+    % Acción X: beta=1.75
+    % x = 1.75*2 = 3.5
+    % Requerida: 16.625% -> y = 16.625 * 0.5 = 8.3125
+    % Observada: 14% -> y = 14 * 0.5 = 7
+    \node[red] at (3.5,8.3125) {$\bullet$};
+    \node[above] at (3.5,8.6) {\small X (req.)};
+    \node[red!50,opacity=0.7] at (3.5,7) {$\bullet$};
+    \node[below] at (3.5,6.7) {\small X (obs.)};
+    \draw[red,dashed,thick] (3.5,7) -- (3.5,8.3125);
+    
+    % Acción Y: beta=0.75
+    % x = 0.75*2 = 1.5
+    % Requerida: 9.125% -> y = 9.125 * 0.5 = 4.5625
+    % Observada: 6% -> y = 6 * 0.5 = 3
+    \node[green!70!black] at (1.5,4.5625) {$\bullet$};
+    \node[above] at (1.5,4.85) {\small Y (req.)};
+    \node[green!50,opacity=0.7] at (1.5,3) {$\bullet$};
+    \node[below] at (1.5,2.7) {\small Y (obs.)};
+    \draw[green!70!black,dashed,thick] (1.5,3) -- (1.5,4.5625);
+    
+    % Acción Z: beta=2.25
+    % x = 2.25*2 = 4.5
+    % Requerida: 20.375% -> y = 20.375 * 0.5 = 10.1875
+    % Observada: 15% -> y = 15 * 0.5 = 7.5
+    \node[orange] at (4.5,10.1875) {$\bullet$};
+    \node[above] at (4.5,10.5) {\small Z (req.)};
+    \node[orange!50,opacity=0.7] at (4.5,7.5) {$\bullet$};
+    \node[below] at (4.5,7.2) {\small Z (obs.)};
+    \draw[orange,dashed,thick] (4.5,7.5) -- (4.5,10.1875);
+    \draw[orange,dashed,thick] (4.5,7.5) -- (4.5,10.1875);
+    
+    % Leyenda (esquina superior izquierda)
+    \node[anchor=west,black] at (0.3,10.5) {$\bullet$ Requerida (CAPM)};
+    \node[anchor=west,black!50] at (0.3,10.0) {$\bullet$ Observada};
+    
+    % Etiqueta r_f en el intercepto de la SML con el eje y
+    \node[right,xshift=3pt] at (0,1.75) {\small $r_f=3{,}5\%$};
+  \end{tikzpicture}
+  \shorthandon{<>}
+  \end{center}
+  
+  \textbf{Interpretación del gráfico:}
+  
+  \begin{itemize}
+    \item La \textbf{SML} (línea azul) representa todas las combinaciones de beta y rentabilidad esperada que están en equilibrio según el CAPM. Todos los activos correctamente valorados deberían situarse sobre esta línea.
+    
+    \item Los \textbf{puntos sólidos} (X, Y, Z con etiqueta "req.") representan las rentabilidades requeridas según el CAPM para cada beta. Estos puntos están sobre la SML, como debe ser.
+    
+    \item Los \textbf{puntos semitransparentes} (X, Y, Z con etiqueta \texttt{obs.}) representan las rentabilidades observadas en el mercado. Todas están por debajo de la SML.
+    
+    \item Las \textbf{líneas discontinuas} muestran la diferencia vertical entre la rentabilidad observada y la requerida para cada acción.
+    
+    \item \textbf{Conclusión:} Las tres acciones tienen rentabilidades observadas menores que las requeridas por el CAPM, lo que indica que sus precios están por encima del equilibrio. En un mercado eficiente, estas acciones deberían ajustarse hasta situarse sobre la SML. La acción Z muestra la mayor desviación (5.375 puntos porcentuales por debajo de la SML), seguida de la acción Y (3.125 puntos) y la acción X (2.625 puntos).
+  \end{itemize}
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{6 (Beta de una Cartera)}
+Un fondo de inversión tiene una cartera compuesta por cuatro activos con las siguientes características:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & Beta ($\beta_i$) & Peso en cartera ($w_i$) \\
+\midrule
+Activo 1 & 0.8 & 25\% \\
+Activo 2 & 1.2 & 30\% \\
+Activo 3 & 1.5 & 20\% \\
+Activo 4 & 0.6 & 25\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la beta de la cartera.
+  \item Si la rentabilidad esperada del mercado es $\E[r_M] = 10\%$ y la tasa libre de riesgo es $r_f = 3\%$, calcule la rentabilidad esperada de la cartera según el CAPM.
+  \item Si el gestor del fondo decide cambiar la composición de la cartera a: $w_1 = 30\%$, $w_2 = 25\%$, $w_3 = 25\%$, $w_4 = 20\%$, calcule la nueva beta y rentabilidad esperada de la cartera.
+  \item Compare las dos carteras y explique qué cambio en la composición produce una cartera más agresiva o más defensiva.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio demuestra que la beta de una cartera es simplemente la media ponderada de las betas de los activos individuales. Esto refleja el principio de que el riesgo sistemático es aditivo y no puede diversificarse.
+
+\begin{enumerate}[label=\alph*)]
+  \item La beta de una cartera se calcula como:
+  \[
+  \beta_p = \sum_{i=1}^{N} w_i \beta_i
+  \]
+  
+  Sustituyendo los valores:
+  \[
+  \beta_p = 0.25 \times 0.8 + 0.30 \times 1.2 + 0.20 \times 1.5 + 0.25 \times 0.6
+  \]
+  \[
+  \beta_p = 0.20 + 0.36 + 0.30 + 0.15 = 1.01
+  \]
+  
+  La beta de la cartera es 1.01, lo que indica que la cartera tiene un riesgo sistemático prácticamente igual al del mercado (beta = 1).
+
+  \item Según el CAPM, la rentabilidad esperada de la cartera es:
+  \[
+  \E[r_p] = r_f + \beta_p (\E[r_M] - r_f)
+  \]
+  
+  Sustituyendo:
+  \[
+  \E[r_p] = 0.03 + 1.01 \times (0.10 - 0.03) = 0.03 + 1.01 \times 0.07 = 0.03 + 0.0707 = 0.1007 = 10.07\%
+  \]
+  
+  La rentabilidad esperada de la cartera (10.07\%) es prácticamente igual a la del mercado (10\%), lo cual es consistente con una beta cercana a 1.
+
+  \item Con la nueva composición ($w_1 = 0.30$, $w_2 = 0.25$, $w_3 = 0.25$, $w_4 = 0.20$), calculamos la nueva beta:
+  \[
+  \beta_p^{\text{nueva}} = 0.30 \times 0.8 + 0.25 \times 1.2 + 0.25 \times 1.5 + 0.20 \times 0.6
+  \]
+  \[
+  \beta_p^{\text{nueva}} = 0.24 + 0.30 + 0.375 + 0.12 = 1.035
+  \]
+  
+  La nueva rentabilidad esperada según el CAPM:
+  \[
+  \E[r_p^{\text{nueva}}] = 0.03 + 1.035 \times 0.07 = 0.03 + 0.07245 = 0.10245 = 10.245\%
+  \]
+
+  \item \textbf{Comparación de las dos carteras:}
+  
+  \begin{center}
+  \begin{tabular}{lcc}
+  \toprule
+  Característica & Cartera Original & Cartera Nueva \\
+  \midrule
+  Beta & 1.01 & 1.035 \\
+  Rentabilidad esperada (CAPM) & 10.07\% & 10.245\% \\
+  \bottomrule
+  \end{tabular}
+  \end{center}
+
+  \textbf{Análisis de los cambios:}
+  \begin{itemize}
+    \item La nueva cartera tiene una beta mayor (1.035 vs 1.01), lo que indica que es \textbf{más agresiva} que la cartera original.
+    \item El aumento en la beta se debe principalmente a:
+      \begin{itemize}
+        \item Aumento del peso del Activo 3 (beta = 1.5) de 20\% a 25\% (+5 puntos porcentuales)
+        \item Aumento del peso del Activo 1 (beta = 0.8) de 25\% a 30\% (+5 puntos porcentuales)
+        \item Disminución del peso del Activo 4 (beta = 0.6) de 25\% a 20\% (-5 puntos porcentuales)
+        \item Disminución del peso del Activo 2 (beta = 1.2) de 30\% a 25\% (-5 puntos porcentuales)
+      \end{itemize}
+    \item El efecto neto es un aumento en la beta porque el aumento del peso del Activo 3 (beta alta = 1.5) y la disminución del peso del Activo 4 (beta baja = 0.6) dominan sobre los otros cambios.
+    \item La nueva cartera tiene una rentabilidad esperada mayor (10.245\% vs 10.07\%) según el CAPM, lo cual es consistente con su mayor beta y mayor riesgo sistemático.
+  \end{itemize}
+
+  \textbf{Conclusión:} La nueva composición produce una cartera más agresiva (mayor beta) y con mayor rentabilidad esperada, pero también con mayor riesgo sistemático. El gestor ha aumentado la exposición a activos con betas más altas (especialmente el Activo 3) y reducido la exposición a activos con betas más bajas (especialmente el Activo 4).
+\end{enumerate}
+\end{solucion}
+
+\section{Problemas Integrados}
+
+\begin{ejercicio}{7 (Análisis Completo de Cartera: Markowitz y CAPM)}
+Un inversor está considerando formar una cartera invirtiendo en dos acciones españolas: INDITEX y REPSOL. Los datos históricos muestran:
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Activo & $\E[r_i]$ & $\sigma_i$ \\
+\midrule
+INDITEX & 12\% & 20\% \\
+REPSOL & 9\% & 16\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El coeficiente de correlación entre las rentabilidades de ambas acciones es $\rho = 0.35$. Además, existe un activo libre de riesgo con $r_f = 3\%$ y la rentabilidad esperada del mercado es $\E[r_M] = 10\%$. Las betas de las acciones son $\beta_{\text{INDITEX}} = 1.3$ y $\beta_{\text{REPSOL}} = 0.9$.
+
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la rentabilidad esperada y el riesgo de una cartera equiponderada (50\% en cada activo).
+  \item Determine los pesos de la cartera de mínima varianza formada solo con estos dos activos con riesgo.
+  \item Calcule la rentabilidad esperada y el riesgo de la cartera de mínima varianza del apartado (b).
+  \item Si el inversor puede combinar la cartera de mínima varianza con el activo libre de riesgo, calcule el Ratio de Sharpe de la cartera de mínima varianza.
+  \item Calcule las rentabilidades esperadas requeridas para INDITEX y REPSOL según el CAPM y compárelas con las rentabilidades esperadas observadas. ¿Están las acciones correctamente valoradas según el CAPM?
+  \item Si el inversor quiere una cartera final con riesgo del 10\% combinando la cartera de mínima varianza con el activo libre de riesgo, ¿qué proporción debe invertir en cada componente?
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio integra los conceptos de diversificación, optimización de carteras según Markowitz, introducción del activo libre de riesgo y aplicación del CAPM. Es un problema completo que requiere aplicar múltiples conceptos de la teoría de carteras.
+
+\begin{enumerate}[label=\alph*)]
+  \item Para una cartera equiponderada ($w_{\text{INDITEX}} = w_{\text{REPSOL}} = 0.5$):
+  
+  Rentabilidad esperada:
+  \[
+  \E[r_p] = 0.5 \times 0.12 + 0.5 \times 0.09 = 0.06 + 0.045 = 0.105 = 10.5\%
+  \]
+  
+  Varianza:
+  \[
+  \sigma_p^2 = (0.5)^2 \times (0.20)^2 + (0.5)^2 \times (0.16)^2 + 2 \times 0.5 \times 0.5 \times 0.35 \times 0.20 \times 0.16
+  \]
+  \[
+  \sigma_p^2 = 0.25 \times 0.04 + 0.25 \times 0.0256 + 0.25 \times 0.0112
+  \]
+  \[
+  \sigma_p^2 = 0.01 + 0.0064 + 0.0056 = 0.0220
+  \]
+  
+  Desviación estándar:
+  \[
+  \sigma_p = \sqrt{0.0220} = 0.1487 = 14.87\%
+  \]
+
+  \item Para encontrar la cartera de mínima varianza, utilizamos la fórmula:
+  \[
+  w_{\text{INDITEX}}^* = \frac{\sigma_{\text{REPSOL}}^2 - \rho \sigma_{\text{INDITEX}} \sigma_{\text{REPSOL}}}{\sigma_{\text{INDITEX}}^2 + \sigma_{\text{REPSOL}}^2 - 2\rho \sigma_{\text{INDITEX}} \sigma_{\text{REPSOL}}}
+  \]
+  
+  Sustituyendo:
+  \[
+  w_{\text{INDITEX}}^* = \frac{(0.16)^2 - 0.35 \times 0.20 \times 0.16}{(0.20)^2 + (0.16)^2 - 2 \times 0.35 \times 0.20 \times 0.16}
+  \]
+  \[
+  w_{\text{INDITEX}}^* = \frac{0.0256 - 0.0112}{0.04 + 0.0256 - 0.0224} = \frac{0.0144}{0.0432} = 0.3333
+  \]
+  
+  Por tanto: $w_{\text{REPSOL}}^* = 1 - 0.3333 = 0.6667$
+  
+  La cartera de mínima varianza tiene 33.33\% en INDITEX y 66.67\% en REPSOL.
+
+  \item Rentabilidad esperada de la cartera de mínima varianza:
+  \[
+  \E[r_p^*] = 0.3333 \times 0.12 + 0.6667 \times 0.09 = 0.04 + 0.06 = 0.10 = 10\%
+  \]
+  
+  Varianza:
+  \[
+  \sigma_p^{*2} = (0.3333)^2 \times (0.20)^2 + (0.6667)^2 \times (0.16)^2 + 2 \times 0.3333 \times 0.6667 \times 0.35 \times 0.20 \times 0.16
+  \]
+  \[
+  \sigma_p^{*2} = 0.1111 \times 0.04 + 0.4444 \times 0.0256 + 2 \times 0.2222 \times 0.0112
+  \]
+  \[
+  \sigma_p^{*2} = 0.004444 + 0.011378 + 0.004977 = 0.020799
+  \]
+  
+  Desviación estándar:
+  \[
+  \sigma_p^* = \sqrt{0.020799} = 0.1442 = 14.42\%
+  \]
+  
+  \textbf{Observación:} La cartera de mínima varianza logra el menor riesgo (14.42\%) y es inferior al de la cartera equiponderada (14.87\%).
+
+  \item El Ratio de Sharpe de la cartera de mínima varianza es:
+  \[
+  \text{Sharpe Ratio} = \frac{\E[r_p^*] - r_f}{\sigma_p^*} = \frac{0.10 - 0.03}{0.1442} = \frac{0.07}{0.1442} = 0.4856
+  \]
+  
+  El Ratio de Sharpe mide el exceso de rentabilidad por unidad de riesgo. Un ratio de 0.4856 indica que por cada unidad de riesgo asumido, la cartera genera 0.4856 unidades de exceso de rentabilidad sobre la tasa libre de riesgo.
+
+  \item Según el CAPM, las rentabilidades esperadas requeridas son:
+  \[
+  \E[r_i] = r_f + \beta_i (\E[r_M] - r_f)
+  \]
+  
+  La prima de riesgo del mercado es: $\E[r_M] - r_f = 0.10 - 0.03 = 0.07 = 7\%$
+  
+  Para INDITEX:
+  \[
+  \E[r_{\text{INDITEX}}] = 0.03 + 1.3 \times 0.07 = 0.03 + 0.091 = 0.121 = 12.1\%
+  \]
+  
+  Para REPSOL:
+  \[
+  \E[r_{\text{REPSOL}}] = 0.03 + 0.9 \times 0.07 = 0.03 + 0.063 = 0.093 = 9.3\%
+  \]
+  
+  Comparación:
+  \begin{itemize}
+    \item \textbf{INDITEX:} Rentabilidad observada (12\%) vs requerida (12.1\%). Está \textbf{ligeramente sobrevalorada} (rentabilidad observada por debajo de la requerida en 0.1 pp).
+    \item \textbf{REPSOL:} Rentabilidad observada (9\%) vs requerida (9.3\%). Está \textbf{ligeramente sobrevalorada} (0.3 pp por debajo de lo requerido).
+  \end{itemize}
+  
+  En general, ambas acciones aparecen \textbf{ligeramente sobrevaloradas} según el CAPM, con desviaciones pequeñas que podrían deberse a errores de estimación o a factores no capturados por el modelo.
+
+  \item Si el inversor quiere una cartera final con riesgo $\sigma_p = 10\% = 0.10$, y combina la cartera de mínima varianza (con riesgo $\sigma_p^* = 14.42\%$) con el activo libre de riesgo, la proporción a invertir en la cartera de mínima varianza es:
+  \[
+  w = \frac{\sigma_p}{\sigma_p^*} = \frac{0.10}{0.1442} = 0.6935
+  \]
+  
+  Por tanto, el inversor debe invertir 69.35\% en la cartera de mínima varianza y 30.65\% en el activo libre de riesgo.
+  
+  Verificación de la rentabilidad esperada:
+  \[
+  \E[r_p] = 0.3065 \times 0.03 + 0.6935 \times 0.10 = 0.009195 + 0.06935 = 0.078545 = 7.85\%
+  \]
+  
+  Verificación usando la ecuación de la CAL:
+  \[
+  \E[r_p] = 0.03 + 0.4856 \times 0.10 = 0.03 + 0.04856 = 0.07855 = 7.85\% \quad \checkmark
+  \]
+  
+  La cartera final tiene una rentabilidad esperada del 7.85\% y un riesgo del 10\%, lo que representa un buen equilibrio entre rentabilidad y riesgo para un inversor moderadamente averso al riesgo.
+\end{enumerate}
+\end{solucion}
+
+\end{document}
+

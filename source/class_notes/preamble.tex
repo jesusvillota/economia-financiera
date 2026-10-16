@@ -1,0 +1,80 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes necesarios
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, decorations.pathreplacing, shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\usepackage{caption}
+
+% Configuración de página
+\geometry{margin=2.5cm}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Jesus Villota Miranda - CEMFI}
+\fancyfoot[C]{\thepage}
+
+% Configuración de hipervínculos
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Definición de entornos matemáticos
+\theoremstyle{definition}
+\newtheorem{definicion}{Definición}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{proposicion}{Proposición}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+\newtheorem{corolario}{Corolario}[section]
+\newtheorem{ejercicio}{Ejercicio}[section]
+\newtheorem{solucion}{Solución}[section]
+
+% Comandos personalizados
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Cov}{\mathbb{C}\text{ov}}
+
+% Estilos TikZ para visualizaciones financieras
+\tikzset{
+  timeline/.style={-Stealth, thick, black},
+  cashflow/.style={-Stealth, very thick, blue!70},
+  discount/.style={-Stealth, dashed, red!70},
+  simple/.style={fill=blue!30, draw=blue!70},
+  compound/.style={fill=green!30, draw=green!70},
+  timepoint/.style={circle, fill, inner sep=2pt},
+  payment/.style={-Stealth, thick, orange!80},
+  growth/.style={-Stealth, thick, purple!80}
+}
+
+% Configuración de títulos
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+

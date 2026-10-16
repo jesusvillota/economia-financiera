@@ -1,0 +1,1188 @@
+\input{../preamble.tex}
+
+% Título del documento
+\title{\textbf{Fundamentos de Valoración de Activos}\\
+\large Parte V: Microestructura de los Mercados Secundarios de Valores}
+\author{Jesus Villota Miranda\\
+CEMFI}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Este documento presenta un tratamiento riguroso y autocontenido de la microestructura de los mercados secundarios de valores. La microestructura de mercados estudia los mecanismos y procedimientos mediante los cuales se intercambian activos financieros en los mercados secundarios, así como los procesos de formación de precios y la organización institucional que facilita estas transacciones.
+
+A diferencia de los mercados primarios, donde los emisores obtienen financiación mediante la emisión de nuevos valores, los mercados secundarios permiten la negociación de valores ya emitidos entre inversores. La comprensión de la microestructura es fundamental para entender cómo se determinan los precios, cómo se proporciona liquidez y cómo las diferentes estructuras de mercado afectan la eficiencia y el coste de las transacciones.
+
+El documento se organiza en cuatro secciones principales: (1) consideraciones generales sobre participantes y funciones de los mercados financieros, (2) mecanismos de compra y venta de valores, (3) organización y funcionamiento de los mercados regulados, y (4) características y regulación de los mercados OTC. Cada sección incluye definiciones formales, análisis de los mecanismos de funcionamiento y ejemplos aplicados al contexto europeo y español.
+
+\section{Consideraciones Generales}
+\label{sec:consideraciones}
+
+\subsection{Los Mercados Financieros}
+
+\begin{definicion}[Mercado Financiero]
+Un \textbf{mercado financiero} es el lugar o el conjunto de mecanismos y procedimientos a través de los cuales se intercambian activos financieros y se fijan sus precios. Los mercados financieros facilitan la transferencia de fondos entre agentes con excedentes de capital y agentes con necesidades de financiación.
+\end{definicion}
+
+Los mercados financieros cumplen funciones esenciales en la economía moderna. Su existencia permite la asignación eficiente de recursos financieros y la transferencia de riesgo entre agentes económicos.
+
+\begin{teorema}[Funciones Principales de los Mercados Financieros]
+Los mercados financieros cumplen las siguientes funciones principales:
+
+\begin{enumerate}
+\item \textbf{Intercambio de activos financieros}: Ponen en contacto a los agentes que intervienen en el mercado para facilitar el intercambio de activos financieros.
+
+\item \textbf{Fijación de precios}: Proporcionan un mecanismo de fijación de precios de los activos, especialmente en los mercados secundarios donde la negociación continua permite el descubrimiento de precios.
+
+\item \textbf{Provisión de liquidez}: Proporcionan liquidez a los activos, permitiendo a los inversores convertir sus inversiones en efectivo cuando lo necesiten.
+
+\item \textbf{Reducción de costes de intermediación}: Reducen los plazos y costes de intermediación mediante la centralización de la negociación y la estandarización de los procesos.
+\end{enumerate}
+\end{teorema}
+
+\begin{definicion}[Eficiencia Operativa]
+La \textbf{eficiencia operativa} de un mercado financiero se refiere a la capacidad del mercado para canalizar fondos al coste más bajo posible, consistente con la supervivencia del mercado como tal. Un mercado operativamente eficiente minimiza los costes de transacción y los costes de intermediación.
+\end{definicion}
+
+\begin{definicion}[Eficiencia de Asignación]
+La \textbf{eficiencia de asignación} de un mercado financiero se basa en el reparto óptimo del riesgo entre los participantes del mercado. Un mercado con eficiencia de asignación permite que cada agente asuma el nivel de riesgo acorde con sus preferencias y capacidad.
+\end{definicion}
+
+\begin{definicion}[Eficiencia Informacional]
+La \textbf{eficiencia informacional} de un mercado financiero se refiere a la capacidad de los precios de los activos para reflejar toda la información disponible sobre el valor fundamental del activo. En un mercado informacionalmente eficiente, los precios incorporan instantáneamente toda la información relevante.
+\end{definicion}
+
+\subsection{Características de los Mercados Financieros}
+
+Las características de los mercados financieros pueden clasificarse en dos categorías principales: características institucionales y características de la oferta y demanda.
+
+\begin{definicion}[Transparencia]
+La \textbf{transparencia} de un mercado financiero se refiere a la capacidad de los participantes para obtener información de manera barata y fácil de forma uniforme. Un mercado transparente permite que todos los participantes tengan acceso a la misma información sobre precios, volúmenes y órdenes.
+\end{definicion}
+
+\begin{definicion}[Libertad]
+La \textbf{libertad} de un mercado financiero se refiere a la inexistencia de limitaciones para el acceso como comprador o vendedor, la posibilidad de negociar activos en las cantidades deseadas y la libre formación de precios. Un mercado libre permite la participación sin restricciones artificiales.
+\end{definicion}
+
+\begin{definicion}[Profundidad]
+La \textbf{profundidad} de un mercado se refiere a cuántas órdenes (y cuántas unidades) hay disponibles cerca del precio actual y a precios sucesivos. La profundidad es una de las medidas de liquidez en el libro de órdenes. Un mercado profundo tiene un gran volumen de órdenes cerca del precio de mercado actual.
+\end{definicion}
+
+\begin{definicion}[Amplitud]
+La \textbf{amplitud} de un mercado se refiere a cuántos activos participan en la tendencia del mercado (participación). Un mercado amplio incluye una gran variedad de activos negociados.
+\end{definicion}
+
+\begin{definicion}[Flexibilidad]
+Un mercado es \textbf{flexible} si ante las variaciones de precios que desequilibran temporalmente las órdenes de compra y de venta, surgen nuevas órdenes que restablecen el equilibrio. La flexibilidad permite que el mercado se recupere rápidamente de desequilibrios temporales.
+\end{definicion}
+
+\subsection{Clasificación de los Mercados Financieros}
+
+Los mercados financieros pueden clasificarse según diversos criterios. Esta clasificación es fundamental para entender la estructura y funcionamiento del sistema financiero.
+
+\begin{definicion}[Clasificación por Naturaleza del Derecho]
+Los mercados financieros pueden clasificarse según la naturaleza del derecho que representan:
+\begin{itemize}
+\item \textbf{Mercado de deuda}: Negocia instrumentos de deuda (bonos, obligaciones).
+\item \textbf{Mercado de renta variable}: Negocia instrumentos de renta variable (acciones).
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Clasificación por Vencimiento]
+Los mercados financieros pueden clasificarse según el vencimiento de los instrumentos:
+\begin{itemize}
+\item \textbf{Mercado monetario}: Negocia instrumentos con vencimiento inferior a un año.
+\item \textbf{Mercado de capitales}: Negocia instrumentos con vencimiento superior a un año.
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Clasificación por Momento de Entrega]
+Los mercados financieros pueden clasificarse según el momento de entrega:
+\begin{itemize}
+\item \textbf{Mercado al contado (spot)}: La entrega del activo y el pago ocurren inmediatamente o en un plazo muy corto (típicamente T+2 para acciones).
+\item \textbf{Mercado de futuros}: La entrega del activo y el pago ocurren en una fecha futura acordada.
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Clasificación por Estructura Organizativa]
+Los mercados financieros pueden clasificarse según su estructura organizativa:
+\begin{itemize}
+\item \textbf{Mercado organizado (exchange-traded)}: Mercados centralizados y regulados donde la negociación ocurre en un lugar físico o electrónico específico.
+\item \textbf{Mercado over-the-counter (OTC)}: Mercados descentralizados donde la negociación ocurre bilateralmente fuera de un mercado organizado.
+\end{itemize}
+\end{definicion}
+
+\begin{proposicion}[Tamaño del Mercado Financiero Global]
+Según datos de LSEG (2023), el tamaño del mercado financiero global al cierre de 2023, medido por el valor nocional pendiente, alcanzó aproximadamente 1.088 billones de dólares. La distribución por categorías de instrumentos financieros es la siguiente:
+\begin{itemize}
+\item \textbf{Rates (Bonos gubernamentales)}: 687 billones de dólares (63\% del total)
+\item \textbf{Equities (Acciones)}: 175 billones de dólares (16\% del total)
+\item \textbf{FX (Divisas)}: 118 billones de dólares (11\% del total)
+\item \textbf{Credit (Bonos corporativos y cuasi-corporativos)}: 81 billones de dólares (7\% del total)
+\item \textbf{Commodities (Materias primas)}: 3,7 billones de dólares
+\item \textbf{MM (Mercado monetario)}: 9 billones de dólares
+\item \textbf{Alternatives}: 14 billones de dólares
+\item \textbf{Digital assets}: 1,8 billones de dólares
+\end{itemize}
+Estos datos ilustran la importancia relativa de los diferentes segmentos del mercado financiero global y la predominancia de los mercados de deuda gubernamental.
+\end{proposicion}
+
+\subsection{Fases de Negociación: Mercado Primario vs. Mercado Secundario}
+
+Los mercados financieros pueden clasificarse según la fase de negociación en la que operan. Esta distinción es fundamental para entender el flujo de fondos y el papel de los diferentes participantes.
+
+\begin{definicion}[Mercado Primario]
+El \textbf{mercado primario} es aquel en el que se emiten nuevos valores y se venden a los inversores iniciales. En el mercado primario, el emisor recibe los ingresos de la venta de los valores. Las operaciones en el mercado primario incluyen ofertas públicas iniciales (OPV/IPO) y colocaciones privadas.
+\end{definicion}
+
+\begin{definicion}[Mercado Secundario]
+El \textbf{mercado secundario} es aquel en el que se negocian valores ya emitidos entre inversores. En el mercado secundario, los inversores compran y venden valores entre sí, y el inversor vendedor recibe los ingresos de la venta. La negociación puede ocurrir en mercados organizados (bolsas de valores) o en mercados no organizados (mercados OTC).
+\end{definicion}
+
+\begin{proposicion}[Relación entre Mercado Primario y Secundario]
+La existencia de un mercado secundario líquido y eficiente es esencial para el funcionamiento del mercado primario, ya que proporciona a los inversores la posibilidad de liquidar sus inversiones cuando lo deseen, reduciendo así el riesgo de liquidez y aumentando la disposición a participar en emisiones primarias.
+\end{proposicion}
+
+\subsection{Funcionamiento y Organización de los Mercados}
+
+Los mercados financieros pueden organizarse de diferentes maneras según cómo se facilite el encuentro entre compradores y vendedores. Esta clasificación es fundamental para entender los mecanismos de negociación y la estructura de los mercados.
+
+\begin{definicion}[Búsqueda Directa (Direct Search)]
+La \textbf{búsqueda directa} es un mecanismo de mercado donde los compradores y vendedores se buscan directamente entre sí sin intermediarios. Este tipo de mercado es característico de transacciones bilaterales donde las partes negocian directamente. La búsqueda directa puede ser costosa en términos de tiempo y recursos, especialmente cuando hay muchos participantes en el mercado.
+\end{definicion}
+
+\begin{definicion}[Mercado de Corredores o Brokers (Broker Market)]
+Un \textbf{mercado de corredores} o \textbf{broker market} es un mercado donde los brokers actúan como intermediarios que facilitan las transacciones entre compradores y vendedores. Los brokers no toman posiciones propias, sino que buscan contrapartes para sus clientes y cobran una comisión por sus servicios. Este tipo de mercado reduce los costes de búsqueda para los participantes.
+\end{definicion}
+
+\begin{definicion}[Mercado de Mediadores o Dealers (Dealer Market)]
+Un \textbf{mercado de mediadores} o \textbf{dealer market} es un mercado donde los dealers (mediadores) compran y venden activos por cuenta propia, manteniendo inventarios de valores. Los dealers proporcionan liquidez al mercado cotizando precios de compra (bid) y venta (ask), obteniendo beneficios del diferencial (bid-ask spread). Este tipo de mercado es característico de los mercados OTC y algunos mercados organizados con creadores de mercado.
+\end{definicion}
+
+\begin{definicion}[Mercados de Subasta (Auction Markets)]
+Un \textbf{mercado de subasta} es un mercado donde múltiples compradores y vendedores presentan ofertas de compra y venta simultáneamente, y las transacciones se ejecutan cuando las ofertas coinciden según reglas específicas de emparejamiento. Los mercados de subasta pueden ser de dos tipos:
+\begin{itemize}
+\item \textbf{Subastas por lotes (call markets)}: Las transacciones se ejecutan en momentos específicos cuando se reúnen todas las órdenes.
+\item \textbf{Subastas continuas}: Las transacciones se ejecutan continuamente cuando las órdenes encuentran contrapartes disponibles.
+\end{itemize}
+Los mercados de subasta proporcionan transparencia y facilitan el descubrimiento de precios mediante la agregación de información de múltiples participantes.
+\end{definicion}
+
+\begin{proposicion}[Ventajas y Desventajas de los Diferentes Mecanismos]
+Cada mecanismo de organización del mercado presenta ventajas y desventajas:
+\begin{itemize}
+\item \textbf{Búsqueda directa}: Baja coste de intermediación pero alto coste de búsqueda y tiempo.
+\item \textbf{Mercado de brokers}: Reduce costes de búsqueda pero introduce costes de comisión.
+\item \textbf{Mercado de dealers}: Proporciona liquidez inmediata pero introduce costes implícitos a través del bid-ask spread.
+\item \textbf{Mercados de subasta}: Proporcionan transparencia y descubrimiento de precios eficiente, pero pueden requerir mayor tiempo para la ejecución en mercados con baja liquidez.
+\end{itemize}
+\end{proposicion}
+
+\subsection{Participantes en los Mercados Financieros}
+
+Los mercados financieros involucran diversos tipos de participantes, cada uno con funciones y características específicas. La clasificación de estos participantes es fundamental para entender la estructura y funcionamiento de los mercados.
+
+\subsubsection{Intermediarios Financieros}
+
+\begin{definicion}[Intermediario Financiero]
+Un \textbf{intermediario financiero} es un agente económico que presta y pide prestados fondos, constituyendo esta actividad el eje básico de su función en el mercado y la razón de su existencia. Los intermediarios financieros transforman los activos, adquiriendo títulos primarios de los prestatarios y vendiendo títulos secundarios a los prestamistas.
+\end{definicion}
+
+Los intermediarios financieros pueden clasificarse en dos categorías principales:
+
+\begin{definicion}[Intermediarios Bancarios]
+Los \textbf{intermediarios bancarios} canalizan el ahorro hacia la inversión a través de la captación de depósitos y la concesión de créditos y préstamos. Ejemplos incluyen bancos comerciales y cooperativas de crédito. Los intermediarios bancarios tienen acceso directo a la liquidez del banco central y pueden captar depósitos a la vista.
+\end{definicion}
+
+\begin{definicion}[Intermediarios No Bancarios]
+Los \textbf{intermediarios no bancarios} conectan ahorradores e inversores ofreciendo productos financieros diversos, sin tener acceso directo a la liquidez del banco central ni captar depósitos a la vista. Ejemplos incluyen fondos de inversión, compañías de seguros y fondos de pensiones.
+\end{definicion}
+
+\subsubsection{Mediadores}
+
+\begin{definicion}[Mediador]
+Un \textbf{mediador} es un participante del mercado que no transforma o crea nuevos activos, sino que únicamente ayuda a la circulación de los fondos facilitando las transacciones entre compradores y vendedores.
+\end{definicion}
+
+Los mediadores se clasifican en dos categorías principales según su función y el riesgo que asumen:
+
+\begin{definicion}[Operadores por Cuenta Propia (Dealers)]
+Los \textbf{operadores por cuenta propia} o \textbf{dealers} son mediadores que compran y venden activos por cuenta propia, asumiendo el riesgo de movimientos adversos de precios. Los dealers obtienen beneficios del diferencial entre el precio de compra y el precio de venta (bid-ask spread).
+\end{definicion}
+
+Los principales tipos de operadores por cuenta propia incluyen:
+
+\begin{itemize}
+\item \textbf{Creadores de mercado (market makers)}: Mantienen cotizaciones continuas de precios de compra y venta para un valor específico, proporcionando liquidez al mercado y obteniendo beneficios del diferencial entre el precio de compra (bid) y el precio de venta (ask).
+
+\item \textbf{Operadores de alta frecuencia (high-frequency traders)}: Utilizan algoritmos muy rápidos para ejecutar enormes volúmenes de operaciones en milisegundos, aprovechando pequeños movimientos de precios y discrepancias temporales en las cotizaciones.
+\end{itemize}
+
+\begin{definicion}[Comisionistas o Corredores (Brokers)]
+Los \textbf{comisionistas} o \textbf{corredores} (brokers) son mediadores que cobran una comisión por los servicios prestados y no asumen riesgos en las operaciones realizadas por terceros. Los brokers actúan como agentes que facilitan las transacciones entre compradores y vendedores sin tomar posiciones propias.
+\end{definicion}
+
+Los principales tipos de brokers incluyen:
+
+\begin{itemize}
+\item \textbf{Arbitrajistas}: Se centran en identificar y explotar discrepancias de precios entre diferentes mercados o instrumentos financieros relacionados.
+
+\item \textbf{Especuladores}: Buscan controlar el riesgo mediante estrategias de cobertura y diversificación mientras buscan oportunidades de beneficio.
+
+\item \textbf{Corredores de contrapartes}: Buscan contrapartes comerciales para los clientes, facilitando la ejecución de órdenes de compra y venta.
+\end{itemize}
+
+\section{Compra y Venta de Valores}
+
+\subsection{El Proceso de Compra-Venta de Valores}
+
+El proceso de compra y venta de valores en los mercados financieros modernos involucra múltiples etapas que van desde la adquisición de información hasta la liquidación final de la transacción.
+
+\begin{teorema}[Proceso de Compra-Venta de Valores]
+El proceso de compra y venta de valores consta de las siguientes etapas:
+
+\begin{enumerate}
+\item \textbf{Adquisición de información y cotizaciones}: El inversor obtiene información sobre el activo financiero que desea negociar, incluyendo precios actuales, volúmenes de negociación, información financiera del emisor y análisis de mercado. Esta información puede obtenerse a través de terminales de información financiera (como Bloomberg o Reuters), sitios web de bolsas, o a través de brokers.
+
+\item \textbf{Asignación de rutas de ejecución}: El inversor, a menudo con la ayuda de un broker, determina la mejor ruta de ejecución para su orden. Esto incluye decidir en qué mercado o centro de negociación ejecutar la orden (mercado regulado, MTF, dark pool, OTC), considerando factores como costes de transacción, liquidez disponible, velocidad de ejecución y requisitos de transparencia.
+
+\item \textbf{Ejecución}: La orden se ejecuta en el mercado seleccionado según las reglas de negociación del centro correspondiente. La ejecución puede ocurrir mediante subasta, negociación continua, o negociación bilateral, dependiendo del tipo de mercado y del tipo de orden.
+
+\item \textbf{Confirmación, compensación y liquidación}: Una vez ejecutada la transacción, se confirma la operación, se procede a la compensación (clearing) mediante una cámara de compensación, y finalmente se realiza la liquidación (settlement) mediante la transferencia de valores y fondos entre las partes. Para acciones, la liquidación típicamente ocurre en T+2 (dos días hábiles después de la ejecución).
+\end{enumerate}
+\end{teorema}
+
+\begin{proposicion}[Importancia de Cada Etapa]
+Cada etapa del proceso es crítica para el éxito de la transacción:
+\begin{itemize}
+\item La adquisición de información adecuada permite tomar decisiones informadas sobre precios y timing.
+\item La asignación correcta de rutas de ejecución puede minimizar los costes de transacción y mejorar la calidad de la ejecución.
+\item La ejecución eficiente garantiza que la orden se complete al mejor precio disponible.
+\item La compensación y liquidación adecuadas aseguran la transferencia segura de valores y fondos.
+\end{itemize}
+\end{proposicion}
+
+\subsection{Especificaciones de la Orden}
+
+\begin{definicion}[Orden de Mercado]
+Una \textbf{orden} es una instrucción para comprar o vender un valor en un determinado mercado de valores. Las órdenes especifican las condiciones bajo las cuales el inversor está dispuesto a realizar la transacción.
+\end{definicion}
+
+\begin{teorema}[Especificaciones de una Orden]
+Toda orden de mercado debe contener las siguientes especificaciones:
+
+\begin{enumerate}
+\item \textbf{Nombre del activo}: Identificación precisa del valor financiero objeto de la transacción.
+
+\item \textbf{Dirección de la orden}: Especificación de si la orden es de compra o de venta.
+
+\item \textbf{Tamaño de la orden}: Cantidad de valores que se desea comprar o vender.
+
+\item \textbf{Vigencia de la orden}: Período durante el cual la orden permanece activa. Las órdenes pueden ser:
+\begin{itemize}
+\item \textbf{Del día}: Válidas únicamente durante el día de negociación en curso.
+\item \textbf{Abiertas o válidas hasta ser canceladas}: Permanecen activas hasta que sean ejecutadas o canceladas explícitamente.
+\item \textbf{De ejecución inmediata}: Deben ejecutarse inmediatamente o cancelarse.
+\end{itemize}
+
+\item \textbf{Tipo de orden}: Especificación del mecanismo de ejecución y las condiciones de precio.
+\end{enumerate}
+\end{teorema}
+
+\subsection{Tipos de Órdenes}
+
+Las órdenes pueden clasificarse según diversos criterios, siendo el más importante el relacionado con las condiciones de precio y ejecución.
+
+\begin{definicion}[Orden por lo Mejor (Market Order)]
+Una \textbf{orden por lo mejor} o \textbf{orden de mercado} es una orden que se ejecuta inmediatamente al mejor precio disponible en el mercado en el momento de su recepción. Las órdenes de mercado priorizan la ejecución inmediata sobre el precio exacto.
+\end{definicion}
+
+\begin{definicion}[Orden Limitada]
+Una \textbf{orden limitada} es una orden que especifica un precio máximo (para órdenes de compra) o mínimo (para órdenes de venta) al que el inversor está dispuesto a ejecutar la transacción. La orden solo se ejecutará si se puede obtener un precio igual o mejor que el precio límite especificado.
+\end{definicion}
+
+\begin{proposicion}[Trade-off entre Ejecución y Precio]
+Existe un trade-off fundamental entre la garantía de ejecución y el control del precio:
+\begin{itemize}
+\item Las órdenes de mercado garantizan la ejecución pero no controlan el precio exacto.
+\item Las órdenes limitadas controlan el precio pero no garantizan la ejecución.
+\end{itemize}
+\end{proposicion}
+
+\begin{definicion}[Orden con Parada (Stop Order)]
+Una \textbf{orden con parada} o \textbf{stop order} es una orden que se convierte en una orden de mercado cuando el precio del activo alcanza un nivel específico (precio de activación). Las stop orders se utilizan típicamente para limitar pérdidas o proteger ganancias.
+\end{definicion}
+
+\begin{definicion}[Orden Todo o Nada]
+Una \textbf{orden todo o nada} es una orden que debe ejecutarse completamente o no ejecutarse en absoluto. Este tipo de orden es útil cuando el inversor no desea una ejecución parcial.
+\end{definicion}
+
+\begin{definicion}[Orden por lo Mejor (Best Order)]
+Una \textbf{orden por lo mejor} o \textbf{marketable limit order} es un tipo de orden que combina características de las órdenes de mercado y limitadas. La orden llega sin un precio fijado por el inversor y se ejecuta al mejor precio disponible en el mercado en ese momento (mejor posición de compra o venta). Si no se ejecuta completamente, la parte no ejecutada se convierte automáticamente en una orden limitada al precio al que se ejecutó la primera parte.
+\end{definicion}
+
+\begin{proposicion}[Diferencias entre Órdenes Limitadas y Stop]
+Las órdenes limitadas y stop difieren en su mecanismo de activación:
+\begin{itemize}
+\item \textbf{Orden limitada de compra}: Se ejecuta cuando el precio cae a o por debajo del precio límite especificado.
+\item \textbf{Orden stop de compra}: Se activa cuando el precio sube a o por encima del precio stop especificado, convirtiéndose entonces en una orden de mercado.
+\item \textbf{Orden limitada de venta}: Se ejecuta cuando el precio sube a o por encima del precio límite especificado.
+\item \textbf{Orden stop de venta}: Se activa cuando el precio cae a o por debajo del precio stop especificado, convirtiéndose entonces en una orden de mercado.
+\end{itemize}
+\end{proposicion}
+
+\subsection{Costes de Transacción}
+
+\begin{definicion}[Costes de Transacción]
+Los \textbf{costes de transacción} son todos los costes asociados con la ejecución de una operación en el mercado financiero, más allá del precio del activo en sí. Estos costes pueden clasificarse en explícitos, implícitos y costes de información.
+\end{definicion}
+
+\begin{teorema}[Clasificación de los Costes de Transacción]
+Los costes de transacción incluyen:
+
+\begin{enumerate}
+\item \textbf{Costes explícitos}:
+\begin{itemize}
+\item \textbf{Comisiones de intermediación}: Comisiones cobradas por los brokers por facilitar la transacción.
+\item \textbf{Cánones del mercado y tarifas de clearing}: Costes cobrados por la bolsa, la cámara de compensación y el depositario/registrador.
+\end{itemize}
+
+\item \textbf{Costes implícitos}:
+\begin{itemize}
+\item \textbf{Bid-ask spread}: Diferencia entre el precio de compra (bid) y el precio de venta (ask). Cuanto mayor es el spread, mayor es el coste. El spread refleja liquidez, riesgo, competencia y volatilidad.
+\item \textbf{Impacto de mercado}: El movimiento adverso del precio causado por la propia orden. Una orden grande puede "empujar" el mercado en dirección adversa.
+\item \textbf{Coste de oportunidad}: Coste de no ejecutar cuando se deseaba hacerlo, cuando el precio se mueve en contra mientras se espera.
+\item \textbf{Derrape (slippage)}: Diferencia entre el precio al que se quería ejecutar y el precio real al que se ejecutó la orden.
+\item \textbf{Costes de cumplimiento normativo}: Costes asociados con el cumplimiento de requisitos regulatorios.
+\end{itemize}
+
+\item \textbf{Costes de información}:
+\begin{itemize}
+\item \textbf{Asimetrías de información}: Coste de negociar contra alguien que tiene más información (adverse selection). Los creadores de mercado aumentan los spreads para protegerse de este riesgo.
+\item \textbf{Acceso a datos del mercado}: Costes de suscripción y acceso a información de mercado en tiempo real.
+\end{itemize}
+\end{enumerate}
+\end{teorema}
+
+\subsection{Compras al Margen (Apalancamiento)}
+
+\begin{definicion}[Cuenta de Margen]
+Una \textbf{cuenta de margen} es una cuenta de corretaje que permite a un inversor comprar valores utilizando fondos prestados del broker. El inversor debe depositar un porcentaje mínimo del valor de la compra (margen inicial) y mantener un porcentaje mínimo del valor de mercado de los valores (margen de mantenimiento) mientras la posición esté abierta.
+\end{definicion}
+
+\begin{definicion}[Margen Inicial]
+El \textbf{margen inicial} es el porcentaje mínimo del valor total de la compra que el inversor debe depositar en efectivo al abrir una posición con margen. En Estados Unidos, el margen inicial típico es del 50\%, lo que significa que el inversor puede pedir prestado hasta el 50\% del valor de la compra.
+\end{definicion}
+
+\begin{definicion}[Margen de Mantenimiento]
+El \textbf{margen de mantenimiento} es el porcentaje mínimo del valor de mercado actual de los valores que el inversor debe mantener como capital propio en la cuenta mientras la posición con margen esté abierta. Si el margen cae por debajo del margen de mantenimiento, el broker emitirá una llamada de margen (margin call), requiriendo que el inversor deposite fondos adicionales o venda valores para restaurar el margen requerido.
+\end{definicion}
+
+\begin{ejemplo}[Compra al Margen]
+Suponga que un inversor desea comprar 100 acciones de una empresa que cotiza a €100 por acción. El margen inicial requerido es del 60\% y el margen de mantenimiento es del 30\%.
+
+\textbf{Posición inicial:}
+\begin{itemize}
+\item Valor de las acciones: 100 acciones × €100 = €10.000
+\item Préstamo del broker: €4.000 (40\% del valor total)
+\item Capital propio (margen): €6.000 (60\% del valor total)
+\end{itemize}
+
+\textbf{Escenario: El precio cae a €70 por acción}
+
+\textbf{Nueva posición:}
+\begin{itemize}
+\item Valor de las acciones: 100 acciones × €70 = €7.000
+\item Préstamo del broker: €4.000 (permanece constante)
+\item Capital propio: €7.000 - €4.000 = €3.000
+\item Porcentaje de margen: €3.000 / €7.000 = 42,86\%
+\end{itemize}
+
+En este caso, el margen (42,86\%) está por encima del margen de mantenimiento (30\%), por lo que no se produciría una llamada de margen.
+
+\textbf{Cálculo del precio mínimo antes de la llamada de margen:}
+
+Para determinar hasta dónde puede caer el precio antes de que se produzca una llamada de margen, establecemos el margen igual al margen de mantenimiento:
+
+\begin{equation}
+\frac{\text{Capital}}{\text{Valor de las acciones}} = \frac{100P - 4.000}{100P} = 0,30
+\end{equation}
+
+donde $P$ es el precio de las acciones. Resolviendo:
+
+\begin{align}
+100P - 4.000 &= 0,30 \times 100P \\
+100P - 4.000 &= 30P \\
+70P &= 4.000 \\
+P &= €57,14
+\end{align}
+
+Por lo tanto, el precio puede caer hasta €57,14 antes de que se produzca una llamada de margen. Si el precio cae por debajo de este nivel, el inversor deberá depositar fondos adicionales o vender acciones para restaurar el margen requerido.
+\end{ejemplo}
+
+\subsection{Venta en Corto}
+
+\begin{definicion}[Venta en Corto]
+La \textbf{venta en corto} (short selling) es una estrategia de inversión mediante la cual un inversor vende un valor que no posee, con la expectativa de que el precio del valor disminuya, permitiendo recomprarlo posteriormente a un precio menor y obtener un beneficio.
+\end{definicion}
+
+\begin{teorema}[Proceso de Venta en Corto]
+El proceso de venta en corto consta de los siguientes pasos:
+
+\begin{enumerate}
+\item \textbf{Préstamo del valor}: El vendedor en corto solicita prestada una acción que no posee, típicamente a través de un broker o de otro inversor que posee el valor.
+
+\item \textbf{Venta del valor}: El vendedor en corto vende el valor prestado en el mercado y deposita los ingresos de la venta junto con un margen adicional en una cuenta de garantía.
+
+\item \textbf{Pago de dividendos}: Si el valor paga dividendos mientras la posición en corto está abierta, el vendedor en corto debe pagar al prestamista original el equivalente al dividendo recibido.
+
+\item \textbf{Cierre de la posición}: El vendedor en corto recompra el valor en el mercado y lo devuelve al prestamista original, cerrando así la posición.
+
+\item \textbf{Beneficio o pérdida}: El vendedor en corto obtiene un beneficio si el precio de recompra es menor que el precio de venta inicial, y una pérdida en caso contrario.
+\end{enumerate}
+\end{teorema}
+
+\begin{proposicion}[Objetivo de la Venta en Corto]
+El objetivo de la venta en corto es obtener beneficios de la caída del precio de una acción o valor. La estrategia sigue el principio de "vender alto, comprar bajo", invirtiendo la secuencia temporal típica de una inversión tradicional.
+\end{proposicion}
+
+\begin{ejemplo}[Venta en Corto]
+Suponga que un inversor cree que las acciones de la empresa ABC, que cotizan actualmente a \$50 por acción, van a caer de precio. El inversor realiza una venta en corto de 10 acciones:
+
+\begin{itemize}
+\item Paso 1: El inversor pide prestadas 10 acciones de ABC a través de su broker.
+\item Paso 2: El inversor vende las 10 acciones en el mercado a \$50 cada una, obteniendo \$500. Deposita estos \$500 más un margen adicional en una cuenta de garantía.
+\item Paso 3: Suponga que el precio de las acciones cae a \$40 por acción.
+\item Paso 4: El inversor compra 10 acciones a \$40 cada una, gastando \$400.
+\item Paso 5: El inversor devuelve las 10 acciones al broker y mantiene la diferencia: \$500 - \$400 = \$100 de beneficio.
+\end{itemize}
+
+Si, por el contrario, el precio hubiera subido a \$60, el inversor habría incurrido en una pérdida de \$100.
+\end{ejemplo}
+
+\begin{ejemplo}[Venta en Corto: Ejemplo Detallado con Cálculos]
+Un inversor realiza una venta en corto de 1.000 acciones de Dot a un precio inicial de €100 por acción. El margen inicial requerido es del 50\% y el margen de mantenimiento es del 30\%.
+
+\textbf{Posición inicial:}
+\begin{itemize}
+\item Ingresos por la venta: 1.000 acciones × €100 = €100.000
+\item Margen inicial y capital: €50.000 (50\% de €100.000)
+\item Acciones adeudadas: 1.000 acciones
+\end{itemize}
+
+\textbf{Escenario: El precio cae a €70 por acción}
+
+El inversor debe recomprar las acciones a €70. La posición financiera es:
+
+\begin{itemize}
+\item \textbf{Activo:}
+\begin{itemize}
+\item €100.000 (ingresos por la venta)
+\item €50.000 (margen inicial depositado)
+\end{itemize}
+\item \textbf{Pasivo:}
+\begin{itemize}
+\item €70.000 (coste de recomprar 1.000 acciones a €70)
+\end{itemize}
+\item \textbf{Patrimonio neto (capital propio):}
+\begin{itemize}
+\item €100.000 + €50.000 - €70.000 = €80.000
+\end{itemize}
+\end{itemize}
+
+\textbf{Cálculo del beneficio:}
+
+El beneficio se calcula como la diferencia entre el patrimonio neto final y el patrimonio neto inicial:
+
+\begin{equation}
+\text{Beneficio} = \text{Patrimonio neto final} - \text{Patrimonio neto inicial} = €80.000 - €50.000 = €30.000
+\end{equation}
+
+Alternativamente, el beneficio puede calcularse como:
+
+\begin{equation}
+\text{Beneficio} = \text{Descenso del precio} \times \text{Número de acciones} = (€100 - €70) \times 1.000 = €30.000
+\end{equation}
+
+\textbf{Cálculo del precio máximo antes de la llamada de margen:}
+
+Para determinar hasta dónde puede subir el precio antes de que se produzca una llamada de margen, establecemos el margen igual al margen de mantenimiento. En una venta en corto, el margen se calcula como:
+
+\begin{equation}
+\text{Margen} = \frac{\text{Margen inicial} + \text{Ingresos por venta} - \text{Coste de recompra}}{\text{Coste de recompra}} = \frac{150.000 - 1.000P}{1.000P}
+\end{equation}
+
+donde $P$ es el precio de las acciones y 150.000 = 50.000 (margen inicial) + 100.000 (ingresos por venta).
+
+Igualando al margen de mantenimiento del 30\%:
+
+\begin{align}
+\frac{150.000 - 1.000P}{1.000P} &= 0,30 \\
+150.000 - 1.000P &= 0,30 \times 1.000P \\
+150.000 - 1.000P &= 300P \\
+150.000 &= 1.300P \\
+P &= €115,38
+\end{align}
+
+Por lo tanto, el precio puede subir hasta €115,38 antes de que se produzca una llamada de margen. Si el precio sube por encima de este nivel, el inversor deberá depositar fondos adicionales o cerrar la posición para restaurar el margen requerido.
+\end{ejemplo}
+
+\section{Mercados Regulados}
+
+\subsection{Clasificación de los Centros de Negociación}
+
+Según la Directiva MiFID II (Markets in Financial Instruments Directive II), en Europa los centros de negociación se clasifican en dos tipos principales: mercados regulados y mercados no organizados (OTC).
+
+\begin{definicion}[Mercado Regulado]
+Un \textbf{mercado regulado} es un mercado multilateral que reúne o facilita el encuentro de múltiples intereses de compra y venta de terceros en relación con instrumentos financieros de forma que resulte en un contrato, y que funciona de forma regular. Los mercados regulados están supervisados por los reguladores nacionales y la ESMA (European Securities and Markets Authority).
+\end{definicion}
+
+\begin{teorema}[Características de los Mercados Regulados]
+Los mercados regulados presentan las siguientes características:
+
+\begin{enumerate}
+\item \textbf{Supervisión}: Están supervisados por los reguladores nacionales y la ESMA, garantizando el cumplimiento de estándares de transparencia y protección de inversores.
+
+\item \textbf{Transparencia}: Deben cumplir con requisitos estrictos de transparencia pre-negociación (publicación de órdenes) y post-negociación (publicación de transacciones ejecutadas).
+
+\item \textbf{Libro de órdenes centralizado}: Mantienen un libro de órdenes centralizado donde se registran todas las órdenes de compra y venta.
+
+\item \textbf{Requisitos de admisión}: Establecen requisitos estrictos de admisión a cotización para los emisores, incluyendo requisitos de información financiera y de gobierno corporativo.
+
+\item \textbf{Modos de negociación}: Operan en modo subasta (negociación por lotes en momentos específicos) y en modo de negociación continua (negociación continua durante las horas de mercado).
+
+\item \textbf{Instrumentos negociados}: Incluyen acciones, ETFs, bonos, derivados y otros instrumentos financieros estandarizados.
+\end{enumerate}
+\end{teorema}
+
+Ejemplos de mercados regulados en Europa incluyen Euronext, Deutsche Börse/Xetra, London Stock Exchange y Bolsas y Mercados Españoles (BME).
+
+\begin{proposicion}[Volúmenes de Negociación por Tipo de Mercado en Europa]
+Según datos de ESMA (2021-2022), los volúmenes de negociación en Europa se distribuyen entre diferentes tipos de centros de negociación. Para renta variable, los mercados regulados tradicionales mantienen una participación significativa, aunque los MTFs y otros centros de negociación han ganado terreno desde la implementación de MiFID II. Para renta fija, una proporción considerable de la negociación ocurre en mercados OTC y a través de internalizadores sistemáticos, reflejando las características específicas de estos instrumentos y la necesidad de flexibilidad en la negociación.
+\end{proposicion}
+
+\subsection{Tipos de Centros de Negociación según MiFID II}
+
+Además de los mercados regulados, MiFID II define otros tipos de centros de negociación que operan en Europa con diferentes niveles de regulación y transparencia.
+
+\begin{definicion}[Sistema Multilateral de Negociación (MTF)]
+\label{def:mtf}
+Un \textbf{Sistema Multilateral de Negociación} (MTF, Multilateral Trading Facility) es una plataforma electrónica que reúne múltiples intereses de compra y venta utilizando reglas no discrecionales, similar a una bolsa pero con requisitos más flexibles. Los MTFs son operados por empresas de servicios de inversión o operadores de mercado y no pueden negociar por cuenta propia.
+\end{definicion}
+
+\begin{teorema}[Características de los MTFs]
+Los MTFs presentan las siguientes características:
+\begin{enumerate}
+\item \textbf{Transparencia}: Son transparentes y se basan en reglas fijas, aunque algunos pueden ser opacos (dark pools) con exenciones de transparencia pre-negociación. Para un análisis detallado de los dark pools, véase la subsección~\ref{subsec:darkpools}.
+\item \textbf{Instrumentos}: Negocian acciones, ETFs, bonos, crypto ETPs y otros instrumentos financieros.
+\item \textbf{Ejemplos}: Turquoise, Aquis Exchange, Cboe Europe (BATS Chi-X), Euronext Growth, BME Growth.
+\end{enumerate}
+\end{teorema}
+
+\begin{definicion}[Sistema Organizado de Contratación (OTF)]
+Un \textbf{Sistema Organizado de Contratación} (OTF, Organized Trading Facility) es un centro diseñado para instrumentos no de renta variable que permite al operador cierto grado de discrecionalidad en la ejecución de órdenes. El operador puede decidir cómo ejecutar dentro de los límites de MiFID II. Los OTFs representan un híbrido entre un mercado organizado y un mercado de dealers.
+\end{definicion}
+
+\begin{teorema}[Características de los OTFs]
+Los OTFs presentan las siguientes características:
+\begin{enumerate}
+\item \textbf{Discrecionalidad}: El operador tiene cierta discrecionalidad en la ejecución de órdenes, a diferencia de los MTFs que utilizan reglas no discrecionales.
+\item \textbf{Instrumentos}: Negocian principalmente bonos, derivados y productos estructurados.
+\item \textbf{Ejemplos}: Tradeweb OTF, Bloomberg OTF, MarketAxess OTF.
+\end{enumerate}
+\end{teorema}
+
+\begin{definicion}[Internalizador Sistemático (SI)]
+Un \textbf{Internalizador Sistemático} (SI, Systematic Internalizer) es una empresa de servicios de inversión que ejecuta órdenes de clientes contra su propio balance de forma frecuente, organizada y sistemática. El SI actúa como contrapartida en las transacciones.
+\end{definicion}
+
+\begin{teorema}[Características de los SIs]
+Los SIs presentan las siguientes características:
+\begin{enumerate}
+\item \textbf{Ejecución bilateral}: La ejecución es bilateral, con el SI actuando como contrapartida directa del cliente.
+\item \textbf{Transparencia}: Deben publicar cotizaciones firmes para instrumentos líquidos. Tienen un régimen de transparencia diferente al de un mercado y pueden operar como "dark pools".
+\item \textbf{Instrumentos}: Negocian acciones, bonos y derivados.
+\item \textbf{Ejemplos}: Grandes bancos europeos y globales como BNP Paribas, Barclays, Goldman Sachs, etc.
+\end{enumerate}
+\end{teorema}
+
+\subsubsection{Dark Pools}
+\label{subsec:darkpools}
+
+Los dark pools representan una innovación importante en la estructura de los mercados financieros modernos. Como se mencionó anteriormente en la definición de MTFs (véase la definición~\ref{def:mtf}), algunos MTFs pueden operar como dark pools con exenciones de transparencia pre-negociación. Esta subsección proporciona un análisis detallado de estas plataformas de negociación opacas y su relación con el trading de alta frecuencia.
+
+\begin{definicion}[Dark Pool]
+Un \textbf{dark pool} es un sistema de negociación o mecanismo que contiene liquidez de negociación anónima y no visible (no mostrada) disponible para ejecución. Los dark pools no muestran listas de órdenes de compra y venta, por lo que los precios y volúmenes no son visibles antes de la ejecución, haciendo que estos sistemas sean opacos y anónimos.
+\end{definicion}
+
+Los dark pools surgieron como una evolución de la negociación "upstairs" (negociaciones privadas para operaciones de grandes bloques), que existía antes de los mercados organizados. Las innovaciones tecnológicas de finales de la década de 1990 y los cambios regulatorios permitieron la organización de dark pools estructurados.
+
+\begin{teorema}[Características Principales de los Dark Pools]
+Los dark pools presentan las siguientes características principales:
+
+\begin{enumerate}
+\item \textbf{Opacidad pre-negociación}: No muestran órdenes de compra y venta antes de la ejecución, permitiendo a grandes inversores institucionales colocar órdenes sin revelar información que podría causar movimientos adversos de precios. Esta característica contrasta con la transparencia de los mercados regulados discutida anteriormente (véase la definición de transparencia en la sección~\ref{sec:consideraciones}).
+
+\item \textbf{Anonimato}: Las identidades de los participantes no se revelan hasta después de la ejecución, protegiendo a los inversores de información sobre sus intenciones de negociación.
+
+\item \textbf{Precios de referencia}: La mayoría de los dark pools ejecutan operaciones de bloques a un precio específico para minimizar el impacto de mercado (slippage, véase la sección sobre costes de transacción). Muchos dark pools ofrecen "mejora de precio" (\textit{price improvement}) sobre las cotizaciones de los mercados mostrados, algunos ofreciendo mejoras pequeñas mientras que otros cotizan al punto medio entre el precio de compra (bid) y el precio de venta (ask).
+
+\item \textbf{Riesgo de ejecución}: Los dark pools no garantizan la ejecución de órdenes, lo que implica un riesgo de ejecución para los participantes.
+
+\item \textbf{Transparencia post-negociación}: A pesar de la falta de transparencia pre-negociación, los dark pools deben reportar las transacciones después de su ejecución.
+
+\item \textbf{Costes de transacción}: Los dark pools típicamente no cobran comisiones de negociación, resultando en costes explícitos de transacción más bajos que los mercados mostrados (para una discusión detallada de los costes de transacción, véase la sección sobre costes de transacción).
+\end{enumerate}
+\end{teorema}
+
+\begin{proposicion}[Estructura de Propiedad de los Dark Pools]
+Según Rosenblatt Securities (2019), en Estados Unidos, el 62\% del volumen de negociación en dark pools proviene de dark pools propiedad de bancos de inversión (por ejemplo, UBS ATS, Credit Suisse CrossFinder, Morgan Stanley MS Dark Pool), que negocian tanto para clientes como para cuentas propias. Otros tipos incluyen dark pools de brokers de agencia (por ejemplo, Virtu Posit, Liquidnet) y dark pools propiedad de bolsas (por ejemplo, BATS Trading, NYSE Euronext). En Europa, los MTFs multilaterales de bolsas (como CBOE Dark o Turquoise Plato) poseen el mayor porcentaje, representando el 43\% del volumen de negociación.
+\end{proposicion}
+
+\begin{proposicion}[Importancia de los Dark Pools en el Mercado]
+Los dark pools representan una fracción significativa del volumen total de negociación. En Estados Unidos, existen más de 30 dark pools que representan aproximadamente el 14,1\% del volumen consolidado de negociación. En Europa, los dark pools representan aproximadamente el 4,7\% del volumen de negociación consolidado.
+\end{proposicion}
+
+\begin{proposicion}[Impacto en la Transparencia y el Descubrimiento de Precios]
+La opacidad pre-negociación de los dark pools afecta la transparencia del mercado y el descubrimiento de precios. Sin embargo, Zhu (2014) sugiere que los dark pools no reducen el descubrimiento de precios, ya que los inversores informados utilizan los mercados mostrados. Bayona et al. (2014) notan efectos sutiles en la calidad del mercado dependiendo de las características de las acciones y los traders. Los reguladores están preocupados por el impacto de los dark pools en la calidad del mercado y la fragmentación de los mercados de renta variable.
+\end{proposicion}
+
+\paragraph{Regulación de los Dark Pools}
+
+La regulación de los dark pools ha evolucionado tanto en Estados Unidos como en Europa para abordar las preocupaciones sobre transparencia y calidad del mercado.
+
+\begin{proposicion}[Regulación en Estados Unidos]
+En Estados Unidos, la SEC reguló los Sistemas de Negociación Alternativos (ATS) en 1998. Cuando el trading oscuro excedía el 5\% del volumen diario, se aplicaban reglas más estrictas sobre mantenimiento de registros y transparencia. Sin embargo, estas regulaciones no previeron completamente el comportamiento depredador, lo que llevó a demandas y multas de más de \$229 millones entre 2011 y 2018. En 2018, la SEC votó para mejorar la supervisión de los dark pools.
+\end{proposicion}
+
+\begin{proposicion}[Regulación en Europa: MiFID II y MiFIR]
+En Europa, MiFID II y MiFIR, aprobados en 2014 e implementados en 2018, introdujeron el mecanismo de Límite de Volumen Doble (DVC, Double Volume Cap), que limita la negociación de un instrumento al 4\% en un solo centro de negociación y al 8\% en todos los centros de negociación de la UE. Los objetivos de MiFID II son asegurar mercados más justos, seguros y eficientes, y una mayor transparencia. La ESMA está evaluando el impacto de estas regulaciones.
+\end{proposicion}
+
+\begin{proposicion}[Conflictos de Interés en Dark Pools]
+Los dark pools pueden generar conflictos de interés, ya que los operadores pueden ocultar precios o prioridad debido a la falta de un libro de órdenes visible ex-ante. Existe el riesgo de que los dark pools de bancos de inversión no enruten las órdenes de clientes para la mejor ejecución, priorizando sus propios intereses.
+\end{proposicion}
+
+\paragraph{Trading de Alta Frecuencia y Dark Pools}
+
+El trading de alta frecuencia (HFT) y los dark pools mantienen una relación compleja y evolutiva que ha generado extenso debate académico y regulatorio.
+
+\begin{definicion}[Trading Algorítmico]
+El \textbf{trading algorítmico} es un método para comprar o vender valores financieros utilizando un conjunto pre-programado de reglas para determinar qué, cuándo, en qué centro de negociación y cómo negociar valores financieros y otros productos de mercado como divisas y materias primas. En algunos mercados, se estima que el trading algorítmico representa alrededor del 70\% del volumen total.
+\end{definicion}
+
+\begin{definicion}[Trading de Alta Frecuencia (HFT)]
+El \textbf{trading de alta frecuencia} (HFT, High-Frequency Trading) es un tipo importante de trading algorítmico caracterizado por operaciones que ocurren en intervalos muy cortos (microsegundos). El HFT se caracteriza por su dependencia del poder computacional, la sofisticación de algoritmos, el acceso rápido a datos (co-localización) y la capacidad de procesamiento de información. El HFT representa aproximadamente el 50\% o más de los mercados estadounidenses. Las características típicas del HFT incluyen altas velocidades, altos volúmenes de negociación y la explotación de oportunidades de beneficio de muy corto plazo.
+\end{definicion}
+
+\begin{teorema}[Impacto del HFT en los Mercados]
+El impacto del HFT en los mercados es objeto de debate académico. La evidencia empírica sugiere:
+
+\begin{enumerate}
+\item \textbf{Reducción de costes de transacción}: Los costes de transacción disminuyeron más del 50\% con el trading electrónico y el HFT.
+
+\item \textbf{Creadores de mercado informados}: Los HFTs a menudo actúan como creadores de mercado bien informados, reduciendo los costes de transacción.
+
+\item \textbf{Prácticas depredadoras}: Los HFTs pueden aumentar los costes de transacción cuando depredan órdenes institucionales grandes mediante prácticas como el uso de información temprana, front-running y "pinging" (enviar órdenes pequeñas para detectar órdenes grandes).
+
+\item \textbf{Competencia}: Los HFTs fomentan la competencia en los mercados.
+
+\item \textbf{Reequilibrio de carteras}: Los HFTs ayudan a los inversores a reequilibrar sus carteras.
+\end{enumerate}
+\end{teorema}
+
+\begin{proposicion}[Estrategias de HFT]
+Según Biais y Foucault (2014), el impacto del HFT en el mercado depende críticamente del tipo de estrategia. Las principales estrategias de HFT incluyen:
+
+\begin{enumerate}
+\item \textbf{Creación de mercado}: Los HFTs actúan como proveedores de liquidez, obteniendo beneficios del diferencial bid-ask.
+
+\item \textbf{Arbitraje}: Los HFTs explotan pequeñas diferencias de precios entre mercados o instrumentos (por ejemplo, arbitraje estadístico, de latencia, de índices).
+
+\item \textbf{Estrategias direccionales}: Los HFTs utilizan modelos predictivos para movimientos de precios a corto plazo, tomando posiciones direccionales.
+
+\item \textbf{Estrategias estructurales}: Los HFTs explotan características de la estructura del mercado como la velocidad de ejecución o el procesamiento de órdenes (por ejemplo, "flash crash" o "spoofing").
+
+\item \textbf{Estrategias de manipulación}: Estrategias ilegales como "quote stuffing" o "layering".
+\end{enumerate}
+\end{proposicion}
+
+\begin{proposicion}[HFTs en Dark Pools]
+La relación entre HFTs y dark pools es compleja y evolutiva. Inicialmente, los dark pools fueron diseñados para proteger a los inversores de las prácticas depredadoras de los HFTs. Sin embargo, con el tiempo, los operadores de dark pools han incentivado la participación de HFTs debido a la liquidez adicional y la mayor probabilidad de ejecución que proporcionan. Los dark pools también son ventajosos para los HFTs debido a la velocidad, automatización y menores comisiones.
+\end{proposicion}
+
+\begin{proposicion}[Prácticas Depredadoras de HFTs en Dark Pools]
+Algunos HFTs en dark pools contribuyen a la reducción del tamaño promedio de las órdenes mediante estrategias sofisticadas de "pinging" para detectar y hacer "front-running" de órdenes grandes ocultas en centros opacos, lo que potencialmente perjudica los beneficios de los dark pools. En 2014, el Fiscal General de Nueva York inició acciones legales contra Barclays por sus operaciones de dark pool, alegando que Barclays tergiversó la actividad de HFT, defraudando así a los inversores. En enero de 2016, Barclays acordó pagar una multa de \$35 millones a la SEC y \$70 millones al Fiscal General de Nueva York.
+\end{proposicion}
+
+\begin{ejemplo}[Caso Barclays]
+En 2014, el Fiscal General de Nueva York demandó a Barclays por sus operaciones de dark pool, alegando que Barclays tergiversó la actividad de HFT, defraudando así a los inversores. En enero de 2016, Barclays acordó pagar una multa de \$35 millones a la SEC y \$70 millones al Fiscal General de Nueva York por no revelar adecuadamente la participación de traders de alta frecuencia en su dark pool.
+\end{ejemplo}
+
+\begin{proposicion}[Controles para Prácticas Depredadoras de HFT]
+Los dark pools pueden implementar controles para prevenir prácticas depredadoras de HFT. Petrescu y Wedow (2017) proponen medidas como imponer un tamaño mínimo de orden para reducir las estrategias de pinging o emparejar órdenes en puntos discretos en el tiempo. No todos los dark pools evitan a los HFTs, lo cual es aceptable si los inversores están completamente informados sobre cómo operan los centros de negociación.
+\end{proposicion}
+
+\begin{proposicion}[Externalidades Negativas del HFT]
+El HFT puede generar externalidades negativas, incluyendo menor participación de "traders lentos", inversión excesiva en tecnologías de negociación y mayor riesgo sistémico. El Flash Crash de 2010, un episodio de 36 minutos donde los mercados de valores estadounidenses colapsaron y se recuperaron, ilustra el riesgo sistémico. Kirilenko et al. (2017) concluyeron que los HFTs "exacerbaron la volatilidad del mercado" pero "no desencadenaron" el crash, y que los HFTs "no proporcionan liquidez en episodios de crashes".
+\end{proposicion}
+
+\begin{proposicion}[Regulación del Trading Algorítmico]
+Las regulaciones actuales para el trading algorítmico, incluyendo HFT, en Estados Unidos y Europa cubren requisitos de cumplimiento en términos de gobierno, personal, tecnología de la información, pruebas de algoritmos, resiliencia, vigilancia, controles de negociación, seguridad e información. También existen requisitos adicionales para los creadores de mercado de HFT respecto a las provisiones de liquidez y el capital regulatorio. Las propuestas académicas para la regulación incluyen subastas periódicas y pruebas de estrés.
+\end{proposicion}
+
+\subsection{Mecanismos de Negociación en Mercados Regulados}
+
+Los mercados regulados utilizan dos mecanismos principales de negociación: las subastas y la negociación continua.
+
+\subsubsection{Subastas del Mercado de Valores}
+
+\begin{definicion}[Subasta]
+Una \textbf{subasta} es un mecanismo de negociación mediante el cual múltiples compradores y vendedores presentan ofertas de compra y venta, y las transacciones se ejecutan cuando las ofertas de compra y venta coinciden según reglas específicas de emparejamiento.
+\end{definicion}
+
+\begin{teorema}[Ventajas de las Subastas]
+Las subastas presentan las siguientes ventajas:
+
+\begin{enumerate}
+\item \textbf{Transparencia}: Proporcionan transparencia mediante la publicación de todas las ofertas y la ejecución de transacciones a precios públicos.
+
+\item \textbf{Precios justos}: Facilitan la determinación de precios justos mediante pujas abiertas que reflejan la información disponible.
+
+\item \textbf{Competencia}: Fomentan la competencia entre compradores y vendedores, lo que puede resultar en mejores precios para los participantes.
+
+\item \textbf{Descubrimiento de precios}: Facilitan el descubrimiento de precios mediante la agregación de información de múltiples participantes.
+
+\item \textbf{Eficiencia}: Permiten una negociación eficiente de una amplia variedad de activos mediante la centralización de la oferta y la demanda.
+\end{enumerate}
+\end{teorema}
+
+\begin{proposicion}[Limitaciones de las Subastas]
+Las subastas presentan las siguientes limitaciones:
+
+\begin{enumerate}
+\item \textbf{Possible manipulación}: Existe la posibilidad de manipulación mediante la presentación de ofertas falsas o coordinadas.
+
+\item \textbf{Falta de liquidez}: Pueden presentar falta de liquidez para ciertos activos, especialmente aquellos con menor volumen de negociación.
+
+\item \textbf{Desviaciones del valor fundamental}: Existe la posibilidad de que las pujas no reflejen el verdadero valor de mercado del activo, especialmente en situaciones de información asimétrica.
+
+\item \textbf{Operaciones de grandes bloques}: No son óptimas para operaciones de grandes bloques, ya que pueden causar movimientos significativos de precio.
+\end{enumerate}
+\end{proposicion}
+
+\begin{definicion}[Mecanismo de Emparejamiento de Órdenes]
+El \textbf{mecanismo de emparejamiento de órdenes} en una subasta funciona de la siguiente manera:
+\begin{enumerate}
+\item Los compradores presentan múltiples ofertas de compra (bids).
+\item Los vendedores presentan múltiples ofertas de venta (offers).
+\item Las ofertas se registran en el libro de órdenes del mercado.
+\item El mecanismo de emparejamiento identifica la oferta de compra con el precio más alto y la oferta de venta con el precio más bajo.
+\item Si el precio de la oferta de compra es mayor o igual al precio de la oferta de venta, se ejecuta la transacción.
+\end{enumerate}
+\end{definicion}
+
+\subsubsection{Negociación Continua}
+
+\begin{definicion}[Negociación Continua]
+La \textbf{negociación continua} es un mecanismo de negociación mediante el cual las órdenes se ejecutan inmediatamente cuando encuentran una contraparte disponible, sin necesidad de esperar a un momento específico de negociación. La negociación continua permite la ejecución inmediata de transacciones durante las horas de mercado.
+\end{definicion}
+
+La negociación continua es especialmente adecuada para activos líquidos con alto volumen de negociación, ya que garantiza la disponibilidad constante de contrapartes.
+
+\subsubsection{Comparación entre Mercados Call y Mercados Continuos}
+
+\begin{proposicion}[Comparación de Características]
+Los mercados call (subastas por lotes) y los mercados continuos presentan características distintivas:
+
+\textbf{Mercados Call (Subastas por Lotes):}
+\begin{itemize}
+\item \textbf{Agregación de liquidez}: Todas las órdenes se reúnen en momentos específicos, lo que puede proporcionar mayor liquidez en cada ejecución.
+\item \textbf{Descubrimiento de precios}: El precio se determina mediante la agregación de todas las órdenes, lo que puede resultar en un mejor descubrimiento de precios.
+\item \textbf{Menor frecuencia de ejecución}: Las transacciones ocurren en momentos discretos, lo que puede aumentar el tiempo de espera para la ejecución.
+\item \textbf{Menor impacto de mercado}: La agregación de órdenes puede reducir el impacto de mercado de órdenes grandes.
+\item \textbf{Adecuados para}: Activos con menor liquidez, apertura y cierre de mercados, y operaciones de grandes bloques.
+\end{itemize}
+
+\textbf{Mercados Continuos:}
+\begin{itemize}
+\item \textbf{Ejecución inmediata}: Las órdenes se ejecutan tan pronto como encuentran una contraparte disponible.
+\item \textbf{Mayor frecuencia de transacciones}: Permite múltiples transacciones durante el día de negociación.
+\item \textbf{Mayor liquidez operativa}: Los inversores pueden entrar y salir del mercado en cualquier momento durante las horas de negociación.
+\item \textbf{Mayor impacto de mercado potencial}: Las órdenes grandes pueden tener mayor impacto en el precio debido a la ejecución inmediata.
+\item \textbf{Adecuados para}: Activos líquidos con alto volumen de negociación, donde los inversores valoran la ejecución inmediata.
+\end{itemize}
+\end{proposicion}
+
+\subsection{Estructura del Mercado de Valores Español}
+
+El mercado de valores español está organizado en torno a Bolsas y Mercados Españoles (BME), que opera los principales mercados regulados del país. La estructura incluye procesos de pre-negociación, negociación y post-negociación.
+
+\subsubsection{Horarios y Mecanismos de Negociación}
+
+La bolsa de valores española opera con tres fases principales de negociación durante el día de negociación:
+
+\begin{definicion}[Subasta de Apertura]
+La \textbf{subasta de apertura} es el período inicial de negociación que tiene lugar entre las 8:30 y las 9:00 horas. Durante este período, los participantes pueden introducir, modificar o cancelar órdenes, pero no se ejecutan transacciones. Al finalizar la subasta de apertura (a las 9:00 horas), se determina el precio de apertura mediante el mecanismo de emparejamiento de órdenes, ejecutándose todas las órdenes compatibles a este precio.
+\end{definicion}
+
+\begin{definicion}[Mercado Continuo]
+El \textbf{mercado continuo} es el período principal de negociación que tiene lugar entre las 9:00 y las 17:30 horas. Durante este período, las órdenes se ejecutan inmediatamente cuando encuentran una contraparte disponible, siguiendo el mecanismo de negociación continua. El mercado continuo permite la ejecución inmediata de transacciones durante las horas de mercado.
+\end{definicion}
+
+\begin{definicion}[Subasta de Cierre]
+La \textbf{subasta de cierre} es el período final de negociación que tiene lugar entre las 17:30 y las 17:35 horas. Similar a la subasta de apertura, durante este período los participantes pueden introducir, modificar o cancelar órdenes, pero no se ejecutan transacciones hasta el final del período. Al finalizar la subasta de cierre (a las 17:35 horas), se determina el precio de cierre mediante el mecanismo de emparejamiento de órdenes.
+\end{definicion}
+
+\subsubsection{Características de Renta Variable y Renta Fija en España}
+
+Los mercados españoles de renta variable y renta fija presentan características específicas que reflejan la estructura organizativa y los requisitos regulatorios.
+
+\begin{proposicion}[Características del Mercado de Renta Variable]
+El mercado de renta variable en España presenta las siguientes características:
+\begin{itemize}
+\item \textbf{Plataforma electrónica}: La negociación se realiza a través de una plataforma electrónica centralizada gestionada por BME.
+\item \textbf{Modelo dirigido por órdenes}: El mercado opera bajo un modelo dirigido por órdenes (order-driven), donde las órdenes de compra y venta se emparejan automáticamente según reglas de prioridad precio-tiempo.
+\item \textbf{Cambios MiFID II}: La implementación de MiFID II ha introducido cambios significativos en la estructura del mercado, incluyendo nuevos tipos de centros de negociación (MTFs, OTFs, SIs) y requisitos de transparencia mejorados.
+\item \textbf{Mercados gestionados por BME}: BME gestiona varios mercados de renta variable, incluyendo el mercado continuo para acciones principales, mercados para pequeñas y medianas empresas, y mercados de crecimiento.
+\end{itemize}
+\end{proposicion}
+
+\begin{proposicion}[Características del Mercado de Renta Fija]
+El mercado de renta fija en España presenta las siguientes características:
+\begin{itemize}
+\item \textbf{Negociación electrónica}: La negociación de bonos y otros instrumentos de renta fija se realiza principalmente a través de plataformas electrónicas.
+\item \textbf{Participantes}: Los principales participantes incluyen bancos, gestores de fondos, compañías de seguros y otros inversores institucionales.
+\item \textbf{Liquidez}: El mercado de deuda pública española es uno de los más líquidos de Europa, mientras que el mercado de bonos corporativos presenta menor liquidez.
+\item \textbf{Regulación}: El mercado de renta fija está sujeto a la regulación europea (MiFID II) y a la supervisión de la CNMV y el Banco de España.
+\end{itemize}
+\end{proposicion}
+
+\subsubsection{Libro de Órdenes y Formación de Precios}
+
+El libro de órdenes es un componente fundamental del mercado de valores español, registrando todas las órdenes de compra y venta pendientes de ejecución.
+
+\begin{definicion}[Libro de Órdenes]
+El \textbf{libro de órdenes} es el registro electrónico que contiene todas las órdenes de compra y venta pendientes de ejecución para un valor específico. El libro de órdenes muestra los precios y volúmenes de las órdenes de compra (bids) y venta (asks), ordenados por precio y tiempo de recepción.
+\end{definicion}
+
+\begin{proposicion}[Mecanismo de Formación de Precios]
+El precio de mercado se forma mediante el encuentro de las órdenes de compra y venta en el libro de órdenes:
+\begin{itemize}
+\item \textbf{Precio de compra (bid)}: El precio más alto al que un comprador está dispuesto a comprar el valor.
+\item \textbf{Precio de venta (ask)}: El precio más bajo al que un vendedor está dispuesto a vender el valor.
+\item \textbf{Spread bid-ask}: La diferencia entre el precio de venta y el precio de compra representa el coste implícito de transacción.
+\item \textbf{Precio de ejecución}: Las órdenes de mercado se ejecutan al mejor precio disponible (mejor bid para ventas, mejor ask para compras).
+\end{itemize}
+\end{proposicion}
+
+\subsubsection{Post-Contratación: Compensación, Liquidación y Registro}
+
+Una vez ejecutada una transacción en el mercado regulado, se inician los procesos de post-contratación, que incluyen la compensación (clearing), la liquidación (settlement) y el registro de las transacciones.
+
+\begin{definicion}[Compensación (Clearing)]
+La \textbf{compensación} o \textbf{clearing} es el proceso mediante el cual se confirman las transacciones ejecutadas, se calculan las obligaciones netas de cada participante y se establece una contrapartida central (CCP, Central Counterparty) que garantiza la ejecución de las transacciones incluso en caso de incumplimiento de una de las partes.
+\end{definicion}
+
+En España, BME Clearing es el operador responsable de la compensación y contrapartida central de renta variable, derivados financieros, repos sobre deuda pública, derivados de tipo de interés y derivados sobre electricidad.
+
+\begin{definicion}[Liquidación (Settlement)]
+La \textbf{liquidación} o \textbf{settlement} es el proceso mediante el cual se transfieren efectivamente los valores y los fondos entre las partes de una transacción. La liquidación típicamente ocurre algunos días después de la ejecución de la transacción (por ejemplo, T+2 para acciones).
+\end{definicion}
+
+\begin{definicion}[Registro]
+El \textbf{registro} es el proceso mediante el cual se registran contablemente las transacciones y los derechos de propiedad sobre los valores. En España, Iberclear actúa como depositario central de valores (DCV), realizando el registro contable y de liquidación de los valores admitidos a negociación en las bolsas españolas.
+\end{definicion}
+
+\subsection{Regulación y Supervisión Financiera en Europa y España}
+
+La regulación y supervisión de los mercados financieros en Europa se estructura en múltiples niveles, desde el nivel europeo hasta el nivel nacional.
+
+\begin{definicion}[European Systemic Risk Board (ESRB)]
+El \textbf{European Systemic Risk Board} (ESRB) es el organismo responsable de la supervisión macroprudencial del sistema financiero europeo. El ESRB está compuesto por el Consejo del BCE, los presidentes de EBA, EIOPA y ESMA, y la Comisión Europea.
+\end{definicion}
+
+\begin{definicion}[European Securities and Markets Authority (ESMA)]
+La \textbf{European Securities and Markets Authority} (ESMA) es la autoridad europea de supervisión responsable de la supervisión de los mercados de valores y la protección de inversores a nivel europeo. ESMA coordina la supervisión de los mercados de valores entre las autoridades nacionales.
+\end{definicion}
+
+En España, la Comisión Nacional del Mercado de Valores (CNMV) es la autoridad nacional responsable de la supervisión de los mercados de valores y la protección de inversores.
+
+\section{Mercados OTC}
+
+\subsection{Definición y Características}
+
+\begin{definicion}[Mercado Over-the-Counter (OTC)]
+Un \textbf{mercado over-the-counter} (OTC) es un mercado no organizado donde la negociación se realiza de forma bilateral fuera de un centro de negociación regulado, mediante dealers, brokers o negociación directa entre las partes.
+\end{definicion}
+
+\begin{teorema}[Características de los Mercados OTC]
+Los mercados OTC presentan las siguientes características:
+
+\begin{enumerate}
+\item \textbf{Ausencia de centro de negociación regulado}: La negociación no ocurre en un mercado organizado centralizado, sino mediante acuerdos bilaterales entre las partes.
+
+\item \textbf{Menor transparencia}: A diferencia de los mercados regulados, los mercados OTC no están sujetos a los mismos requisitos estrictos de transparencia pre y post-negociación.
+
+\item \textbf{Flexibilidad}: Permiten mayor flexibilidad para la negociación de contratos a medida (tailor-made contracts) que se adaptan a las necesidades específicas de las partes.
+
+\item \textbf{Activos menos líquidos}: Son cruciales para la negociación de activos menos líquidos que no cumplen con los requisitos de admisión a cotización en mercados regulados.
+
+\item \textbf{Instrumentos negociados}: Incluyen bonos corporativos, divisas al contado (spot), algunas materias primas, y derivados no estandarizados como swaps y forwards.
+\end{enumerate}
+\end{teorema}
+
+\subsection{Tipos de Negociación en Mercados OTC}
+
+Los mercados OTC pueden organizarse según diferentes tipos de negociación, dependiendo de cómo se facilite el encuentro entre compradores y vendedores.
+
+\begin{definicion}[Negociación Bilateral]
+La \textbf{negociación bilateral} en mercados OTC ocurre cuando dos partes negocian directamente entre sí, sin intermediarios o con la participación mínima de un dealer que actúa como contrapartida. Este tipo de negociación es característico de transacciones de swaps, forwards y otros derivados OTC donde las partes acuerdan términos específicos adaptados a sus necesidades.
+\end{definicion}
+
+\begin{definicion}[Negociación Multilateral]
+La \textbf{negociación multilateral} en mercados OTC ocurre cuando múltiples participantes interactúan a través de una plataforma o sistema que facilita el encuentro entre compradores y vendedores. Aunque no es un mercado regulado, este tipo de negociación puede proporcionar mayor liquidez y transparencia que la negociación puramente bilateral. Ejemplos incluyen plataformas electrónicas para negociación de bonos corporativos.
+\end{definicion}
+
+\begin{proposicion}[Ventajas y Desventajas de los Tipos de Negociación]
+Cada tipo de negociación presenta ventajas y desventajas:
+\begin{itemize}
+\item \textbf{Negociación bilateral}: Permite contratos completamente personalizados y términos negociados específicamente, pero puede ser menos transparente y presentar mayor riesgo de contrapartida.
+\item \textbf{Negociación multilateral}: Puede proporcionar mayor liquidez y mejores precios mediante la competencia entre múltiples participantes, pero puede ser menos flexible en términos de personalización de contratos.
+\end{itemize}
+\end{proposicion}
+
+\subsection{Ejemplo de Transacción OTC: Swap de Tipos de Interés}
+
+\begin{ejemplo}[Swap de Tipos de Interés OTC]
+Un banco de inversión tiene una cartera de inversiones que genera ingresos variables basados en tipos de interés variables. Para gestionar el riesgo de tipos de interés y estabilizar sus flujos de caja, el banco decide entrar en un swap de tipos de interés con otra institución financiera.
+
+\textbf{Detalles de la transacción:}
+\begin{itemize}
+\item \textbf{Principal nocional}: €100 millones
+\item \textbf{Plazo}: 10 años
+\item \textbf{Contrapartida}: Otra institución financiera que tiene inversiones con tipos de interés fijos y desea exposición a tipos variables
+\item \textbf{Términos del swap}:
+\begin{itemize}
+\item El banco de inversión paga tipos de interés fijos (por ejemplo, 3\% anual)
+\item El banco de inversión recibe tipos de interés variables (por ejemplo, EURIBOR + 0,5\%)
+\end{itemize}
+\end{itemize}
+
+\textbf{Características de la transacción OTC:}
+\begin{itemize}
+\item \textbf{Negociación bilateral}: La transacción se negocia directamente entre las dos instituciones financieras, sin pasar por un mercado organizado.
+\item \textbf{Contrato a medida}: Los términos del swap (principal, plazo, frecuencia de pagos, tipos de referencia) se adaptan a las necesidades específicas de ambas partes.
+\item \textbf{Flexibilidad}: Las partes pueden acordar términos específicos que no estarían disponibles en un mercado estandarizado.
+\item \textbf{Riesgo de contrapartida}: Dado que no hay una cámara de compensación central, existe riesgo de que una de las partes incumpla sus obligaciones.
+\item \textbf{Regulación}: Aunque la transacción es OTC, ambas partes están sujetas a requisitos regulatorios (como EMIR en Europa) que requieren el reporte de transacciones de derivados y, en algunos casos, la compensación centralizada.
+\end{itemize}
+
+Este ejemplo ilustra cómo los mercados OTC permiten la negociación de instrumentos financieros complejos y personalizados que no estarían disponibles en mercados organizados estandarizados.
+\end{ejemplo}
+
+\subsection{Regulación de los Mercados OTC en España}
+
+\begin{proposicion}[Supervisión de los Mercados OTC]
+En España, la actividad en los mercados OTC no está directamente supervisada como mercado, pero sí lo están los principales operadores (entidades de crédito), excepto los Hedge Funds. Por tanto, los supervisores bancarios tienen acceso a las operaciones que las entidades supervisadas realizan en estos mercados.
+\end{proposicion}
+
+\begin{teorema}[Requisitos de Comunicación de Operaciones OTC]
+Según la Ley 47/2007 del 19 de diciembre del Mercado de Valores, las empresas de servicios de inversión y entidades de crédito que ejecuten operaciones sobre instrumentos financieros en mercados OTC deben comunicarlas a la CNMV, a más tardar, al finalizar el siguiente día hábil a su ejecución.
+\end{teorema}
+
+La definición de instrumento financiero en la legislación española recoge prácticamente la totalidad del mapa de derivados y subyacentes conocidos hasta la fecha, incluyendo contratos a plazo (forwards), opciones y swaps sobre cualquier tipo de subyacente: acciones e índices, bonos, divisas, tipos de interés, materias primas, variables climáticas o riesgo de crédito (como los CDS, Credit Default Swaps).
+
+\section{Ejercicios}
+
+Esta sección presenta ejercicios prácticos que permiten aplicar los conceptos teóricos desarrollados en el documento. Los ejercicios cubren temas de compras al margen, venta en corto y análisis de libros de órdenes.
+
+\subsection{Ejercicio 1: Compra al Margen}
+
+\begin{ejercicio}[Compra al Margen]
+Sandra, una inversora, abre una cuenta de corretaje y compra 300 acciones de Indra a €40 por acción. Pide prestados €4.000 a su bróker para ayudar a financiar la compra. El tipo de interés del préstamo es del 8\%.
+
+\begin{enumerate}
+\item ¿Cuál es el margen en € en la cuenta de Sandra cuando compra las acciones?
+\item Si el precio de la acción cae a €30 por acción al final del próximo año, ¿cuál es el margen restante en € en su cuenta?
+\item Si el margen de mantenimiento requerido es del 30\%, ¿recibirá una llamada de margen (margin call)?
+\item ¿Cuál es la tasa de rentabilidad de su inversión? Compara esta tasa con el porcentaje de caída del precio de la acción.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{solucion}[Ejercicio 1]
+\textbf{a. Margen inicial:}
+
+La acción se compra por: 300 × €40 = €12.000.
+
+La cantidad prestada es €4.000. Por lo tanto, el inversor aporta capital propio, o margen, de €8.000.
+
+\textbf{b. Margen restante después de la caída de precio:}
+
+Si el precio de la acción cae a €30, entonces el valor de las acciones cae a €9.000 (300 × €30).
+
+Al final del año, la cantidad del préstamo adeudado al bróker crece a:
+\begin{equation}
+€4.000 \times 1,08 = €4.320
+\end{equation}
+
+Por lo tanto, el margen restante en la cuenta del inversor es:
+\begin{equation}
+€9.000 - €4.320 = €4.680
+\end{equation}
+
+\textbf{c. Verificación de llamada de margen:}
+
+El porcentaje de margen ahora es:
+\begin{equation}
+\frac{€4.680}{€9.000} = 0,52 \text{ o } 52\%
+\end{equation}
+
+Dado que el margen (52\%) está por encima del margen de mantenimiento requerido (30\%), el inversor no recibirá una llamada de margen.
+
+\textbf{d. Tasa de rentabilidad:}
+
+La tasa de rentabilidad de la inversión durante el año es:
+\begin{equation}
+\frac{€4.680 - €8.000}{€8.000} = -0,415 \text{ o } -41,5\%
+\end{equation}
+
+Alternativamente, se puede calcular dividiendo la inversión inicial en capital en el cambio de valor más el pago de intereses:
+\begin{equation}
+\frac{€3.000 \text{ de pérdida} + €320 \text{ de intereses}}{€8.000} = -0,415
+\end{equation}
+
+La caída en el precio de la acción es solo del -25\% (de €40 a €30), pero la tasa de rentabilidad es del -41,5\% debido al apalancamiento y al coste del préstamo.
+\end{solucion}
+
+\subsection{Ejercicio 2: Venta en Corto}
+
+\begin{ejercicio}[Venta en Corto]
+David abre una cuenta para vender en corto 1.000 acciones de Indra (la misma acción que en el problema anterior). El requisito de margen inicial era del 50\% (la cuenta de margen no paga intereses). Un año más tarde, el precio de Indra ha subido de €40 a €50, y la acción ha pagado un dividendo de €2 por acción.
+
+\begin{enumerate}
+\item ¿Cuál es el margen restante, en €, en la cuenta?
+\item Si el margen de mantenimiento es del 30\%, ¿recibirá David una llamada de margen (margin call)?
+\item ¿Cuál es la tasa de rentabilidad de la posición corta (tratando el margen inicial como la cantidad invertida)?
+\end{enumerate}
+\end{ejercicio}
+
+\begin{solucion}[Ejercicio 2]
+\textbf{a. Margen restante:}
+
+El margen inicial fue:
+\begin{equation}
+0,50 \times 1.000 \times €40 = €20.000
+\end{equation}
+
+Como resultado del aumento en el precio de la acción, David pierde:
+\begin{equation}
+€10 \times 1.000 = €10.000
+\end{equation}
+
+Por lo tanto, el margen disminuye en €10.000.
+
+Además, David debe pagar el dividendo de €2 por acción al prestamista de las acciones, de modo que el margen en la cuenta disminuye en €2.000 adicionales.
+
+Por lo tanto, el margen restante es:
+\begin{equation}
+€20.000 - €10.000 - €2.000 = €8.000
+\end{equation}
+
+\textbf{b. Verificación de llamada de margen:}
+
+El porcentaje de margen es:
+\begin{equation}
+\frac{€8.000}{€50.000} = 0,16 \text{ o } 16\%
+\end{equation}
+
+Dado que el margen (16\%) está por debajo del margen de mantenimiento requerido (30\%), habrá una llamada de margen.
+
+\textbf{c. Tasa de rentabilidad:}
+
+El capital propio en la cuenta disminuyó de €20.000 a €8.000 en un año, para una tasa de rentabilidad de:
+\begin{equation}
+\frac{€8.000 - €20.000}{€20.000} = \frac{-€12.000}{€20.000} = -0,60 \text{ o } -60\%
+\end{equation}
+
+La posición corta generó una pérdida del 60\% sobre el margen inicial invertido.
+\end{solucion}
+
+\subsection{Ejercicio 3: Libro de Órdenes}
+
+\begin{ejercicio}[Libro de Órdenes]
+Considere el siguiente libro de órdenes limitadas para la acción Inditex. La última operación en la acción se realizó a un precio de €50.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c||c|c|}
+\hline
+\multicolumn{2}{|c||}{\textbf{Órdenes límite de compra}} & \multicolumn{2}{c|}{\textbf{Órdenes límite de venta}} \\
+\hline
+\textbf{Precio (€)} & \textbf{Volumen} & \textbf{Precio (€)} & \textbf{Volumen} \\
+\hline
+49,74 & 500 & 50,25 & 100 \\
+49,50 & 800 & 51,50 & 100 \\
+49,25 & 500 & 54,75 & 300 \\
+49,00 & 200 & 58,25 & 100 \\
+48,50 & 600 & & \\
+\hline
+\end{tabular}
+\caption{Libro de órdenes para Inditex}
+\end{table}
+
+\begin{enumerate}
+\item Si entra una orden de compra a mercado por 100 acciones, ¿a qué precio se ejecutará?
+\item ¿A qué precio se ejecutará la siguiente orden de compra a mercado?
+\item Si fueras un intermediario de valores (dealer), ¿querrías aumentar o disminuir tu inventario de esta acción?
+\end{enumerate}
+\end{ejercicio}
+
+\begin{solucion}[Ejercicio 3]
+\textbf{a. Precio de ejecución de la primera orden de mercado:}
+
+La orden de compra a mercado se ejecutará al mejor precio de venta limitado disponible, que es €50,25. Esta orden ejecutará las 100 acciones disponibles a este precio.
+
+\textbf{b. Precio de ejecución de la siguiente orden de mercado:}
+
+La siguiente orden de compra a mercado se ejecutará al siguiente mejor precio de venta limitado disponible, que es €51,50. Esta orden ejecutará las 100 acciones disponibles a este precio.
+
+\textbf{c. Decisión del dealer sobre inventario:}
+
+Querrías aumentar tu inventario. Hay una demanda de compra considerable a precios justo por debajo de €50 (500 acciones a €49,74, 800 acciones a €49,50, 500 acciones a €49,25, etc.), lo que indica que el riesgo a la baja es limitado. En cambio, las órdenes limitadas de venta son escasas (solo 100 acciones a €50,25, 100 acciones a €51,50, etc.), lo que sugiere que una orden de compra moderada podría provocar un aumento sustancial en el precio. Por lo tanto, un dealer podría querer aumentar su inventario para beneficiarse de la posible subida de precios.
+\end{solucion}
+
+\section{Conclusiones}
+
+La microestructura de los mercados secundarios de valores es un componente fundamental del sistema financiero moderno. La comprensión de los mecanismos de negociación, los tipos de participantes y las diferentes estructuras de mercado es esencial para entender cómo se forman los precios, cómo se proporciona liquidez y cómo las diferentes estructuras afectan la eficiencia y el coste de las transacciones.
+
+Los mercados regulados, con su estructura centralizada, transparencia y supervisión, proporcionan un entorno seguro y eficiente para la negociación de instrumentos financieros estandarizados. Los mercados OTC, por su parte, ofrecen flexibilidad y son esenciales para la negociación de instrumentos menos estandarizados y activos menos líquidos.
+
+La regulación europea, encabezada por MiFID II y coordinada por ESMA, establece un marco común que garantiza la protección de inversores y la estabilidad del sistema financiero, mientras permite la innovación y la adaptación a las necesidades del mercado.
+
+La evolución continua de la tecnología, especialmente con el desarrollo de algoritmos de alta frecuencia y plataformas de negociación electrónica, está transformando la microestructura de los mercados, aumentando la velocidad de ejecución y la eficiencia, pero también planteando nuevos desafíos regulatorios y de supervisión.
+
+\section{Referencias Bibliográficas}
+
+\begin{thebibliography}{9}
+
+\bibitem{alexander2001}
+Alexander, G. J., Sharpe, W. F., \& Bailey, J. V. (2001). \textit{Fundamentals of Investments} (3rd ed.). Prentice Hall. Capítulos 2 y 3.
+
+\bibitem{bodie2023}
+Bodie, Z., Kane, A. y Marcus, A. J. (2023). \textit{Investments} (13th ed.). McGraw-Hill Education. Capítulos 3 y 4.
+
+\bibitem{bayona2020}
+Bayona, A. (2020). ``Dark Pools and High Frequency Trading: A Brief Note''. \textit{Observatorio de Divulgación Financiera}, Instituto de Estudios Financieros, n.º 48.
+
+\end{thebibliography}
+
+\end{document}
+

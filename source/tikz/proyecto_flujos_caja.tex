@@ -1,0 +1,31 @@
+\begin{tikzpicture}[scale=1.2]
+    % Timeline
+    \draw[timeline] (0,0) -- (7,0);
+    
+    % Time points
+    \foreach \x/\label in {0/$t=0$, 1.5/$t=1$, 3/$t=2$, 4.5/$t=3$, 7/$t=T$} {
+        \node[timepoint] at (\x,0) {};
+        \node[below] at (\x,-0.3) {\label};
+    }
+    
+    % Cash flows - investment
+    \draw[cashflow, red!70, -Stealth] (0,0) -- (0,-1.5);
+    \node[below, red!70] at (0,-1.8) {$-I_0$};
+    
+    % Positive cash flows
+    \draw[cashflow, Stealth-] (1.5,0) -- (1.5,1);
+    \node[above, blue!70] at (1.5,1.2) {$CF_1$};
+    
+    \draw[cashflow, Stealth-] (3,0) -- (3,1.2);
+    \node[above, blue!70] at (3,1.4) {$CF_2$};
+    
+    \draw[cashflow, Stealth-] (4.5,0) -- (4.5,0.8);
+    \node[above, blue!70] at (4.5,1.0) {$CF_3$};
+    
+    % Dots
+    \node at (5.75,0.5) {$\cdots$};
+    
+    \draw[cashflow, Stealth-] (7,0) -- (7,1.3);
+    \node[above, blue!70] at (7,1.5) {$CF_T$};
+\end{tikzpicture}
+

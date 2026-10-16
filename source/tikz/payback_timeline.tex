@@ -1,0 +1,67 @@
+\begin{tikzpicture}[scale=1.3]
+    % Timeline
+    \draw[timeline] (0,0) -- (7,0);
+    
+    % Time points
+    \foreach \x in {0,1,2,3,4,5,6} {
+        \node[timepoint] at (\x,0) {};
+    }
+    % Time labels: place t=0 above the axis, the rest below
+    \node[above] at (0,0.3) {$t=0$};
+    \foreach \x/\label in {1/1, 2/2, 3/3, 4/4, 5/5, 6/6} {
+        \node[below] at (\x,-0.3) {$t=\label$};
+    }
+    
+    % Individual cash flows (bars)
+    % Initial investment bar (same width as CF bars)
+    \fill[red!70] (-0.2,-1.5) rectangle (0.2,-0.1);
+    \node[left, font=\scriptsize] at (-0.1,-0.75) {$-I_0$};
+    
+    \fill[blue!70] (0.8,0.1) rectangle (1.2,0.8);
+    \node[above, font=\scriptsize] at (1,0.9) {$CF_1$};
+    
+    \fill[blue!70] (1.8,0.1) rectangle (2.2,1.0);
+    \node[above, font=\scriptsize] at (2,1.1) {$CF_2$};
+    
+    \fill[blue!70] (2.8,0.1) rectangle (3.2,0.9);
+    \node[above, font=\scriptsize] at (3,1.0) {$CF_3$};
+    
+    \fill[blue!70] (3.8,0.1) rectangle (4.2,0.7);
+    \node[above, font=\scriptsize] at (4,0.8) {$CF_4$};
+    
+    \fill[blue!70] (4.8,0.1) rectangle (5.2,0.6);
+    \node[above, font=\scriptsize] at (5,0.7) {$CF_5$};
+    
+    \fill[blue!70] (5.8,0.1) rectangle (6.2,0.5);
+    \node[above, font=\scriptsize] at (6,0.6) {$CF_6$};
+    
+    % Cumulative cash flow curve (piecewise-smooth with inflection and decreasing slopes)
+    % Constructed from cumulative values that reflect smaller late cash flows.
+    % The curve starts at -I0, crosses zero at x≈2.67, and then grows at a smaller rate.
+    \draw[thick, green!70!black]
+        plot[smooth] coordinates {
+            (0,-1.5)
+            (1,-0.946)
+            (2,-0.330)
+            (2.67,0)
+            (3,0.163)
+            (4,0.533)
+            (5,0.841)
+            (6,1.087)
+        };
+    
+    % Zero line for cumulative
+    \draw[dashed, gray] (-0.3,0) -- (7,0);
+    
+    % Payback period point (placed ~2/3 between t=2 and t=3)
+    \coordinate (PB) at (2.67,0);
+    \fill[purple!70] (PB) circle (3pt);
+    \draw[dashed, purple!70, thick] (2.67,-1.7) -- (2.67,1.5);
+    % Remove below-plot annotations (arrows and labels) as requested
+    
+    % Cumulative label (repositioned to avoid overlap)
+    \node[font=\scriptsize, green!70!black, text width=3cm, align=center] at (4.2,1.35) {Flujos de Caja\\Acumulados};
+    
+    % Removed formula box below the plot
+\end{tikzpicture}
+

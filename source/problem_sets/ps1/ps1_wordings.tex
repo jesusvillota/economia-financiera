@@ -1,0 +1,171 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#1}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#1}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 1}\\\large Fundamentos de Valoración de Activos}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\R}{\mathbb{R}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+
+\begin{document}
+
+
+\section{Interés simple y compuesto}
+
+\begin{ejercicio}{1 (Capitalización simple anual y fraccionado)}
+\begin{enumerate}[label=\alph*)]
+  \item Una empresa invierte $C_0=150{,}000$ al tipo simple anual $i=6\%$ durante $t=3{,}5$ años. Calcule el capital final con interés simple anual.
+  \item Calcule el interés simple fraccionado equivalente al 6\% simple anual para los siguientes periodos: mensual, bimensual, trimestral, cuatrimestral, semestral y bianual.
+  \item Si en la inversión del a) los intereses se pagan por fraccionamientos trimestrales, calcule el interés devengado en el trimestre 1 y en el trimestre 2.
+  \item \textit{Valor actual con capitalización simple:} \; ¿Cuál es el valor presente hoy de un capital futuro de 10{,}000 a $t=10$ años al $5\%$ simple anual? ¿Y si $t=1.5$ años y el interés es del 3\% simple semestral?
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{2 (Capitalización compuesta anual y fraccionada)}
+\begin{enumerate}[label=\alph*)]
+  \item Se deposita $C_0=25{,}000$ con interés compuesto. Calcule el montante $C_t$ a $t=5$ años con capitalización anual a $i=8\%$ efectivo anual.
+  \item Interés fraccionado compuesto equivalente al 8\% efectivo anual para los siguientes periodos: mensual, bimensual, trimestral, cuatrimestral, semestral y bianual.
+  \item Si en el depósito del apartado a), los intereses se pagan por fraccionamientos (compuestos) mensuales, calcule el interés devengado en el mes 1 y en el mes 2.
+  \item \textit{Valor presente con capitalización compuesta:} \; i) ¿Cuál es el valor presente hoy de un capital futuro de 10{,}000 a $t=10$ años al $5\%$ efectivo anual? \; ii) ¿Y si $t=1.5$ años con tasa efectiva anual del $6\%$, usando capitalización mensual equivalente?
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{3 (Mixto: tramo simple y tramo compuesto)}
+Se invierte $C_0=100{,}000$ durante $3$ años bajo el siguiente esquema mixto:
+\begin{itemize}
+  \item Primer año: interés simple al $3\%$ semestral con fraccionamiento semestral.
+  \item Años 2 y 3: capitalización compuesta anual al $8\%$ efectivo anual.
+\end{itemize}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el montante al final de los $3$ años.
+  \item Calcule la tasa anual simple equivalente y la tasa anual compuesta equivalente del período total de $3$ años.
+  \item Compare con dos alternativas:
+  \begin{itemize}
+    \item Alternativa A: capitalización simple al $2\%$ trimestral durante $3$ años.
+    \item Alternativa B: capitalización compuesta al $2\%$ cuatrimestral durante $3$ años.
+  \end{itemize}
+  Para cada alternativa, calcule el montante final y compare con el esquema mixto. ¿Cuál entrega mayor monto?
+\end{enumerate}
+\end{ejercicio}
+
+\section{Rentas finitas y perpetuas}
+
+\begin{ejercicio}{4 (Anualidad ordinaria y creciente)}
+Una anualidad ordinaria paga $A=5{,}000$ anuales durante $n=8$ años. La tasa de descuento es del 9\% anual.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el valor presente $V_0$ de la anualidad ordinaria.
+  \item Si los pagos crecen al $g=3\%$ anual (anualidad creciente), calcule $V_0$.
+  \item Considere una anualidad mixta: durante los primeros $m=3$ años, los pagos son constantes de $A=5{,}000$ anuales; desde el año $m+1$ hasta el año $n=8$, los pagos crecen al $g=3\%$ anual partiendo del nivel $A$. Calcule el valor presente $V_0$ de esta anualidad mixta.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{5 (Perpetuidad constante y creciente)}
+Valore:
+\begin{enumerate}[label=\alph*)]
+  \item Una perpetuidad que paga $A=2{,}500$ anuales con $r=8\%$ anual.
+  \item Una perpetuidad creciente con pago inicial $A=2{,}500$, crecimiento del $g=2\%$ anual y descuento del $r=8\%$ anual.
+  \item Una perpetuidad creciente diferida: suponga que la perpetuidad creciente del apartado b) comienza a pagar dentro de $k=5$ años (el primer pago es en $t=6$). La anualidad sigue creciendo al $g=2\%$ anual durante el periodo de diferimiento. Calcule el valor presente hoy de esta perpetuidad diferida.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{6 (Mixto de rentas con interés fraccionado)}
+Un proyecto paga dos flujos simultáneos durante $10$ años:
+\begin{itemize}
+  \item Una anualidad ordinaria mensual de 600 al final de cada mes (120 pagos mensuales),
+  \item Un pago anual creciente que empieza en 2{,}000 y crece al $g=4\%$ anual (10 pagos anuales).
+\end{itemize}
+La tasa nominal anual efectiva compuesta es $i=9\%$. Calcule el valor presente combinando:
+\begin{enumerate}[label=\alph*)]
+  \item El valor presente de la renta mensual
+  \item El valor presente de la anualidad creciente
+  \item El valor presente total de a) + b)
+  \item ¿Cuál es el valor actual de la anualidad constante de 600 mensuales del apartado a) si en vez de pagarse al final de cada mes (renta pospagable) se paga al principio de cada mes (renta prepagable)?
+\end{enumerate}
+\end{ejercicio}
+
+\section{Evaluación de proyectos}
+
+\begin{ejercicio}{7 (VAN)}
+Una inversión requiere $I_0=120{,}000$ y genera $CF_1=40{,}000$, $CF_2=45{,}000$, $CF_3=50{,}000$, $CF_4=55{,}000$. Con $r=10\%$ anual, calcule el VAN y decida.
+\end{ejercicio}
+
+\begin{ejercicio}{8 (Payback simple y descontado)}
+Para el proyecto del Ejercicio 7, calcule:
+\begin{enumerate}[label=\alph*)]
+  \item El período de recuperación simple (PR),
+  \item El período de recuperación descontado (PRD) con $r=10\%$ anual.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{9 (TIR)}
+Considere un nuevo proyecto de inversión con los siguientes flujos de caja (en miles de euros):
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c}
+\toprule
+$t=0$ & $t=1$ & $t=2$ \\
+\midrule
+$CF_0=-100$ & $CF_1=60$ & $CF_2=60$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+El tipo de descuento requerido para este proyecto es del $10\%$ anual.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la TIR anual $r^*$ que satisface la ecuación $\sum_{t=0}^{2}\dfrac{CF_t}{(1+r^*)^t}=0$. Resuelva la ecuación analíticamente usando la fórmula cuadrática.
+  \item Tome una decisión sobre el proyecto en función de la TIR obtenida.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{10 (Mixto VAN, Payback, TIR)}
+Dos proyectos mutuamente excluyentes (miles de euros) tienen los siguientes flujos de caja:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+& $t=0$ & $t=1$ & $t=2$ \\
+\midrule
+\textbf{Proyecto A} & $-1{,}000$ & $1{,}200$ & --- \\
+\textbf{Proyecto B} & $-1{,}000$ & $200$ & $1{,}100$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Con $r=10\%$ anual:
+\begin{enumerate}[label=\alph*)]
+  \item Calcule VAN de A y B.
+  \item Calcule PR y PRD de ambos.
+  \item Calcule la TIR de cada proyecto analíticamente. 
+  \item ¿Qué proyecto seleccionaría?
+\end{enumerate}
+\end{ejercicio}
+
+\end{document}
+

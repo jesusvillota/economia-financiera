@@ -1,0 +1,961 @@
+\input{../preamble.tex}
+
+% Título del documento
+\title{\textbf{Fundamentos de Valoración de Activos}\\
+\large Parte I: Valor Temporal del Dinero y Proyectos de Inversión}
+\author{Jesus Villota Miranda\\
+CEMFI}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Este documento presenta un tratamiento riguroso y autocontenido de los fundamentos de la valoración de activos financieros, con especial énfasis en el valor temporal del dinero, la valoración de flujos de tesorería múltiples y la valoración de proyectos de inversión. El contenido está estructurado para proporcionar una base matemática sólida que permita al lector comprender y aplicar los conceptos fundamentales de la valoración financiera.
+
+El documento se organiza en cuatro secciones principales: (1) el valor temporal del dinero y el concepto de interés, (2) la valoración de flujos de tesorería múltiples, (3) la valoración de proyectos y decisiones de inversión, y (4) el apéndice matemático que proporciona las herramientas necesarias para comprender completamente las derivaciones presentadas. Cada sección incluye definiciones formales, derivaciones matemáticas rigurosas y ejemplos aplicados.
+
+\section{El Valor Temporal del Dinero y el Concepto de Interés}
+
+\subsection{Concepto de Interés}
+
+\begin{definicion}[Interés]
+Sea $C_0$ el capital inicial en el momento $t=0$ y $C_t$ el capital en el momento $t$. El \textbf{interés} $I_t$ generado en el período $[0,t]$ se define como:
+\begin{equation}
+I_t = C_t - C_0
+\end{equation}
+\end{definicion}
+
+El concepto de interés surge de la premisa fundamental de que el dinero tiene valor temporal: una unidad monetaria disponible hoy es preferible a la misma unidad monetaria disponible en el futuro. Esta preferencia temporal se debe a tres factores principales:
+
+\begin{enumerate}
+\item \textbf{Incertidumbre}: El futuro es incierto, y existe el riesgo de no recibir el dinero prometido.
+\item \textbf{Inflación}: El poder adquisitivo del dinero puede disminuir con el tiempo.
+\item \textbf{Oportunidad de inversión}: El dinero disponible hoy puede ser invertido para generar rendimientos adicionales.
+\end{enumerate}
+
+La tasa de interés $r$ representa el precio del dinero en el tiempo y se expresa típicamente como un porcentaje anual.
+
+\begin{center}
+    \input{../../tikz/concepto_interes.tex}
+\captionof{figure}{Representación del concepto de interés: acumulación del valor temporal del dinero}
+\end{center}
+
+\subsection{Capitalización Simple}
+
+En la capitalización simple, el interés se calcula únicamente sobre el capital inicial $C_0$, sin considerar los intereses generados en períodos anteriores.
+
+\begin{teorema}[Fórmula de Capitalización Simple]
+Para un capital inicial $C_0$ y una tasa de interés simple $r$ por período, el capital final $C_t$ después de $t$ períodos es:
+\begin{equation}
+C_t = C_0(1 + rt)
+\end{equation}
+donde $r$ es la tasa de interés por período y $t$ es el número de períodos.
+\end{teorema}
+
+\begin{center}
+    \input{../../tikz/capitalizacion_simple.tex}
+\end{center}
+
+
+\begin{proof}
+La demostración se realiza por inducción sobre $t$.
+
+\textbf{Caso base} ($t = 1$): En el primer período, el interés generado es $I_1 = C_0 \cdot r$, por lo que el capital final es:
+$$C_1 = C_0 + I_1 = C_0 + C_0 \cdot r = C_0(1 + r)$$
+
+\textbf{Paso inductivo}: Supongamos que la fórmula es válida para $t = k$, es decir, $C_k = C_0(1 + rk)$. En el período $k+1$, el interés generado es nuevamente $I_{k+1} = C_0 \cdot r$ (ya que en capitalización simple el interés se calcula solo sobre el capital inicial). Por tanto:
+$$C_{k+1} = C_k + I_{k+1} = C_0(1 + rk) + C_0 \cdot r = C_0(1 + rk + r) = C_0(1 + r(k+1))$$
+
+Esto completa la demostración por inducción.
+\end{proof}
+
+\subsection{Interés Simple Fraccionado}
+
+\begin{definicion}[Interés Simple Fraccionado]
+El \textbf{interés simple fraccionado} $i^*$ se define como el tipo de interés simple equivalente para períodos fraccionarios (mensuales, semestrales, trimestrales, etc.) que resulta en el mismo interés total que el tipo de interés simple anual de referencia $i$.
+\end{definicion}
+
+En la práctica financiera, es común que los intereses se paguen en períodos más cortos que el año (mensualmente, semestralmente, etc.). El interés simple fraccionado nos permite calcular el tipo de interés equivalente para estos períodos.
+
+\begin{teorema}[Fórmula del Interés Simple Fraccionado]
+Sea $i$ el tipo de interés simple anual y $m$ el número de períodos por año en los que se pagan intereses. El tipo de interés simple fraccionado $i^*$ viene dado por:
+\begin{equation}
+i^* = \frac{i}{m}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Sea $C$ el capital inicial y $n$ el número de años. El interés total generado con el tipo anual $i$ es:
+$$I = n \cdot i \cdot C$$
+
+Si dividimos cada año en $m$ períodos, tendremos $n \cdot m$ períodos en total. Para que el interés total sea el mismo usando el tipo fraccionado $i^*$ por período, debe cumplirse:
+$$I = (n \cdot m) \cdot i^* \cdot C$$
+
+Igualando ambas expresiones:
+$$n \cdot i \cdot C = (n \cdot m) \cdot i^* \cdot C$$
+
+Simplificando:
+$$i = m \cdot i^*$$
+
+Por tanto:
+$$i^* = \frac{i}{m}$$
+\end{proof}
+
+\begin{ejemplo}
+Suponga que una empresa tiene un excedente de tesorería de €2,000,000 y decide invertirlo durante 1 año en una cuenta que paga un tipo de interés simple nominal del 6\% anual, pero los intereses se pagan semestralmente.
+
+\textbf{Solución:}
+\begin{itemize}
+\item Tipo de interés anual: $i = 0.06$
+\item Número de períodos por año: $m = 2$ (semestral)
+\item Tipo de interés simple fraccionado: $i^* = \frac{0.06}{2} = 0.03 = 3\%$ semestral
+\end{itemize}
+
+Interés total al cabo de 1 año:
+$$I = 2 \cdot 0.03 \cdot 2{,}000{,}000 = \text{€}120{,}000$$
+
+O equivalentemente:
+$$I = 1 \cdot 0.06 \cdot 2{,}000{,}000 = \text{€}120{,}000$$
+
+Capital final: $C_1 = 2{,}000{,}000 + 120{,}000 = \text{€}2{,}120{,}000$
+\end{ejemplo}
+
+\subsubsection{Otros enfoques de valoración de acciones}
+
+\begin{definicion}[Valor contable]
+El \textbf{valor contable} corresponde al patrimonio neto de la empresa según el balance (activos menos pasivos). Refleja una medida contable-histórica y no necesariamente el valor económico de la empresa.
+\end{definicion}
+
+\begin{definicion}[Valor de liquidación]
+El \textbf{valor de liquidación} es la tesorería estimada que se obtendría al vender todos los activos de la empresa y liquidar las deudas. Representa un valor de cierre, no un valor en funcionamiento.
+\end{definicion}
+
+\begin{definicion}[Valor de mercado]
+El \textbf{valor de mercado} es el precio observado en el mercado secundario. Resume las expectativas de los inversores sobre la capacidad futura de generación de beneficios y crecimiento. No sustituye a la valoración por descuento de flujos, que es el enfoque fundamental.
+\end{definicion}
+
+\begin{proposicion}[Equivalencia del Interés Simple Fraccionado]
+Para un período completo (un año), es indiferente pagar el tipo de interés simple anual o el tipo de interés simple fraccionado correspondiente, ya que el montante final es idéntico.
+\end{proposicion}
+
+\subsection{Capitalización Compuesta}
+
+En la capitalización compuesta, el interés se calcula sobre el capital inicial más todos los intereses acumulados en períodos anteriores.
+
+\begin{teorema}[Fórmula de Capitalización Compuesta]
+Para un capital inicial $C_0$ y una tasa de interés compuesta $r$ por período, el capital final $C_t$ después de $t$ períodos es:
+\begin{equation}
+C_t = C_0(1 + r)^t
+\end{equation}
+donde $r$ es la tasa de interés por período y $t$ es el número de períodos.
+\end{teorema}
+
+\begin{center}
+    \input{../../tikz/capitalizacion_compuesta.tex}
+\end{center}
+
+
+\begin{proof}
+La demostración se realiza por inducción sobre $t$.
+
+\textbf{Caso base} ($t = 1$): En el primer período, el interés generado es $I_1 = C_0 \cdot r$, por lo que el capital final es:
+$$C_1 = C_0 + I_1 = C_0 + C_0 \cdot r = C_0(1 + r)$$
+
+\textbf{Paso inductivo}: Supongamos que la fórmula es válida para $t = k$, es decir, $C_k = C_0(1 + r)^k$. En el período $k+1$, el interés se calcula sobre el capital acumulado $C_k$, por lo que:
+$$I_{k+1} = C_k \cdot r = C_0(1 + r)^k \cdot r$$
+
+El capital final en el período $k+1$ es:
+$$C_{k+1} = C_k + I_{k+1} = C_0(1 + r)^k + C_0(1 + r)^k \cdot r = C_0(1 + r)^k(1 + r) = C_0(1 + r)^{k+1}$$
+
+Esto completa la demostración por inducción.
+\end{proof}
+
+\begin{proposicion}[Comparación entre Capitalización Simple y Compuesta]
+Para $t > 1$ y $r > 0$, se cumple que:
+\begin{equation}
+C_0(1 + r)^t > C_0(1 + rt)
+\end{equation}
+Es decir, la capitalización compuesta genera mayor rendimiento que la capitalización simple para períodos superiores a un año.
+\end{proposicion}
+
+\begin{proof}
+Para demostrar que $(1 + r)^t > (1 + rt)$ para $t > 1$ y $r > 0$, utilizamos la desigualdad de Bernoulli.
+
+Por la desigualdad de Bernoulli, sabemos que $(1 + x)^n \geq 1 + nx$ para $x \geq -1$ y $n \geq 1$, con igualdad si y solo si $x = 0$ o $n = 1$.
+
+Aplicando esta desigualdad con $x = r > 0$ y $n = t > 1$:
+$$(1 + r)^t > 1 + rt$$
+
+Multiplicando ambos lados por $C_0 > 0$:
+$$C_0(1 + r)^t > C_0(1 + rt)$$
+\end{proof}
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{../../figures/simple_vs_compuesta.png}
+\captionof{figure}{Comparación: Capitalización Simple vs Compuesta}
+\end{center}
+
+\subsection{Interés Compuesto Fraccionado}
+
+\begin{definicion}[Interés Compuesto Fraccionado o Tasas Equivalentes]
+El \textbf{interés compuesto fraccionado} $i_m$ es el tipo de interés compuesto equivalente para períodos fraccionarios que produce el mismo montante final que el tipo de interés compuesto anual $i$ cuando se capitaliza $m$ veces al año.
+\end{definicion}
+
+A diferencia del interés simple fraccionado (donde simplemente dividimos el tipo anual por el número de períodos), en capitalización compuesta debemos calcular un tipo equivalente que tenga en cuenta el efecto de la composición dentro del año.
+
+\begin{teorema}[Fórmula de Tasas Equivalentes]
+Sea $i$ el tipo de interés compuesto anual y $m$ el número de períodos de capitalización por año. El tipo de interés compuesto fraccionado $i_m$ viene dado por:
+\begin{equation}
+i_m = (1 + i)^{1/m} - 1
+\end{equation}
+Equivalentemente, la relación entre ambos tipos es:
+\begin{equation}
+1 + i = (1 + i_m)^m
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Para que el tipo $i_m$ sea equivalente al tipo anual $i$, el montante final obtenido al capitalizar $m$ veces durante un año debe ser igual al obtenido capitalizando una vez al año.
+
+Sea $C$ el capital inicial. Capitalizando con el tipo anual $i$:
+$$C_1 = C(1 + i)$$
+
+Capitalizando con el tipo fraccionado $i_m$ durante $m$ períodos:
+$$C_1 = C(1 + i_m)^m$$
+
+Para que sean equivalentes:
+$$C(1 + i) = C(1 + i_m)^m$$
+
+Simplificando:
+$$1 + i = (1 + i_m)^m$$
+
+Despejando $i_m$:
+$$(1 + i_m)^m = 1 + i$$
+$$1 + i_m = (1 + i)^{1/m}$$
+$$i_m = (1 + i)^{1/m} - 1$$
+\end{proof}
+
+\begin{ejemplo}
+Determine el tipo de interés equivalente mensual de un tipo de interés en capitalización compuesta anual del 8\%.
+
+\textbf{Solución:}
+\begin{itemize}
+\item Tipo de interés anual: $i = 0.08$
+\item Número de períodos por año: $m = 12$ (mensual)
+\end{itemize}
+
+Aplicando la fórmula:
+$$i_{12} = (1 + 0.08)^{1/12} - 1 = (1.08)^{1/12} - 1$$
+$$i_{12} = 1.006434 - 1 = 0.006434 = 0.6434\%\text{ mensual}$$
+
+\textbf{Verificación:}
+Si capitalizamos durante 12 meses al 0.6434\% mensual:
+$$(1.006434)^{12} = 1.08$$
+
+Por tanto, el 0.6434\% mensual es equivalente al 8\% anual.
+
+\textbf{Nota:} Observe que $i_{12} = 0.006434 \neq \frac{0.08}{12} = 0.006667$, lo que demuestra que en capitalización compuesta no se puede simplemente dividir el tipo anual entre el número de períodos.
+\end{ejemplo}
+
+\begin{proposicion}[Comparación entre Interés Simple y Compuesto Fraccionado]
+Para el interés simple fraccionado: $i^* = \frac{i}{m}$
+
+Para el interés compuesto fraccionado: $i_m = (1 + i)^{1/m} - 1$
+
+Se cumple que:
+\begin{equation}
+i_m < \frac{i}{m} = i^*
+\end{equation}
+para $i > 0$ y $m > 1$.
+\end{proposicion}
+
+\begin{proof}
+Por la desigualdad de Bernoulli, para $x > 0$ y $n > 1$:
+$$(1 + x)^n > 1 + nx$$
+
+Tomando $x = i_m$ y $n = m$:
+$$(1 + i_m)^m > 1 + m \cdot i_m$$
+
+Pero sabemos que $(1 + i_m)^m = 1 + i$, por tanto:
+$$1 + i > 1 + m \cdot i_m$$
+$$i > m \cdot i_m$$
+$$i_m < \frac{i}{m}$$
+\end{proof}
+
+\subsection{Valor Actual y Valor Futuro}
+
+\begin{definicion}[Valor Futuro]
+Para un capital inicial $C_0$ después de $t$ períodos a una tasa de interés $r$ por período, el \textbf{capital final} $C_t$ es:
+\begin{equation}
+C_t = C_0(1 + r)^t
+\end{equation}
+\end{definicion}
+
+\begin{definicion}[Valor Presente]
+Para un capital futuro $C_t$ que se recibirá en $t$ períodos a una tasa de descuento $r$ por período, el \textbf{capital presente} $C_0$ es:
+\begin{equation}
+C_0 = \frac{C_t}{(1 + r)^t} = C_t(1 + r)^{-t}
+\end{equation}
+\end{definicion}
+
+El factor $(1 + r)^{-t}$ se denomina \textbf{factor de descuento} y representa el valor presente de una unidad monetaria recibida en $t$ períodos. El factor $(1 + r)^t$ se denomina \textbf{factor de capitalización} y representa la cantidad final que se obtiene al invertir una unidad monetaria durante $t$ períodos a una tasa de interés $r$ por período.
+
+\begin{proposicion}[Relación entre Valor Presente y Valor Futuro]
+Los conceptos de valor presente y valor futuro son inversos:
+\begin{align}
+C_t &= C_0(1 + r)^t \\
+C_0 &= C_t(1 + r)^{-t}
+\end{align}
+\end{proposicion}
+
+\begin{center}
+    \input{../../tikz/valor_presente_futuro.tex}
+\captionof{figure}{Valor Presente y Valor Futuro: relación bidireccional}
+\end{center}
+
+\begin{ejemplo}
+Supongamos que el factor de capitalización a 5 años para una tasa de interés compuesto del 5\% anual es:
+$$(1.05)^5 = 1.2763$$
+
+\textbf{Interpretación:}
+\begin{itemize}
+\item Si invertimos €1 hoy al 5\% anual, en 5 años tendremos €1.2763
+\item Si invertimos €100 hoy al 5\% anual, en 5 años tendremos: $100 \times 1.2763 = \text{€}127.63$
+\item El factor de descuento correspondiente es: $(1.05)^{-5} = \frac{1}{1.2763} = 0.7835$
+\item Esto significa que €1 recibido en 5 años vale hoy €0.7835
+\end{itemize}
+\end{ejemplo}
+
+\begin{ejemplo}
+Considere un capital de €1,000 que se invierte durante 3 años a una tasa de interés del 8% anual.
+
+\textbf{Capitalización simple:}
+$$C_3 = 1{,}000(1 + 0.08 \times 3) = 1{,}000(1.24) = \text{€}1{,}240$$
+
+\textbf{Capitalización compuesta:}
+$$C_3 = 1{,}000(1 + 0.08)^3 = 1{,}000(1.2597) = \text{€}1{,}259.70$$
+
+La diferencia de \text{€}19.70 representa el efecto del interés compuesto.
+\end{ejemplo}
+
+\section{Valor Actual de Flujos de Tesorería Múltiples}
+
+\subsection{Valor Actual de una Anualidad}
+
+\begin{definicion}[Anualidad]
+Una \textbf{anualidad} es una serie de pagos iguales $A$ realizados a intervalos regulares durante un número finito de períodos $n$.
+\end{definicion}
+
+\begin{teorema}[Valor Presente de una Anualidad Ordinaria]
+El valor presente $V_0$ de una anualidad ordinaria con pagos $A$ durante $n$ períodos a una tasa de descuento $r$ por período es:
+\begin{equation}
+V_0 = A \cdot \frac{1 - (1 + r)^{-n}}{r}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+El valor presente de una anualidad ordinaria es la suma de los valores presentes de cada pago individual:
+
+$$V_0 = \sum_{t=1}^{n} \frac{A}{(1 + r)^t} = A \sum_{t=1}^{n} \frac{1}{(1 + r)^t}$$
+
+Sea $x = \frac{1}{1 + r}$. Entonces:
+$$V_0 = A \sum_{t=1}^{n} x^t = A \cdot x \sum_{t=0}^{n-1} x^t$$
+
+Utilizando la fórmula de la serie geométrica finita (ver Apéndice A.1):
+$$\sum_{t=0}^{n-1} x^t = \frac{1 - x^n}{1 - x}$$
+
+Por tanto:
+$$V_0 = A \cdot x \cdot \frac{1 - x^n}{1 - x} = A \cdot \frac{1}{1 + r} \cdot \frac{1 - (1 + r)^{-n}}{1 - \frac{1}{1 + r}}$$
+
+Simplificando:
+$$V_0 = A \cdot \frac{1}{1 + r} \cdot \frac{1 - (1 + r)^{-n}}{\frac{r}{1 + r}} = A \cdot \frac{1 - (1 + r)^{-n}}{r}$$
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/anualidad_ordinaria.tex}
+\captionof{figure}{Anualidad Ordinaria: flujos de pago y descuento}
+\end{center}
+
+\begin{definicion}[Anualidad Anticipada]
+Una \textbf{anualidad anticipada} es una anualidad donde los pagos se realizan al inicio de cada período.
+\end{definicion}
+
+\begin{teorema}[Valor Presente de una Anualidad Anticipada]
+El valor presente $V_0$ de una anualidad anticipada con pagos $A$ durante $n$ períodos a una tasa de descuento $r$ por período es:
+\begin{equation}
+V_0 = A \cdot \frac{1 - (1 + r)^{-n}}{r} \cdot (1 + r)
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Una anualidad anticipada puede considerarse como una anualidad ordinaria multiplicada por $(1 + r)$, ya que cada pago se recibe un período antes:
+
+$$V_{0,\text{anticipada}} = V_{0,\text{ordinaria}} \cdot (1 + r) = A \cdot \frac{1 - (1 + r)^{-n}}{r} \cdot (1 + r)$$
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/anualidad_anticipada.tex}
+\captionof{figure}{Anualidad Anticipada: pagos al inicio de cada período}
+\end{center}
+
+\begin{definicion}[Anualidad Creciente]
+Una \textbf{anualidad creciente} es una serie de pagos que crecen a una tasa constante $g$ por período durante un número finito de períodos $n$.
+\end{definicion}
+
+\begin{teorema}[Valor Presente de una Anualidad Creciente]
+El valor presente $V_0$ de una anualidad creciente con pago inicial $A$ y tasa de crecimiento $g$ durante $n$ períodos a una tasa de descuento $r$ por período (donde $r \neq g$) es:
+\begin{equation}
+V_0 = A \cdot \frac{1 - \left(\frac{1 + g}{1 + r}\right)^n}{r - g}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+El valor presente de una anualidad creciente es la suma de los valores presentes de cada pago individual:
+
+$$V_0 = \sum_{t=1}^{n} \frac{A(1 + g)^{t-1}}{(1 + r)^t} = \frac{A}{1 + r} \sum_{t=1}^{n} \left(\frac{1 + g}{1 + r}\right)^{t-1}$$
+
+Sea $x = \frac{1 + g}{1 + r}$. Entonces:
+$$V_0 = \frac{A}{1 + r} \sum_{t=1}^{n} x^{t-1} = \frac{A}{1 + r} \sum_{t=0}^{n-1} x^t$$
+
+Utilizando la fórmula de la serie geométrica finita (ver Apéndice A.1):
+$$\sum_{t=0}^{n-1} x^t = \frac{1 - x^n}{1 - x}$$
+
+Por tanto:
+$$V_0 = \frac{A}{1 + r} \cdot \frac{1 - x^n}{1 - x} = \frac{A}{1 + r} \cdot \frac{1 - \left(\frac{1 + g}{1 + r}\right)^n}{1 - \frac{1 + g}{1 + r}}$$
+
+Simplificando el denominador:
+$$1 - \frac{1 + g}{1 + r} = \frac{(1 + r) - (1 + g)}{1 + r} = \frac{r - g}{1 + r}$$
+
+Por tanto:
+$$V_0 = \frac{A}{1 + r} \cdot \frac{1 - \left(\frac{1 + g}{1 + r}\right)^n}{\frac{r - g}{1 + r}} = A \cdot \frac{1 - \left(\frac{1 + g}{1 + r}\right)^n}{r - g}$$
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/anualidad_creciente.tex}
+\captionof{figure}{Anualidad Creciente: flujos con crecimiento constante en períodos finitos}
+\end{center}
+
+\begin{ejemplo}[Valoración de una Anualidad Creciente]
+Considere una anualidad creciente que paga €1,000 inicialmente y crece al 5\% anual durante 10 años, con una tasa de descuento del 10\% anual.
+
+\textbf{Datos:}
+\begin{itemize}
+\item $A = 1{,}000$ (pago inicial)
+\item $g = 0.05$ (tasa de crecimiento)
+\item $n = 10$ (número de períodos)
+\item $r = 0.10$ (tasa de descuento)
+\end{itemize}
+
+\textbf{Cálculo:}
+$$V_0 = 1{,}000 \cdot \frac{1 - \left(\frac{1.05}{1.10}\right)^{10}}{0.10 - 0.05}$$
+
+Primero calculamos $\frac{1.05}{1.10} = 0.9545$:
+$$0.9545^{10} = 0.6145$$
+
+Por tanto:
+$$V_0 = 1{,}000 \cdot \frac{1 - 0.6145}{0.05} = 1{,}000 \cdot \frac{0.3855}{0.05} = 1{,}000 \cdot 7.71 = \text{€}7{,}710$$
+
+\textbf{Interpretación:} El valor presente de los 10 pagos crecientes es €7,710. Como el pago inicial es €1,000 y el último pago (en el año 10) es $1{,}000(1.05)^9 = \text{€}1{,}551$, los pagos aumentan sustancialmente con el tiempo, pero el descuento también aumenta con el horizonte temporal.
+\end{ejemplo}
+
+\subsection{Valor Actual de una Perpetuidad}
+
+\begin{definicion}[Perpetuidad]
+Una \textbf{perpetuidad} es una serie infinita de pagos iguales $A$ realizados a intervalos regulares.
+\end{definicion}
+
+\begin{teorema}[Valor Presente de una Perpetuidad]
+El valor presente $V_0$ de una perpetuidad con pagos $A$ a una tasa de descuento $r$ por período es:
+\begin{equation}
+V_0 = \frac{A}{r}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Una perpetuidad puede considerarse como el límite de una anualidad cuando $n \to \infty$:
+
+$$V_0 = \lim_{n \to \infty} A \cdot \frac{1 - (1 + r)^{-n}}{r}$$
+
+Como $r > 0$, tenemos que $(1 + r)^{-n} \to 0$ cuando $n \to \infty$. Por tanto:
+
+$$V_0 = A \cdot \frac{1 - 0}{r} = \frac{A}{r}$$
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/perpetuidad.tex}
+\captionof{figure}{Perpetuidad: flujos infinitos de pago}
+\end{center}
+
+\begin{definicion}[Perpetuidad Creciente]
+Una \textbf{perpetuidad creciente} es una serie infinita de pagos que crecen a una tasa constante $g$ por período.
+\end{definicion}
+
+\begin{teorema}[Valor Presente de una Perpetuidad Creciente]
+El valor presente $V_0$ de una perpetuidad creciente con pago inicial $A$ y tasa de crecimiento $g$ a una tasa de descuento $r$ por período (donde $r > g$) es:
+\begin{equation}
+V_0 = \frac{A}{r - g}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+El valor presente de una perpetuidad creciente es:
+
+$$V_0 = \sum_{t=1}^{\infty} \frac{A(1 + g)^{t-1}}{(1 + r)^t} = \frac{A}{1 + r} \sum_{t=1}^{\infty} \left(\frac{1 + g}{1 + r}\right)^{t-1}$$
+
+Sea $x = \frac{1 + g}{1 + r}$. Como $r > g$, tenemos $0 < x < 1$. Utilizando la fórmula de la serie geométrica infinita (ver Apéndice A.1):
+
+$$\sum_{t=1}^{\infty} x^{t-1} = \sum_{t=0}^{\infty} x^t = \frac{1}{1 - x}$$
+
+Por tanto:
+$$V_0 = \frac{A}{1 + r} \cdot \frac{1}{1 - \frac{1 + g}{1 + r}} = \frac{A}{1 + r} \cdot \frac{1 + r}{(1 + r) - (1 + g)} = \frac{A}{r - g}$$
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/perpetuidad_creciente.tex}
+\captionof{figure}{Perpetuidad Creciente: flujos con crecimiento constante}
+\end{center}
+
+\section{Valoración de Proyectos y Decisiones de Inversión}
+
+\subsection{Introducción}
+
+En la sección anterior se establecieron los fundamentos matemáticos de la valoración de flujos de tesorería. En esta sección se aplican estos conceptos al análisis y valoración de proyectos de inversión reales. A diferencia de los activos financieros, que se negocian en mercados líquidos, los proyectos de inversión requieren un análisis detallado de sus flujos de caja futuros y de la tasa de descuento apropiada que refleje el riesgo del proyecto.
+
+El objetivo principal de esta sección es proporcionar las herramientas analíticas necesarias para evaluar la viabilidad económica de un proyecto de inversión y tomar decisiones óptimas de asignación de capital.
+
+\subsection{Fundamentos de Valoración de Proyectos}
+
+\begin{definicion}[Activo Real]
+Un \textbf{activo real} o \textbf{activo productivo} es un activo tangible o intangible que genera flujos de tesorería futuros y que, a diferencia de los activos financieros, no se negocia en mercados financieros organizados. Ejemplos incluyen maquinaria, plantas de producción, patentes, y proyectos de expansión empresarial.
+\end{definicion}
+
+\begin{definicion}[Proyecto de Inversión]
+Un \textbf{proyecto de inversión} es una propuesta de asignación de recursos que requiere un desembolso inicial $I_0$ y genera una secuencia de flujos de caja futuros $\{CF_t\}_{t=1}^{n}$ durante un horizonte temporal de $n$ períodos.
+\end{definicion}
+
+\begin{definicion}[Flujos de Caja Incrementales]
+Los \textbf{flujos de caja incrementales} de un proyecto son los flujos de caja adicionales que la empresa genera como consecuencia directa de la implementación del proyecto, es decir:
+\begin{equation}
+CF_t^{\text{incremental}} = CF_t^{\text{con proyecto}} - CF_t^{\text{sin proyecto}}
+\end{equation}
+para $t = 1, 2, \ldots, n$.
+\end{definicion}
+
+\begin{center}
+    \input{../../tikz/proyecto_flujos_caja.tex}
+\captionof{figure}{Representación temporal de los flujos de caja de un proyecto de inversión}
+\end{center}
+
+\begin{teorema}[Creación de Valor mediante Inversión]
+Una empresa crea valor cuando invierte en proyectos cuyos flujos de caja descontados superan el coste de la inversión inicial. Formalmente, un proyecto crea valor si y solo si:
+\begin{equation}
+\sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} > I_0
+\end{equation}
+donde $r$ es la tasa de descuento apropiada que refleja el coste de oportunidad del capital.
+\end{teorema}
+
+\begin{definicion}[Coste de Oportunidad del Capital]
+El \textbf{coste de oportunidad del capital} $r$ de un proyecto de inversión es la rentabilidad esperada de la mejor alternativa de inversión disponible con un nivel de riesgo similar al del proyecto en consideración.
+\end{definicion}
+
+La determinación del coste de oportunidad apropiado depende fundamentalmente del riesgo del proyecto:
+
+\begin{enumerate}
+\item \textbf{Proyectos sin riesgo}: Para proyectos prácticamente libres de riesgo, el coste de oportunidad es el tipo de interés libre de riesgo $r_f$ (por ejemplo, la rentabilidad de bonos gubernamentales a largo plazo).
+
+\item \textbf{Proyectos con riesgo}: Para proyectos con riesgo, el coste de oportunidad debe incorporar una prima de riesgo:
+\begin{equation}
+r = r_f + \text{Prima de riesgo}
+\end{equation}
+donde la prima de riesgo refleja la incertidumbre asociada a los flujos de caja futuros del proyecto.
+\end{enumerate}
+
+\subsection{Valor Actual Neto (VAN)}
+
+\begin{definicion}[Valor Actual Neto]
+El \textbf{Valor Actual Neto} (VAN) de un proyecto de inversión se define como la diferencia entre el valor presente de los flujos de caja futuros y la inversión inicial:
+\begin{equation}
+\text{VAN} = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t}
+\end{equation}
+donde:
+\begin{itemize}
+\item $I_0$ es la inversión inicial (desembolso en $t=0$)
+\item $CF_t$ es el flujo de caja neto en el período $t$
+\item $r$ es la tasa de descuento (coste de oportunidad del capital)
+\item $n$ es el número de períodos del proyecto
+\end{itemize}
+\end{definicion}
+
+Alternativamente, si incluimos el flujo de caja inicial como $CF_0 = -I_0$, podemos escribir:
+\begin{equation}
+\text{VAN} = \sum_{t=0}^{n} \frac{CF_t}{(1+r)^t}
+\end{equation}
+
+\begin{center}
+    \input{../../tikz/van_calculo.tex}
+\captionof{figure}{Proceso de cálculo del Valor Actual Neto}
+\end{center}
+
+\begin{teorema}[Regla de Decisión del VAN]
+Sea un proyecto de inversión con VAN calculado a la tasa de descuento apropiada $r$. Entonces:
+\begin{itemize}
+\item Si $\text{VAN} > 0$: El proyecto debe aceptarse, pues crea valor para los accionistas.
+\item Si $\text{VAN} = 0$: El proyecto es indiferente desde el punto de vista económico.
+\item Si $\text{VAN} < 0$: El proyecto debe rechazarse, pues destruye valor.
+\end{itemize}
+\end{teorema}
+
+\begin{proof}
+Si VAN $> 0$, entonces:
+$$\sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} > I_0$$
+
+Esto significa que el valor presente de los flujos futuros excede el coste de la inversión. Por tanto, invertir en este proyecto genera más valor que invertir la misma cantidad $I_0$ en la alternativa con rentabilidad $r$, creando así un valor neto positivo para los accionistas.
+
+Recíprocamente, si VAN $< 0$, los accionistas obtendrían mayor valor invirtiendo directamente en la alternativa que rinde $r$ en lugar de en el proyecto, por lo que el proyecto destruye valor.
+\end{proof}
+
+\begin{center}
+    \input{../../tikz/van_positivo_negativo.tex}
+\captionof{figure}{Comparación: Proyecto con VAN positivo vs VAN negativo}
+\end{center}
+
+\begin{proposicion}[Propiedades del VAN]
+El Valor Actual Neto satisface las siguientes propiedades:
+
+\begin{enumerate}
+\item \textbf{Valor temporal del dinero}: El VAN reconoce explícitamente que el dinero tiene valor temporal mediante el descuento de los flujos futuros.
+
+\item \textbf{Aditividad}: Si dos proyectos $A$ y $B$ son independientes, entonces:
+\begin{equation}
+\text{VAN}(A + B) = \text{VAN}(A) + \text{VAN}(B)
+\end{equation}
+
+\item \textbf{Monotonía en la tasa de descuento}: El VAN es una función decreciente de la tasa de descuento $r$:
+\begin{equation}
+\frac{\partial \text{VAN}}{\partial r} < 0
+\end{equation}
+para proyectos con flujos de caja positivos después de la inversión inicial.
+
+\item \textbf{Homogeneidad}: Para cualquier escalar $\lambda > 0$:
+\begin{equation}
+\text{VAN}(\lambda \cdot \text{Proyecto}) = \lambda \cdot \text{VAN}(\text{Proyecto})
+\end{equation}
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}[Demostración de la propiedad de aditividad]
+Sean dos proyectos independientes $A$ y $B$ con flujos de caja $CF_t^A$ y $CF_t^B$ respectivamente. El proyecto combinado tiene flujos $CF_t^{A+B} = CF_t^A + CF_t^B$. Entonces:
+
+\begin{align*}
+\text{VAN}(A + B) &= \sum_{t=0}^{n} \frac{CF_t^{A+B}}{(1+r)^t} \\
+&= \sum_{t=0}^{n} \frac{CF_t^A + CF_t^B}{(1+r)^t} \\
+&= \sum_{t=0}^{n} \frac{CF_t^A}{(1+r)^t} + \sum_{t=0}^{n} \frac{CF_t^B}{(1+r)^t} \\
+&= \text{VAN}(A) + \text{VAN}(B)
+\end{align*}
+\end{proof}
+
+\begin{ejemplo}[Decisión de Reducción de Plantilla]
+Una empresa manufacturera está considerando reducir temporalmente su plantilla en 25 empleados durante un período de baja demanda. Los datos del problema son:
+
+\textbf{Datos:}
+\begin{itemize}
+\item Ahorro anual en costes salariales: €700,000 durante 3 años
+\item Coste de despido (año 0): €100,000 por empleado $\times$ 25 = €2,500,000
+\item Coste de recontratación y formación (año 4): €100,000 por empleado $\times$ 25 = €2,500,000
+\item Tasa de descuento: $r = 10\%$ anual
+\end{itemize}
+
+\textbf{Análisis:}
+
+Los flujos de caja del proyecto son:
+\begin{align*}
+CF_0 &= -2{,}500{,}000 \text{ (costes de despido)} \\
+CF_1 &= 700{,}000 \text{ (ahorro año 1)} \\
+CF_2 &= 700{,}000 \text{ (ahorro año 2)} \\
+CF_3 &= 700{,}000 \text{ (ahorro año 3)} \\
+CF_4 &= -2{,}500{,}000 \text{ (costes de recontratación)}
+\end{align*}
+
+Calculamos el VAN:
+\begin{align*}
+\text{VAN} &= -2{,}500{,}000 + \frac{700{,}000}{1.10} + \frac{700{,}000}{(1.10)^2} + \frac{700{,}000}{(1.10)^3} + \frac{-2{,}500{,}000}{(1.10)^4} \\
+&= -2{,}500{,}000 + 636{,}364 + 578{,}512 + 525{,}920 - 1{,}707{,}947 \\
+&= -2{,}467{,}151 \text{ euros}
+\end{align*}
+
+\textbf{Conclusión:} Como $\text{VAN} = -\text{€}2{,}467{,}151 < 0$, el proyecto destruye valor y la empresa \textbf{no debe} proceder con la reducción temporal de plantilla. Es más rentable mantener a los empleados incluso durante el período de baja demanda.
+\end{ejemplo}
+
+\subsection{Criterios Alternativos de Inversión}
+
+Aunque el VAN es el criterio teóricamente superior para la evaluación de proyectos, en la práctica empresarial se utilizan otros criterios, ya sea como complemento o como alternativa. Los dos más importantes son la Tasa Interna de Retorno (TIR) y el Período de Recuperación.
+
+\subsubsection{Tasa Interna de Retorno (TIR)}
+
+\begin{definicion}[Tasa Interna de Retorno]
+La \textbf{Tasa Interna de Retorno} (TIR) de un proyecto de inversión es la tasa de descuento $r^*$ que hace que el VAN del proyecto sea igual a cero:
+\begin{equation}
+\text{TIR} = r^* \text{ tal que } \sum_{t=0}^{n} \frac{CF_t}{(1+r^*)^t} = 0
+\end{equation}
+\end{definicion}
+
+Equivalentemente, la TIR es la solución de la ecuación:
+\begin{equation}
+I_0 = \sum_{t=1}^{n} \frac{CF_t}{(1+r^*)^t}
+\end{equation}
+
+\begin{center}
+    \input{../../tikz/tir_grafica.tex}
+\captionof{figure}{Representación gráfica de la TIR como intersección del VAN con el eje horizontal. Las regiones $\mathcal{A}$ (verde) y $\mathcal{R}$ (rojo) representan las zonas de aceptación y rechazo del proyecto, respectivamente.}
+\end{center}
+
+\begin{teorema}[Regla de Decisión de la TIR]
+Para un proyecto de inversión convencional con TIR $r^*$ (donde el VAN es una función estrictamente decreciente de la tasa de descuento), definimos:
+\begin{itemize}
+\item La \textbf{región de aceptación} $\mathcal{A}$ como el conjunto de tasas de descuento menores que la TIR:
+$$\mathcal{A} = \{r : r < r^*\} = \{r : \text{VAN}(r) > 0\}$$
+\item La \textbf{región de rechazo} $\mathcal{R}$ como el conjunto de tasas de descuento mayores que la TIR:
+$$\mathcal{R} = \{r : r > r^*\} = \{r : \text{VAN}(r) < 0\}$$
+\end{itemize}
+
+La regla de decisión basada en la TIR establece que, para un coste de oportunidad del capital $r$:
+\begin{itemize}
+\item Si $r \in \mathcal{A}$ (es decir, si $\text{TIR} > r$): Aceptar el proyecto
+\item Si $\text{TIR} = r$: Indiferente
+\item Si $r \in \mathcal{R}$ (es decir, si $\text{TIR} < r$): Rechazar el proyecto
+\end{itemize}
+\end{teorema}
+
+\begin{proof}
+Por definición, la TIR satisface:
+$$\sum_{t=0}^{n} \frac{CF_t}{(1+\text{TIR})^t} = 0$$
+
+Dado que el VAN es una función decreciente de la tasa de descuento, si TIR $> r$, entonces:
+$$\text{VAN}(r) = \sum_{t=0}^{n} \frac{CF_t}{(1+r)^t} > \sum_{t=0}^{n} \frac{CF_t}{(1+\text{TIR})^t} = 0$$
+
+Por tanto, si TIR $> r$, entonces VAN$(r) > 0$, y el proyecto debe aceptarse según el criterio del VAN. El razonamiento es análogo para TIR $< r$.
+\end{proof}
+
+\begin{proposicion}[Limitaciones de la TIR]
+La TIR presenta las siguientes limitaciones como criterio de inversión:
+
+\begin{enumerate}
+\item \textbf{Múltiples TIR}: Para proyectos no convencionales (con múltiples cambios de signo en los flujos de caja), puede existir más de una TIR que satisfaga la ecuación del VAN.
+
+\item \textbf{Ausencia de TIR}: Para algunos proyectos, puede no existir ninguna TIR real.
+
+\item \textbf{Proyectos mutuamente excluyentes}: La TIR puede dar rankings incorrectos cuando se comparan proyectos de diferente escala o con patrones de flujos de caja diferentes.
+
+\item \textbf{Supuesto de reinversión}: La TIR asume implícitamente que los flujos intermedios se reinvierten a la propia TIR, mientras que el VAN asume reinversión al coste de oportunidad $r$, siendo esta última más realista.
+\end{enumerate}
+\end{proposicion}
+
+\begin{center}
+    \input{../../tikz/comparacion_van_tir.tex}
+\captionof{figure}{Comparación de los criterios VAN y TIR para proyectos mutuamente excluyentes}
+\end{center}
+
+\subsubsection{Período de Recuperación (Payback)}
+
+\begin{definicion}[Período de Recuperación Simple]
+El \textbf{período de recuperación} o \textbf{payback} de un proyecto es el número de períodos necesarios para que los flujos de caja acumulados igualen la inversión inicial:
+\begin{equation}
+\text{PR} = \min\left\{t : \sum_{s=1}^{t} CF_s \geq I_0\right\}
+\end{equation}
+\end{definicion}
+
+\begin{definicion}[Período de Recuperación Descontado]
+El \textbf{período de recuperación descontado} es el número de períodos necesarios para que los flujos de caja descontados acumulados igualen la inversión inicial:
+\begin{equation}
+\text{PRD} = \min\left\{t : \sum_{s=1}^{t} \frac{CF_s}{(1+r)^s} \geq I_0\right\}
+\end{equation}
+\end{definicion}
+
+\begin{center}
+    \input{../../tikz/payback_timeline.tex}
+\captionof{figure}{Determinación del período de recuperación mediante flujos acumulados}
+\end{center}
+
+\begin{proposicion}[Limitaciones del Período de Recuperación]
+El período de recuperación presenta las siguientes limitaciones:
+
+\begin{enumerate}
+\item \textbf{Ignora flujos posteriores}: No considera los flujos de caja que ocurren después del período de recuperación.
+
+\item \textbf{Valor temporal del dinero}: La versión simple no descuenta los flujos de caja futuros.
+
+\item \textbf{Umbral arbitrario}: La determinación del período de recuperación máximo aceptable es arbitraria y no está basada en principios económicos.
+
+\item \textbf{Sesgo contra proyectos a largo plazo}: Tiende a rechazar proyectos rentables con horizontes largos.
+\end{enumerate}
+\end{proposicion}
+
+\begin{ejemplo}[Comparación de Criterios de Inversión]
+Considere dos proyectos mutuamente excluyentes $A$ y $B$ con los siguientes flujos de caja (en miles de euros):
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+Año & Proyecto A & Proyecto B \\
+\midrule
+0 & $-1{,}000$ & $-1{,}000$ \\
+1 & $500$ & $100$ \\
+2 & $500$ & $300$ \\
+3 & $500$ & $600$ \\
+4 & $100$ & $800$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Con una tasa de descuento del $10\%$:
+
+\textbf{Proyecto A:}
+\begin{align*}
+\text{VAN}_A &= -1{,}000 + \frac{500}{1.10} + \frac{500}{1.21} + \frac{500}{1.331} + \frac{100}{1.464} \\
+&= -1{,}000 + 454.5 + 413.2 + 375.7 + 68.3 = 311.7 \text{ miles €}
+\end{align*}
+
+\textbf{Proyecto B:}
+\begin{align*}
+\text{VAN}_B &= -1{,}000 + \frac{100}{1.10} + \frac{300}{1.21} + \frac{600}{1.331} + \frac{800}{1.464} \\
+&= -1{,}000 + 90.9 + 247.9 + 450.8 + 546.4 = 336.0 \text{ miles €}
+\end{align*}
+
+Para las TIR (calculadas numéricamente):
+\begin{itemize}
+\item $\text{TIR}_A \approx 24.3\%$
+\item $\text{TIR}_B \approx 21.7\%$
+\end{itemize}
+
+Para los períodos de recuperación simple:
+\begin{itemize}
+\item $\text{PR}_A = 2$ años (al final del año 2, flujos acumulados = €1,000)
+\item $\text{PR}_B = 3$ años (al final del año 3, flujos acumulados = €1,000)
+\end{itemize}
+
+\textbf{Análisis:}
+\begin{itemize}
+\item Según el VAN: Proyecto B es superior ($\text{VAN}_B > \text{VAN}_A$)
+\item Según la TIR: Proyecto A es superior ($\text{TIR}_A > \text{TIR}_B$)
+\item Según el PR: Proyecto A es superior ($\text{PR}_A < \text{PR}_B$)
+\end{itemize}
+
+\textbf{Conclusión:} El criterio del VAN es el único que da la respuesta correcta, ya que el proyecto B genera mayor valor absoluto para los accionistas. La TIR y el payback favorecen incorrectamente al proyecto A debido a sus limitaciones estructurales.
+\end{ejemplo}
+
+\subsection{Síntesis y Recomendaciones}
+
+La evaluación rigurosa de proyectos de inversión requiere:
+
+\begin{enumerate}
+\item \textbf{Identificación precisa de flujos de caja incrementales}: Solo deben considerarse los flujos de caja directamente atribuibles al proyecto.
+
+\item \textbf{Determinación apropiada del coste de oportunidad}: La tasa de descuento debe reflejar el riesgo específico del proyecto y las alternativas de inversión disponibles.
+
+\item \textbf{Uso del VAN como criterio principal}: El VAN es el único criterio que garantiza decisiones consistentes con la maximización del valor para los accionistas.
+
+\item \textbf{Análisis de sensibilidad}: Dada la incertidumbre en las estimaciones, es fundamental analizar cómo varía el VAN ante cambios en los supuestos clave.
+
+\item \textbf{Consideración de aspectos estratégicos}: Algunos proyectos pueden tener valor estratégico que no se captura completamente en el análisis de VAN tradicional (por ejemplo, opciones reales).
+\end{enumerate}
+
+\appendix
+
+\section{Apéndice Matemático}
+
+\subsection{Series Geométricas}
+
+\begin{teorema}[Serie Geométrica Finita]
+Para $x \neq 1$ y $n \geq 0$:
+\begin{equation}
+\sum_{k=0}^{n} x^k = \frac{1 - x^{n+1}}{1 - x}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Sea $S_n = \sum_{k=0}^{n} x^k$. Multiplicando por $x$:
+$$xS_n = \sum_{k=0}^{n} x^{k+1} = \sum_{k=1}^{n+1} x^k$$
+
+Restando $S_n$ de $xS_n$:
+$$xS_n - S_n = (x^{n+1} - 1)$$
+
+Factorizando:
+$$S_n(x - 1) = x^{n+1} - 1$$
+
+Por tanto:
+$$S_n = \frac{x^{n+1} - 1}{x - 1} = \frac{1 - x^{n+1}}{1 - x}$$
+\end{proof}
+
+\begin{teorema}[Serie Geométrica Infinita]
+Para $|x| < 1$:
+\begin{equation}
+\sum_{k=0}^{\infty} x^k = \frac{1}{1 - x}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+La serie geométrica infinita es el límite de la serie finita cuando $n \to \infty$:
+
+$$\sum_{k=0}^{\infty} x^k = \lim_{n \to \infty} \sum_{k=0}^{n} x^k = \lim_{n \to \infty} \frac{1 - x^{n+1}}{1 - x}$$
+
+Como $|x| < 1$, tenemos que $x^{n+1} \to 0$ cuando $n \to \infty$. Por tanto:
+
+$$\sum_{k=0}^{\infty} x^k = \frac{1 - 0}{1 - x} = \frac{1}{1 - x}$$
+\end{proof}
+
+\subsection{Series Aritméticas}
+
+\begin{teorema}[Suma de los Primeros $n$ Números Naturales]
+\begin{equation}
+\sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Sea $S_n = \sum_{k=1}^{n} k$. Escribiendo la suma en orden directo e inverso:
+
+$$S_n = 1 + 2 + 3 + \cdots + (n-1) + n$$
+$$S_n = n + (n-1) + (n-2) + \cdots + 2 + 1$$
+
+Sumando ambas ecuaciones:
+$$2S_n = (1+n) + (2+(n-1)) + (3+(n-2)) + \cdots + ((n-1)+2) + (n+1)$$
+
+Cada término en la suma es igual a $(n+1)$, y hay $n$ términos. Por tanto:
+$$2S_n = n(n+1)$$
+
+Dividiendo por 2:
+$$S_n = \frac{n(n+1)}{2}$$
+\end{proof}
+
+\subsection{Límites Relevantes}
+
+\begin{teorema}[Límite de $(1 + r)^{-n}$]
+Para $r > 0$:
+\begin{equation}
+\lim_{n \to \infty} (1 + r)^{-n} = 0
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Como $r > 0$, tenemos $1 + r > 1$. Por tanto, $(1 + r)^{-n} = \frac{1}{(1 + r)^n}$ tiende a 0 cuando $n \to \infty$.
+\end{proof}
+
+\begin{teorema}[Límite de $\frac{x^n}{n!}$]
+Para cualquier $x \in \R$:
+\begin{equation}
+\lim_{n \to \infty} \frac{x^n}{n!} = 0
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Para $x = 0$, el resultado es trivial. Para $x \neq 0$, consideremos la serie $\sum_{n=0}^{\infty} \frac{x^n}{n!}$ que converge a $e^x$. Por el criterio de convergencia de series, el término general debe tender a 0.
+\end{proof}
+
+\end{document}
+
