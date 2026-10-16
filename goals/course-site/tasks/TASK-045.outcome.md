@@ -1,0 +1,17 @@
+# TASK-045 outcome
+
+## Acceptance
+
+- [x] `npm test` passes, including `tests/capitulo18.test.ts`. The post-sync run passed 37 files and 1,203 tests. The 11 chapter tests cover the hook, coupon cash flows and their present values, zero-coupon prices, both original forwards, bootstrap prices and recovered spots, all five PS4 spots and three corrected forwards, the flat-curve bond price, quizzes, and the PS4 Ex 6d inverse relation. A numeric inventory rejects new numerals until the coverage is updated.
+- [x] `npm run build` passes and `/chapters/18-estructura-temporal/` renders all six sections in order. Astro checked 134 files with 0 errors, 0 warnings and 0 hints, then built 23 pages. The browser script asserts HTTP 200 and the rendered order: Gancho, Intuición, Formalización, Zona de juego, Compruébalo, Resumen. Unit tests also assert the chapter metadata, prerequisite 17, empty sessions and three quizzes.
+- [x] `npm run screenshots 18` passes in dark/light themes at desktop/phone sizes. All four images have no browser console errors, KaTeX errors or horizontal overflow. Images were visually inspected. Local images: `screenshots/chapters_18-estructura-temporal-{dark,light}-{desktop,phone}.png` (generated, ignored by git).
+- [x] `npm run clickthrough:cap18` passes with 2,240 readout comparisons against the imported `bonds.ts` library. It exercises all five draggable points, all six sliders including negative/extreme inputs, keyboard controls, every bond maturity, every valid forward interval, duration clamping, reset, the bootstrap disclosure and all three quizzes. It repeats in both themes at 1280px and 360px, with no console, KaTeX or overflow errors. It verifies the six rendered sections on each visit.
+- [x] No chapter claim contradicts `docs/AUDIT.md`. The PS4 Ex 8b forward is 5.01%, rather than the source's 5.00%. The text separates fixed forward rates from unknown future spot rates. The appended section 2 entry records the PS4 Ex 8d interpretation issue, with a named library regression comparing future spot scenarios of 2% and 8%. Original examples were recomputed through `bonds.ts`; no third-party slides were copied.
+
+## Summary
+
+Resumed the existing uncommitted chapter work. Added the Spanish chapter, a spot-to-forward curve builder, three quizzes, numeric tests and a Playwright click-through. The widget calls only `bonds.ts` for finance calculations. Added the npm command, notation rows and source interpretation correction. No library changes were needed. There are no scope deviations, material decisions or proposed follow-ups.
+
+Implementation commit: `d45e856`. Verified post-sync revision: `20a22489888f50e4c9b92261941261477ae65ac1`, which merges `origin/main` at `77c34a677116c6df9617a00df2482964b6e86c1c` without conflicts. All four spec commands were run in this session, then repeated together on this merged revision. This outcome is a documentation-only follow-up. No task specs, other tasks, decision files or goal configuration were authored or edited by this task.
+
+Delivery PR: https://github.com/jesusvillota/economia-financiera/pull/42, targeting `main` from `goal/course-site/task-045`. It carries `Goal-Task: course-site/TASK-045` and label `goal:course-site`. The PR had no review threads, reviews or comments when checked. Local verification is the delivery gate; GitHub Actions and the PR build check are ignored under the owner's explicit override. The PR is not merged.

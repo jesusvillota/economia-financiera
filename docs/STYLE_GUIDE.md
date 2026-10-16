@@ -140,6 +140,14 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Bond present-value weight | $w_t$ | | $C_t/(1+y)^t$ divided by price; not a portfolio allocation or probability |
 | Macaulay / modified duration | $D_{\mathrm{Mac}}$, $D_{\mathrm{mod}}$ | | Years; annual convention: $D_{\mathrm{mod}}=D_{\mathrm{Mac}}/(1+y)$ |
 | Bond convexity / rate shock | $K$, $\Delta y$ | | $K=P''(y)/P(y)$ in years squared; shock in decimal units, not percentage points |
+| Spot / discount factor | $r_t$, $d_t$ | | Chapter 18: annual effective rate to t; $d_t=(1+r_t)^{-t}$ and $d_0=1$ |
+| Forward interval / annual effective forward | $s$, $k$, $f_{s,k}$ | | Chapter 18: starts at s, lasts k years, ends at s+k; second index is duration |
+| Bond face / initial price | $N$, $P_0$ | | Chapter 18: nominal principal / value today; cash flows use $C_t$ |
+| Bond face / annual coupon rate / coupon payment | $F$, $c$, $A$ | | Chapter 17: $A=Fc/m$; face repaid at maturity; $c$ is not a fund here |
+| Bond maturity / payments per year / period count | $T$, $m$, $n$ | | Chapter 17: $n=mT$ at a coupon boundary; $T$ is not a tangent fund here |
+| Yield to maturity | $y$ | `\Rate{y}` | Annual effective for annual payments; nominal annual compounded $m$ times when explicitly stated |
+| Clean / dirty bond price / accrued coupon | $P_{\mathrm{limpio}}$, $P_{\mathrm{sucio}}$, $CC$ | | Euros; dirty equals clean plus accrued; no ex-coupon period in chapter 17 |
+| Days elapsed / days in coupon period | $d$, $D$ | | Chapter 17 Actual/Actual coupon-period day counts; $D$ is not corporate debt here |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
