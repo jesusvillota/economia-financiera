@@ -166,6 +166,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
+### PS4 Ex 6d: absolute versus relative price changes
+
+`source/problem_sets/ps4/ps4_solutions.tex:321` claims the zero-coupon bond has the larger absolute price change. With the source-rounded new spots (3.5%, 4%), corrected old/new prices are 933.51/924.56 for the zero and 1028.73/1019.09 for the coupon bond. Losses are **8.95 euros (0.959%)** and **9.64 euros (0.937%)** respectively. The coupon bond loses more euros; the zero loses more proportionally. Chapter 19 distinguishes both measures and keeps Ex 6c purchase-YTM duration separate from Ex 6d spot-curve repricing. The exact spot implied by the new 4.5% forward is slightly below 4%; the printed Ex 6d prices use the rounded spot. Regression: `tests/capitulo19.test.ts`, “audit PS4 6d”, tests the ordering, all prices and percentages, the existing corrected 6a final-payment PV 980.19, and exact-forward versus rounded-spot conventions.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.
