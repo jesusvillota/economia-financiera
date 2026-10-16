@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { parts, url } from '../../data/curriculum';
+import SearchBox from './SearchBox';
 
 interface Props {
   current?: number;
@@ -9,6 +10,7 @@ const { current } = Astro.props;
 const available = new Map((await getCollection('chapters')).map((c) => [c.data.chapter, c.id]));
 ---
 <nav class="course-nav" aria-label="Contenidos del curso">
+  <SearchBox client:idle indexUrl={url('search-index.json')} />
   {parts.map((part) => (
     <section>
       <h2><span class="roman">{part.roman}</span> {part.title}</h2>

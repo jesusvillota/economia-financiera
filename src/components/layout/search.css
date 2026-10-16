@@ -1,0 +1,14 @@
+.course-search { margin-bottom: 1.2rem; min-width: 0; }
+.course-search label { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-weight: 600; }
+.course-search label span { color: var(--text-muted); }
+.course-search input { width: 100%; min-width: 0; min-height: 44px; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-inset); color: var(--text); font: inherit; }
+.course-search input::placeholder { color: var(--text-muted); }
+.course-search .search-status { margin: 0.4rem 0; color: var(--text-muted); font-size: 0.8rem; }
+.course-search ul { list-style: none; padding: 0; margin: 0; max-height: 55vh; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-raised); }
+.course-search li { padding: 0; }
+.course-search li + li { border-top: 1px solid var(--border); }
+.course-search a { display: block; padding: 0.65rem; min-height: 44px; text-decoration: none; color: var(--text); overflow-wrap: anywhere; }
+.course-search [aria-selected="true"] a, .course-search a:hover { background: var(--bg-inset); box-shadow: inset 2px 0 var(--c-pv); }
+.course-search small, .course-search strong, .course-search a span { display: block; }
+.course-search small { color: var(--c-pv); }
+.course-search a span { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem; }
