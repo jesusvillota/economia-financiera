@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 
 export async function checkSkipLink(page) {
+  await page.bringToFront();
   await page.keyboard.press('Tab');
   const skip = page.getByRole('link', { name: 'Saltar al contenido' });
   assert.ok(await skip.evaluate((element) => element === document.activeElement), 'skip link is first');
-  assert.ok(await skip.evaluate((element) => element.getBoundingClientRect().left >= 0), 'skip link visible');
+  await page.waitForFunction(() => {
+    const link = document.querySelector('.skip-link');
+    return link === document.activeElement && link.getBoundingClientRect().left >= 0;
+  });
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => document.activeElement?.id === 'main');
 }
