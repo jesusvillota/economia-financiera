@@ -85,3 +85,13 @@ export const futuros_6 = futuros.bind(null, 6);
 export const futuros_7 = futuros.bind(null, 7);
 export const futuros_8 = futuros.bind(null, 8);
 export const futuros_9 = futuros.bind(null, 9);
+// Keep fixed calendar choices and book sides out of the learner's parameter table.
+export const precioCompra = (nominal: number) => precioLibro(nominal,0);
+export const precioVenta = (nominal: number) => precioLibro(nominal,1);
+export const corridoCompra = (nominal: number, annual: number) => corrido(nominal,annual,1/3);
+export const corridoVenta = (nominal: number, annual: number) => corrido(nominal,annual,2/3);
+export const desembolso = (nominal: number, annual: number) => efectivo(nominal,annual,0);
+export const cobro = (nominal: number, annual: number) => efectivo(nominal,annual,1);
+export const forward11 = (a: number,b: number,c: number,d: number,e: number) => forward(a,b,c,d,e,1,1);
+export const forward21 = (a: number,b: number,c: number,d: number,e: number) => forward(a,b,c,d,e,2,1);
+export const forward12 = (a: number,b: number,c: number,d: number,e: number) => forward(a,b,c,d,e,1,2);

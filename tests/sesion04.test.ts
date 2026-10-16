@@ -58,6 +58,14 @@ const refs: Record<string,(...a:number[])=>number> = {
   return [...rows,(p3-p0)*n*q][field];
  },
 };
+Object.assign(refs, {
+ precioCompra: (n: number) => quote(n,0), precioVenta: (n: number) => quote(n,1),
+ corridoCompra: (n: number,c: number) => n*c/1200, corridoVenta: (n: number,c: number) => n*c/600,
+ desembolso: (n: number,c: number) => payment(n,c,0), cobro: (n: number,c: number) => payment(n,c,1),
+ forward11: (...a: number[]) => refs.forward(...a,1,1),
+ forward21: (...a: number[]) => refs.forward(...a,2,1),
+ forward12: (...a: number[]) => refs.forward(...a,1,2),
+});
 const reference = (fn:string,args:number[]) => {
  const m=fn.match(/^(.*)_(\d+)$/);
  return m?refs[m[1]](Number(m[2]),...args):refs[fn](...args);

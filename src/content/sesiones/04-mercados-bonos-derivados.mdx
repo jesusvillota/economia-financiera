@@ -360,7 +360,7 @@ exercises:
       coste implícito frente a {{reference}} € para la orden grande."
     parameters:
       - id: small
-        label: small
+        label: Orden pequeña (acciones)
         default: 300
       - id: large
         label: Orden grande
@@ -696,7 +696,7 @@ exercises:
         step: 5
         unit: €
       - id: zero
-        label: zero
+        label: Cupón A (%)
         default: 0
     hints:
       - Descuenta cada pago con el spot de su fecha.
@@ -866,7 +866,7 @@ exercises:
         step: 0.25
         unit: "%"
       - id: zero
-        label: zero
+        label: Cupón A (%)
         default: 0
     hints:
       - Encadena el factor del primer año y los factores forward posteriores.
@@ -961,17 +961,11 @@ exercises:
         step: 0.25
         unit: "%"
       - id: r4
-        label: r4
+        label: Spot a cuatro años (%)
         default: 4.2
       - id: r5
-        label: r5
+        label: Spot a cinco años (%)
         default: 4.3
-      - id: one
-        label: one
-        default: 1
-      - id: two
-        label: two
-        default: 2
     hints:
       - Iguala las dos formas de invertir durante el mismo plazo.
       - Divide el factor acumulado final por el inicial; toma la raíz según la duración.
@@ -995,15 +989,13 @@ exercises:
           value: 0.00005
         lib:
           module: sesion04
-          fn: forward
+          fn: forward11
           args:
             - r1
             - r2
             - r3
             - r4
             - r5
-            - one
-            - one
       - id: f21
         label: b) Forward desde 2 durante 1 año
         unit: "%"
@@ -1013,15 +1005,13 @@ exercises:
           value: 0.00005
         lib:
           module: sesion04
-          fn: forward
+          fn: forward21
           args:
             - r1
             - r2
             - r3
             - r4
             - r5
-            - two
-            - one
       - id: f12
         label: c) Forward desde 1 durante 2 años
         unit: "%"
@@ -1031,15 +1021,13 @@ exercises:
           value: 0.00005
         lib:
           module: sesion04
-          fn: forward
+          fn: forward12
           args:
             - r1
             - r2
             - r3
             - r4
             - r5
-            - one
-            - two
     concepts:
       - 18-estructura-temporal
   - id: ej9_compra
@@ -1065,12 +1053,6 @@ exercises:
         max: 16
         step: 0.5
         unit: "%"
-      - id: buy
-        label: buy
-        default: 0
-      - id: third
-        label: third
-        default: 0.3333333333333333
     hints:
       - Consume las ventas desde el precio menor. Los precios son porcentajes del nominal.
       - El precio sucio suma el cupón corrido al precio limpio.
@@ -1094,10 +1076,9 @@ exercises:
           value: 0.00005
         lib:
           module: sesion04
-          fn: precioLibro
+          fn: precioCompra
           args:
             - nominal
-            - buy
       - id: accrued
         label: a) Cupón corrido total
         unit: €
@@ -1107,11 +1088,10 @@ exercises:
           value: 0.005
         lib:
           module: sesion04
-          fn: corrido
+          fn: corridoCompra
           args:
             - nominal
             - annual
-            - third
       - id: total
         label: a) Desembolso total
         unit: €
@@ -1121,11 +1101,10 @@ exercises:
           value: 0.005
         lib:
           module: sesion04
-          fn: efectivo
+          fn: desembolso
           args:
             - nominal
             - annual
-            - buy
       - id: ytm
         label: b) TIR efectiva anual
         unit: "%"
@@ -1165,12 +1144,6 @@ exercises:
         max: 16
         step: 0.5
         unit: "%"
-      - id: sell
-        label: sell
-        default: 1
-      - id: twothirds
-        label: twothirds
-        default: 0.6666666666666666
     hints:
       - Una venta consume las compras del mayor al menor precio.
       - Suma al precio limpio los dos tercios del cupón trimestral.
@@ -1195,10 +1168,9 @@ exercises:
           value: 0.00005
         lib:
           module: sesion04
-          fn: precioLibro
+          fn: precioVenta
           args:
             - nominal
-            - sell
       - id: accrued
         label: c) Cupón corrido total
         unit: €
@@ -1208,11 +1180,10 @@ exercises:
           value: 0.005
         lib:
           module: sesion04
-          fn: corrido
+          fn: corridoVenta
           args:
             - nominal
             - annual
-            - twothirds
       - id: total
         label: c) Cobro total de venta
         unit: €
@@ -1222,11 +1193,10 @@ exercises:
           value: 0.005
         lib:
           module: sesion04
-          fn: efectivo
+          fn: cobro
           args:
             - nominal
             - annual
-            - sell
       - id: ytm
         label: c) TIR efectiva anual realizada
         unit: "%"
@@ -1287,7 +1257,7 @@ exercises:
         step: 1
         unit: €
       - id: remaining
-        label: remaining
+        label: Plazo restante (años)
         default: 1.5
     hints:
       - El precio de entrega de un contrato nuevo no es el valor de un contrato existente.
@@ -1468,7 +1438,7 @@ exercises:
       ganancia total."
     parameters:
       - id: p0
-        label: p0
+        label: Precio de apertura (puntos)
         default: 100
       - id: p1
         label: Cierre día 1
@@ -1501,10 +1471,10 @@ exercises:
         max: 20
         step: 5
       - id: initial
-        label: initial
+        label: Depósito inicial total (€)
         default: 200
       - id: maintenance
-        label: maintenance
+        label: Mantenimiento total (€)
         default: 150
     hints:
       - Cada día liquida la diferencia de precios multiplicada por contratos y multiplicador.
