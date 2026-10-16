@@ -9,16 +9,23 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+SC-2: the site must be usable with keyboard and screen readers.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Add `axe-core` as a dev dependency and `scripts/a11y.mjs` (`npm run a11y`): after a build, open every page in `dist/` with Playwright (already used by the screenshots script), run axe in dark and light at 360 px and 1280 px, and fail on serious or critical violations. Fix what it finds in layouts and shared components (focus ring, colour contrast via CSS variables, labels for sliders and the search box, landmark roles, `prefers-reduced-motion`, skip link). Chapter text edits only where a violation requires. Out of scope: SEO meta, 404 (TASK-058).
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- `npm run build && npm run a11y` exits 0 and prints pages checked and zero serious or critical violations.
+- `npm test` and `npm run screenshots 1` pass.
+- The PR body lists the violations found and how each was fixed.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+npm test
+npm run build
+npm run a11y
+npm run screenshots 1
+```

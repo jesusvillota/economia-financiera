@@ -9,16 +9,22 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+SC-2 and SC-3: 21 chapters, 4 sessions and the exam page were written by many workers; links and cross-references must agree on the built site.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Add `scripts/check-site.mjs` and `npm run check:site`: after a build it walks `dist/`, and for every HTML page checks that each internal link and `#anchor` resolves, each page has one `h1` and a `<title>`, prev/next links form the `curriculum.ts` order, every session links to chapters that link back, and every chapter listed in `curriculum.ts` has a page. Add `tests/site-links.test.ts` for the pure helpers. Fix every defect found with the smallest edit (typo, broken link, missing back-link) in the PR and list them in the PR body. Out of scope: new content, layout redesign.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- `npm run build && npm run check:site` exits 0 and prints the number of pages and links checked.
+- `npm test` passes.
+- The PR body lists each defect fixed, or says none were found.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+npm test
+npm run build
+npm run check:site
+```

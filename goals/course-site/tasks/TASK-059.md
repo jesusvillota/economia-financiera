@@ -9,16 +9,20 @@ delivery: manual
 
 ## Why
 
-<the success criterion or milestone this serves>
+SC-1: the course is only useful when students can open it at the public URL.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Owner steps: (1) read the live site once on phone and desktop; (2) make the repository public (decide whether the committed notes under `source/` (course notes and problem sets) may be public; third-party material must not be); (3) Settings → Pages → Source: GitHub Actions; (4) open https://jesusvillota.github.io/economia-financiera/ and confirm the landing page, one chapter, one session and the exam page load. Out of scope: further content.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- The owner confirms the public URL loads the landing page and one chapter, session and the exam page.
+- `git ls-files source` lists only material the owner agrees to publish.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+git ls-files source | head
+curl -sI https://jesusvillota.github.io/economia-financiera/ | head -1
+```
