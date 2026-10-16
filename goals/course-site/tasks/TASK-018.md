@@ -3,7 +3,7 @@ id: TASK-018
 title: 'Plan: decompose M-5'
 milestone: M-5
 state: approved
-depends_on: [TASK-017]
+depends_on: [TASK-017, TASK-037, TASK-038, TASK-039, TASK-040, TASK-041]
 delivery: manual
 kind: plan
 route: {platform: claude, model: sonnet, effort: high}
