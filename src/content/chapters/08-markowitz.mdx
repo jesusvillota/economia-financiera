@@ -1,0 +1,172 @@
+---
+title: "Markowitz: muchos activos y frontera eficiente"
+part: 3
+chapter: 8
+difficulty: 3
+prerequisites: [7]
+summary: "Cómo elegir pesos entre muchos activos, localizar la cartera de mínima varianza y distinguir la frontera eficiente."
+sessions: []
+---
+import MarkowitzExplorer from '../../components/plots/MarkowitzExplorer';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>La mezcla importa tanto como los ingredientes
+
+¿Comprar más activos basta para construir una buena cartera? Imagina que puedes invertir en A, B y C. Sus rentabilidades esperadas anuales son 6 %, 10 % y 14 %. Sus riesgos, medidos como desviaciones estándar, son 12 %, 20 % y 28 %. Son datos de un ejemplo inventado, no pronósticos sobre empresas reales.
+
+Reservas el 50 % del capital para A y repartes el resto por igual: 25 % para B y 25 % para C. Tu rentabilidad esperada es 9 % y tu riesgo es 11,05 %. La mezcla tiene menos riesgo que cualquiera de sus ingredientes. Eso ocurre por cómo se mueven juntos, no por contar nombres en una lista.
+
+Pero esa mezcla todavía puede mejorar. Otra distribución conserva el 9 % esperado con un riesgo de 11,03 %. La diferencia es pequeña en este ejemplo. La pregunta es general: **¿qué pesos logran el menor riesgo para la rentabilidad que buscas?** El modelo de Markowitz convierte esa pregunta en un problema de elección.
+
+## <span class="section-tag">Intuición</span>De una curva a una nube
+
+En el análisis de dos activos, fijar un peso determina el otro. Con tres activos puedes modificar también cómo repartes el capital restante. En el gráfico aparece una nube de combinaciones. Cada punto representa una cartera completa. Su posición horizontal indica riesgo; su altura indica rentabilidad esperada.
+
+Llamamos **conjunto factible** al conjunto de carteras que cumplen las reglas de inversión. Aquí empezamos sin ventas en corto. Eso significa que todos los pesos son positivos o nulos. Además, inviertes todo el capital. No hay una reserva de efectivo fuera del gráfico ni un activo libre de riesgo.
+
+Usamos una correlación A–B de 0,20. La correlación de C con cada uno de los otros activos es cero. Correlación cero significa ausencia de relación lineal; no prueba independencia. Mantenemos esta simplificación para explorar los pesos sin cambiar el entorno al mismo tiempo.
+
+Mueve los controles de la primera figura. El primero fija cuánto compras de A. El segundo reparte entre B y C lo que queda. Al principio, la mitad del resto va a B. Por eso ese control marca 50 %, aunque el peso total de B sea 25 %. Las lecturas muestran siempre los pesos sobre el capital completo.
+
+<MarkowitzExplorer client:visible />
+
+**Prueba esto:** deja A al 50 % y reparte el resto por igual. Después reduce A al 25 %. B y C pasan al 37,50 % cada uno. La media sube al 10,50 % y el riesgo al 13,58 %. Ganar rentabilidad esperada también puede aumentar el riesgo.
+
+La segunda figura busca, para cada altura, la cartera más a la izquierda: la de menor riesgo. La curva verde marca su tramo eficiente. El tramo gris discontinuo contiene carteras dominadas. La marca roja señala el mínimo global de varianza. La marca azul conserva tu mezcla de la primera figura. Mantén la correlación inicial y las ventas en corto desactivadas para compararlas bajo las mismas reglas.
+
+## <span class="section-tag">Formalización</span>Sumar rendimientos, combinar covarianzas
+
+### El presupuesto y la media
+
+Llamamos $n$ al número de activos y $w_j$ al peso del activo $j$. Un peso es la parte del capital inicial invertida en ese activo. La restricción de presupuesto exige
+
+$$\sum_{j=1}^{n}w_j=1.$$
+
+Sin ventas en corto añadimos $w_j\geq 0$. Un peso negativo representa una posición vendida: vendes un activo prestado y debes devolverlo. Los ingresos de esa venta permiten comprar más de los otros activos. Por eso algunos pesos positivos pueden superar el total del capital inicial.
+
+El rendimiento de la cartera es una suma ponderada de los rendimientos individuales. Tomar la esperanza conserva esa suma:
+
+$$\E[r_p]=\sum_{j=1}^{n}w_j\E[r_j].$$
+
+No necesitas independencia para esta igualdad. En nuestra mezcla inicial, el cálculo es
+
+$$\E[r_p]=0{,}50\cdot0{,}06+0{,}25\cdot0{,}10+0{,}25\cdot0{,}14=0{,}09.$$
+
+La rentabilidad esperada es un promedio de resultados posibles. No es un pago prometido. Dos carteras con la misma media pueden terminar el año con resultados muy distintos.
+
+### La matriz de covarianzas
+
+La **covarianza** mide cómo varían conjuntamente dos rendimientos. Reunimos todas las covarianzas en una matriz, una tabla cuadrada llamada $\Sigma$. Su entrada $\Sigma_{jk}$ cumple
+
+$$\Sigma_{jk}=\Cov(r_j,r_k)=\rho_{jk}\sigma_j\sigma_k.$$
+
+La diagonal contiene las varianzas individuales. Las entradas a ambos lados de la diagonal coinciden. En nuestro ejemplo, con rendimientos expresados en tanto por uno:
+
+$$
+\Sigma=\begin{pmatrix}
+0{,}0144 & 0{,}0048 & 0\\
+0{,}0048 & 0{,}0400 & 0\\
+0 & 0 & 0{,}0784
+\end{pmatrix}.
+$$
+
+No puedes elegir correlaciones arbitrarias para muchos activos. Deben formar una matriz válida: cualquier combinación tiene varianza no negativa. Nuestra matriz cumple esa condición en todo el recorrido del control A–B, porque C permanece sin correlación con ambos.
+
+La varianza de la cartera incluye todas las parejas:
+
+$$
+\sigma_p^2=\sum_{j=1}^{n}\sum_{k=1}^{n}w_jw_k\Sigma_{jk},
+\qquad \sigma_p=\sqrt{\sigma_p^2}.
+$$
+
+<details>
+<summary>Por qué aparecen las parejas</summary>
+
+Resta la media al rendimiento de cada activo. La desviación de la cartera es la suma de esas desviaciones, multiplicadas por sus pesos. Al elevar esa suma al cuadrado, aparecen productos entre cada pareja. Tomar la esperanza de cada producto da su covarianza. Los productos de un activo consigo mismo dan su varianza. Las parejas distintas aparecen en ambos órdenes.
+
+Para la mezcla inicial, los términos que incluyen C y otro activo desaparecen por su covarianza nula. Queda
+
+$$
+\sigma_p^2=0{,}50^2\cdot0{,}0144
++0{,}25^2\cdot0{,}0400
++0{,}25^2\cdot0{,}0784
++2\cdot0{,}50\cdot0{,}25\cdot0{,}0048
+=0{,}0122.
+$$
+
+Su raíz es aproximadamente $0{,}1105$, es decir, 11,05 %. No sumes las desviaciones estándar como si fueran rendimientos. Los términos cruzados son esenciales.
+</details>
+
+### Encontrar el borde y elegir su tramo eficiente
+
+Sea $m$ una rentabilidad esperada objetivo. Para encontrar el menor riesgo a esa altura resolvemos
+
+$$
+\begin{aligned}
+\min_{w_1,\ldots,w_n}\quad &\sum_{j=1}^{n}\sum_{k=1}^{n}w_jw_k\Sigma_{jk}\\
+\text{sujeto a}\quad &\sum_{j=1}^{n}w_j\E[r_j]=m,\\
+&\sum_{j=1}^{n}w_j=1,\qquad w_j\geq0.
+\end{aligned}
+$$
+
+Recorrer los objetivos dibuja el borde de mínima varianza. **No todo ese borde es eficiente.** Una cartera está dominada si otra ofrece al menos tanta media y como máximo tanto riesgo, con alguna mejora estricta. La frontera eficiente contiene las carteras no dominadas según esas dos medidas.
+
+Si quitamos la restricción de rentabilidad objetivo, obtenemos la **cartera global de mínima varianza**. En el ejemplo tiene pesos aproximados de 67,88 %, 18,51 % y 13,60 %. Su media es 7,83 % y su riesgo 10,33 %. Los pesos redondeados pueden no sumar exactamente el total; el cálculo usa toda la precisión.
+
+Por debajo de su media, el borde tiene un tramo ineficiente. Por ejemplo, el objetivo del 7 % alcanza un riesgo mínimo de 10,68 %. La cartera global tiene mayor media y menor riesgo. Por eso minimizar la varianza para un objetivo no basta para demostrar eficiencia.
+
+Para el objetivo del 9 %, los pesos óptimos son aproximadamente 48,63 %, 27,74 % y 23,63 %. Su varianza es 0,012156 y su riesgo 11,03 %. Ahora estamos en el tramo superior. El modelo mejora nuestra mezcla inicial sin cambiar su media. No afirma que exista una cartera mejor para todas las preferencias.
+
+<Callout type="warning" title="Las reglas cambian la frontera">
+Sin ventas en corto, la media queda entre la menor y la mayor media individual. Aquí el extremo superior es 14 %. Con ventas en corto sin límite no hay necesariamente una rentabilidad máxima. Una posición de −100 % en A y 200 % en C ya da una media del 22 %. Eso también amplifica la exposición al riesgo. La figura muestra solo una ventana finita de objetivos.
+</Callout>
+
+## <span class="section-tag">Zona de juego</span>Elige los pesos y después exige eficiencia
+
+Vuelve a las figuras. Primero construye una cartera con los controles de pesos. Lee su media y su riesgo antes de mirar la curva. Después fija esa misma media en el control de rentabilidad de la frontera. Compara ambas posiciones horizontales. La cartera del borde nunca debe tener más riesgo cuando las reglas y las covarianzas coinciden.
+
+**Prueba esto:**
+
+1. Recupera los pesos iniciales: A al 50 % y la mitad del resto para B. Fija el objetivo del 9 %. Compara 11,05 % con 11,03 %. La diferencia viene solo del reparto.
+2. Baja el objetivo al 7 %. Compara ese punto gris con el mínimo rojo. Explica qué mejora cada coordenada.
+3. Activa las ventas en corto y lleva el objetivo al 18 %. La lectura de A pasa a −99,32 %. Después desactívalas. El objetivo se limita al 14 %, porque ya no puedes financiar compras vendiendo A.
+
+El control de correlación cambia solo la relación A–B de la curva. La mezcla azul mantiene los supuestos iniciales. Si cambias esa relación, estudias otro entorno. Recupera 0,20 antes de evaluar si la curva mejora la mezcla azul. El punto naranja de la frontera se puede arrastrar verticalmente; el deslizador ofrece la misma elección con el teclado.
+
+El modelo usa únicamente media y varianza durante un periodo. No describe por separado pérdidas extremas, liquidez, impuestos ni costes de negociación. La liquidez es la facilidad para vender sin afectar mucho al precio. Una cartera eficiente según estas medidas puede ser inadecuada por esas otras razones.
+
+Además, las medias y covarianzas futuras se estiman; no se conocen con certeza. Cambiar una estimación puede alterar los pesos óptimos. Aquí las tratamos como datos para entender el mecanismo. La distribución normal de rendimientos o la utilidad cuadrática son formas habituales de justificar preferencias basadas en esos momentos. No son requisitos para calcular las fórmulas de media y varianza.
+
+## <span class="section-tag">Compruébalo</span>Comprueba las reglas de elección
+
+<Quiz client:visible
+  question="Con pesos 50 % en A, 25 % en B y 25 % en C, ¿cuál es la rentabilidad esperada?"
+  options={['9 %', '10 %', '14 %']}
+  answer={0}
+  explanation="La suma ponderada da 9 %. El 10 % es la media de B; el 14 % es la de C. La correlación cambia el riesgo, pero no esta suma."
+/>
+
+<Quiz client:visible
+  question="Una cartera alcanza la menor varianza posible para un objetivo del 7 %. ¿Es necesariamente eficiente?"
+  options={['Sí, porque minimiza la varianza', 'No: el mínimo global puede dominarla', 'Sí, si contiene todos los activos']}
+  answer={1}
+  explanation="En el ejemplo, ese punto tiene un riesgo del 10,68 %. El mínimo global ofrece una media del 7,83 % con un riesgo del 10,33 %. Mejora ambas medidas."
+/>
+
+<Quiz client:visible
+  question="Sin ventas en corto, ¿puedes obtener una media superior al 14 % con estos activos?"
+  options={['Sí, basta con diversificar', 'Sí, si reduces la correlación', 'No, los pesos forman un promedio']}
+  answer={2}
+  explanation="Con pesos no negativos que suman el total, la media no supera el 14 %. La diversificación puede reducir riesgo. No eleva el promedio por encima de todas las medias individuales."
+/>
+
+## <span class="section-tag">Resumen</span>Primero el conjunto, después la elección
+
+- Los pesos y las restricciones definen qué carteras puedes construir. Tener muchos activos no garantiza una mezcla eficiente.
+- La media suma rendimientos ponderados. La varianza combina todas las covarianzas, incluidas las varianzas individuales.
+- El mínimo global tiene el menor riesgo del conjunto. No necesita coincidir con ningún activo individual.
+- La frontera eficiente excluye carteras dominadas. El borde situado por debajo del mínimo global contiene objetivos ineficientes en este ejemplo.
+- Cada punto de la frontera ofrece un intercambio entre riesgo y media. Tus preferencias deciden cuál eliges, dentro de los límites del modelo.
+
+**Siguiente:** introducimos un activo libre de riesgo. Verás cómo combinarlo con una cartera arriesgada cambia el conjunto de oportunidades.

@@ -1,0 +1,174 @@
+---
+title: "Dos activos: correlación y diversificación"
+part: 3
+chapter: 7
+difficulty: 2
+prerequisites: [6]
+summary: "Por qué combinar activos puede reducir el riesgo, cómo medir su movimiento conjunto y qué cambia al permitir ventas en corto."
+sessions: []
+---
+import EfficientFrontier from '../../components/plots/EfficientFrontier';
+import TwoAssetWorked from '../../components/plots/TwoAssetWorked';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Dos riesgos pueden compensarse?
+
+Tienes dos fondos para invertir durante un año. El fondo A tiene una rentabilidad esperada del 6 % y una volatilidad del 10 %. El fondo B ofrece una rentabilidad esperada del 12 % y una volatilidad del 20 %. Son supuestos de nuestro ejemplo, no previsiones de productos reales.
+
+Si repartes el dinero por igual, esperas ganar un 9 %. ¿Tu riesgo será el promedio, un 15 %? Solo en un caso especial. Con una correlación de 0,25, la volatilidad de esa mezcla es aproximadamente un 12,25 %. Has conservado la rentabilidad media y reducido el riesgo respecto al promedio de las volatilidades.
+
+La diferencia depende de cómo se mueven juntos los fondos. Una caída de A puede coincidir con una subida de B. **Diversificar** significa repartir la inversión entre activos cuyos movimientos pueden compensarse. No basta con comprar muchos productos con nombres distintos.
+
+## <span class="section-tag">Intuición</span>La forma de una mezcla
+
+En el [capítulo anterior](/economia-financiera/chapters/06-rentabilidad-riesgo/) medimos la incertidumbre de un activo mediante su desviación típica, también llamada volatilidad. Ahora necesitamos conocer, además, el movimiento conjunto de ambos activos. La **correlación** resume la dirección y la intensidad de su relación lineal.
+
+Una correlación positiva indica que suelen desviarse de sus medias en el mismo sentido. Una negativa indica movimientos en sentidos opuestos. Una correlación nula indica ausencia de relación lineal; no demuestra independencia. Tampoco dice que los precios permanezcan quietos. Cada fondo conserva su propia volatilidad cuando modificamos este supuesto.
+
+Mira primero la figura. El eje horizontal mide el riesgo; el vertical mide la rentabilidad esperada. Los puntos A y B representan los fondos individuales. Cada punto de la curva representa una distribución del dinero entre ellos. Empieza sin ventas en corto: solo puedes recorrer el arco entre los fondos.
+
+<EfficientFrontier client:visible
+  assets={[
+    { name: 'A', expectedReturn: 0.06, sigma: 0.1 },
+    { name: 'B', expectedReturn: 0.12, sigma: 0.2 },
+  ]}
+  initialRho={0.25} initialTarget={0.09}
+  title="Dos fondos: la correlación dobla la curva"
+/>
+
+**Prueba esto:** conserva la rentabilidad en el 9 % y baja la correlación desde 1 hasta −1. El punto naranja se desplaza hacia la izquierda. Los pesos no cambian porque las rentabilidades esperadas de los fondos siguen siendo distintas y fijas.
+
+El color verde señala las carteras **eficientes**: ninguna cartera factible ofrece más rentabilidad con riesgo igual o menor, ni el mismo retorno con menos riesgo. El tramo gris contiene carteras que otra combinación mejora. El punto rojo marca la cartera de menor varianza. No necesitas elegirla: podrías aceptar más riesgo para buscar más rentabilidad esperada.
+
+La gráfica no predice el resultado del próximo año. Compara distribuciones posibles bajo nuestros supuestos. En la realidad, las medias, las volatilidades y las correlaciones se estiman con error. Una relación histórica puede cambiar precisamente durante una crisis. El gráfico ayuda a entender el mecanismo; no garantiza una protección futura.
+
+## <span class="section-tag">Formalización</span>La media suma; el riesgo también cruza
+
+### Pesos y rentabilidad
+
+El **peso** $w_j$ es la fracción del capital inicial destinada al activo $j$. Los pesos suman la unidad: $w_1+w_2=1$. Sin ventas en corto, ambos son no negativos. Tomamos pesos fijos durante el periodo y omitimos costes e impuestos.
+
+La rentabilidad realizada de la cartera es $r_p=w_1r_1+w_2r_2$. La esperanza es lineal, así que:
+
+$$\E[r_p]=w_1\E[r_1]+w_2\E[r_2].$$
+
+La correlación no aparece. Con la mitad en cada fondo:
+
+$$\E[r_p]=0{,}5\cdot0{,}06+0{,}5\cdot0{,}12=0{,}09=9\,\%.$$
+
+Esta igualdad no exige independencia. Solo combina las medias con los pesos iniciales. Además, sin posiciones cortas, la rentabilidad esperada queda entre las medias de los activos. No puedes conseguir una media superior a la del fondo B mediante una mezcla de pesos no negativos.
+
+### Covarianza y varianza
+
+La **covarianza** mide el producto medio de las desviaciones respecto a las medias. Con volatilidades positivas, la correlación elimina sus unidades:
+
+$$\rho_{12}=\frac{\Cov(r_1,r_2)}{\sigma_1\sigma_2},\qquad -1\leq\rho_{12}\leq1.$$
+
+Por tanto, $\Cov(r_1,r_2)=\rho_{12}\sigma_1\sigma_2$. Con nuestros datos y correlación 0,25, la covarianza es $0{,}25\cdot0{,}10\cdot0{,}20=0{,}005$. Trabajamos con rentabilidades decimales; una varianza no se expresa como una volatilidad porcentual.
+
+La varianza de la cartera incluye las varianzas individuales y un término cruzado:
+
+$$\sigma_p^2=w_1^2\sigma_1^2+w_2^2\sigma_2^2+2w_1w_2\rho_{12}\sigma_1\sigma_2.$$
+
+<details>
+<summary>De dónde sale el término cruzado</summary>
+
+Resta la media a la rentabilidad de la cartera:
+
+$$r_p-\E[r_p]=w_1(r_1-\E[r_1])+w_2(r_2-\E[r_2]).$$
+
+Eleva al cuadrado. Aparecen los cuadrados individuales y dos veces el producto de ambos términos. Al tomar esperanzas:
+
+$$
+\begin{aligned}
+\sigma_p^2={}&w_1^2\E[(r_1-\E[r_1])^2]\\
+&+w_2^2\E[(r_2-\E[r_2])^2]\\
+&+2w_1w_2\E[(r_1-\E[r_1])(r_2-\E[r_2])].
+\end{aligned}
+$$
+
+Las primeras esperanzas son las varianzas. La última es la covarianza. Sustituir su relación con la correlación da la fórmula anterior. No hemos supuesto independencia en ningún paso.
+</details>
+
+Con pesos iguales, los términos individuales son $0{,}0025$ y $0{,}0100$. El término cruzado añade $0{,}0025$. La varianza total es $0{,}0150$. Al tomar su raíz cuadrada obtenemos $\sigma_p\approx0{,}1225$, es decir, un 12,25 %.
+
+### Los límites de la diversificación
+
+Con correlación perfecta positiva, $\rho_{12}=1$, la varianza es un cuadrado completo:
+
+$$\sigma_p=|w_1\sigma_1+w_2\sigma_2|.$$
+
+Sin cortos podemos quitar el valor absoluto: la volatilidad es el promedio ponderado de las volatilidades. En la mezcla por mitades sale un 15 %. Bajar la correlación reduce el riesgo para pesos positivos fijos. Esto puede ocurrir incluso con correlación positiva; no necesitas una correlación negativa para diversificar.
+
+Con correlación perfecta negativa, $\rho_{12}=-1$, cambia el signo dentro del cuadrado:
+
+$$\sigma_p=|w_1\sigma_1-w_2\sigma_2|.$$
+
+La mezcla por mitades tiene ahora un riesgo del 5 %, todavía positivo. Para anularlo necesitas igualar las exposiciones al riesgo: $w_1\sigma_1=w_2\sigma_2$. Sustituye $w_2=1-w_1$ y agrupa los términos:
+
+$$w_1(\sigma_1+\sigma_2)=\sigma_2,\qquad w_1=\frac{\sigma_2}{\sigma_1+\sigma_2}.$$
+
+En este ejemplo inviertes dos tercios en A y un tercio en B. La volatilidad es cero y la rentabilidad esperada es del 8 %. Es una cancelación exacta bajo una relación perfecta supuesta. No equivale a prometer que una cartera real pueda eliminar todo su riesgo.
+
+<Callout type="warning" title="Menor que el promedio no significa menor que ambos fondos">
+Con correlación 0,25, el riesgo de la mezcla por mitades es del 12,25 %. Está por debajo del promedio del 15 %, pero supera el riesgo del 10 % de A. Hay diversificación aunque no mejores al activo menos volátil.
+</Callout>
+
+### Ventas en corto
+
+Una **venta en corto** es una posición que gana cuando cae el activo vendido. Se representa con un peso negativo. El dinero obtenido permite que el otro peso supere la unidad, manteniendo la suma de pesos. Nuestro modelo no incluye garantías, comisiones ni límites de préstamo.
+
+El efecto de bajar la correlación depende entonces del signo de $w_1w_2$. Con pesos de signos opuestos, el término cruzado cambia su efecto. No debes trasladar automáticamente la regla de las carteras sin cortos.
+
+Por ejemplo, con correlación 1, peso de A igual a 2 y peso de B igual a −1, el riesgo es cero. La rentabilidad esperada también es cero. El valor absoluto en la fórmula sigue siendo necesario fuera del intervalo de pesos no negativos.
+
+## <span class="section-tag">Zona de juego</span>Separa las dos decisiones
+
+El primer gráfico permite elegir una rentabilidad y leer los pesos necesarios. Este panel hace el recorrido inverso: eliges el peso de A y lees el resultado. La curva muestra el riesgo según el peso, con la correlación que hayas fijado. Así puedes distinguir dos cambios que a menudo se confunden.
+
+<TwoAssetWorked client:visible />
+
+**Prueba esto:**
+
+1. Deja el peso de A en el 50 %. Cambia la correlación entre 1, 0,25, 0 y −1. El retorno sigue en el 9 %. Los riesgos son, respectivamente, 15 %, 12,25 %, 11,18 % y 5 %.
+2. Devuelve la correlación a 0,25. Pon todo en A y después todo en B. Comprueba que reaparecen sus retornos y riesgos individuales. La correlación solo afecta a una mezcla cuando ambos fondos tienen peso distinto de cero.
+
+El **mínimo de varianza** es la mezcla que alcanza el menor riesgo entre las carteras permitidas. Con correlación 0,25 y sin cortos, invierte el 87,50 % en A y el 12,50 % en B. Su retorno es del 6,75 % y su riesgo, aproximadamente, del 9,68 %. En el panel puedes acercarte al fondo de la curva; el primer gráfico muestra el mínimo con mayor precisión.
+
+Ahora activa las ventas en corto en el primer gráfico. El conjunto permitido se amplía y el mínimo puede cambiar. Con correlación 1, el mínimo sin cortos es A. Con cortos, la combinación descrita antes cancela el riesgo. La pantalla muestra una ventana finita del conjunto permitido, que no tiene ese límite de rentabilidad en el modelo.
+
+No confundas mínimo riesgo con máxima rentabilidad, ni rentabilidad esperada con rentabilidad segura. Elegir una cartera exige decidir cuánta incertidumbre aceptas. El modelo ordena las combinaciones; tus preferencias determinan cuál eliges. Las prácticas largas de este tema se incorporarán a la sesión de carteras.
+
+## <span class="section-tag">Compruébalo</span>Tres comprobaciones
+
+<Quiz client:visible
+  question="Con la mitad en A y la mitad en B, bajas la correlación de 0,25 a 0. ¿Qué ocurre?"
+  options={['El retorno baja y el riesgo no cambia.', 'El retorno sigue en 9 % y el riesgo baja a 11,18 %.', 'El retorno sube y el riesgo desaparece.']}
+  answer={1}
+  explanation="Los pesos y las medias no cambian. El término cruzado se anula: la varianza es 0,0125 y su raíz es aproximadamente 11,18 %."
+/>
+
+<Quiz client:visible
+  question="Con correlación −1, ¿qué mezcla elimina el riesgo de nuestro ejemplo?"
+  options={['La mitad en cada fondo.', 'Todo en A.', 'Dos tercios en A y un tercio en B.']}
+  answer={2}
+  explanation="Las exposiciones al riesgo deben ser iguales. Dos tercios de 10 % igualan un tercio de 20 %. El retorno de esa mezcla es 8 %."
+/>
+
+<Quiz client:visible
+  question="La mezcla por mitades tiene riesgo 12,25 %, frente a 10 % de A y 20 % de B. ¿Hay diversificación?"
+  options={['No: debe tener menos riesgo que A.', 'Sí: su riesgo es menor que el promedio ponderado del 15 %.', 'Sí: cualquier mezcla elimina el riesgo.']}
+  answer={1}
+  explanation="Diversificar puede reducir el riesgo respecto al promedio de las volatilidades sin bajar del riesgo de cada activo. No garantiza riesgo cero."
+/>
+
+## <span class="section-tag">Resumen</span>Lo que te llevas
+
+- La rentabilidad esperada es la media ponderada de las rentabilidades esperadas individuales.
+- La varianza incluye la covarianza: importa cómo se mueven juntos los activos.
+- Con pesos positivos fijos, una menor correlación reduce el riesgo de la mezcla.
+- La correlación perfecta negativa permite cancelar el riesgo con los pesos adecuados bajo los supuestos del modelo.
+- Las ventas en corto amplían las combinaciones permitidas y cambian el efecto de la correlación sobre el riesgo.
+
+**Siguiente:** extendemos esta idea a muchos activos con el modelo de Markowitz. Buscaremos las carteras eficientes y veremos por qué el mínimo de varianza es solo una de ellas.
