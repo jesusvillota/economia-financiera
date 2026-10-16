@@ -82,7 +82,7 @@
 .quiz-option:hover { border-color: var(--c-pv); }
 .quiz-option.right { border-color: var(--c-return); background: color-mix(in srgb, var(--c-return) 12%, transparent); }
 .quiz-option.wrong { border-color: var(--c-risk); background: color-mix(in srgb, var(--c-risk) 12%, transparent); }
-.quiz-option.dim { opacity: 0.55; }
+.quiz-option.dim { border-style: dashed; }
 .quiz-letter { font-weight: 700; color: var(--text-muted); }
 .quiz-feedback { margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 8px; background: var(--bg-inset); border-left: 3px solid; }
 .quiz-feedback.right { border-color: var(--c-return); }

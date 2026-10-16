@@ -168,12 +168,12 @@ Each quantity keeps its colour in plots, TeX and prose. Tokens live in `src/styl
 
 | Quantity | Token | Dark | Light |
 |---|---|---|---|
-| Present value, price, spot | `--c-pv` | `#58c4dd` | `#1f7fa3` |
-| Future value | `--c-fv` | `#f4d345` | `#a8860b` |
-| Return, gain | `--c-return` | `#83c167` | `#3e7f2a` |
-| Risk, loss | `--c-risk` | `#fc6255` | `#c0392b` |
-| Time | `--c-time` | `#5cd0b3` | `#1e8c72` |
-| Rate (r, TIR, k) | `--c-rate` | `#ff862f` | `#c25e12` |
+| Present value, price, spot | `--c-pv` | `#58c4dd` | `#155a75` |
+| Future value | `--c-fv` | `#f4d345` | `#685105` |
+| Return, gain | `--c-return` | `#83c167` | `#2d5b1e` |
+| Risk, loss | `--c-risk` | `#fc6255` | `#96291f` |
+| Time | `--c-time` | `#5cd0b3` | `#12604d` |
+| Rate (r, TIR, k) | `--c-rate` | `#ff862f` | `#8a400a` |
 
 In TeX use the macros (`\VA`, `\VF`, `\VAN`, `\TIR`, `\Rate{}`, `\rf`...), never raw `\color`. Colour a term only where it helps match formula to plot. Colour is never the only cue: pair gains/losses with a sign or word.
 

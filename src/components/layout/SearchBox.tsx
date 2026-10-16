@@ -61,7 +61,7 @@ export default function SearchBox({ indexUrl }: { indexUrl: string }) {
       onFocus={() => { ensureIndex(); setOpen(true); }}
       onChange={(event) => { setQuery(event.target.value); setActive(-1); setOpen(true); ensureIndex(); }}
       onKeyDown={(event) => {
-        if (event.key === 'Escape') { event.preventDefault(); setOpen(false); setActive(-1); }
+        if (event.key === 'Escape' && open) { event.preventDefault(); setOpen(false); setActive(-1); }
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           event.preventDefault(); setOpen(true);
           if (results.length) setActive((previous) => event.key === 'ArrowDown'
@@ -76,8 +76,9 @@ export default function SearchBox({ indexUrl }: { indexUrl: string }) {
         : status !== 'ready' ? 'Cargando…' : results.length ? `${results.length} resultados` : 'Sin resultados.')}
     </p>
     <ul id={`${id}-results`} role="listbox" aria-label="Resultados de búsqueda" hidden={!visible || !results.length}>
-      {results.map((entry, index) => <li key={entry.url} id={`${id}-${index}`} role="option" aria-selected={active === index}>
-        <a href={entry.url} tabIndex={-1} onMouseEnter={() => setActive(index)}>
+      {results.map((entry, index) => <li key={entry.url} role="presentation">
+        <a href={entry.url} id={`${id}-${index}`} role="option" aria-selected={active === index}
+          tabIndex={-1} onMouseEnter={() => setActive(index)}>
           <small>{labels[entry.kind]}</small>
           <strong>{entry.title}</strong>
           <span>{entry.excerpt}</span>

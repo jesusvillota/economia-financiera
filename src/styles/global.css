@@ -9,6 +9,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
+/* Leave room for the sticky header when a link or keyboard focus scrolls a target. */
+html { scroll-padding-top: 5rem; }
 
 body {
   margin: 0;

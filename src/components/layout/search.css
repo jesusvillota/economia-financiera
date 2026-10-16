@@ -8,7 +8,7 @@
 .course-search li { padding: 0; }
 .course-search li + li { border-top: 1px solid var(--border); }
 .course-search a { display: block; padding: 0.65rem; min-height: 44px; text-decoration: none; color: var(--text); overflow-wrap: anywhere; }
-.course-search [aria-selected="true"] a, .course-search a:hover { background: var(--bg-inset); box-shadow: inset 2px 0 var(--c-pv); }
+.course-search a[aria-selected="true"], .course-search a:hover { background: var(--bg-inset); box-shadow: inset 2px 0 var(--c-pv); }
 .course-search small, .course-search strong, .course-search a span { display: block; }
 .course-search small { color: var(--c-pv); }
 .course-search a span { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem; }

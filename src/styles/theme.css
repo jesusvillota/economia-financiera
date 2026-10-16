@@ -31,12 +31,12 @@
 }
 
 :root[data-theme='light'] {
-  --c-pv: #1f7fa3;
-  --c-fv: #a8860b;
-  --c-return: #3e7f2a;
-  --c-risk: #c0392b;
-  --c-time: #1e8c72;
-  --c-rate: #c25e12;
+  --c-pv: #155a75;
+  --c-fv: #685105;
+  --c-return: #2d5b1e;
+  --c-risk: #96291f;
+  --c-time: #12604d;
+  --c-rate: #8a400a;
 
   --bg: #fafaf7;
   --bg-raised: #ffffff;

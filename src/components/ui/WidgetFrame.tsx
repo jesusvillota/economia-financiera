@@ -19,7 +19,7 @@ export function WidgetFrame({ title, ariaLabel, plotHeight, plot, controls, read
     <figure className="widget">
       <figcaption className="widget-title">{title}</figcaption>
       <div className="widget-body">
-        <div className="widget-plot" role="img" aria-label={ariaLabel} style={{ minHeight: plotHeight }}>
+        <div className="widget-plot" role="group" aria-label={ariaLabel} style={{ minHeight: plotHeight }}>
           {plot}
         </div>
         {(controls || readout) && (
