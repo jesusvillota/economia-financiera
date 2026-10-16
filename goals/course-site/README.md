@@ -98,6 +98,7 @@ flowchart TD
   end
   subgraph M_6["M-6 · Polish and launch"]
     TASK_019["TASK-019 Plan: decompose M-6"]
+    TASK_052["TASK-052 Glossary page /glosario: terms and notation from the style guide, linked from the nav"]
   end
   TASK_004 --> DEC_001
   TASK_004 --> DEC_002
