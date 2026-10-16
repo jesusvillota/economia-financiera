@@ -89,8 +89,8 @@ describe('capítulo 7: todos los números del texto, panel y quizzes', () => {
     expect([...chapter.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map(match => match[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
-    contains('sessions: []', 'prerequisites: [6]', 'part: 3', 'chapter: 7', 'difficulty: 2');
-    // No PS3 session is available yet. Note 06 is deliberately not used.
+    contains('sessions: [03-carteras-y-capm, examen-final]', 'prerequisites: [6]', 'part: 3', 'chapter: 7', 'difficulty: 2');
+    // Note 06 is deliberately not used.
     const audit = readFileSync('docs/AUDIT.md', 'utf8');
     expect(audit).toContain('note 06 dropped as duplicate');
     expect(audit).toContain('tests/capitulo7.test.ts');

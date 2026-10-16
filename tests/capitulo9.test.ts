@@ -98,12 +98,12 @@ describe('capítulo 9: every numeric example in prose, table, prompts and quizze
     }
   });
 
-  it('six ordered sections, three quizzes, schema, model limits and no nonexistent session link', () => {
+  it('six ordered sections, three quizzes, schema, model limits and the published session', () => {
     expect([...chapter.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map(match => match[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
     expect(chapter).toContain('prerequisites: [8]');
-    expect(chapter).not.toContain('sessions:');
+    expect(chapter).toContain('sessions: [03-carteras-y-capm]');
     expect(chapter).toContain('prestar y pedir prestado al mismo tipo seguro');
     expect(chapter).toContain('sin restricciones de ventas en corto');
     expect(chapter).toContain('Los cálculos conservan los pesos exactos');

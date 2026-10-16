@@ -118,11 +118,11 @@ describe('capítulo 8: every numeric example and claim', () => {
     }
   });
 
-  it('six ordered sections, three quizzes, no link to an unpublished session', () => {
+  it('six ordered sections, three quizzes and the published session', () => {
     expect([...chapter.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map(m => m[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
-    expect(chapter).toContain('sessions: []');
+    expect(chapter).toContain('sessions: [03-carteras-y-capm]');
     expect(chapter).toContain('prerequisites: [7]');
   });
 });
