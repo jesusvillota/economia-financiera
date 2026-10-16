@@ -20,6 +20,7 @@ Build an interactive, Spanish-language, 3Blue1Brown-style website for the Econom
 flowchart TD
   subgraph M_1["M-1 · Foundation"]
     TASK_001["TASK-001 Create GitHub repo, push main, enable Pages (Actions source)"]
+    TASK_002["TASK-002 Import own LaTeX sources into source/ with provenance"]
   end
   subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
   end
@@ -31,6 +32,7 @@ flowchart TD
   end
   subgraph M_6["M-6 · Polish and launch"]
   end
+  TASK_001 --> TASK_002
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
