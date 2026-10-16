@@ -1,0 +1,21 @@
+# TASK-047 outcome
+
+## Acceptance
+
+- [x] `npm test` passes: **37 files / 1,202 tests** on 2026-10-16. The focused command `npm test -- tests/capitulo20.test.ts` also passes **10 tests**. They verify every numerical example and quiz distractor against `derivatives.ts`, the seeded futures ledger, the strict maintenance threshold, and an inventory of every numeric literal in the chapter.
+- [x] `npm run build` passes: **135 files checked, 0 errors, 0 warnings, 0 hints; 23 static pages**. The production route `/chapters/20-forwards-futuros/` returns HTTP 200. Playwright checks the rendered section order: Gancho, Intuición, Formalización, Zona de juego, Compruébalo, Resumen.
+- [x] `npm run screenshots 20` exits 0 for **dark/light × desktop/phone**. All four captures report no browser console errors, KaTeX errors or page overflow. Images were visually inspected; phone equations were split into shorter lines and rechecked. Screenshots remain local generated artifacts under `screenshots/`.
+- [x] `npm run clickthrough:cap20` exits 0: **2,660 readout/table comparisons** against the loaded `derivatives.ts` library, in both themes at 1280 px and 360 px. It exercises every slider, both position selectors, seeded rerolls, both resets, keyboard Home, every ledger row, and wrong/correct answers for all three quizzes. It also checks section order, equation width, and absence of console, KaTeX and page overflow errors. Plot checks wait for ResizeObserver measurement after hydration; the library loader disables its unused WebSocket server.
+- [x] The chapter agrees with `docs/AUDIT.md` and source PS4 Exercise 10: new forward quote **48.672 → €48.67**, **1.5 years remaining**, discount factor **0.9429**, discounted delivery **€45.26**, and long contract value **€4.74**, explicitly rejecting the source's €4.76. Quote and existing-contract value use separate symbols. The original futures example is identified as new material, not attributed to PS4. Nominal daily gains are distinguished from funded terminal wealth. The chapter tests cover these claims and corrected numbers.
+
+## Summary
+
+Resumed the existing chapter commit and draft PR #38 on `goal/course-site/task-047`. Retained the Spanish chapter, six required sections, three quizzes, prerequisite 18 and `sessions: []`. The forward widget compares the new delivery quote, discounted obligation, current contract value and expiry payoff. The futures widget follows a reproducible four-day path with margin calls, balances and a complete daily ledger. Financial calculations call `derivatives.ts`; its only task addition is the small seeded path helper.
+
+Finished the notation table and display equations, fixed a plot-measurement race in the click-through script, disabled its unused WebSocket listener, and made long equations fit phone screens. Numerical tests, audit clarification and the npm script are included. No task specs, other task outcomes, accepted decisions or goal configuration were edited. Merged `origin/main` at `77c34a677116c6df9617a00df2482964b6e86c1c` without conflicts, as required for shared append-only files; upstream goal dispatch records arrived through that merge only.
+
+Verified implementation revision: **`20f93ec38ffb738a39820520a8d4fe3a02d977e7`**. All four Verify commands above passed in this resumed session after the final executable/content changes. This outcome adds documentation only. Existing Node experimental-type-stripping and KaTeX euro font notices appear during the build; there are no build failures or browser KaTeX errors.
+
+PR: https://github.com/jesusvillota/economia-financiera/pull/38 into `main`, with `Goal-Task: course-site/TASK-047` and label `goal:course-site`. Review threads, reviews and PR comments were empty when inspected in this session. Readiness is based on local Verify commands: GitHub Actions and the PR build check are excluded by the explicit owner override from `goal rules`, and were not inspected. Never merge.
+
+No material decisions or scope deviations. The resumed fixes are follow-up commits preserving the existing pushed chapter commit. No follow-up implementation is required for this task. A separate `agent-note bug` records the shared WebSocket-port issue in other chapter scripts; those files were left unchanged.

@@ -4,6 +4,19 @@
  * Sin modelos de valoración de opciones: https://jesusvillota.github.io/options-explained/
  */
 
+import { rng } from '../problems/variant';
+
+/** Trayectoria didáctica reproducible: cuatro cambios enteros entre −5 y +5 €/unidad.
+ * No es un modelo de predicción ni una calibración de mercado.
+ */
+export function seededFuturesPrices(seed: number): number[] {
+  if (!Number.isInteger(seed) || seed < 0) throw new RangeError('La semilla debe ser un entero no negativo');
+  const random = rng(seed);
+  const prices = [100];
+  for (let day = 0; day < 4; day++) prices.push(prices[day] + Math.floor(random() * 11) - 5);
+  return prices;
+}
+
 const finite = (...xs: number[]) => {
   if (xs.some(x => !Number.isFinite(x))) throw new RangeError('Se requieren valores finitos');
 };
