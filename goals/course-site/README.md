@@ -33,6 +33,7 @@ flowchart TD
   subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
     TASK_009["TASK-009 Finance maths library: time value, annuities, NPV, IRR"]
     TASK_010["TASK-010 Shared widgets: cash-flow timeline and growth curves"]
+    TASK_011["TASK-011 Chapter 1: interest, simple vs compound"]
   end
   subgraph M_3["M-3 · Valuation"]
   end
@@ -58,6 +59,9 @@ flowchart TD
   TASK_003 --> TASK_009
   TASK_003 --> TASK_010
   TASK_007 --> TASK_010
+  TASK_009 --> TASK_011
+  TASK_010 --> TASK_011
+  TASK_007 --> TASK_011
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
