@@ -8,13 +8,13 @@
  *   npm run screenshots -- 02        # only pages whose path contains "02"
  *   npm run screenshots home         # only the home page
  */
-import { spawn } from 'node:child_process';
+import { startPreview } from './preview.mjs';
 import { existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { chromium } from 'playwright';
 
-const PORT = 4329;
-const BASE = `http://localhost:${PORT}/economia-financiera/`;
+const server = await startPreview();
+const BASE = server.base;
 const OUT = 'screenshots';
 const filter = process.argv[2];
 
@@ -31,17 +31,6 @@ function pages() {
   return filter ? found.filter((p) => p.includes(filter) || (filter === 'home' && p === '')) : found;
 }
 
-async function waitForServer() {
-  for (let i = 0; i < 60; i++) {
-    try {
-      const res = await fetch(BASE);
-      if (res.ok) return;
-    } catch { /* not up yet */ }
-    await new Promise((r) => setTimeout(r, 500));
-  }
-  throw new Error('preview server did not start');
-}
-
 async function launch() {
   try {
     return await chromium.launch();
@@ -51,11 +40,8 @@ async function launch() {
   }
 }
 
-// Run Astro's CLI directly (not via npx) so that killing it really stops the server.
-const server = spawn(process.execPath, ['node_modules/astro/bin/astro.mjs', 'preview', '--port', String(PORT), '--ignore-lock'], { stdio: 'ignore' });
 let problems = 0;
 try {
-  await waitForServer();
   mkdirSync(OUT, { recursive: true });
   const browser = await launch();
   const viewports = { desktop: { width: 1280, height: 900 }, phone: { width: 375, height: 800 } };
@@ -94,7 +80,7 @@ try {
   }
   await browser.close();
 } finally {
-  server.kill();
+  await server.stop();
 }
 if (problems) {
   console.error(`\n${problems} problem(s) found.`);
