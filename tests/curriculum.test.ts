@@ -19,6 +19,6 @@ it('matches the chapters and prerequisites of docs/AUDIT.md', () => {
 it('every written chapter is in the curriculum (placeholder allowed)', () => {
   const written = readdirSync('src/content/chapters').map((f) => f.replace(/\.mdx$/, ''));
   const known = new Set(chapters.map((c) => c.slug));
-  // 00-ejemplo is the template placeholder, removed when chapter 1 lands.
+  // 00-ejemplo was the template placeholder; it went away with chapter 1.
   expect(written.filter((s) => s !== '00-ejemplo' && !known.has(s))).toEqual([]);
 });

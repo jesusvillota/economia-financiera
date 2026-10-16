@@ -1,0 +1,189 @@
+---
+title: "Interés simple y compuesto; tasas fraccionadas"
+part: 1
+chapter: 1
+difficulty: 1
+prerequisites: []
+summary: "Por qué el dinero tiene un precio en el tiempo, cómo crece con interés simple y compuesto, y cómo comparar tasas de periodos distintos."
+sessions: ["ps1"]
+---
+import GrowthCurves from '../../components/plots/GrowthCurves';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿100 € hoy o 105 € dentro de un año?
+
+Un amigo te ofrece elegir: 100 € ahora o 105 € dentro de un año. ¿Qué eliges?
+
+Si tu banco te paga un 5 % anual por tus ahorros, la elección es indiferente. Los 100 € de hoy se convierten en 105 € en un año. Si te paga más, mejor cobrar hoy. Si te paga menos, mejor esperar.
+
+Esa es la idea central de todo el curso: **un euro de hoy no vale lo mismo que un euro de mañana**. Para comparar cantidades en fechas distintas necesitamos un precio del tiempo. Ese precio es el **tipo de interés**.
+
+Este capítulo responde a tres preguntas:
+
+1. ¿Por qué el dinero tiene un precio en el tiempo?
+2. ¿Cuánto crece un capital con interés simple y con interés compuesto?
+3. Si un banco anuncia "8 % anual, pagado cada mes", ¿cuánto te paga de verdad?
+
+## <span class="section-tag">Intuición</span>El interés sobre el interés
+
+### Tres razones para preferir el dinero de hoy
+
+- **Incertidumbre.** El dinero prometido para dentro de un año puede no llegar.
+- **Inflación.** Con el mismo dinero, dentro de un año compras menos cosas.
+- **Oportunidad.** Con el dinero de hoy puedes invertir y ganar un rendimiento.
+
+Para simplificar, en este capítulo tratamos el tipo de interés como un dato fijo y sin riesgo. Del riesgo hablaremos a partir de la Parte II.
+
+### Dos maneras de contar el interés
+
+Imagina que ingresas 1.000 € al 5 % anual. Al final del primer año ganas 50 €. ¿Qué pasa con el segundo año?
+
+- **Interés simple.** Cobras otra vez 50 €, porque el interés solo se calcula sobre los 1.000 € iniciales. Cada año añade la misma cantidad: la curva es una **recta**.
+- **Interés compuesto.** Los 50 € del primer año ya forman parte del capital. El segundo año el 5 % se aplica a 1.050 €, y ganas 52,50 €. Los intereses cobran intereses: la curva es una **exponencial**.
+
+Mueve los deslizadores y mira cómo se separan las dos curvas. La zona sombreada es el interés sobre el interés.
+
+<GrowthCurves client:visible />
+
+**Prueba esto:** pon la tasa al 5 % y 40 años. ¿Cuántos años tarda el capital compuesto en duplicarse? Después sube la tasa al 10 %. ¿Se reduce el tiempo a la mitad?
+
+<Callout type="key">
+Con pocos años las dos curvas casi coinciden. Con muchos años, la compuesta se aleja de la recta cada vez más deprisa.
+</Callout>
+
+## <span class="section-tag">Formalización</span>Las fórmulas
+
+Usamos $\VA$ para el capital de hoy, $\VF$ para el capital en el futuro, $\Rate{r}$ para el tipo de interés anual y $t$ para el tiempo en años. Si no se dice otra cosa, $\Rate{r}$ es un tipo **efectivo anual**: lo que de verdad ganas en un año.
+
+### Capitalización simple
+
+El interés de cada año es siempre $\VA\,\Rate{r}$. Tras $t$ años:
+
+$$\VF = \VA\,(1+\Rate{r}\,t).$$
+
+Con 1.000 € al 5 % durante 10 años: $1000\,(1+0{,}05\cdot 10)=1.500$ €.
+
+### Capitalización compuesta
+
+Cada año el capital se multiplica por $(1+\Rate{r})$. Tras $t$ años:
+
+$$\VF = \VA\,(1+\Rate{r})^t.$$
+
+<details>
+<summary>Por qué sale esta fórmula</summary>
+
+Sea $C_k$ el capital tras $k$ años. En el año $k+1$ el interés es $C_k\,\Rate{r}$, así que $C_{k+1}=C_k+C_k\,\Rate{r}=C_k(1+\Rate{r})$. Partimos de $C_0=\VA$ y multiplicamos $t$ veces por $(1+\Rate{r})$. El resultado es $\VA(1+\Rate{r})^t$.
+</details>
+
+Con los mismos datos: $1000\cdot 1{,}05^{10}\approx 1.628{,}89$ €. Son 128,89 € más que con interés simple.
+
+El camino inverso es el **valor actual**. Si recibirás $\VF$ dentro de $t$ años, hoy vale
+
+$$\VA = \frac{\VF}{(1+\Rate{r})^t}.$$
+
+Con $\Rate{r}=5\,\%$, 1.000 € dentro de 10 años valen hoy 613,91 €. Volveremos a ello en el capítulo 2.
+
+### Cuál crece más
+
+Para $t>1$ y $r>0$ se cumple $(1+r)^t>1+rt$ (desigualdad de Bernoulli). Después del primer año, el interés compuesto siempre gana. Por ejemplo, 1.000 € al 8 % durante 3 años dan 1.240 € con interés simple y 1.259,71 € con interés compuesto. La diferencia es de 19,71 €.
+
+<Callout type="warning" title="Antes del primer año ocurre lo contrario">
+Para $0<t<1$ la desigualdad se invierte: $(1+r)^t<1+rt$. A medio año, 1.000 € al 5 % dan 1.024,70 € en compuesto y 1.025 € en simple. Por eso el criterio "el compuesto siempre gana" solo vale a partir de un año.
+</Callout>
+
+### Cuánto tarda en duplicarse
+
+Con interés compuesto anual, el capital se duplica cuando $(1+\Rate{r})^t=2$, es decir, tras
+
+$$t=\frac{\ln 2}{\ln(1+\Rate{r})}\ \text{años}.$$
+
+Al 5 % son 14,2 años. La **regla del 72** da una aproximación rápida: $t\approx 72/(100\,\Rate{r})$, que al 5 % sale 14,4 años.
+
+### Tasas fraccionadas: proporcional frente a equivalente
+
+Muchos productos anuncian un tipo anual pero pagan intereses cada mes o cada semestre. Sea $k$ el número de periodos por año. Hay dos formas de pasar del tipo anual al tipo por periodo.
+
+**Con interés simple** el tipo por periodo es **proporcional**: se divide entre $k$.
+
+$$r_{1/k}=\frac{r}{k}.$$
+
+Una empresa invierte 2.000.000 € a un 6 % simple anual, con intereses semestrales. El tipo semestral es $6\,\%/2=3\,\%$. En un año cobra $2\cdot 3\,\%\cdot 2.000.000=120.000$ €, igual que con el 6 % anual.
+
+**Con interés compuesto** dividir entre $k$ no funciona. El tipo por periodo que reproduce el efectivo anual $\Rate{r}$ es el **equivalente**:
+
+$$r_{1/k}=(1+\Rate{r})^{1/k}-1.$$
+
+Para un 8 % efectivo anual:
+
+| Periodo | $k$ | Tipo equivalente |
+|---|---|---|
+| Mensual | 12 | $0{,}6434\,\%$ |
+| Bimestral | 6 | $1{,}2909\,\%$ |
+| Trimestral | 4 | $1{,}9427\,\%$ |
+| Cuatrimestral | 3 | $2{,}5986\,\%$ |
+| Semestral | 2 | $3{,}9230\,\%$ |
+
+Fíjate: el tipo mensual equivalente es $0{,}6434\,\%$, y no $8\,\%/12=0{,}6667\,\%$. Si dividieras entre 12 y capitalizaras cada mes, ganarías más del 8 %. Eso nos lleva al siguiente punto.
+
+### Tipo nominal y tipo efectivo
+
+Un banco anuncia "8 % anual, capitalizado cada mes". Eso es un **tipo nominal** $j=8\,\%$ con $k=12$: el tipo por mes es $j/k$. Al cabo de un año, el capital se multiplica por $(1+j/k)^k$. El **tipo efectivo anual** (en España, la **TAE**) es
+
+$$r=\left(1+\frac{j}{k}\right)^k-1.$$
+
+Con $j=8\,\%$ y $k=12$: $r=1{,}00667^{12}-1=8{,}30\,\%$. Con capitalización semestral ($k=2$) sale 8,16 %, y con trimestral ($k=4$) sale 8,24 %. Cuantas más capitalizaciones, mayor es el tipo efectivo. En el widget de arriba, el deslizador $k$ usa justo esta definición: $r$ es el tipo nominal.
+
+<Callout type="note">
+Para comparar productos financieros compara siempre tipos **efectivos** anuales. Dos tipos nominales solo son comparables si tienen el mismo $k$.
+</Callout>
+
+La conversión inversa también existe: el nominal $j$ con $k$ capitalizaciones equivalente a un efectivo $r$ es $j=k\left[(1+r)^{1/k}-1\right]$. Para un 8 % efectivo y $k=12$, $j=7{,}72\,\%$.
+
+## <span class="section-tag">Zona de juego</span>Compara capitalizaciones
+
+Ahora el widget es tuyo. Cada gráfico parte de 100 €. Fija $r=8\,\%$ y $n=10$ años. Con $k=1$ el capital compuesto final es 215,89 €. Sube $k$ a 12 y llega a 221,96 €. Capitalizar más a menudo ayuda, pero cada vez menos.
+
+<GrowthCurves client:visible />
+
+Fíjate también en la lectura "Duplicar". Muestra el tiempo exacto y, entre paréntesis, la aproximación de la regla del 72. Cuanto más alto es el tipo, más se alejan las dos cifras.
+
+**Prueba esto:**
+
+1. Con $r=8\,\%$ y $n=10$, mueve $k$ de 1 a 12. ¿Cuánto aporta la capitalización mensual frente a la anual? ¿Y de 6 a 12? Piensa si hay un límite.
+2. Pon $r=2\,\%$ y $n=5$. ¿Cuesta distinguir a simple vista las dos curvas? ¿Qué te dice eso de los plazos cortos y los tipos bajos?
+
+Los ejercicios de este capítulo están en la [Sesión de problemas 1](/economia-financiera/sesiones/ps1/).
+
+## <span class="section-tag">Compruébalo</span>Tres preguntas
+
+<Quiz client:visible
+  question="Depositas 500 € al 6 % efectivo anual durante 4 años con interés compuesto. ¿Cuánto tendrás?"
+  options={['620,00 €', '631,24 €', '636,00 €']}
+  answer={1}
+  explanation="$500\cdot 1{,}06^4=631{,}24$ €. La opción A es el resultado con interés simple: $500\,(1+0{,}06\cdot 4)=620$ €."
+/>
+
+<Quiz client:visible
+  question="Un banco anuncia un 12 % nominal anual con capitalización mensual. ¿Cuál es su TAE?"
+  options={['12,00 %', '12,68 %', '13,00 %']}
+  answer={1}
+  explanation="$(1+0{,}12/12)^{12}-1=1{,}01^{12}-1\approx 12{,}68\,\%$. Cada mes se cobran intereses sobre los intereses anteriores, así que la TAE supera al nominal."
+/>
+
+<Quiz client:visible
+  question="El tipo efectivo anual es del 6 %. ¿Cuál es el tipo mensual equivalente en capitalización compuesta?"
+  options={['0,5000 %', '0,4868 %', '0,5800 %']}
+  answer={1}
+  explanation="$1{,}06^{1/12}-1\approx 0{,}4868\,\%$. La opción A, $6\,\%/12$, es el tipo proporcional: solo vale para interés simple."
+/>
+
+## <span class="section-tag">Resumen</span>Lo que te llevas
+
+- El dinero tiene un precio en el tiempo por la incertidumbre, la inflación y la oportunidad de invertir.
+- Interés simple: $\VF=\VA(1+\Rate{r}t)$, crece en línea recta. Interés compuesto: $\VF=\VA(1+\Rate{r})^t$, crece en curva.
+- A partir del primer año el compuesto gana. Antes del primer año, gana el simple.
+- Con interés simple el tipo por periodo es proporcional ($r/k$). Con compuesto es el equivalente, $(1+r)^{1/k}-1$.
+- Un tipo nominal $j$ con $k$ capitalizaciones tiene un efectivo $(1+j/k)^k-1$. Compara siempre tipos efectivos.
+
+**Siguiente:** capítulo 2, *Valor actual, rentas y perpetuidades*. Pasamos de un solo pago a muchos pagos iguales.
