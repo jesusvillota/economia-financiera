@@ -18,6 +18,7 @@
     "clickthrough:cap5": "node scripts/clickthrough-cap5.mjs",
     "clickthrough:van-tir": "node scripts/clickthrough-van-tir.mjs",
     "clickthrough:cap4": "node scripts/clickthrough-cap4.mjs",
+    "clickthrough:cap10": "node scripts/clickthrough-cap10.mjs",
     "clickthrough:cap7": "node scripts/clickthrough-cap7.mjs"
   },
   "dependencies": {
