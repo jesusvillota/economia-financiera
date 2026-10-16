@@ -19,6 +19,12 @@ export interface ExerciseSpec {
 const expected = (a: AnswerSpec, values: Record<string, number>) =>
   libs[`../../lib/${a.lib.module}.ts`][a.lib.fn](...a.lib.args.map((id) => values[id]));
 
+/** Solution steps may use `{{answer_id}}`: the answer rounded for display (2 decimals for €, 4 otherwise). */
+const withAnswers = (answers: AnswerSpec[], values: Record<string, number>) => ({
+  ...values,
+  ...Object.fromEntries(answers.map((a) => [a.id, Number(expected(a, values).toFixed(a.unit === '€' ? 2 : 4))])),
+});
+
 /** Hint ladder: one button reveals the next hint, in order. */
 export function Pista({ hints, values }: { hints: string[]; values: Record<string, number> }) {
   const [shown, setShown] = useState(0);
@@ -113,7 +119,7 @@ export default function Ejercicio({ slug, index, exercise }: { slug: string; ind
           }}
         />
       ))}
-      <Solucion key={`s${n}`} steps={exercise.steps} values={values} />
+      <Solucion key={`s${n}`} steps={exercise.steps} values={withAnswers(exercise.answers, values)} />
     </section>
   );
 }

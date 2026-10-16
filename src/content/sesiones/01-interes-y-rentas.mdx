@@ -1,0 +1,239 @@
+---
+title: 'Interés y rentas'
+number: 1
+source: ps1
+chapters: ['01-interes-simple-y-compuesto', '02-valor-actual-rentas', '03-van-tir-criterios']
+# pendiente: los tres capítulos todavía no están fusionados; los enlaces se resolverán por slug cuando existan.
+difficulty: 1
+summary: 'Diez ejercicios sobre interés simple y compuesto, rentas finitas y perpetuas y evaluación de proyectos, con números que cambian en cada variante.'
+exercises:
+  - id: ej1
+    statement: 'Una empresa invierte {{c0}} € al tipo simple anual $i={{i}}\%$ durante {{t}} años. (a) Calcula el capital final. (b) Calcula el tipo simple de cada periodo si el año se divide en {{k}} periodos (proporcional al anual). (c) Si los intereses se pagan cada periodo de (b), calcula el interés de un periodo. (d) Calcula el valor actual hoy de {{vf}} € a cobrar dentro de {{tp}} años al {{ip}} % simple anual.'
+    parameters:
+      - { id: c0, label: 'Capital inicial', default: 150000, min: 50000, max: 300000, step: 10000, unit: '€' }
+      - { id: i, label: 'Tipo simple anual', default: 6, min: 3, max: 9, step: 0.5, unit: '%' }
+      - { id: t, label: 'Plazo', default: 3.5, min: 1, max: 6, step: 0.5, unit: 'años' }
+      - { id: k, label: 'Periodos por año', default: 4 }
+      - { id: vf, label: 'Capital futuro', default: 10000, min: 5000, max: 20000, step: 1000, unit: '€' }
+      - { id: ip, label: 'Tipo simple (d)', default: 5, min: 2, max: 8, step: 1, unit: '%' }
+      - { id: tp, label: 'Plazo (d)', default: 10, min: 2, max: 15, step: 1, unit: 'años' }
+    hints:
+      - 'Con interés simple los intereses no generan más intereses: el capital crece una cantidad fija cada año.'
+      - 'El capital final es $C_0(1+it)$. Para el tipo del periodo, divide el tipo anual entre el número de periodos por año.'
+      - 'Para el valor actual despeja $C_0$ en $C_t=C_0(1+it)$.'
+    steps:
+      - { title: 'Capital final', body: '$C_t=C_0(1+it)={{c0}}\,(1+{{i}}\%\cdot{{t}})={{res_a}}$ €.' }
+      - { title: 'Tipo proporcional', body: 'En interés simple $i_k=i/k={{i}}\%/{{k}}={{res_b}}\%$.' }
+      - { title: 'Interés de un periodo', body: 'Cada periodo devenga lo mismo: $I=C_0\,i_k={{res_c}}$ €.' }
+      - { title: 'Valor actual', body: '$V_0=\dfrac{C_t}{1+it}=\dfrac{ {{vf}} }{1+{{ip}}\%\cdot{{tp}}}={{res_d}}$ €.' }
+    answers:
+      - { id: res_a, label: 'a) Capital final', unit: '€', value: 181500, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s1Final, args: [c0, i, t] } }
+      - { id: res_b, label: 'b) Tipo del periodo', unit: '%', value: 1.5, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s1Periodo, args: [i, k] } }
+      - { id: res_c, label: 'c) Interés de un periodo', unit: '€', value: 2250, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s1Interes, args: [c0, i, k] } }
+      - { id: res_d, label: 'd) Valor actual', unit: '€', value: 6666.666667, tolerance: { kind: abs, value: 0.5 }, lib: { module: sesion01, fn: s1ValorActual, args: [vf, ip, tp] } }
+    concepts: ['01-interes-simple-y-compuesto']
+  - id: ej2
+    seed: 2
+    statement: 'Se depositan {{c0}} € con interés compuesto al {{i}} % efectivo anual durante {{t}} años. (a) Calcula el montante. (b) Calcula el tipo compuesto equivalente para periodos de $1/{{k}}$ de año. (c) Si los intereses se capitalizan cada uno de esos periodos, calcula el interés devengado en el segundo. (d) Calcula el valor actual de {{vf}} € a cobrar dentro de {{tp}} años con tasa efectiva anual del {{j}} %.'
+    parameters:
+      - { id: c0, label: 'Depósito', default: 25000, min: 10000, max: 50000, step: 5000, unit: '€' }
+      - { id: i, label: 'Tasa efectiva anual', default: 8, min: 4, max: 10, step: 1, unit: '%' }
+      - { id: t, label: 'Plazo', default: 5, min: 2, max: 10, step: 1, unit: 'años' }
+      - { id: k, label: 'Periodos por año', default: 12 }
+      - { id: vf, label: 'Capital futuro', default: 10000, min: 5000, max: 20000, step: 1000, unit: '€' }
+      - { id: j, label: 'Tasa efectiva (d)', default: 6, min: 3, max: 8, step: 1, unit: '%' }
+      - { id: tp, label: 'Plazo (d)', default: 1.5, min: 1, max: 3, step: 0.5, unit: 'años' }
+    hints:
+      - 'Aquí los intereses sí generan intereses: el capital se multiplica por $(1+i)$ cada año.'
+      - 'El tipo equivalente cumple $(1+i_k)^k=1+i$, es decir $i_k=(1+i)^{1/k}-1$. No es $i/k$.'
+      - 'El interés del segundo periodo se calcula sobre el capital ya capitalizado: $I_2=i_k\,C_0(1+i_k)$.'
+    steps:
+      - { title: 'Montante', body: '$C_t=C_0(1+i)^t={{c0}}\,(1+{{i}}\%)^{ {{t}} }={{res_a}}$ €.' }
+      - { title: 'Tipo equivalente', body: '$i_k=(1+{{i}}\%)^{1/{{k}}}-1={{res_b}}\%$ por periodo.' }
+      - { title: 'Interés del segundo periodo', body: '$I_2=i_k\,C_0(1+i_k)={{res_c}}$ €. Es algo mayor que el del primer periodo.' }
+      - { title: 'Valor actual', body: '$V_0=\dfrac{C_t}{(1+i)^t}=\dfrac{ {{vf}} }{(1+{{j}}\%)^{ {{tp}} }}={{res_d}}$ €. Capitalizar por meses con el tipo equivalente da el mismo resultado que elevar a {{tp}}.' }
+    answers:
+      - { id: res_a, label: 'a) Montante', unit: '€', value: 36733.20192, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s2Montante, args: [c0, i, t] } }
+      - { id: res_b, label: 'b) Tipo equivalente del periodo', unit: '%', value: 0.643403, tolerance: { kind: abs, value: 0.001 }, lib: { module: sesion01, fn: s2Periodo, args: [i, k] } }
+      - { id: res_c, label: 'c) Interés del segundo periodo', unit: '€', value: 161.885671, tolerance: { kind: abs, value: 0.05 }, lib: { module: sesion01, fn: s2InteresMes2, args: [c0, i, k] } }
+      - { id: res_d, label: 'd) Valor actual', unit: '€', value: 9163.074173, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s2ValorActual, args: [vf, j, tp] } }
+    concepts: ['01-interes-simple-y-compuesto']
+  - id: ej3
+    seed: 3
+    statement: 'Se invierten {{c0}} € durante 3 años. El primer año con interés simple al {{is}} % semestral (2 semestres) y los años 2 y 3 con capitalización compuesta al {{ic}} % efectivo anual. (a) Calcula el montante. (b) Calcula la tasa compuesta anual equivalente de los 3 años. Compara con (c) la alternativa A, interés simple del {{iq}} % trimestral durante 3 años, y (d) la alternativa B, capitalización compuesta del {{ib}} % cuatrimestral durante 3 años.'
+    parameters:
+      - { id: c0, label: 'Capital', default: 100000, min: 50000, max: 200000, step: 10000, unit: '€' }
+      - { id: is, label: 'Tipo simple semestral', default: 3, min: 2, max: 4, step: 0.5, unit: '%' }
+      - { id: ic, label: 'Tasa compuesta anual', default: 8, min: 5, max: 10, step: 1, unit: '%' }
+      - { id: iq, label: 'Alt. A, simple trimestral', default: 2, min: 1.5, max: 2.5, step: 0.5, unit: '%' }
+      - { id: ib, label: 'Alt. B, compuesto cuatrimestral', default: 2, min: 1.5, max: 2.5, step: 0.5, unit: '%' }
+    hints:
+      - 'Multiplica los factores de cada tramo: el factor total es el producto de los factores.'
+      - 'Tramo simple: $1+2\,i_s$. Tramo compuesto: $(1+i_c)^2$.'
+      - 'La tasa equivalente cumple $(1+i_{eq})^3=C_3/C_0$. La alternativa A tiene 12 trimestres y la B, 9 cuatrimestres.'
+    steps:
+      - { title: 'Montante mixto', body: '$C_3=C_0(1+2\cdot{{is}}\%)(1+{{ic}}\%)^2={{res_a}}$ €.' }
+      - { title: 'Tasa equivalente', body: '$i_{eq}=(C_3/C_0)^{1/3}-1={{res_b}}\%$ anual.' }
+      - { title: 'Alternativa A', body: 'Interés simple, 12 trimestres: $C_0(1+12\cdot{{iq}}\%)={{res_c}}$ €.' }
+      - { title: 'Alternativa B', body: 'Interés compuesto, 9 cuatrimestres: $C_0(1+{{ib}}\%)^9={{res_d}}$ €. Compara los tres montantes: la alternativa con mayor montante es la mejor.' }
+    answers:
+      - { id: res_a, label: 'a) Montante mixto', unit: '€', value: 123638.4, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s3Mixto, args: [c0, is, ic] } }
+      - { id: res_b, label: 'b) Tasa compuesta equivalente', unit: '%', value: 7.329175, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s3TipoEquivalente, args: [c0, is, ic] } }
+      - { id: res_c, label: 'c) Montante de la alternativa A', unit: '€', value: 124000, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s3AltA, args: [c0, iq] } }
+      - { id: res_d, label: 'd) Montante de la alternativa B', unit: '€', value: 119509.256862, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s3AltB, args: [c0, ib] } }
+    concepts: ['01-interes-simple-y-compuesto']
+  - id: ej4
+    seed: 4
+    statement: 'Una renta paga {{a}} € al final de cada año durante {{n}} años; la tasa de descuento es {{r}} %. (a) Calcula su valor actual. (b) Si los pagos crecen un {{g}} % anual (el primer pago es {{a}} €), calcula el valor actual. (c) Renta mixta: los primeros {{m}} años paga {{a}} € constantes; desde el año {{m}}+1 hasta el {{n}} el primer pago es {{a}} € y crece un {{g}} % anual. Calcula su valor actual.'
+    parameters:
+      - { id: a, label: 'Pago', default: 5000, min: 2000, max: 8000, step: 500, unit: '€' }
+      - { id: r, label: 'Tasa de descuento', default: 9, min: 6, max: 12, step: 1, unit: '%' }
+      - { id: g, label: 'Crecimiento', default: 3, min: 1, max: 4, step: 1, unit: '%' }
+      - { id: n, label: 'Años', default: 8, min: 6, max: 12, step: 1 }
+      - { id: m, label: 'Años del tramo constante', default: 3, min: 2, max: 4, step: 1 }
+    hints:
+      - 'Una renta es la suma de pagos descontados. Las fórmulas cerradas la resumen en una sola expresión.'
+      - 'Constante: $A\,\dfrac{1-(1+r)^{-n}}{r}$. Creciente: $A\,\dfrac{1-\left(\frac{1+g}{1+r}\right)^n}{r-g}$.'
+      - 'En (c) suma dos tramos. El segundo vale en $t=m$ lo que dice la fórmula creciente con $n-m$ pagos; llévalo a $t=0$ dividiendo por $(1+r)^m$.'
+    steps:
+      - { title: 'Renta constante', body: '$V_0=A\,\dfrac{1-(1+r)^{-n}}{r}={{a}}\,\dfrac{1-(1+{{r}}\%)^{-{{n}}}}{ {{r}}\% }={{res_a}}$ €.' }
+      - { title: 'Renta creciente', body: '$V_0=A\,\dfrac{1-\left(\frac{1+g}{1+r}\right)^n}{r-g}={{res_b}}$ €. Es mayor que la constante porque los pagos futuros son más altos.' }
+      - { title: 'Renta mixta', body: 'Tramo 1: renta constante de {{m}} pagos. Tramo 2: renta creciente de $n-m$ pagos valorada en $t={{m}}$ y descontada {{m}} años. Suma: $V_0={{res_c}}$ €.' }
+    answers:
+      - { id: res_a, label: 'a) Valor actual constante', unit: '€', value: 27674.095574, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s4Constante, args: [a, r, n] } }
+      - { id: res_b, label: 'b) Valor actual creciente', unit: '€', value: 30354.234338, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s4Creciente, args: [a, r, g, n] } }
+      - { id: res_c, label: 'c) Valor actual mixto', unit: '€', value: 28521.716103, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s4Mixta, args: [a, r, g, n, m] } }
+    concepts: ['02-valor-actual-rentas']
+  - id: ej5
+    seed: 5
+    statement: 'Valora con $r={{r}}\%$: (a) una perpetuidad de {{a}} € anuales; (b) una perpetuidad cuyo primer pago es {{a}} € y que crece un {{g}} % anual; (c) la perpetuidad de (b) diferida {{k}} años: el primer pago llega en $t={{k}}+1$ y los pagos siguen creciendo durante el diferimiento.'
+    parameters:
+      - { id: a, label: 'Pago', default: 2500, min: 1000, max: 5000, step: 500, unit: '€' }
+      - { id: r, label: 'Tasa de descuento', default: 8, min: 6, max: 10, step: 1, unit: '%' }
+      - { id: g, label: 'Crecimiento', default: 2, min: 0, max: 4, step: 1, unit: '%' }
+      - { id: k, label: 'Diferimiento', default: 5, min: 2, max: 8, step: 1, unit: 'años' }
+    hints:
+      - 'Una perpetuidad es el límite de una renta cuando $n\to\infty$.'
+      - 'Constante: $A/r$. Creciente: $A/(r-g)$, con $r>g$.'
+      - 'Diferida: el primer pago es $A(1+g)^k$. Valora la perpetuidad un periodo antes del primer pago, en $t=k$, y descuenta $k$ años.'
+    steps:
+      - { title: 'Perpetuidad constante', body: '$V_0=A/r={{a}}/{{r}}\%={{res_a}}$ €.' }
+      - { title: 'Perpetuidad creciente', body: '$V_0=A/(r-g)={{a}}/({{r}}\%-{{g}}\%)={{res_b}}$ €.' }
+      - { title: 'Perpetuidad diferida', body: 'Primer pago $A(1+g)^{ {{k}} }$ en $t={{k}}+1$. $V_0=\dfrac{A(1+g)^{ {{k}} }}{(r-g)(1+r)^{ {{k}} }}={{res_c}}$ €.' }
+    answers:
+      - { id: res_a, label: 'a) Perpetuidad constante', unit: '€', value: 31250, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s5Constante, args: [a, r] } }
+      - { id: res_b, label: 'b) Perpetuidad creciente', unit: '€', value: 41666.666667, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s5Creciente, args: [a, r, g] } }
+      - { id: res_c, label: 'c) Perpetuidad diferida', unit: '€', value: 31309.118451, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s5Diferida, args: [a, r, g, k] } }
+    concepts: ['02-valor-actual-rentas']
+  - id: ej6
+    seed: 6
+    statement: 'Un proyecto paga durante {{anios}} años dos flujos: una renta mensual de {{cuota}} € al final de cada mes y un pago anual que empieza en {{a}} € y crece un {{g}} % anual. El tipo efectivo anual es {{i}} %. Calcula (a) el valor actual de la renta mensual con el tipo mensual equivalente, (b) el de la renta anual creciente, (c) el total y (d) el valor actual de la renta mensual si se paga al principio de cada mes.'
+    parameters:
+      - { id: cuota, label: 'Cuota mensual', default: 600, min: 300, max: 1000, step: 100, unit: '€' }
+      - { id: a, label: 'Primer pago anual', default: 2000, min: 1000, max: 3000, step: 500, unit: '€' }
+      - { id: i, label: 'Tipo efectivo anual', default: 9, min: 6, max: 10, step: 1, unit: '%' }
+      - { id: g, label: 'Crecimiento', default: 4, min: 2, max: 5, step: 1, unit: '%' }
+      - { id: anios, label: 'Duración', default: 10, min: 5, max: 15, step: 1, unit: 'años' }
+    hints:
+      - 'No uses $i/12$: el tipo mensual equivalente es $(1+i)^{1/12}-1$.'
+      - 'La renta mensual tiene $12\cdot$años pagos. La anual creciente tiene un pago por año.'
+      - 'Prepagable = pospagable multiplicada por $(1+i_{12})$.'
+    steps:
+      - { title: 'Tipo mensual', body: '$i_{12}=(1+{{i}}\%)^{1/12}-1$.' }
+      - { title: 'Renta mensual', body: '$V=\text{cuota}\,\dfrac{1-(1+i_{12})^{-12\cdot{{anios}}}}{i_{12}}={{res_a}}$ €.' }
+      - { title: 'Renta anual creciente', body: '$V={{a}}\,\dfrac{1-\left(\frac{1+{{g}}\%}{1+{{i}}\%}\right)^{ {{anios}} }}{ {{i}}\%-{{g}}\% }={{res_b}}$ €.' }
+      - { title: 'Total', body: '${{res_a}}+{{res_b}}={{res_c}}$ €.' }
+      - { title: 'Prepagable', body: 'Multiplicamos por $(1+i_{12})$: ${{res_d}}$ €. Cobrar antes vale más.' }
+    answers:
+      - { id: res_a, label: 'a) Renta mensual', unit: '€', value: 48083.525695, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s6Mensual, args: [cuota, i, anios] } }
+      - { id: res_b, label: 'b) Renta anual creciente', unit: '€', value: 14989.152688, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s6Creciente, args: [a, i, g, anios] } }
+      - { id: res_c, label: 'c) Valor actual total', unit: '€', value: 63072.678383, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s6Total, args: [cuota, a, i, g, anios] } }
+      - { id: res_d, label: 'd) Renta mensual prepagable', unit: '€', value: 48430.079211, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s6Prepagable, args: [cuota, i, anios] } }
+    concepts: ['02-valor-actual-rentas']
+  - id: ej7
+    seed: 7
+    statement: 'Una inversión requiere {{i0}} € y genera {{c1}} €, {{c2}} €, {{c3}} € y {{c4}} € al final de los años 1 a 4. Con $r={{r}}\%$, calcula el VAN. ¿Aceptas el proyecto?'
+    parameters:
+      - { id: i0, label: 'Inversión', default: 120000, unit: '€' }
+      - { id: c1, label: 'Flujo 1', default: 40000, min: 35000, max: 45000, step: 5000, unit: '€' }
+      - { id: c2, label: 'Flujo 2', default: 45000, min: 40000, max: 50000, step: 5000, unit: '€' }
+      - { id: c3, label: 'Flujo 3', default: 50000, min: 45000, max: 55000, step: 5000, unit: '€' }
+      - { id: c4, label: 'Flujo 4', default: 55000, min: 50000, max: 60000, step: 5000, unit: '€' }
+      - { id: r, label: 'Tasa de descuento', default: 10, min: 6, max: 12, step: 1, unit: '%' }
+    hints:
+      - 'Descuenta cada flujo a $t=0$ y réstale la inversión.'
+      - 'El VAN es $-I_0+\sum_t C_t/(1+r)^t$. La regla: acepta si VAN $>0$.'
+    steps:
+      - { title: 'Descontar', body: '$\VAN=-{{i0}}+\dfrac{ {{c1}} }{1+{{r}}\%}+\dfrac{ {{c2}} }{(1+{{r}}\%)^2}+\dfrac{ {{c3}} }{(1+{{r}}\%)^3}+\dfrac{ {{c4}} }{(1+{{r}}\%)^4}$.' }
+      - { title: 'Resultado y decisión', body: '$\VAN={{res_a}}$ €. Con VAN $>0$ el proyecto se acepta.' }
+    answers:
+      - { id: res_a, label: 'VAN', unit: '€', value: 28685.199098, tolerance: { kind: abs, value: 1 }, lib: { module: sesion01, fn: s7Van, args: [i0, c1, c2, c3, c4, r] } }
+    concepts: ['03-van-tir-criterios']
+  - id: ej8
+    seed: 8
+    statement: 'Para el proyecto del ejercicio 7 (inversión {{i0}} €; flujos {{c1}}, {{c2}}, {{c3}}, {{c4}} €), calcula el periodo de recuperación simple y el descontado con $r={{r}}\%$. Interpola linealmente dentro del año.'
+    parameters:
+      - { id: i0, label: 'Inversión', default: 120000, unit: '€' }
+      - { id: c1, label: 'Flujo 1', default: 40000, min: 35000, max: 45000, step: 5000, unit: '€' }
+      - { id: c2, label: 'Flujo 2', default: 45000, min: 40000, max: 50000, step: 5000, unit: '€' }
+      - { id: c3, label: 'Flujo 3', default: 50000, min: 45000, max: 55000, step: 5000, unit: '€' }
+      - { id: c4, label: 'Flujo 4', default: 55000, min: 50000, max: 60000, step: 5000, unit: '€' }
+      - { id: r, label: 'Tasa de descuento', default: 10, min: 6, max: 12, step: 1, unit: '%' }
+    hints:
+      - 'Acumula los flujos hasta cubrir la inversión; el último año se reparte de forma proporcional.'
+      - 'El descontado hace lo mismo con los flujos ya descontados a $t=0$.'
+    steps:
+      - { title: 'Recuperación simple', body: 'Se cubre la inversión durante un año: $PR=(t-1)+\dfrac{\text{pendiente}}{\text{flujo del año }t}={{res_a}}$ años.' }
+      - { title: 'Recuperación descontada', body: 'Con los flujos descontados al {{r}} %, $PRD={{res_b}}$ años. Es mayor que PR porque descontar reduce los flujos.' }
+    answers:
+      - { id: res_a, label: 'a) PR', unit: 'años', value: 2.7, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s8Payback, args: [i0, c1, c2, c3, c4] } }
+      - { id: res_b, label: 'b) PRD', unit: 'años', value: 3.2364, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s8PaybackDescontado, args: [i0, c1, c2, c3, c4, r] } }
+    concepts: ['03-van-tir-criterios']
+  - id: ej9
+    seed: 9
+    statement: 'Un proyecto cuesta {{c0}} (miles de €) y paga {{c}} al final de cada uno de los dos años siguientes. El tipo requerido es {{r}} %. (a) Calcula la TIR resolviendo la ecuación cuadrática. (b) Calcula el VAN al tipo requerido y decide.'
+    parameters:
+      - { id: c0, label: 'Inversión', default: 100, min: 80, max: 110, step: 10, unit: 'mil €' }
+      - { id: c, label: 'Flujo anual', default: 60, min: 50, max: 70, step: 5, unit: 'mil €' }
+      - { id: r, label: 'Tipo requerido', default: 10, min: 6, max: 12, step: 1, unit: '%' }
+    hints:
+      - 'Cambia de variable: $x=1+r^*$.'
+      - 'Multiplica por $x^2$: queda $c_0x^2-cx-c=0$.'
+      - 'Aplica la fórmula cuadrática y quédate con la raíz positiva.'
+    steps:
+      - { title: 'Ecuación', body: '$-{{c0}}+\dfrac{ {{c}} }{x}+\dfrac{ {{c}} }{x^2}=0\;\Rightarrow\;{{c0}}x^2-{{c}}x-{{c}}=0$.' }
+      - { title: 'Raíz positiva', body: '$x=\dfrac{ {{c}}+\sqrt{ {{c}}^2+4\cdot{{c0}}\cdot{{c}} }}{2\cdot{{c0}}}$, y $\TIR={{res_a}}\%$.' }
+      - { title: 'Decisión', body: 'Con $\VAN={{res_b}}$ mil € y TIR frente al {{r}} % requerido, el proyecto se acepta si la TIR supera el tipo requerido (VAN $>0$).' }
+    answers:
+      - { id: res_a, label: 'a) TIR', unit: '%', value: 13.066239, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s9Tir, args: [c0, c] } }
+      - { id: res_b, label: 'b) VAN al tipo requerido', unit: 'mil €', value: 4.132231, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s9Van, args: [c0, c, r] } }
+    concepts: ['03-van-tir-criterios']
+  - id: ej10
+    seed: 10
+    statement: 'Dos proyectos excluyentes (miles de €): A paga {{a1}} en $t=1$ y B paga {{b1}} en $t=1$ y {{b2}} en $t=2$; ambos cuestan {{a0}} en $t=0$. Con $r={{r}}\%$ calcula: (a) VAN de A, (b) VAN de B, (c) la diferencia VAN(B) menos VAN(A), (d) PR de B, (e) PRD de B, (f) TIR de A y (g) TIR de B. ¿Qué proyecto eliges?'
+    parameters:
+      - { id: a0, label: 'Inversión', default: 1000, unit: 'mil €' }
+      - { id: a1, label: 'A: flujo en t=1', default: 1200, unit: 'mil €' }
+      - { id: b1, label: 'B: flujo en t=1', default: 100, unit: 'mil €' }
+      - { id: b2, label: 'B: flujo en t=2', default: 1300, unit: 'mil €' }
+      - { id: r, label: 'Tasa de descuento', default: 10, min: 6, max: 12, step: 1, unit: '%' }
+    hints:
+      - 'Calcula cada VAN y cada TIR por separado; luego compara los criterios.'
+      - 'La TIR de A sale de $a_0(1+r^*)=a_1$. La de B, de una cuadrática en $x=1+r^*$.'
+      - 'Cuando el VAN y la TIR discrepan, el VAN mide la riqueza creada; elige el de mayor VAN.'
+    steps:
+      - { title: 'VAN', body: '$\VAN_A={{res_a}}$ y $\VAN_B={{res_b}}$ mil €. La diferencia es {{res_c}} mil €.' }
+      - { title: 'Recuperación', body: 'B recupera en $PR={{res_d}}$ años y, descontado, en $PRD={{res_e}}$ años.' }
+      - { title: 'TIR', body: '$\TIR_A={{res_f}}\%$ y $\TIR_B={{res_g}}\%$. A tiene la TIR mayor y B, el VAN mayor.' }
+      - { title: 'Decisión', body: 'Se elige el proyecto de mayor VAN (el de VAN mayor crea más valor al tipo requerido), aunque la TIR apunte al otro. La TIR no mide el tamaño ni el momento del valor creado.' }
+    answers:
+      - { id: res_a, label: 'a) VAN de A', unit: 'mil €', value: 90.909091, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10VanA, args: [a0, a1, r] } }
+      - { id: res_b, label: 'b) VAN de B', unit: 'mil €', value: 165.289256, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10VanB, args: [a0, b1, b2, r] } }
+      - { id: res_c, label: 'c) VAN(B) − VAN(A)', unit: 'mil €', value: 74.380165, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10Diferencia, args: [a0, a1, b1, b2, r] } }
+      - { id: res_d, label: 'd) PR de B', unit: 'años', value: 1.692308, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10PaybackB, args: [a0, b1, b2] } }
+      - { id: res_e, label: 'e) PRD de B', unit: 'años', value: 1.846154, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10PaybackDescontadoB, args: [a0, b1, b2, r] } }
+      - { id: res_f, label: 'f) TIR de A', unit: '%', value: 20, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10TirA, args: [a0, a1] } }
+      - { id: res_g, label: 'g) TIR de B', unit: '%', value: 19.127122, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion01, fn: s10TirB, args: [a0, b1, b2] } }
+    concepts: ['03-van-tir-criterios']
+---
+Diez ejercicios de repaso de los capítulos 1 a 3. Cada uno parte de un caso del problem set 1, con los números corregidos y recalculados. Pulsa **Nueva variante** para practicar con otros valores.
