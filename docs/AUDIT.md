@@ -44,6 +44,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
 
+### Note 03 §3: minimum-risk boundary versus efficient frontier
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §3, “Optimización de Carteras”, says that minimising variance for different equality-constrained return targets gives only efficient portfolios. Targets below the global minimum-variance portfolio's return can instead be dominated. Chapter 8 uses an original three-asset example: means 6/10/14 %, volatilities 12/20/28 %, correlations A–B = 0.20 and A–C = B–C = 0. A target of 7 % has minimum risk 10.68 %, while the global minimum has return 7.83 % and risk 10.33 %. The latter improves both measures. Regression: `tests/capitulo8.test.ts`, “lower target is dominated by the global minimum”. Chapter 8 also makes the short-sale distinction explicit. With unrestricted shorts, weights −1/0/2 already give 22 %; the family (1−t)/0/t has unbounded mean as t grows. The chapter states the long-only restriction and the plot's finite window explicitly.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
