@@ -25,6 +25,7 @@ flowchart TD
     TASK_002["TASK-002 Import own LaTeX sources into source/ with provenance"]
     TASK_003["TASK-003 Scaffold the Astro site from options-explained (Spanish UI)"]
     TASK_004["TASK-004 Source audit: coverage map, errors and proposed curriculum"]
+    TASK_005["TASK-005 Contract: chapter and problem-session schemas"]
   end
   subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
   end
@@ -41,6 +42,8 @@ flowchart TD
   TASK_001 --> TASK_002
   TASK_001 --> TASK_003
   TASK_002 --> TASK_004
+  DEC_001 --> TASK_005
+  TASK_003 --> TASK_005
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
