@@ -1,6 +1,6 @@
 # TASK-023 outcome
 
-Status: implementation verified locally; remote check pending.
+Status: BLOCKED — GitHub account billing or spending limit prevents the required build check from starting. All four acceptance requirements pass locally.
 
 ## Acceptance
 
@@ -23,7 +23,13 @@ Read the dependency outcome (`TASK-022.outcome.md`) and accepted DEC-003. Its Ex
 
 ## Delivery
 
-PR: https://github.com/jesusvillota/economia-financiera/pull/21. Base: `main`. Label: `goal:course-site`. Body contains `Goal-Task: course-site/TASK-023`. Implementation is committed and pushed on `goal/course-site/task-023`. Remote check status is pending; the PR remains draft until the required check passes. Never merged.
+PR: https://github.com/jesusvillota/economia-financiera/pull/21. Base: `main`. Label: `goal:course-site`. Body contains `Goal-Task: course-site/TASK-023` and `Goal-Blocked: GitHub account billing or spending limit prevents the build check from starting`. Implementation and acceptance evidence are committed and pushed on `goal/course-site/task-023`. The PR remains open and draft. Never merged.
+
+## Delivery blocker
+
+The required build check for implementation revision `e77bc02990e57fa0d3c0dd85474c56d442d74804` failed before starting (check ID `117006291245`). The same failure recurred on outcome revision `6d0185c7c1f447a074f9d576816721acc0656f86` (check ID `117006616195`, completed 2026-10-16 at 13:50:56 UTC). Its annotation states: **"The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings"**. The deploy check was skipped.
+
+The task's explicit delivery rule makes failing or pending checks block delivery. Only check status and the failure annotation were inspected to establish this access blocker. No workflow definitions or execution logs were read or changed. Fixing the GitHub account payment or spending limit needs account access outside this task. The owner must resolve the account restriction before resuming delivery and retrying the required check. No implementation decision remains. The native goal is not marked complete because delivery requirements are not satisfied.
 
 Local verification tail (combined command exited 0):
 
