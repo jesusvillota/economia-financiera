@@ -40,6 +40,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:255–275` asks for year-2 FCFE but supplies neither net income nor interest. EBIT 140, tax 25 %, depreciation 32, capex 60 and working-capital increase 8 determine FCFF = 69. Net borrowing is −2. FCFE is therefore `67 - interest * 0.75`, not a unique number. For interest 0 or 20, FCFE is 67 or 52. Do not silently assume zero interest. Chapter 5 supplies both interest and net income in its original example. Regression test: `tests/capitulo5.test.ts`, “source note FCFE example is underdetermined”.
 
+### Note 02: infinite-horizon dividend valuation
+
+`source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
