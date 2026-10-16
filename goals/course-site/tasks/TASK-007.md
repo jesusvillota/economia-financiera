@@ -9,16 +9,22 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+Consistency across many chapters written by different sessions (SC-2).
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Write `docs/STYLE_GUIDE.md` and repo `CLAUDE.md`, adapted from options-explained's (see https://github.com/jesusvillota/options-explained, files `docs/STYLE_GUIDE.md`, `CLAUDE.md`) but in a way that fits this course: Spanish voice (tuteo, short sentences, honest simplifications), the chapter template Hook -> Intuition -> Formalisation -> Playground -> Check yourself -> Recap with Spanish `section-tag`s, the problem-session voice per DEC-001, the notation table from `docs/AUDIT.md` section 3 (resolve clashes), colour semantics (CSS variables from TASK-003), the euro sign and decimal comma rules in prose vs in math, widget rules, verification checklist, one-commit-per-chapter rule. `CLAUDE.md` lists commands, stack, rules and gotchas and links the guide and the curriculum. Update `src/lib/katexMacros.ts` so every notation-table symbol that needs a macro has one. No chapter content.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- `docs/STYLE_GUIDE.md` has sections Voice, Chapter template, Problem-session template, Notation, Colours, Widgets, Checklist.
+- Every symbol in the notation table that uses a macro is defined in `src/lib/katexMacros.ts`; a Vitest test renders each macro with KaTeX without error.
+- `CLAUDE.md` exists and lists the real npm scripts of `package.json`.
+- `npm test && npm run build` pass.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+npm test && npm run build
+ls docs/STYLE_GUIDE.md CLAUDE.md
+```

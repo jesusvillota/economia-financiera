@@ -10,16 +10,20 @@ kind: plan
 
 ## Why
 
-<the success criterion or milestone this serves>
+Rolling-wave planning: M-5 is decomposed only once M-4 evidence exists.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Run the `goal-setup` skill at the plan root to decompose M-5 into tasks: split code from content, one chapter or one session per task, widgets before chapters that use them, one problem session per source set with its numeric tests, `Plan: decompose` for the next milestone stays. Use `docs/AUDIT.md` section 4 and the lessons from the previous milestone. Then the user marks this task done.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- Every M-5 node has a filled spec and `goal check --json` has no errors.
+- `goal graph` shows parallel chapter waves, no dependency chain longer than 4.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+goal check --json
+goal graph
+```

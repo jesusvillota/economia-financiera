@@ -9,16 +9,17 @@ delivery: manual
 
 ## Why
 
-<the success criterion or milestone this serves>
+The vertical slice sets tone, pedagogy and structure for about 25 more chapters and 4 more sessions. The owner must approve before fan-out.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+The owner reads chapters 1 to 3 and Problem Session 1 on the deployed site or locally, in both themes and on a phone, and decides: tone, depth, widget quality, session format. Requested changes become new tasks (via `goal add`). Out of scope: any edit by an agent.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- The owner has read the four pages and either approved them or filed follow-up tasks.
+- No open follow-up task blocks the approval.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+Optional: `goal status course-site`.

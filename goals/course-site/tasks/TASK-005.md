@@ -9,16 +9,21 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+Contract first (SC-3, SC-4): chapters and problem sessions must share one schema before any content or component is written.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Write `docs/contracts/chapter.md` and `docs/contracts/problem-session.md`, and implement them as Zod schemas in `src/content.config.ts` (collections `chapters` and `sesiones`). Follow the accepted DEC-001. The problem-session contract defines: frontmatter (title, number, source set e.g. `ps1`, chapters it practises, difficulty), the exercise unit (statement, parameters with seeded defaults, hint ladder, ordered solution steps, final numeric answers with tolerance, concept links), and how a numeric answer is tied to a `src/lib` function name (so tests can assert it). Add one minimal fixture file for each collection under `src/content/` that validates. No components or pages (TASK-006).
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- Both contract docs exist and name every frontmatter field with type and meaning.
+- `npm run build` validates the two fixtures against the schemas; a deliberately broken fixture (deleted in the PR) fails `astro check`.
+- `npm test` and `npm run build` pass.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+npm test && npm run build
+ls docs/contracts
+```
