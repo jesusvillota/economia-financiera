@@ -72,6 +72,9 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Portfolio return | $r_p$ | | |
 | Cost of equity / debt | $k_e$, $k_d$ | `\ke`, `\kd` | Never `R_e` |
 | Weights | $w_j$ | | Never `x_j` |
+| Risky fund / tangent fund | $c$, $T$ | | Returns $r_c$, $r_T$ and volatilities $\sigma_c$, $\sigma_T$ |
+| Risky fund / risk-free allocation | $w_c$, $w_f$ | | $w_f=1-w_c$; these allocate wealth between a fund and cash |
+| Fund Sharpe ratio / risk-free volatility | $S_c$, $\sigma_f$ | | $S_c=(\E[r_c]-r_f)/\sigma_c$ for positive volatility; $\sigma_f=0$ |
 | Asset count / second asset index | $n$, $k$ | | In portfolio sums, indices are `j`, `k`; `n` counts assets |
 | Covariance matrix / entry | $\Sigma$, $\Sigma_{jk}$ | | Entry is $\Cov(r_j,r_k)$; diagonal is $\sigma_j^2$ |
 | Target expected portfolio return | $m$ | | Constraint $\E[r_p]=m$ in Markowitz optimisation |
