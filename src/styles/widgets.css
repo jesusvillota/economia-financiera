@@ -125,3 +125,38 @@
 @media (max-width: 560px) {
   .iter-table th, .iter-table td { padding-right: 0.55rem; }
 }
+
+/* Problem sessions */
+.ses-page, .ses-index { max-width: 44rem; margin: 0 auto; padding: 1rem 1.5rem 5rem; }
+.ses-exercise > * + * { margin-top: 0.9rem; }
+.ses-statement { margin: 0; font-size: 1rem; }
+.ses-params { padding: 0.75rem 0.9rem; background: var(--bg-inset); border-radius: 8px; }
+.ses-hints, .ses-steps { margin: 0 0 0.6rem; padding-left: 1.3rem; display: grid; gap: 0.5rem; }
+.ses-hints:empty, .ses-steps:empty { display: none; }
+.ses-answer { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: end; }
+.ses-answer label { display: grid; gap: 0.15rem; min-width: 0; }
+.ses-answer input {
+  width: 9rem; max-width: 100%; min-height: 40px; padding: 0 0.7rem; border-radius: 8px; font: inherit;
+  border: 1px solid var(--border); background: var(--bg-inset); color: var(--text);
+}
+.ses-answer .quiz-feedback { flex: 1 1 100%; margin-top: 0; }
+.ses-progress { font-family: var(--font-ui); font-size: 0.8rem; color: var(--text-muted); }
+.ses-list { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 0.6rem; }
+.ses-list a {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; padding: 0.8rem 1rem; text-decoration: none; color: var(--text);
+  background: var(--bg-raised); border: 1px solid var(--border); border-radius: 12px; font-family: var(--font-ui);
+}
+.ses-list a:hover { border-color: var(--c-pv); }
+.ses-list .n { color: var(--c-fv); font-weight: 700; }
+.ses-list .ses-progress { margin-left: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .ses-reveal { animation: ses-in 0.25s ease-out; }
+  @keyframes ses-in { from { opacity: 0; transform: translateY(4px); } }
+}
+.ses-page .prev-next { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; font-family: var(--font-ui); }
+.ses-page .prev-next a {
+  flex: 1 1 10rem; display: grid; gap: 0.1rem; padding: 0.6rem 0.9rem; text-decoration: none; color: var(--text);
+  background: var(--bg-raised); border: 1px solid var(--border); border-radius: 12px;
+}
+.ses-page .prev-next a:hover { border-color: var(--c-pv); }
+.ses-page .prev-next .label { font-size: 0.75rem; color: var(--text-muted); }

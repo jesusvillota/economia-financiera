@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Progreso from '../../components/sesiones/Progreso';
+import { url } from '../../data/curriculum';
+
+const sesiones = (await getCollection('sesiones')).sort((a, b) => a.data.number - b.data.number);
+---
+<BaseLayout title="Sesiones de problemas" description="Ejercicios interactivos con variantes, pistas y soluciones paso a paso.">
+  <main id="main" class="ses-index">
+    <h1>Sesiones de problemas</h1>
+    <p class="lede">Ejercicios con números que cambian, pistas graduales y soluciones paso a paso.</p>
+    <ol class="ses-list">
+      {sesiones.map((s) => (
+        <li>
+          <a href={url(`sesiones/${s.id}/`)}>
+            <span class="n">{s.data.number}</span>
+            <span><strong>{s.data.title}</strong><br /><span class="muted">{s.data.summary}</span></span>
+            <Progreso client:load slug={s.id} total={s.data.exercises.length} />
+          </a>
+        </li>
+      ))}
+    </ol>
+  </main>
+</BaseLayout>
