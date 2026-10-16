@@ -44,6 +44,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
 
+### Note 03: perfect positive correlation with short sales
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
