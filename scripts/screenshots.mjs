@@ -6,6 +6,7 @@
  *
  *   npm run screenshots              # all pages
  *   npm run screenshots -- 02        # only pages whose path contains "02"
+ *   npm run screenshots home         # only the home page
  */
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
@@ -21,7 +22,7 @@ function pages() {
   const found = [''];
   const dir = 'dist/chapters';
   if (existsSync(dir)) for (const d of readdirSync(dir)) if (statSync(join(dir, d)).isDirectory()) found.push(`chapters/${d}/`);
-  return filter ? found.filter((p) => p.includes(filter)) : found;
+  return filter ? found.filter((p) => p.includes(filter) || (filter === 'home' && p === '')) : found;
 }
 
 async function waitForServer() {
