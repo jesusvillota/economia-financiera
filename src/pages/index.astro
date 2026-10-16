@@ -76,8 +76,8 @@ const levels = ['introductorio', 'intermedio', 'avanzado'];
           </section>
         ))}
         <section class="part">
-          <header><h3>{finalExam.title}</h3></header>
-          <p class="meta"><span>Usa los capítulos {finalExam.chapters.join(', ')}</span><span class="badge">Próximamente</span></p>
+          <header><h3><a href={url(`sesiones/${finalExam.slug}/`)}>{finalExam.title}</a></h3></header>
+          <p class="meta"><span>Usa los capítulos {finalExam.chapters.join(', ')}</span><span class="badge">Niveles 1–3</span></p>
         </section>
       </div>
     </section>

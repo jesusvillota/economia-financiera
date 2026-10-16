@@ -1,0 +1,671 @@
+---
+title: "Examen final: práctica por dificultad"
+number: 5
+source: examen
+chapters:
+  - 02-valor-actual
+  - 03-van-tir
+  - 04-dividendos
+  - 05-empresa-wacc
+  - 07-dos-activos
+  - 10-capm
+  - 17-bonos
+  - 19-duracion
+difficulty: 3
+summary: "Ocho ejercicios: rentas, inversión, valoración, carteras y bonos, de nivel introductorio a avanzado."
+exercises:
+  - id: ahorro
+    difficulty: 1
+    seed: 52
+    statement: Un fondo paga {{a}} € al final de cada año durante {{n}} años. El tipo efectivo anual es {{r}} %.
+      Calcula su valor actual. No hay pago hoy.
+    parameters:
+      - id: a
+        label: Pago anual
+        default: 750
+        min: 600
+        max: 950
+        step: 50
+        unit: €
+      - id: n
+        label: Número de pagos
+        default: 6
+        min: 4
+        max: 8
+        step: 1
+      - id: r
+        label: Tipo anual
+        default: 4
+        min: 3
+        max: 6
+        step: 0.5
+        unit: "%"
+    hints:
+      - Dibuja los pagos al final de cada año.
+      - Cada pago se divide por una potencia de uno más el tipo.
+      - El primer pago se descuenta un año; el último, {{n}} años.
+    steps:
+      - title: Fechas
+        body: Los pagos ocurren en los años 1 a {{n}}. Hoy no se cobra nada.
+      - title: Suma descontada
+        body: $V_0=\sum_{t=1}^{ {{n}} } {{a}}/(1+{{r}}/100)^t$. El valor actual es {{va}} €.
+    answers:
+      - id: va
+        label: Valor actual
+        unit: €
+        value: 3931.6026425597656
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: rentaConstante
+          args:
+            - a
+            - r
+            - n
+    concepts:
+      - 02-valor-actual
+  - id: capm
+    difficulty: 1
+    seed: 52
+    statement: El tipo libre de riesgo es {{rf}} %, la rentabilidad esperada del mercado {{rm}} % y la beta
+      {{beta}}. Calcula la rentabilidad requerida por CAPM.
+    parameters:
+      - id: rf
+        label: Tipo libre
+        default: 2.5
+        min: 2
+        max: 3
+        step: 0.5
+        unit: "%"
+      - id: rm
+        label: Media del mercado
+        default: 8.5
+        min: 8
+        max: 10
+        step: 0.5
+        unit: "%"
+      - id: beta
+        label: Beta
+        default: 1.2
+        min: 0.7
+        max: 1.5
+        step: 0.1
+    hints:
+      - CAPM remunera la exposición al riesgo del mercado.
+      - Resta el tipo libre a la rentabilidad del mercado.
+      - Multiplica esa prima por {{beta}} y suma {{rf}} %.
+    steps:
+      - title: Prima
+        body: La prima de mercado es la diferencia entre {{rm}} % y {{rf}} %.
+      - title: Rentabilidad requerida
+        body: $\E[r_j]=\rf+\beta_j(\rM-\rf)$. La rentabilidad requerida es {{requerida}} %.
+    answers:
+      - id: requerida
+        label: Rentabilidad requerida
+        unit: "%"
+        value: 9.7
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: examen
+          fn: capm
+          args:
+            - rf
+            - rm
+            - beta
+    concepts:
+      - 10-capm
+  - id: proyecto
+    difficulty: 2
+    seed: 53
+    statement: Una máquina cuesta {{coste}} € hoy y genera {{a}} € netos al final de cada año durante {{n}} años.
+      No tiene valor residual. Calcula el VAN al {{r}} % efectivo anual y la TIR anual. Decide si conviene
+      invertir.
+    parameters:
+      - id: coste
+        label: Desembolso inicial
+        default: 2100
+        min: 2000
+        max: 2400
+        step: 100
+        unit: €
+      - id: a
+        label: Flujo anual
+        default: 720
+        min: 650
+        max: 800
+        step: 10
+        unit: €
+      - id: n
+        label: Años
+        default: 4
+        min: 4
+        max: 5
+        step: 1
+      - id: r
+        label: Tipo anual
+        default: 7
+        min: 5
+        max: 9
+        step: 0.5
+        unit: "%"
+    hints:
+      - Incluye el coste con signo negativo en la fecha cero.
+      - El VAN suma ese coste y los cobros descontados.
+      - La TIR hace cero el VAN. Los flujos tienen un solo cambio de signo.
+    steps:
+      - title: VAN
+        body: $\VAN=-{{coste}}+\sum_{t=1}^{ {{n}} } {{a}}/(1+{{r}}/100)^t={{van}}$ €. Un VAN positivo crea valor.
+      - title: TIR
+        body: Resuelve el mismo VAN igualado a cero. La raíz anual es {{tir}} %. Compara con {{r}} % para decidir.
+    answers:
+      - id: van
+        label: VAN
+        unit: €
+        value: 338.79210465402775
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: van
+          args:
+            - coste
+            - a
+            - n
+            - r
+      - id: tir
+        label: TIR anual
+        unit: "%"
+        value: 13.95058051832475
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: examen
+          fn: tir
+          args:
+            - coste
+            - a
+            - n
+    concepts:
+      - 02-valor-actual
+      - 03-van-tir
+  - id: accion
+    difficulty: 2
+    seed: 53
+    statement: Una acción pagará su próximo dividendo de {{d1}} € dentro de un año. Después crecerá al {{g}} %
+      anual perpetuamente. La rentabilidad requerida es {{r}} % anual. Valora la acción hoy con DDM, el modelo
+      de descuento de dividendos.
+    parameters:
+      - id: d1
+        label: Próximo dividendo
+        default: 3.6
+        min: 3
+        max: 4.5
+        step: 0.1
+        unit: €
+      - id: g
+        label: Crecimiento anual
+        default: 2
+        min: 1
+        max: 3
+        step: 0.5
+        unit: "%"
+      - id: r
+        label: Rentabilidad requerida
+        default: 9
+        min: 8
+        max: 11
+        step: 0.5
+        unit: "%"
+    hints:
+      - El dividendo indicado ya es el del próximo año.
+      - Comprueba que el tipo requerido supera al crecimiento.
+      - Divide {{d1}} entre la diferencia de tasas en tanto por uno.
+    steps:
+      - title: Convergencia
+        body: El tipo {{r}} % supera al crecimiento {{g}} %. La suma de dividendos descontados converge.
+      - title: Gordon
+        body: "$P_0=D_1/(r-g)$. Usa el próximo dividendo sin hacerlo crecer otra vez. El precio es {{precio}} €. "
+    answers:
+      - id: precio
+        label: Precio de la acción
+        unit: €
+        value: 51.42857142857142
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: dividendo
+          args:
+            - d1
+            - r
+            - g
+    concepts:
+      - 04-dividendos
+  - id: cartera
+    difficulty: 2
+    seed: 53
+    statement: Invierte {{w}} % en A y el resto en B. Sus medias anuales son {{ra}} % y {{rb}} %; sus
+      volatilidades, {{sa}} % y {{sb}} %. La correlación es {{rho}}. Calcula media y volatilidad de la
+      cartera.
+    parameters:
+      - id: w
+        label: Peso de A
+        default: 35
+        min: 20
+        max: 70
+        step: 5
+        unit: "%"
+      - id: ra
+        label: Media de A
+        default: 11
+        min: 9
+        max: 13
+        step: 0.5
+        unit: "%"
+      - id: rb
+        label: Media de B
+        default: 6
+        min: 5
+        max: 8
+        step: 0.5
+        unit: "%"
+      - id: sa
+        label: Volatilidad de A
+        default: 22
+        min: 19
+        max: 25
+        step: 1
+        unit: "%"
+      - id: sb
+        label: Volatilidad de B
+        default: 13
+        min: 10
+        max: 16
+        step: 1
+        unit: "%"
+      - id: rho
+        label: Correlación
+        default: 0.15
+        min: -0.5
+        max: 0.75
+        step: 0.05
+    hints:
+      - La media es un promedio ponderado.
+      - La varianza incluye la covarianza; no promedies las volatilidades.
+      - Usa w={{w}}/100 y el peso de B igual a uno menos w.
+    steps:
+      - title: Media
+        body: $\E[r_p]=w\E[r_A]+(1-w)\E[r_B]$. Resulta {{media}} %.
+      - title: Varianza y raíz
+        body: $\sigma_p^2=w^2\sigma_A^2+(1-w)^2\sigma_B^2+2w(1-w)\rho\sigma_A\sigma_B$. Su raíz es {{riesgo}} %.
+    answers:
+      - id: media
+        label: Media anual
+        unit: "%"
+        value: 7.75
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: examen
+          fn: media
+          args:
+            - w
+            - ra
+            - rb
+      - id: riesgo
+        label: Volatilidad anual
+        unit: "%"
+        value: 12.25610052178098
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: examen
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho
+    concepts:
+      - 07-dos-activos
+  - id: empresa
+    difficulty: 3
+    seed: 54
+    statement: Los valores de mercado son E={{e}} € y D={{d}} €. Los costes anuales son ke={{ke}} % y kd={{kd}} %.
+      El impuesto es {{tax}} %. El FCFF del próximo año será {{flujo}} € y crecerá al {{g}} % anual
+      perpetuamente. Calcula WACC y el valor de las operaciones. Mantén constantes los pesos financieros;
+      ignora caja excedente.
+    parameters:
+      - id: e
+        label: Equity de mercado
+        default: 6000
+        min: 5000
+        max: 7000
+        step: 500
+        unit: €
+      - id: d
+        label: Deuda de mercado
+        default: 4000
+        min: 3000
+        max: 4500
+        step: 500
+        unit: €
+      - id: ke
+        label: Coste del equity
+        default: 11
+        min: 10
+        max: 13
+        step: 0.5
+        unit: "%"
+      - id: kd
+        label: Coste de deuda
+        default: 5
+        min: 4
+        max: 6
+        step: 0.5
+        unit: "%"
+      - id: tax
+        label: Impuesto
+        default: 25
+        min: 20
+        max: 30
+        step: 5
+        unit: "%"
+      - id: flujo
+        label: Próximo FCFF
+        default: 900
+        min: 800
+        max: 1100
+        step: 50
+        unit: €
+      - id: g
+        label: Crecimiento anual
+        default: 2
+        min: 1
+        max: 3
+        step: 0.5
+        unit: "%"
+    hints:
+      - Descuenta el FCFF con el coste conjunto de deuda y equity.
+      - Usa pesos de mercado; el escudo fiscal reduce solo el coste de la deuda.
+      - Calcula E/(E+D) y D/(E+D) antes de ponderar los costes.
+    steps:
+      - title: WACC
+        body: $\mathrm{WACC}=w_E\ke+w_D\kd(1-T_c)={{wacc}}$ %.
+      - title: Operaciones
+        body: "El FCFF indicado ya es el del próximo año. Divide {{flujo}} entre WACC menos crecimiento, con tasas
+          decimales: {{valor}} €. No restes la deuda al pedir operaciones."
+    answers:
+      - id: wacc
+        label: WACC
+        unit: "%"
+        value: 8.1
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: examen
+          fn: costeCapital
+          args:
+            - e
+            - d
+            - ke
+            - kd
+            - tax
+      - id: valor
+        label: Valor de operaciones
+        unit: €
+        value: 14754.098360655738
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: empresa
+          args:
+            - e
+            - d
+            - ke
+            - kd
+            - tax
+            - flujo
+            - g
+    concepts:
+      - 05-empresa-wacc
+  - id: bono
+    difficulty: 3
+    seed: 54
+    statement: Un bono tiene nominal {{f}} €, cupón nominal anual {{c}} %, {{m}} pagos por año y vencimiento en
+      {{t}} años. La TIR es {{y}} % nominal anual capitalizable {{m}} veces al año. Valora en una fecha de
+      cupón, justo después del pago. Calcula precio, duración de Macaulay y duración modificada. Ignora
+      impago.
+    parameters:
+      - id: f
+        label: Nominal
+        default: 1000
+        min: 1000
+        max: 2000
+        step: 250
+        unit: €
+      - id: c
+        label: Cupón nominal anual
+        default: 5
+        min: 3
+        max: 7
+        step: 0.5
+        unit: "%"
+      - id: t
+        label: Vencimiento
+        default: 5
+        min: 3
+        max: 7
+        step: 1
+        unit: años
+      - id: m
+        label: Pagos por año
+        default: 2
+        min: 1
+        max: 4
+        step: 1
+      - id: y
+        label: TIR nominal anual
+        default: 6
+        min: 4
+        max: 8
+        step: 0.5
+        unit: "%"
+    hints:
+      - Cada cupón es nominal por cupón anual dividido entre pagos por año.
+      - Descuenta cada flujo con y/m y añade el principal al último.
+      - Macaulay promedia fechas en años con pesos de valor actual. La modificada divide por uno más y/m.
+    steps:
+      - title: Flujos y precio
+        body: Hay {{t}} × {{m}} pagos. Cada cupón vale {{f}} × {{c}}/100/{{m}}. Devuelve también {{f}} € al final. La
+          suma descontada es {{precio}} €.
+      - title: Macaulay
+        body: "$D=\\sum_t t\\,\\VA(C_t)/P$. Usa fechas en años: {{duracion}} años."
+      - title: Modificada
+        body: $D_{\mathrm{mod}}=D/(1+y/m)={{modificada}}$ años. Mide sensibilidad respecto a la TIR nominal anual.
+    answers:
+      - id: precio
+        label: Precio del bono
+        unit: €
+        value: 957.3489858161207
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: precioBono
+          args:
+            - f
+            - c
+            - t
+            - m
+            - y
+      - id: duracion
+        label: Duración de Macaulay
+        unit: años
+        value: 4.471678607581262
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: examen
+          fn: duracion
+          args:
+            - f
+            - c
+            - t
+            - m
+            - y
+      - id: modificada
+        label: Duración modificada
+        unit: años
+        value: 4.34143554134103
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: examen
+          fn: modificada
+          args:
+            - f
+            - c
+            - t
+            - m
+            - y
+    concepts:
+      - 17-bonos
+      - 19-duracion
+  - id: rentas
+    difficulty: 3
+    seed: 54
+    statement: Renta creciente diferida del examen. El primer pago A={{a}} € ocurre en T={{t}} años. Hay m={{m}}
+      pagos por año. El crecimiento efectivo anual es g={{beta}} % y el descuento efectivo por periodo es
+      r={{gamma}} %, con k={{k}} periodos de descuento por año. Los pagos siguientes son $A(1+g)^{j/m}$ en
+      $T+j/m$, para j=0,1,… Usa g y r en tanto por uno en las opciones. Supón $(1+g)^{1/m}<(1+r)^{(k-1)/m}$,
+      condición que cumplen todas las variantes. Elige la fórmula de valor actual y calcula ese valor. a)
+      $A/[(1+r)^{k/m}-(1+g)^{1/m}]$. b) $A/\{[(1+r)^{k/m}-(1+g)^{1/m}](1+r)^{k(T-1/m)}\}$. c)
+      $A/\{[(1+r)^{(k-1)/m}-(1+g)^{1/m}](1+r)^{(k-1)(T-1/m)}\}$. Introduce 1 para a, 2 para b o 3 para c.
+    parameters:
+      - id: a
+        label: Primer pago
+        default: 1000
+        min: 750
+        max: 1500
+        step: 50
+        unit: €
+      - id: beta
+        label: Crecimiento efectivo anual
+        default: 2
+        min: 1
+        max: 2.5
+        step: 0.5
+        unit: "%"
+      - id: gamma
+        label: Descuento efectivo por periodo
+        default: 3
+        min: 3
+        max: 5
+        step: 0.5
+        unit: "%"
+      - id: m
+        label: Pagos por año
+        default: 2
+        min: 1
+        max: 4
+        step: 1
+      - id: k
+        label: Periodos de descuento por año
+        default: 4
+        min: 3
+        max: 6
+        step: 1
+      - id: t
+        label: Fecha del primer pago
+        default: 2
+        min: 2
+        max: 4
+        step: 1
+        unit: años
+    hints:
+      - Marca el primer pago y luego separa los pagos por 1/m años.
+      - "Convierte las tasas al periodo de pago: descuento (1+r)^(k/m)−1 y crecimiento (1+g)^(1/m)−1."
+      - La perpetuidad vale A dividido entre la diferencia de tasas en T−1/m. Desde allí aún debes descontar
+        hasta hoy.
+    steps:
+      - title: Periodicidades
+        body: El descuento por pago es $(1+{{gamma}}/100)^{ {{k}}/{{m}} }-1$; el crecimiento por pago es
+          $(1+{{beta}}/100)^{1/{{m}}}-1$.
+      - title: Fecha de valoración
+        body: La fórmula de perpetuidad creciente da el valor un periodo antes del primer pago, en T−1/m. No da
+          directamente el valor de hoy.
+      - title: Descuento adicional
+        body: Divide ese valor entre $(1+{{gamma}}/100)^{ {{k}}({{t}}-1/{{m}}) }$. El valor actual es {{va}} €.
+      - title: Comparar opciones
+        body: La opción correcta codificada es {{opcion}}. La a omite el descuento adicional; la c cambia la
+          frecuencia del tipo cotizado. Con m=2, k=4 y T=2 recuperas las tres fórmulas del examen original.
+    answers:
+      - id: opcion
+        label: "Opción: a=1, b=2, c=3"
+        unit: ""
+        value: 2
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: opcionRentas
+          args:
+            - a
+            - beta
+            - gamma
+            - m
+            - k
+            - t
+      - id: va
+        label: Valor actual de la renta
+        unit: €
+        value: 16437.53433038812
+        tolerance:
+          kind: abs
+          value: 0.01
+        lib:
+          module: examen
+          fn: rentaDiferida
+          args:
+            - a
+            - beta
+            - gamma
+            - m
+            - k
+            - t
+    concepts:
+      - 02-valor-actual
+---
+
+Practica a tu ritmo. Los ejercicios están ordenados por dificultad: 1 introductorio, 2 intermedio y 3 avanzado.
+
+Los dos primeros son de nivel 1; los tres siguientes, de nivel 2; los tres últimos, de nivel 3.
+
+Dibuja las fechas antes de calcular. Usa «Nueva variante» para cambiar los datos y las periodicidades de forma reproducible.
+
+Introduce importes en euros y tasas en porcentaje. Se acepta coma o punto decimal. Las soluciones se recalculan con cada variante.
+
+La tolerancia es de 0,01 € en importes, 0,005 puntos porcentuales en tasas y 0,0001 años en duraciones.
+En la elección de fórmula, introduce el código entero de la opción.
+
+FCFF es el flujo de caja libre para toda la empresa. WACC es el coste medio ponderado de su financiación.
+
+La renta final adapta el ejercicio propio de preparación del examen. Sus datos iniciales conservan los pagos semestrales,
+el crecimiento anual y el descuento trimestral del original. Los otros siete problemas son nuevos.

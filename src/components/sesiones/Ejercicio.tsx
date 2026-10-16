@@ -11,6 +11,7 @@ interface AnswerSpec {
   lib: { module: string; fn: string; args: string[] };
 }
 export interface ExerciseSpec {
+  difficulty?: 1 | 2 | 3;
   id: string; statement: string; parameters: (Param & { label: string; unit?: string })[]; seed: number;
   hints: string[]; steps: { title: string; body: string }[]; answers: AnswerSpec[];
 }
@@ -94,6 +95,7 @@ export default function Ejercicio({ slug, index, exercise }: { slug: string; ind
   return (
     <section className="widget ses-exercise" aria-labelledby={`${slug}-${exercise.id}`}>
       <h2 className="widget-title" id={`${slug}-${exercise.id}`}>Ejercicio {index + 1}</h2>
+      {exercise.difficulty && <p className="ses-level">Dificultad {exercise.difficulty}: {['introductorio', 'intermedio', 'avanzado'][exercise.difficulty - 1]}</p>}
       <p className="ses-statement"><RichText>{interpolate(exercise.statement, values)}</RichText></p>
       {exercise.parameters.length > 0 && (
         <dl className="readout-grid ses-params" aria-label="Datos">

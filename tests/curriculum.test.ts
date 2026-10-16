@@ -22,3 +22,14 @@ it('every written chapter is in the curriculum (placeholder allowed)', () => {
   // 00-ejemplo was the template placeholder; it went away with chapter 1.
   expect(written.filter((s) => s !== '00-ejemplo' && !known.has(s))).toEqual([]);
 });
+
+it('keeps the final-exam navigation in sync with its content and chapter coverage', async () => {
+  const { finalExam } = await import('../src/data/curriculum');
+  const { parse } = await import('yaml');
+  const fm = parse(readFileSync(`src/content/sesiones/${finalExam.slug}.mdx`, 'utf8').split('---')[1]);
+  expect(fm.source).toBe('examen');
+  expect(fm.title).toBe(finalExam.title);
+  expect(fm.chapters).toEqual(finalExam.chapters.map(n => chapters.find(c => c.number === n)!.slug));
+  const home = readFileSync('src/pages/index.astro', 'utf8');
+  expect(home).toContain('sesiones/${finalExam.slug}/');
+});
