@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { compound } from '../src/lib/compound';
 import { splitMath } from '../src/components/ui/Tex';
-import { katexMacros } from '../src/lib/katexMacros';
+import katex from 'katex';
+import { katexMacros, katexOptions } from '../src/lib/katexMacros';
 
 describe('compound', () => {
   it('computes VF = VA (1+r)^t', () => {
@@ -21,4 +22,14 @@ describe('RichText / macros', () => {
   it('defines the generic finance macros', () => {
     for (const m of ['VA', 'VF', 'VAN', 'TIR', 'Rate', 'E', 'Var', 'Cov']) expect(katexMacros[`\\${m}`]).toBeDefined();
   });
+});
+
+describe('katexMacros render', () => {
+  // Macros with an argument get a dummy one; every macro must render with throwOnError.
+  for (const [name, def] of Object.entries(katexMacros)) {
+    it(`renders ${name}`, () => {
+      const src = def.includes('#1') ? `${name}{x}` : name;
+      expect(() => katex.renderToString(src, { ...katexOptions, throwOnError: true })).not.toThrow();
+    });
+  }
 });
