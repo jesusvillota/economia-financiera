@@ -3,7 +3,7 @@ id: TASK-009
 title: 'Finance maths library: time value, annuities, NPV, IRR'
 milestone: M-2
 state: approved
-depends_on: [TASK-003]
+depends_on: [TASK-003, TASK-004]
 delivery: pr
 ---
 
