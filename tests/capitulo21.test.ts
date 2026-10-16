@@ -14,7 +14,7 @@ describe('capítulo 21: cada cifra del texto y las estrategias', () => {
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
     expect(chapter).toContain('<OptionPayoffs client:visible />');
-    for (const line of ['part: 5', 'chapter: 21', 'difficulty: 3', 'prerequisites: [20]', 'sessions: []']) expect(chapter).toContain(line);
+    for (const line of ['part: 5', 'chapter: 21', 'difficulty: 3', 'prerequisites: [20]', 'sessions: [04-mercados-bonos-derivados]']) expect(chapter).toContain(line);
     expect(parts.flatMap(p => p.chapters).find(c => c.number === 21))
       .toMatchObject({ slug: '21-opciones', difficulty: 3, prerequisites: [20] });
     expect(chapter).toContain('https://jesusvillota.github.io/options-explained/');

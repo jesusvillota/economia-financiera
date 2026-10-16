@@ -1,0 +1,1697 @@
+---
+title: Mercados, bonos y derivados
+number: 4
+source: ps4
+chapters:
+  - 11-mas-alla-capm
+  - 13-negociacion
+  - 17-bonos
+  - 18-estructura-temporal
+  - 19-duracion
+  - 20-forwards-futuros
+  - 21-opciones
+difficulty: 3
+summary: Doce ejercicios de negociación, eventos, bonos y derivados, con pistas, soluciones y variantes reproducibles.
+exercises:
+  - id: ej1
+    difficulty: 3
+    seed: 40
+    statement: Compra al margen (fuente 1). Compra {{n}} acciones a {{p0}} € con un préstamo de {{loan}} €. Tras
+      un año, el precio es {{p1}} € y el préstamo devenga {{rate}} %. Calcula el capital inicial, los
+      márgenes, la llamada (1 = sí; 0 = no), y las dos rentabilidades. El mantenimiento es {{maintenance}} %.
+    parameters:
+      - id: n
+        label: Acciones
+        default: 400
+        min: 350
+        max: 450
+        step: 50
+      - id: p0
+        label: Precio inicial
+        default: 35
+        min: 33
+        max: 37
+        step: 1
+        unit: €
+      - id: loan
+        label: Préstamo
+        default: 4500
+        min: 4000
+        max: 5000
+        step: 250
+        unit: €
+      - id: p1
+        label: Precio final
+        default: 28
+        min: 25
+        max: 32
+        step: 1
+        unit: €
+      - id: rate
+        label: Interés anual
+        default: 9
+        min: 6
+        max: 10
+        step: 1
+        unit: "%"
+      - id: maintenance
+        label: Mantenimiento
+        default: 30
+        min: 25
+        max: 40
+        step: 5
+        unit: "%"
+    hints:
+      - Separa el valor de las acciones y la deuda.
+      - La deuda final incluye intereses. Divide el capital final por el valor final para hallar el margen.
+      - La rentabilidad usa el capital inicial como denominador. La llamada exige margen inferior al
+        mantenimiento.
+    steps:
+      - title: Capital inicial
+        body: "Resta el préstamo del coste: {{capital}} €. El margen inicial es {{margen0}} %."
+      - title: Al cierre
+        body: "Resta la deuda con intereses al valor final: {{capital1}} €. Margen: {{margen1}} %. Llamada: {{call}}."
+      - title: Rentabilidades
+        body: "Capital propio: {{retorno}} %. Precio de la acción: {{precio}} %. El préstamo amplifica el cambio y
+          añade intereses."
+    answers:
+      - id: capital
+        label: a) Capital inicial
+        unit: €
+        value: 9500
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_0
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+      - id: margen0
+        label: a) Margen inicial
+        unit: "%"
+        value: 67.85714285714286
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_1
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+      - id: capital1
+        label: b) Capital final
+        unit: €
+        value: 6295
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_2
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+      - id: margen1
+        label: c) Margen final
+        unit: "%"
+        value: 56.20535714285714
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_3
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+      - id: call
+        label: c) Llamada (1 sí, 0 no)
+        unit: ""
+        value: 0
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: llamadaCompra
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+            - maintenance
+      - id: retorno
+        label: d) Rentabilidad del capital
+        unit: "%"
+        value: -33.73684210526316
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_4
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+      - id: precio
+        label: d) Variación del precio
+        unit: "%"
+        value: -19.999999999999996
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: compra_5
+          args:
+            - n
+            - p0
+            - loan
+            - p1
+            - rate
+    concepts:
+      - 13-negociacion
+  - id: ej2
+    difficulty: 3
+    seed: 41
+    statement: Venta corta (fuente 2). Vende {{n}} acciones prestadas a {{p0}} €, deposita {{initial}} % y
+      recompra a {{p1}} €. Compensa un dividendo de {{dividend}} € por acción. No hay intereses. Calcula
+      efectivo, depósito, capital final, margen, llamada (1 sí, 0 no) con mantenimiento {{maintenance}} %, y
+      rentabilidad.
+    parameters:
+      - id: n
+        label: Acciones
+        default: 800
+        min: 600
+        max: 1000
+        step: 100
+      - id: p0
+        label: Precio inicial
+        default: 48
+        min: 46
+        max: 50
+        step: 1
+        unit: €
+      - id: initial
+        label: Margen inicial
+        default: 50
+        min: 45
+        max: 60
+        step: 5
+        unit: "%"
+      - id: p1
+        label: Precio final
+        default: 55
+        min: 50
+        max: 60
+        step: 1
+        unit: €
+      - id: dividend
+        label: Dividendo
+        default: 1.5
+        min: 1
+        max: 2
+        step: 0.25
+        unit: €
+      - id: maintenance
+        label: Mantenimiento
+        default: 35
+        min: 30
+        max: 40
+        step: 5
+        unit: "%"
+    hints:
+      - La venta genera efectivo, pero las acciones siguen siendo una deuda.
+      - Resta el dividendo compensado y el coste de recompra del efectivo más depósito.
+      - Divide el capital final por el valor de las acciones adeudadas. La ganancia se compara con el depósito
+        inicial.
+    steps:
+      - title: Apertura
+        body: "Efectivo: {{efectivo}} €. Depósito propio: {{deposito}} €."
+      - title: Cierre y mantenimiento
+        body: "Capital final: {{capital}} €. Margen: {{margen}} %. Llamada: {{call}}."
+      - title: Resultado
+        body: "Rentabilidad sobre el depósito: {{retorno}} %. Una subida del precio perjudica la venta corta."
+    answers:
+      - id: efectivo
+        label: a) Efectivo de la venta
+        unit: €
+        value: 38400
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corto_0
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+      - id: deposito
+        label: a) Depósito inicial
+        unit: €
+        value: 19200
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corto_1
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+      - id: capital
+        label: b) Capital final
+        unit: €
+        value: 12400
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corto_2
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+      - id: margen
+        label: c) Margen final
+        unit: "%"
+        value: 28.18181818181818
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corto_3
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+      - id: call
+        label: c) Llamada (1 sí, 0 no)
+        unit: ""
+        value: 1
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: llamadaCorto
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+            - maintenance
+      - id: retorno
+        label: d) Rentabilidad
+        unit: "%"
+        value: -35.41666666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corto_4
+          args:
+            - n
+            - p0
+            - initial
+            - p1
+            - dividend
+    concepts:
+      - 13-negociacion
+  - id: ej3
+    difficulty: 3
+    seed: 42
+    statement: "Libro de órdenes (fuente 3). Compras: 400 a 61,80; 600 a 61,50; 500 a 61,20; 900 a 60,80. Ventas:
+      200 a 62,30; 300 a 63,10; 400 a 64,00; 600 a 65,50. Precios en euros. Calcula spread y tamaño medio del
+      mejor nivel. Ejecuta compras de {{small}} y {{large}} acciones; calcula el precio medio, coste total y
+      coste implícito frente a {{reference}} € para la orden grande."
+    parameters:
+      - id: small
+        label: Orden pequeña (acciones)
+        default: 300
+      - id: large
+        label: Orden grande
+        default: 900
+        min: 600
+        max: 1200
+        step: 100
+      - id: reference
+        label: Última operación
+        default: 62
+        min: 61.5
+        max: 62.25
+        step: 0.25
+        unit: €
+    hints:
+      - Una compra consume las ventas desde el menor precio.
+      - El precio medio pondera por acciones ejecutadas.
+      - El coste implícito es efectivo pagado menos acciones por precio de referencia.
+    steps:
+      - title: Mejor nivel
+        body: "Spread: {{spread}} €. Tamaño medio: {{size}} acciones."
+      - title: Ejecución
+        body: "Orden pequeña: {{avgsmall}} €/acción. Orden grande: {{avglarge}} €/acción; efectivo {{total}} €."
+      - title: Coste implícito
+        body: "Diferencia frente a la referencia: {{cost}} €, equivalente al {{relative}} % del nocional de
+          referencia."
+    answers:
+      - id: spread
+        label: a) Spread
+        unit: €
+        value: 0.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_0
+          args:
+            - small
+            - reference
+      - id: size
+        label: a) Tamaño medio del mejor nivel
+        unit: acciones
+        value: 300
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: orden_1
+          args:
+            - small
+            - reference
+      - id: avgsmall
+        label: b) Precio medio pequeño
+        unit: €
+        value: 62.56666666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_2
+          args:
+            - small
+            - reference
+      - id: avglarge
+        label: c) Precio medio grande
+        unit: €
+        value: 63.32222222222222
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_2
+          args:
+            - large
+            - reference
+      - id: total
+        label: c) Coste total grande
+        unit: €
+        value: 56990
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_3
+          args:
+            - large
+            - reference
+      - id: cost
+        label: d) Coste implícito
+        unit: €
+        value: 1190.0000000000005
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_4
+          args:
+            - large
+            - reference
+      - id: relative
+        label: d) Coste relativo
+        unit: "%"
+        value: 2.132616487455198
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: orden_5
+          args:
+            - large
+            - reference
+    concepts:
+      - 13-negociacion
+  - id: ej4
+    difficulty: 3
+    seed: 43
+    statement: "Estudio de eventos (fuente 4). Intercepto y tipo sin riesgo nulos; beta {{beta}}. Mercado mensual:
+      3 %, 1 %, −2 %. Acción: {{a}} %, {{b}} %, {{c}} %. Calcula predicciones, rendimientos anormales y CAR:
+      la suma de rendimientos anormales, sin capitalizar. Interpreta el signo; no demuestra por sí solo una
+      noticia causal."
+    parameters:
+      - id: beta
+        label: Beta
+        default: 1.2
+        min: 0.8
+        max: 1.6
+        step: 0.1
+      - id: a
+        label: Acción mes 1
+        default: 4.6
+        min: 3
+        max: 6
+        step: 0.2
+        unit: "%"
+      - id: b
+        label: Acción mes 2
+        default: 2
+        min: 1
+        max: 3
+        step: 0.2
+        unit: "%"
+      - id: c
+        label: Acción mes 3
+        default: -0.5
+        min: -2
+        max: 0
+        step: 0.1
+        unit: "%"
+      - id: m1
+        label: m1
+        default: 3
+      - id: m2
+        label: m2
+        default: 1
+      - id: m3
+        label: m3
+        default: -2
+    hints:
+      - Usa el modelo de mercado con intercepto nulo.
+      - Rendimiento anormal = observado menos beta por mercado.
+      - Suma los tres rendimientos anormales; no multipliques factores.
+    steps:
+      - title: Predicción
+        body: "Esperados: {{e1}} %, {{e2}} %, {{e3}} %."
+      - title: Sorpresa
+        body: "Anormales: {{ar1}} %, {{ar2}} %, {{ar3}} %."
+      - title: Acumulación
+        body: "CAR: {{car}} %. Positivo indica rendimiento superior al modelo; negativo indica rendimiento inferior."
+    answers:
+      - id: e1
+        label: a) Esperado mes 1
+        unit: "%"
+        value: 3.5999999999999996
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_0
+          args:
+            - beta
+            - a
+            - m1
+      - id: e2
+        label: a) Esperado mes 2
+        unit: "%"
+        value: 1.2
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_0
+          args:
+            - beta
+            - b
+            - m2
+      - id: e3
+        label: a) Esperado mes 3
+        unit: "%"
+        value: -2.4
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_0
+          args:
+            - beta
+            - c
+            - m3
+      - id: ar1
+        label: b) Anormal mes 1
+        unit: "%"
+        value: 1.0000000000000002
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_1
+          args:
+            - beta
+            - a
+            - m1
+      - id: ar2
+        label: b) Anormal mes 2
+        unit: "%"
+        value: 0.8
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_1
+          args:
+            - beta
+            - b
+            - m2
+      - id: ar3
+        label: b) Anormal mes 3
+        unit: "%"
+        value: 1.9
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: evento_1
+          args:
+            - beta
+            - c
+            - m3
+      - id: car
+        label: c) CAR trimestral
+        unit: "%"
+        value: 3.7000000000000006
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: car
+          args:
+            - beta
+            - a
+            - b
+            - c
+    concepts:
+      - 11-mas-alla-capm
+  - id: ej6
+    difficulty: 3
+    seed: 44
+    statement: "Bonos y duración (fuente 6a–c). Nominal {{face}} €, vencimiento {{years}} años, cupón anual B
+      {{coupon}} %; A no tiene cupón. Spots: {{r1}} % al año uno y {{rt}} % al vencimiento, con interpolación
+      lineal entre spots anuales. Precios de compra: A {{pa}} €, B {{pb}} €. Calcula precios teóricos, valor
+      actual del último pago de B, TIR de compra y duración de Macaulay."
+    parameters:
+      - id: face
+        label: Nominal
+        default: 1000
+        min: 900
+        max: 1100
+        step: 100
+        unit: €
+      - id: years
+        label: Vencimiento
+        default: 2
+        min: 2
+        max: 5
+        step: 1
+        unit: años
+      - id: coupon
+        label: Cupón B
+        default: 5
+        min: 3
+        max: 7
+        step: 1
+        unit: "%"
+      - id: r1
+        label: Spot inicial
+        default: 3
+        min: 2
+        max: 4
+        step: 0.25
+        unit: "%"
+      - id: rt
+        label: Spot final
+        default: 3.5
+        min: 3
+        max: 5
+        step: 0.25
+        unit: "%"
+      - id: pa
+        label: Compra A
+        default: 925
+        min: 850
+        max: 1000
+        step: 25
+        unit: €
+      - id: pb
+        label: Compra B
+        default: 1035
+        min: 1000
+        max: 1100
+        step: 5
+        unit: €
+      - id: zero
+        label: Cupón A (%)
+        default: 0
+    hints:
+      - Descuenta cada pago con el spot de su fecha.
+      - La TIR usa el precio de compra, que puede diferir del teórico.
+      - La duración pondera las fechas por el valor actual de los pagos usando la TIR de compra.
+    steps:
+      - title: Precios por spots
+        body: "A: {{precioa}} €. Último pago B: {{final}} € de valor actual. Precio completo B: {{preciob}} €."
+      - title: TIR de compra
+        body: "A: {{tira}} %; B: {{tirb}} %. Solo a dos años puedes transformar la ecuación de B en una cuadrática.
+          Para otros plazos resuelve la raíz numérica. La TIR de A coincide con el spot final solo si compras
+          a precio teórico."
+      - title: Duración
+        body: "A: {{da}} años; B: {{db}} años. El cupón adelanta parte del cobro."
+    answers:
+      - id: precioa
+        label: a) Precio A
+        unit: €
+        value: 933.510700366403
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioBono
+          args:
+            - face
+            - zero
+            - years
+            - r1
+            - rt
+      - id: preciob
+        label: a) Precio B
+        unit: €
+        value: 1028.7299247051114
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioBono
+          args:
+            - face
+            - coupon
+            - years
+            - r1
+            - rt
+      - id: final
+        label: a) Valor actual del último pago B
+        unit: €
+        value: 980.1862353847231
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: pvFinal
+          args:
+            - face
+            - coupon
+            - years
+            - rt
+      - id: tira
+        label: b) TIR A
+        unit: "%"
+        value: 3.9750489820072636
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: tirBono
+          args:
+            - face
+            - zero
+            - years
+            - pa
+      - id: tirb
+        label: b) TIR B
+        unit: "%"
+        value: 3.1664488981367795
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: tirBono
+          args:
+            - face
+            - coupon
+            - years
+            - pb
+      - id: da
+        label: c) Duración A
+        unit: años
+        value: 2
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: duracion
+          args:
+            - face
+            - zero
+            - years
+            - pa
+      - id: db
+        label: c) Duración B
+        unit: años
+        value: 1.9531735566553619
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: duracion
+          args:
+            - face
+            - coupon
+            - years
+            - pb
+    concepts:
+      - 17-bonos
+      - 19-duracion
+  - id: ej6_curva
+    difficulty: 3
+    seed: 45
+    statement: Nueva curva (fuente 6d). Nominal {{face}} €, plazo {{years}} años, cupón B {{coupon}} % anual; A
+      sin cupón. La nueva curva tiene spot de un año {{r1}} % y forward anual {{f}} % en todos los años
+      posteriores. Calcula el spot final y ambos precios. Conserva todos los decimales; no redondees el spot
+      antes de valorar.
+    parameters:
+      - id: face
+        label: Nominal
+        default: 1000
+        min: 900
+        max: 1100
+        step: 100
+        unit: €
+      - id: years
+        label: Plazo
+        default: 2
+        min: 2
+        max: 5
+        step: 1
+        unit: años
+      - id: coupon
+        label: Cupón B
+        default: 5
+        min: 3
+        max: 7
+        step: 1
+        unit: "%"
+      - id: r1
+        label: Nuevo spot de un año
+        default: 3.5
+        min: 3
+        max: 4
+        step: 0.25
+        unit: "%"
+      - id: f
+        label: Forward anual posterior
+        default: 4.5
+        min: 4
+        max: 6
+        step: 0.25
+        unit: "%"
+      - id: zero
+        label: Cupón A (%)
+        default: 0
+    hints:
+      - Encadena el factor del primer año y los factores forward posteriores.
+      - El factor al plazo T es $(1+r_1)(1+f)^{T-1}$.
+      - Descuenta cada cupón con su propio factor acumulado.
+    steps:
+      - title: Spot final
+        body: La raíz del factor acumulado da {{spot}} %.
+      - title: Nuevos precios
+        body: "A: {{precioa}} €; B: {{preciob}} €. En el caso original, el cupón pierde más euros y el cero pierde más
+          en porcentaje."
+      - title: Redondeo
+        body: El original redondeó el nuevo spot a 4 % antes de valorar. Aquí se conserva el spot exacto; por eso los
+          precios difieren unos céntimos.
+    answers:
+      - id: spot
+        label: d) Nuevo spot final
+        unit: "%"
+        value: 3.998798069977716
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: spotNuevo
+          args:
+            - r1
+            - f
+            - years
+      - id: precioa
+        label: d) Nuevo precio A
+        unit: €
+        value: 924.5775836164851
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioNuevo
+          args:
+            - face
+            - zero
+            - years
+            - r1
+            - f
+      - id: preciob
+        label: d) Nuevo precio B
+        unit: €
+        value: 1019.1156415412706
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioNuevo
+          args:
+            - face
+            - coupon
+            - years
+            - r1
+            - f
+    concepts:
+      - 18-estructura-temporal
+      - 19-duracion
+  - id: ej8
+    difficulty: 3
+    seed: 46
+    statement: "Curva forward (fuente 8). Spots anuales a uno, dos, tres, cuatro y cinco años: {{r1}} %, {{r2}} %,
+      {{r3}} %, {{r4}} %, {{r5}} %. Calcula los forwards anuales indicados. Un préstamo que comienza en dos
+      años ofrece un tipo fijo de 4,5 % por un año. Compáralo con el forward implícito, sin suponer que ese
+      forward predice el spot futuro."
+    parameters:
+      - id: r1
+        label: Spot 1
+        default: 3
+        min: 2
+        max: 3
+        step: 0.25
+        unit: "%"
+      - id: r2
+        label: Spot 2
+        default: 3.5
+        min: 3.25
+        max: 3.75
+        step: 0.25
+        unit: "%"
+      - id: r3
+        label: Spot 3
+        default: 4
+        min: 4
+        max: 4.5
+        step: 0.25
+        unit: "%"
+      - id: r4
+        label: Spot a cuatro años (%)
+        default: 4.2
+      - id: r5
+        label: Spot a cinco años (%)
+        default: 4.3
+    hints:
+      - Iguala las dos formas de invertir durante el mismo plazo.
+      - Divide el factor acumulado final por el inicial; toma la raíz según la duración.
+      - El forward fija un tipo hoy. El tipo disponible dentro de dos años sigue siendo desconocido.
+    steps:
+      - title: Un año desde uno
+        body: "El cociente de factores da {{f11}} %. Con curva creciente supera el spot inicial: el segundo año debe
+          compensar el menor rendimiento del primero."
+      - title: Un año desde dos
+        body: El tipo es {{f21}} %. Si supera 4,5 %, la oferta es menor que este tipo fijo de referencia. Eso no
+          prueba que esperar sea peor.
+      - title: Dos años desde uno
+        body: "Toma la raíz cuadrada del cociente: {{f12}} % anual."
+    answers:
+      - id: f11
+        label: a) Forward desde 1 durante 1 año
+        unit: "%"
+        value: 4.00242718446602
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: forward11
+          args:
+            - r1
+            - r2
+            - r3
+            - r4
+            - r5
+      - id: f21
+        label: b) Forward desde 2 durante 1 año
+        unit: "%"
+        value: 5.007258045695347
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: forward21
+          args:
+            - r1
+            - r2
+            - r3
+            - r4
+            - r5
+      - id: f12
+        label: c) Forward desde 1 durante 2 años
+        unit: "%"
+        value: 4.503634906819696
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: forward12
+          args:
+            - r1
+            - r2
+            - r3
+            - r4
+            - r5
+    concepts:
+      - 18-estructura-temporal
+  - id: ej9_compra
+    difficulty: 3
+    seed: 47
+    statement: "Bono corporativo (fuente 9a–b). Compra nominal {{nominal}} € el 15 de diciembre de 2025. Ventas
+      del libro: 150.000 nominales a 101 %; 150.000 a 101,20 %; 200.000 a 101,50 %; 100.000 a 102 %. Cupón
+      anual {{annual}} %, pagadero trimestralmente. Usa fracción de cupón corrido 1/3, sin días reales.
+      Calcula precio medio, cupón corrido total, desembolso y TIR efectiva anual hasta noviembre de 2028.
+      Supón que no hay impago ni amortización anticipada."
+    parameters:
+      - id: nominal
+        label: Nominal comprado
+        default: 350000
+        min: 310000
+        max: 450000
+        step: 10000
+        unit: €
+      - id: annual
+        label: Cupón anual
+        default: 14.5
+        min: 12
+        max: 16
+        step: 0.5
+        unit: "%"
+    hints:
+      - Consume las ventas desde el precio menor. Los precios son porcentajes del nominal.
+      - El precio sucio suma el cupón corrido al precio limpio.
+      - "Quedan doce cupones: el primero llega en dos meses, luego cada tres meses. Descuenta con una TIR
+        efectiva anual."
+    steps:
+      - title: Libro
+        body: "Precio limpio medio: {{precio}} % del nominal. No redondees antes de calcular el efectivo."
+      - title: Liquidación
+        body: "Cupón corrido total: {{accrued}} €. Desembolso: {{total}} €."
+      - title: Ecuación de TIR
+        body: $P_{\mathrm{sucio}}=\sum_{j=0}^{11}C/(1+y)^{(2+3j)/12}+N/(1+y)^{35/12}$. Aquí $C$ es el cupón trimestral
+          y $N$ el nominal. La raíz efectiva anual es {{ytm}} %.
+    answers:
+      - id: precio
+        label: a) Precio limpio medio
+        unit: "%"
+        value: 101.15714285714286
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioCompra
+          args:
+            - nominal
+      - id: accrued
+        label: a) Cupón corrido total
+        unit: €
+        value: 4229.166666666666
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corridoCompra
+          args:
+            - nominal
+            - annual
+      - id: total
+        label: a) Desembolso total
+        unit: €
+        value: 358279.1666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: desembolso
+          args:
+            - nominal
+            - annual
+      - id: ytm
+        label: b) TIR efectiva anual
+        unit: "%"
+        value: 14.756813966545435
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: tirVencimiento
+          args:
+            - nominal
+            - annual
+    concepts:
+      - 13-negociacion
+      - 17-bonos
+  - id: ej9_venta
+    difficulty: 3
+    seed: 48
+    statement: "Venta del bono (fuente 9c). Conserva el libro de compra del ejercicio anterior. Nominal
+      {{nominal}} €, cupón anual {{annual}} %. El 15 de abril de 2026 vende a mercado. Compras: 100.000
+      nominales a 99,20 %; 150.000 a 99 %; 200.000 a 98,75 %; 150.000 a 98,40 %. Usa cupón corrido 2/3 y un
+      cupón completo cobrado en febrero. Calcula precio medio, cobro total y TIR efectiva anual desde
+      diciembre. Mantén precisión completa."
+    parameters:
+      - id: nominal
+        label: Nominal vendido
+        default: 350000
+        min: 310000
+        max: 450000
+        step: 10000
+        unit: €
+      - id: annual
+        label: Cupón anual
+        default: 14.5
+        min: 12
+        max: 16
+        step: 0.5
+        unit: "%"
+    hints:
+      - Una venta consume las compras del mayor al menor precio.
+      - Suma al precio limpio los dos tercios del cupón trimestral.
+      - Iguala el desembolso inicial al cupón descontado dos meses y la venta descontada cuatro meses.
+    steps:
+      - title: Venta limpia
+        body: "Precio medio: {{precio}} % del nominal."
+      - title: Cobro
+        body: "Cupón corrido: {{accrued}} €. Cobro total: {{total}} €. La fracción 2/3 es una convención del
+          ejercicio, no Actual/Actual."
+      - title: TIR realizada
+        body: "$P_{\\mathrm{compra}}=C/(1+y)^{1/6}+P_{\\mathrm{venta}}/(1+y)^{1/3}$. Resultado: {{ytm}} % anual
+          efectivo. El dato auditado 8,14 % usa el coste de compra redondeado del original; el cálculo sin
+          redondeos da 8,15 % con los datos iniciales."
+    answers:
+      - id: precio
+        label: c) Precio limpio medio de venta
+        unit: "%"
+        value: 98.98571428571428
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: precioVenta
+          args:
+            - nominal
+      - id: accrued
+        label: c) Cupón corrido total
+        unit: €
+        value: 8458.333333333332
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: corridoVenta
+          args:
+            - nominal
+            - annual
+      - id: total
+        label: c) Cobro total de venta
+        unit: €
+        value: 354908.3333333333
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: cobro
+          args:
+            - nominal
+            - annual
+      - id: ytm
+        label: c) TIR efectiva anual realizada
+        unit: "%"
+        value: 8.15290875547395
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: tirVenta
+          args:
+            - nominal
+            - annual
+    concepts:
+      - 13-negociacion
+      - 17-bonos
+  - id: ej10_forward
+    difficulty: 3
+    seed: 49
+    statement: "Forwards (fuente 10a–b). Una acción sin dividendos vale {{spot0}} € y el tipo anual efectivo es
+      {{rate}} %. Calcula la entrega sin arbitraje a {{years}} años. Otro contrato largo se firmó hace seis
+      meses con entrega {{strike}} € a dos años desde su firma: quedan {{remaining}} años. Hoy su acción vale
+      {{spot1}} €. Calcula descuento y valor del contrato existente."
+    parameters:
+      - id: spot0
+        label: Contado inicial
+        default: 45
+        min: 40
+        max: 50
+        step: 1
+        unit: €
+      - id: rate
+        label: Tipo sin riesgo
+        default: 4
+        min: 2
+        max: 6
+        step: 0.5
+        unit: "%"
+      - id: years
+        label: Plazo nuevo
+        default: 2
+        min: 1
+        max: 3
+        step: 0.5
+        unit: años
+      - id: strike
+        label: Entrega pactada
+        default: 48
+        min: 44
+        max: 52
+        step: 1
+        unit: €
+      - id: spot1
+        label: Contado hoy
+        default: 50
+        min: 45
+        max: 55
+        step: 1
+        unit: €
+      - id: remaining
+        label: Plazo restante (años)
+        default: 1.5
+    hints:
+      - El precio de entrega de un contrato nuevo no es el valor de un contrato existente.
+      - Capitaliza el contado para la entrega nueva.
+      - Valor largo = contado actual menos valor actual de la entrega pactada. Usa el plazo restante.
+    steps:
+      - title: Entrega nueva
+        body: "$K=S_0(1+r_f)^T$: {{quote}} €."
+      - title: Descuento
+        body: El factor para el plazo restante es {{df}}.
+      - title: Valor actual
+        body: "$V_t=S_t-K/(1+r_f)^{\\tau}$: {{value}} €. No uses el plazo original de dos años."
+    answers:
+      - id: quote
+        label: a) Entrega del contrato nuevo
+        unit: €
+        value: 48.672000000000004
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: cotizacion
+          args:
+            - spot0
+            - rate
+            - years
+      - id: df
+        label: b) Factor de descuento
+        unit: ""
+        value: 0.9428660343181924
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion04
+          fn: descuento
+          args:
+            - rate
+            - remaining
+      - id: value
+        label: b) Valor del contrato largo
+        unit: €
+        value: 4.742430352726769
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: valorForward
+          args:
+            - spot1
+            - strike
+            - rate
+            - remaining
+    concepts:
+      - 20-forwards-futuros
+  - id: ej10_opciones
+    difficulty: 3
+    seed: 50
+    statement: Opciones (fuente 10c–d). Compra una call europea con ejercicio {{strike}} € y prima {{call}} €, y
+      una put del mismo ejercicio con prima {{put}} €. Calcula el beneficio nominal de la call a precios
+      finales {{high}} €, {{strike}} € y {{low}} €. Calcula el beneficio conjunto de call y put en {{low}} €.
+      No capitalices las primas.
+    parameters:
+      - id: strike
+        label: Ejercicio
+        default: 48
+        min: 46
+        max: 50
+        step: 1
+        unit: €
+      - id: call
+        label: Prima call
+        default: 3.5
+        min: 2.5
+        max: 4.5
+        step: 0.5
+        unit: €
+      - id: put
+        label: Prima put
+        default: 2
+        min: 1
+        max: 3
+        step: 0.5
+        unit: €
+      - id: high
+        label: Precio alto
+        default: 52
+        min: 51
+        max: 56
+        step: 1
+        unit: €
+      - id: low
+        label: Precio bajo
+        default: 44
+        min: 40
+        max: 45
+        step: 1
+        unit: €
+    hints:
+      - Distingue pago bruto y beneficio después de la prima.
+      - La call paga el máximo entre precio menos ejercicio y cero.
+      - La put paga el máximo entre ejercicio menos precio y cero. Resta ambas primas al sumar.
+    steps:
+      - title: Call
+        body: "Beneficios: {{up}} € a precio alto, {{at}} € en el ejercicio, {{down}} € a precio bajo."
+      - title: Call y put
+        body: El beneficio conjunto a precio bajo es {{both}} €. La combinación necesita un movimiento suficiente para
+          cubrir las dos primas.
+    answers:
+      - id: up
+        label: c.i) Beneficio call, precio alto
+        unit: €
+        value: 0.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: beneficioCall
+          args:
+            - high
+            - strike
+            - call
+      - id: at
+        label: c.ii) Beneficio call, en ejercicio
+        unit: €
+        value: -3.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: beneficioCall
+          args:
+            - strike
+            - strike
+            - call
+      - id: down
+        label: c.iii) Beneficio call, precio bajo
+        unit: €
+        value: -3.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: beneficioCall
+          args:
+            - low
+            - strike
+            - call
+      - id: both
+        label: d) Beneficio conjunto
+        unit: €
+        value: -1.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: beneficioAmbas
+          args:
+            - low
+            - strike
+            - call
+            - put
+    concepts:
+      - 21-opciones
+  - id: futuros
+    difficulty: 3
+    seed: 51
+    statement: "Futuros: ejercicio nuevo. Compra {{contracts}} contratos, multiplicador {{multiplier}} €/punto.
+      Precio de apertura {{p0}} y cierres diarios {{p1}}, {{p2}}, {{p3}}. Depósito inicial total {{initial}}
+      €, mantenimiento total {{maintenance}} €. Sin intereses ni retiradas. Cada saldo inferior al
+      mantenimiento exige reponer hasta el depósito inicial. Calcula variación, reposición y saldo diario, y
+      ganancia total."
+    parameters:
+      - id: p0
+        label: Precio de apertura (puntos)
+        default: 100
+      - id: p1
+        label: Cierre día 1
+        default: 97
+        min: 95
+        max: 99
+        step: 1
+      - id: p2
+        label: Cierre día 2
+        default: 94
+        min: 90
+        max: 96
+        step: 1
+      - id: p3
+        label: Cierre día 3
+        default: 101
+        min: 98
+        max: 105
+        step: 1
+      - id: contracts
+        label: Contratos
+        default: 2
+        min: 1
+        max: 3
+        step: 1
+      - id: multiplier
+        label: Multiplicador
+        default: 10
+        min: 10
+        max: 20
+        step: 5
+      - id: initial
+        label: Depósito inicial total (€)
+        default: 200
+      - id: maintenance
+        label: Mantenimiento total (€)
+        default: 150
+    hints:
+      - Cada día liquida la diferencia de precios multiplicada por contratos y multiplicador.
+      - Suma la variación al saldo anterior antes de comparar con mantenimiento.
+      - La reposición restaura el depósito inicial. Una reposición no es una pérdida adicional.
+    steps:
+      - title: Día uno
+        body: Variación {{v1}} €, reposición {{c1}} €, saldo {{b1}} €.
+      - title: Día dos
+        body: Variación {{v2}} €, reposición {{c2}} €, saldo {{b2}} €.
+      - title: Día tres
+        body: Variación {{v3}} €, reposición {{c3}} €, saldo {{b3}} €.
+      - title: Ganancia
+        body: "Suma de variaciones: {{gain}} €. El saldo incluye depósitos; no equivale a la ganancia."
+    answers:
+      - id: v1
+        label: Variación día 1
+        unit: €
+        value: -60
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_0
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: c1
+        label: Reposición día 1
+        unit: €
+        value: 60
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_1
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: b1
+        label: Saldo día 1
+        unit: €
+        value: 200
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_2
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: v2
+        label: Variación día 2
+        unit: €
+        value: -60
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_3
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: c2
+        label: Reposición día 2
+        unit: €
+        value: 60
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_4
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: b2
+        label: Saldo día 2
+        unit: €
+        value: 200
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_5
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: v3
+        label: Variación día 3
+        unit: €
+        value: 140
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_6
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: c3
+        label: Reposición día 3
+        unit: €
+        value: 0
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_7
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: b3
+        label: Saldo día 3
+        unit: €
+        value: 340
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_8
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+      - id: gain
+        label: Ganancia total
+        unit: €
+        value: 20
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion04
+          fn: futuros_9
+          args:
+            - p0
+            - p1
+            - p2
+            - p3
+            - contracts
+            - multiplier
+            - initial
+            - maintenance
+    concepts:
+      - 20-forwards-futuros
+---
+
+Practica cómo cambian el capital, los precios y los pagos. Usa las pistas antes de abrir la solución.
+
+La página numera los ejercicios sin saltos. Los originales 1, 2, 3 y 4 corresponden a los cuatro primeros.
+El original 6 se divide en bonos y nueva curva; el 8 trata forwards de tipos;
+el 9 se divide en compra y venta; el 10 se divide en forwards y opciones.
+El último ejercicio añade la liquidación diaria de futuros. Los números 5 y 7 no existen en la fuente.
+
+Introduce tipos y rentabilidades en porcentaje. Usa coma o punto decimal y conserva decimales intermedios.
+Los bonos corporativos usan las fracciones mensuales del enunciado. Las soluciones distinguen esas fracciones de los días reales.
+
+Prueba esto: resuelve una compra al margen. Después pulsa «Nueva variante» y observa cómo cambia la rentabilidad.

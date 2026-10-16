@@ -12,7 +12,7 @@ describe('capítulo 13: todos los números del texto', () => {
     expect([...text.matchAll(/^## <span class="section-tag">([^<]+)/gm)].map(m => m[1])).toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(text.match(/<Quiz client:visible/g)).toHaveLength(3);
     for (const widget of ['OrderBook', 'MarginAccount']) expect(text).toContain(`<${widget} client:visible />`);
-    expect(text).toMatch(/^sessions: \[\]$/m);
+    expect(text).toMatch(/^sessions: \[04-mercados-bonos-derivados\]$/m);
   });
 
   it('cada nivel del libro, cotización, media, cantidades pendientes y costes', () => {

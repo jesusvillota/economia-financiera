@@ -18,7 +18,7 @@ describe('capítulo 17: every number in the text', () => {
   it('metadata and six ordered sections; one widget and three quizzes', () => {
     expect([...text.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map((m) => m[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
-    for (const value of ['part: 5', 'chapter: 17', 'difficulty: 2', 'prerequisites: [2]', 'sessions: []']) expect(text).toContain(value);
+    for (const value of ['part: 5', 'chapter: 17', 'difficulty: 2', 'prerequisites: [2]', 'sessions: [04-mercados-bonos-derivados]']) expect(text).toContain(value);
     expect(parts.flatMap((p) => p.chapters).find((c) => c.number === 17))
       .toMatchObject({ slug: '17-bonos', difficulty: 2, prerequisites: [2] });
     expect(text.match(/<BondExplorer client:visible/g)).toHaveLength(1);

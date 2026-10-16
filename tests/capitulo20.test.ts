@@ -15,7 +15,7 @@ describe('capítulo 20: todos los números y convenciones del texto', () => {
     for (const widget of ['ForwardExplorer', 'FuturesMargin']) expect(chapter).toContain(`<${widget} client:visible />`);
     const entry = parts.flatMap((part) => part.chapters).find((c) => c.number === 20)!;
     expect(entry).toMatchObject({ slug: '20-forwards-futuros', difficulty: 3, prerequisites: [18] });
-    for (const line of ['part: 5', 'chapter: 20', 'difficulty: 3', 'prerequisites: [18]', 'sessions: []']) expect(chapter).toContain(line);
+    for (const line of ['part: 5', 'chapter: 20', 'difficulty: 3', 'prerequisites: [18]', 'sessions: [04-mercados-bonos-derivados]']) expect(chapter).toContain(line);
   });
 
   it('gancho y quiz 1: 60 €, 5 %, un año, 63 € y valor inicial cero', () => {
