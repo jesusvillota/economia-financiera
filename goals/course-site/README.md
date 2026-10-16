@@ -94,6 +94,7 @@ flowchart TD
     TASK_047["TASK-047 Chapter 20: forwards and futures"]
     TASK_048["TASK-048 Chapter 21: options, payoffs and strategies"]
     TASK_049["TASK-049 Problem Session 4 (ps4) as an interactive session"]
+    TASK_050["TASK-050 Problem Session 4 (ps4) as an interactive session"]
   end
   subgraph M_6["M-6 · Polish and launch"]
     TASK_019["TASK-019 Plan: decompose M-6"]
@@ -167,6 +168,15 @@ flowchart TD
   TASK_043 --> TASK_047
   TASK_043 --> TASK_048
   TASK_035 --> TASK_049
+  TASK_035 --> TASK_050
+  TASK_036 --> TASK_050
+  TASK_042 --> TASK_050
+  TASK_043 --> TASK_050
+  TASK_044 --> TASK_050
+  TASK_045 --> TASK_050
+  TASK_046 --> TASK_050
+  TASK_047 --> TASK_050
+  TASK_048 --> TASK_050
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
