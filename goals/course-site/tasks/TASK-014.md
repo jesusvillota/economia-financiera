@@ -3,7 +3,7 @@ id: TASK-014
 title: Problem Session 1 (ps1) as an interactive session
 milestone: M-2
 state: approved
-depends_on: [TASK-006, TASK-009, TASK-004]
+depends_on: [TASK-006, TASK-009]
 delivery: pr
 ---
 
