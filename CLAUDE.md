@@ -6,7 +6,7 @@ Interactive, 3Blue1Brown-style Spanish-language course site for Economía Financ
 - `docs/STYLE_GUIDE.md`: voice, chapter and problem-session templates, notation, colours, widgets, checklist.
 - `docs/AUDIT.md`: source errors, notation inventory and the proposed curriculum (section 4).
 - `src/data/curriculum.ts`: the chapter list the navigation uses. Keep it in sync with the curriculum.
-- `src/content/chapters/00-ejemplo.mdx`: placeholder chapter showing the structure.
+- `src/content/chapters/01-interes.mdx`: the reference chapter showing the structure.
 
 ## Stack
 Astro 7 (static, base `/economia-financiera`) + MDX + KaTeX (`remark-math`/`rehype-katex`) + React 18 islands (Mafs) + Vitest. Deployed to GitHub Pages.

@@ -20,4 +20,4 @@ MDX. Sections start with `## <span class="section-tag">Tag</span>Title`. Maths i
 
 ## Slugs
 
-A chapter slug is its file name without extension (e.g. `00-ejemplo`). Sessions refer to chapters by slug.
+A chapter slug is its file name without extension (e.g. `01-interes`). Sessions refer to chapters by slug.
