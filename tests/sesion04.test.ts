@@ -94,6 +94,7 @@ describe('PS4: all exercises and independent calculations across 20 random seeds
    it(`${ex.id}.${a.id}: defaults vs library, frontmatter and independent arithmetic`,()=>{
     expect(a.lib.module).toBe('sesion04');const args=a.lib.args.map(id=>defaults[id]);const actual=call(a.lib.fn,args);
     expect(actual).toBeCloseTo(reference(a.lib.fn,args),7);expect(withinTolerance(actual,a.value,a.tolerance)).toBe(true);
+    if(a.unit === '%') expect(withinTolerance(Number(actual.toFixed(2)),actual,a.tolerance)).toBe(true);
    });
    it(`${ex.id}.${a.id}: 20 random seeded variants`,()=>{
     const random=rng(ex.seed);
