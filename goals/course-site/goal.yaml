@@ -4,9 +4,18 @@ title: 'Economía Financiera: 3Blue1Brown-style course site'
 objective: Build an interactive, Spanish-language, 3Blue1Brown-style website for the Economía Financiera course, covering lectures and problem-set sessions, modeled on options-explained.
 base: main
 success:
-  SC-1: <observable result and how it is verified>
+  SC-1: The site builds and tests pass on a clean checkout (`npm ci && npm test && npm run build`) and deploys to GitHub Pages at a public URL.
+  SC-2: Every lecture session of the course is a chapter sequence in the house template (Hook, Intuition, Formalisation, Playground, Check yourself, Recap), in Spanish, with at least one interactive widget per chapter; verified by `npm run build` and `npm run screenshots` (no console, KaTeX or overflow errors).
+  SC-3: Every problem set (ps1 to ps4) and the rentas exam is an interactive problem session with stepwise worked solutions, numeric answer checkers and seeded variants; verified by `npm test` and `npm run build`.
+  SC-4: All finance maths lives in `src/lib/` with Vitest tests, and every numeric answer in a problem session is asserted against the library; verified by `npm test`.
+  SC-5: Errors and inconsistencies found in the source notes and problem sets are logged in `docs/AUDIT.md` and corrected in the site, not copied; verified by the audit file listing each fix and its test.
 milestones:
-  - {id: M-1, title: <first observable outcome>, success: [SC-1], exit: <verifiable evidence>}
+  - {id: M-1, title: Foundation, success: [SC-1, SC-4], exit: Repo published; scaffold, style guide, problem-session components, curriculum and audit merged; site deploys}
+  - {id: M-2, title: Reference slice (Part I + PS1), success: [SC-2, SC-3, SC-4], exit: Time-value chapters and Problem Session 1 merged and approved by the owner as the template for the rest}
+  - {id: M-3, title: Valuation, risk and portfolio theory, success: [SC-2, SC-3, SC-5], exit: Lectures 2 to 7 chapters and PS2, PS3 sessions merged}
+  - {id: M-4, title: Markets, IPOs and efficiency, success: [SC-2, SC-3, SC-5], exit: IPO, microstructure, efficiency and behavioural chapters merged}
+  - {id: M-5, title: Fixed income, derivatives and exam, success: [SC-2, SC-3, SC-5], exit: Remaining lectures, PS4 and the rentas exam session merged}
+  - {id: M-6, title: Polish and launch, success: [SC-1, SC-2, SC-3], exit: Cross-site QA, search or glossary, accessibility and launch checks done}
 policy:
   decide: human         # human | experts (a committee answers worker decision requests)
   orchestrator: null    # {platform: codex, model: MODEL, effort: LEVEL}

@@ -18,7 +18,18 @@ Build an interactive, Spanish-language, 3Blue1Brown-style website for the Econom
 <!-- goal:graph:start -->
 ```mermaid
 flowchart TD
-  subgraph M_1["M-1 · <first observable outcome>"]
+  subgraph M_1["M-1 · Foundation"]
+    TASK_001["TASK-001 Create GitHub repo, push main, enable Pages (Actions source)"]
+  end
+  subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
+  end
+  subgraph M_3["M-3 · Valuation"]
+  end
+  subgraph M_4["M-4 · Markets"]
+  end
+  subgraph M_5["M-5 · Fixed income"]
+  end
+  subgraph M_6["M-6 · Polish and launch"]
   end
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
