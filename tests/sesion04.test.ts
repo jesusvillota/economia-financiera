@@ -114,6 +114,7 @@ describe('PS4: all exercises and independent calculations across 20 random seeds
   expect((lib.efectivo(350000,14.5,1)/350).toFixed(2)).toBe('1014.02');
   // AUDIT rounds clean and accrued components separately: 989.86 + 24.17 = 1014.03.
   expect(Number((lib.precioLibro(350000,1)*10).toFixed(2))+Number(lib.corrido(1000,14.5,2/3).toFixed(2))).toBeCloseTo(1014.03,10);
+  expect((36.25**2+4*1023.68*1014.03).toFixed(0)).toBe('4153483');
   expect(lib.tirVencimiento(350000,14.5).toFixed(2)).toBe('14.76');
   expect(lib.tirVentaAuditada().toFixed(2)).toBe('8.14');
   expect((100*root([1/6,1/3],[36.25,lib.efectivo(350000,14.5,1)/350],1023.68)).toFixed(2)).toBe('8.14');
