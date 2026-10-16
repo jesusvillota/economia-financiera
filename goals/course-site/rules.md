@@ -1,0 +1,1 @@
+- Dispatch every task with --via orca --agent codex --model gpt-6.1-sol --effort high (owner, 2026-10-16). Do not change policy or task routes.
