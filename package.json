@@ -26,7 +26,8 @@
     "clickthrough:cap16": "node scripts/clickthrough-cap16.mjs",
     "clickthrough:cap13": "node scripts/clickthrough-cap13.mjs",
     "clickthrough:cap14": "node scripts/clickthrough-cap14.mjs",
-    "clickthrough:cap15": "node scripts/clickthrough-cap15.mjs"
+    "clickthrough:cap15": "node scripts/clickthrough-cap15.mjs",
+    "clickthrough:cap18": "node scripts/clickthrough-cap18.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

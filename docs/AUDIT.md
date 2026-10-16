@@ -166,6 +166,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
+### PS4 Ex 8d: implied forwards do not guarantee future spots
+
+`source/problem_sets/ps4/ps4_solutions.tex:385–391` identifies the implied forward with the future spot expected by the market and recommends locking a loan solely from that comparison. No-arbitrage alone relates current discount factors; it does not identify a forecast or ensure that waiting costs more. With the source curve, the corrected annual forward from year 2 to year 3 is 5.01%. A contract at 4.5% is cheaper than that implied fixed rate for otherwise identical terms. A future spot of either 2% or 8% remains possible without changing today’s curve. Chapter 18 states the uncertainty and the extra assumptions needed for an expectations interpretation. Regression: `tests/capitulo18.test.ts`, “audit PS4 Ex 8d: future spots can differ from the locked forward”, compares repayment under both future scenarios with the library. The existing 5.01% correction is also tested there.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.
