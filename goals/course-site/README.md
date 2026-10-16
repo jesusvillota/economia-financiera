@@ -58,6 +58,7 @@ flowchart TD
   subgraph M_3["M-3 · Valuation"]
     TASK_016["TASK-016 Plan: decompose M-3"]
     TASK_020["TASK-020 M-2 follow-ups: screenshots port, contract docs, ps1 links, audit entry"]
+    TASK_021["TASK-021 Finance maths library: valuation and single-asset risk"]
   end
   subgraph M_4["M-4 · Markets"]
     TASK_017["TASK-017 Plan: decompose M-4"]
@@ -98,6 +99,7 @@ flowchart TD
   TASK_017 --> TASK_018
   TASK_018 --> TASK_019
   TASK_016 --> TASK_020
+  TASK_016 --> TASK_021
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
