@@ -20,7 +20,7 @@ describe('capítulo 19: cada número del texto', () => {
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
     expect(chapter).toContain('<DurationExplorer client:visible />');
-    for (const line of ['part: 5', 'chapter: 19', 'difficulty: 3', 'prerequisites: [17]', 'sessions: []']) expect(chapter).toContain(line);
+    for (const line of ['part: 5', 'chapter: 19', 'difficulty: 3', 'prerequisites: [17]', 'sessions: [04-mercados-bonos-derivados]']) expect(chapter).toContain(line);
     expect(parts.flatMap((p) => p.chapters).find((c) => c.number === 19))
       .toMatchObject({ slug: '19-duracion', difficulty: 3, prerequisites: [17] });
     expect(chapter).toContain('/chapters/17-bonos/');

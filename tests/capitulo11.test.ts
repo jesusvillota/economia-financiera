@@ -99,6 +99,6 @@ describe('capítulo 11: cada número del ejemplo, tabla, fórmulas, juego y quiz
     expect(chapter).toContain('part: 3');
     expect(chapter).toContain('difficulty: 3');
     expect(chapter).toContain('prerequisites: [10]');
-    expect(chapter).toContain('sessions: []');
+    expect(chapter).toContain('sessions: [04-mercados-bonos-derivados]');
   });
 });

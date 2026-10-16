@@ -282,3 +282,9 @@ Open question for DEC-002: scope of Part V (21 chapters total; Part V is 5 of th
 | exam (rentas) | 1 (multiple choice a/b/c) | 1 | 0 | 1 (symbolic) | 0 | Yes: vary periodicities, check option by brute-force sum |
 
 Parametrisation rules found: need r > g for growing annuities and DDM; probabilities sum to 1; correlation matrices must be positive semi-definite; Ex 2 of ps3 needs a correlation whose minimum-variance weight is outside [0,1]; Ex 6 of ps4 uses a quadratic YTM that works for 2 years only.
+
+### PS4 session: Exercise 9c rounding conventions
+
+TASK-050 retains full precision through execution and cash-flow valuation. The exact sale quote is 98.9857142857%, so the clean proceeds per bond are 989.857142857 € and the accrued coupon is 24.166666667 €. Their exact sum rounds to **1014.02 €**. The table's **1014.03 €** sums the separately rounded components 989.86 + 24.17. Both conventions are now tested explicitly.
+
+With the unrounded purchase payment 1023.654761905 € and corrected exact sale payment, the annual effective holding return is **8.152908755%**, or **8.15%**. The table's **8.14%** is reproduced with the source-rounded purchase payment 1023.68 € and exact corrected sale payment (8.144767380%). Rounding both purchase and sale payments gives 8.146766841%, which rounds to 8.15%. The interactive session uses unrounded execution prices and shows the distinction in its solution. Tests: `tests/sesion04.test.ts`, “asserts corrected AUDIT values”. Source files remain unchanged as provenance; the delivered solution also replaces the malformed `extbf` fragment with plain conclusion text and uses continuous exercise numbering.

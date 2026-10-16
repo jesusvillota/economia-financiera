@@ -14,12 +14,12 @@ const num = (v: number) => v.toFixed(2).replace('.', ',');
 const zero = (face: number, maturity: number) => ({ face, couponRate: 0, maturity });
 
 describe('capítulo 18: cada número y ejemplo del texto', () => {
-  it('six ordered sections, three quizzes, curriculum, prerequisite 17 and empty sessions', () => {
+  it('six ordered sections, three quizzes, curriculum, prerequisite 17 and PS4 session link', () => {
     expect([...chapter.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map(m => m[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
     expect(chapter.match(/<SpotForwardBuilder client:visible/g)).toHaveLength(1);
-    for (const line of ['part: 5', 'chapter: 18', 'difficulty: 3', 'prerequisites: [17]', 'sessions: []']) expect(chapter).toContain(line);
+    for (const line of ['part: 5', 'chapter: 18', 'difficulty: 3', 'prerequisites: [17]', 'sessions: [04-mercados-bonos-derivados]']) expect(chapter).toContain(line);
     expect(parts.flatMap(p => p.chapters).find(c => c.number === 18))
       .toMatchObject({ slug: '18-estructura-temporal', difficulty: 3, prerequisites: [17] });
   });
