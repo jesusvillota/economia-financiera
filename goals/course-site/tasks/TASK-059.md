@@ -2,9 +2,10 @@
 id: TASK-059
 title: 'Owner launch: make the repository public, enable Pages, final read-through of the live site'
 milestone: M-6
-state: approved
+state: done
 depends_on: [TASK-053, TASK-054, TASK-055, TASK-058]
 delivery: manual
+reason: Repo public, Pages live at https://jesusvillota.github.io/economia-financiera/ (landing, chapter, session, exam, glosario, search index, sitemap, custom 404 verified by curl); owner approved publishing source/.
 ---
 
 ## Why
