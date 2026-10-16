@@ -35,6 +35,7 @@ flowchart TD
     TASK_010["TASK-010 Shared widgets: cash-flow timeline and growth curves"]
     TASK_011["TASK-011 Chapter 1: interest, simple vs compound"]
     TASK_012["TASK-012 Chapter 2: present value, annuities, perpetuities"]
+    TASK_013["TASK-013 Chapter 3: NPV, IRR and investment criteria"]
   end
   subgraph M_3["M-3 · Valuation"]
   end
@@ -66,6 +67,9 @@ flowchart TD
   TASK_009 --> TASK_012
   TASK_010 --> TASK_012
   TASK_007 --> TASK_012
+  TASK_009 --> TASK_013
+  TASK_010 --> TASK_013
+  TASK_007 --> TASK_013
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
