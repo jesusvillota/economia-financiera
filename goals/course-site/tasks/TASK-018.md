@@ -6,6 +6,7 @@ state: approved
 depends_on: [TASK-017]
 delivery: manual
 kind: plan
+route: {platform: claude, model: sonnet, effort: high}
 ---
 
 ## Why
