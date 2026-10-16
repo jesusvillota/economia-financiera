@@ -40,6 +40,7 @@ flowchart TD
     TASK_015["TASK-015 Owner review of the reference slice"]
   end
   subgraph M_3["M-3 · Valuation"]
+    TASK_016["TASK-016 Plan: decompose M-3"]
   end
   subgraph M_4["M-4 · Markets"]
   end
@@ -79,6 +80,7 @@ flowchart TD
   TASK_012 --> TASK_015
   TASK_013 --> TASK_015
   TASK_014 --> TASK_015
+  TASK_015 --> TASK_016
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
