@@ -79,6 +79,7 @@ flowchart TD
     TASK_035["TASK-035 Finance maths library: markets (margin, short sales, order book, IPO)"]
     TASK_036["TASK-036 Finance maths library: efficiency and behavioural finance"]
     TASK_037["TASK-037 Chapter 12: market structure, venues and participants"]
+    TASK_038["TASK-038 Chapter 13: trading, orders, margin, short sales and costs"]
   end
   subgraph M_5["M-5 · Fixed income"]
     TASK_018["TASK-018 Plan: decompose M-5"]
@@ -139,6 +140,7 @@ flowchart TD
   TASK_017 --> TASK_035
   TASK_017 --> TASK_036
   TASK_017 --> TASK_037
+  TASK_035 --> TASK_038
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
