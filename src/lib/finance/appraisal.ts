@@ -57,3 +57,10 @@ export const discountedPayback = (r: number, flows: number[]): number | null =>
 /** Índice de rentabilidad: VA de los flujos futuros / desembolso inicial (flows[0] < 0). */
 export const profitabilityIndex = (r: number, flows: number[]): number =>
   (npv(r, flows) - flows[0]) / -flows[0];
+
+/** Tasa de cruce (Fisher): la TIR de la diferencia A - B; null si las curvas de VAN no se cruzan en [-0,99; 10]. */
+export const crossoverRate = (a: number[], b: number[]): number | null => {
+  const n = Math.max(a.length, b.length);
+  const diff = Array.from({ length: n }, (_, t) => (a[t] ?? 0) - (b[t] ?? 0));
+  return irr(diff).roots[0] ?? null;
+};

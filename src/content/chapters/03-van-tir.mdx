@@ -1,0 +1,141 @@
+---
+title: "VAN, TIR y otros criterios"
+part: 1
+chapter: 3
+difficulty: 2
+prerequisites: [2]
+summary: "Cómo decidir si un proyecto merece la pena: el VAN como regla, la TIR como raíz de una curva, el payback y los casos en que los criterios discrepan."
+---
+import CashFlowTimeline from '../../components/plots/CashFlowTimeline';
+import NpvProfile from '../../components/plots/NpvProfile';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Merece la pena?
+
+Una empresa puede invertir 1000 € en una máquina. Esa máquina le devolverá 400 € el primer año, 500 € el segundo y 600 € el tercero. En total cobra 1500 €. Parece un buen negocio: gana 500 €.
+
+Pero hay un problema. Los 500 € de ganancia llegan repartidos en tres años. Y el dinero de hoy vale más que el de mañana, como viste en el [capítulo 2](/economia-financiera/chapters/02-valor-actual/). Si la empresa tiene otra opción que rinde un 10 % al año, ¿sigue ganando la máquina?
+
+Este capítulo responde a esa pregunta con tres herramientas. El **VAN** dice cuánto valor crea el proyecto, en euros de hoy. La **TIR** dice qué rentabilidad anual ofrece. El **payback** dice cuánto tarda en recuperarse el desembolso. Casi siempre dan la misma respuesta. Cuando no, hay que saber cuál creer.
+
+## <span class="section-tag">Intuición</span>Un proyecto es una línea temporal
+
+Dibuja el proyecto sobre una recta de tiempo. Cada flecha hacia arriba es un cobro. Cada flecha hacia abajo es un pago. La inversión inicial es una flecha hacia abajo en $t = 0$.
+
+No puedes sumar las flechas tal cual, porque están en fechas distintas. Primero hay que llevarlas todas al mismo instante. Lo más cómodo es $t = 0$. Pulsa «Descontar a t = 0» y mira cómo cada flecha se acorta al viajar hacia el presente:
+
+<CashFlowTimeline client:visible />
+
+Mueve la tasa y las puntas de las flechas. El valor actual del conjunto, con el desembolso incluido, es el **valor actual neto**: el VAN.
+
+<Callout type="note" title="Prueba esto">
+Sube la tasa del 8 % al 20 %. ¿Qué flechas se encogen más, las cercanas o las lejanas? ¿A partir de qué tasa deja el VAN de ser positivo?
+</Callout>
+
+Dos ideas bastan para leer el resultado:
+
+- Si el VAN es **positivo**, el proyecto da más que la alternativa que rinde la tasa $\Rate{r}$. Crea valor.
+- Si el VAN es **negativo**, el dinero rinde más en la alternativa. El proyecto destruye valor.
+
+Esa tasa $\Rate{r}$ es el **coste de oportunidad**: lo que ganarías con la mejor alternativa de riesgo parecido. Aquí la damos como dato. En el capítulo 5 verás cómo se calcula para una empresa.
+
+## <span class="section-tag">Formalización</span>VAN, TIR, payback y sus conflictos
+
+### El VAN
+
+Un proyecto es una lista de flujos $C_0, C_1, \dots, C_n$. El primero, $C_0$, suele ser negativo. El VAN a la tasa $\Rate{r}$ es la suma de sus valores actuales:
+
+$$\VAN(\Rate{r}) = \sum_{t=0}^{n} \frac{C_t}{(1+\Rate{r})^t} = C_0 + \frac{C_1}{1+\Rate{r}} + \cdots + \frac{C_n}{(1+\Rate{r})^n}.$$
+
+El flujo de $t = 0$ no se descuenta. Con los flujos de la máquina, $(-1000,\ 400,\ 500,\ 600)$, y $\Rate{r} = 10\,\%$:
+
+$$\VAN(10\,\%) = -1000 + \frac{400}{1{,}1} + \frac{500}{1{,}1^2} + \frac{600}{1{,}1^3} = 227{,}65\,€.$$
+
+**Regla del VAN:** acepta el proyecto si $\VAN > 0$ y recházalo si $\VAN < 0$. El VAN se mide en euros de hoy, así que se puede sumar: el VAN de dos proyectos juntos es la suma de sus VAN.
+
+### La TIR
+
+El VAN depende de la tasa. Si dibujas $\VAN(r)$ para todas las tasas, obtienes el **perfil del VAN**. En un proyecto como el de la máquina es una curva que baja: a tasas más altas, los cobros lejanos pesan menos. Con $\Rate{r} = 0$ el VAN es la suma simple, $500\,€$. Hay una tasa donde la curva corta el eje horizontal. Es la **tasa interna de rentabilidad** (TIR, en inglés IRR):
+
+$$\VAN(\rstar) = 0 \quad\Longleftrightarrow\quad \sum_{t=0}^{n} \frac{C_t}{(1+\rstar)^t} = 0.$$
+
+La TIR es una **raíz** de esta ecuación. No hay fórmula general: se busca con un método numérico. Para la máquina, $\rstar = 21{,}65\,\%$.
+
+**Regla de la TIR:** si el perfil del VAN baja y cruza el eje una sola vez, acepta cuando $\rstar > \Rate{r}$. A la izquierda de la TIR el VAN es positivo. A la derecha es negativo. Con $\Rate{r} = 25\,\%$ el VAN de la máquina es $-52{,}80\,€$ y la TIR, $21{,}65\,\%$, queda por debajo: se rechaza.
+
+### Payback y otros criterios
+
+El **payback** (plazo de recuperación) es el tiempo hasta que los flujos acumulados dejan de ser negativos. Para la máquina, tras dos años van $-1000 + 400 + 500 = -100$. El tercer año aporta 600, así que se recuperan en $2 + 100/600 = 2{,}17$ años. Aquí repartimos el último año de forma lineal, una simplificación.
+
+El payback es fácil de explicar. Pero ignora el valor temporal del dinero y todo lo que ocurre después de recuperar. Una versión mejor es el **payback descontado**, que usa los valores actuales de los flujos: para la máquina, con $\Rate{r} = 10\,\%$, sube a $2{,}50$ años.
+
+El **índice de rentabilidad** compara el valor actual de los cobros con el desembolso: $\mathrm{IR} = (\VAN - C_0)/(-C_0)$. Para la máquina vale $1{,}23$. Un IR mayor que 1 equivale a un VAN positivo.
+
+### Cuando los criterios discrepan
+
+Los criterios coinciden con un solo proyecto convencional. Fallan en dos casos.
+
+**1. Proyectos excluyentes de distinta forma.** Solo puedes hacer uno de dos. Los dos cuestan 1000 €:
+
+- A (rápido): devuelve 1300 € al cabo de un año.
+- B (lento): devuelve 1600 € al cabo de tres años.
+
+La TIR de A es $30\,\%$. La de B es $1{,}6^{1/3}-1 = 16{,}96\,\%$. Con $\Rate{r} = 10\,\%$, los VAN son $181{,}82\,€$ y $202{,}10\,€$. La TIR elige A. El VAN elige B. ¿Quién tiene razón?
+
+El VAN. Mide los euros de valor que creas, y B crea más. A devuelve el dinero pronto, pero luego hay que reinvertirlo y no sabemos a qué tasa. El cambio de ranking ocurre en la **tasa de cruce**, donde las dos curvas valen lo mismo. Es la TIR de la diferencia de flujos, $C^A_t - C^B_t$:
+
+$$\frac{1300}{1+r} = \frac{1600}{(1+r)^3} \;\Longrightarrow\; (1+r)^2 = \frac{1600}{1300} \;\Longrightarrow\; r = 10{,}94\,\%.$$
+
+Por debajo del 10,94 % gana B por VAN. Por encima, gana A. Si $\Rate{r} = 12\,\%$, los VAN son $160{,}71\,€$ (A) y $138{,}85\,€$ (B), y ya no hay conflicto.
+
+**2. Más de una TIR.** La curva del VAN puede cortar el eje más de una vez cuando los flujos cambian de signo más de una vez. Imagina un proyecto que cobra y al final tiene un coste de cierre: $(-100,\ 230,\ -132)$. Resolver $\VAN = 0$ da dos raíces, $10\,\%$ y $20\,\%$. El VAN es positivo solo entre ambas. ¿Cuál es «la» TIR? Ninguna lo es. La regla de la TIR deja de tener sentido. El VAN, en cambio, sigue dando una respuesta clara a cada tasa: $\VAN(15\,\%) = 0{,}19\,€$.
+
+<Callout type="key">
+El VAN siempre mide valor en euros de hoy y se puede sumar. La TIR resume el proyecto en un porcentaje, pero ese porcentaje puede engañar al comparar o no ser único.
+</Callout>
+
+## <span class="section-tag">Zona de juego</span>El perfil del VAN
+
+Elige un proyecto y arrastra la tasa. La línea punteada naranja marca la tasa elegida. Los puntos naranjas sobre el eje son las TIR:
+
+<NpvProfile client:visible />
+
+<Callout type="note" title="Prueba esto">
+(1) En «Rápido y lento», pon la tasa en el 5 % y luego en el 15 %. ¿Cuál de los dos proyectos gana cada vez? Fíjate en la línea verde del cruce. (2) En «Dos TIR», recorre las tasas de 0 % a 40 %. ¿En qué tramo es positivo el VAN?
+</Callout>
+
+Los ejercicios para practicar con números distintos están en la [Sesión de problemas 1](/economia-financiera/sesiones/), sección de valoración de proyectos.
+
+## <span class="section-tag">Compruébalo</span>Tres preguntas
+
+<Quiz client:visible
+  question="El proyecto de la máquina tiene TIR $= 21{,}65\,\%$. Tu coste de oportunidad es $25\,\%$. ¿Qué haces?"
+  options={['Lo acepto: la TIR es positiva', 'Lo rechazo: la TIR es menor que la tasa', 'Me da igual']}
+  answer={1}
+  explanation="Con $r = 25\,\%$ el VAN es $-52{,}80$ €. La TIR no basta con ser positiva: debe superar el coste de oportunidad."
+/>
+
+<Quiz client:visible
+  question="A y B son excluyentes y $r = 10\,\%$. A tiene TIR $30\,\%$ y VAN $181{,}82$ €. B tiene TIR $16{,}96\,\%$ y VAN $202{,}10$ €. ¿Cuál eliges?"
+  options={['A, porque su TIR es mayor', 'B, porque su VAN es mayor', 'A, porque se recupera antes']}
+  answer={1}
+  explanation="Elige el VAN: B crea 20,28 € más de valor de hoy. Solo por encima de la tasa de cruce, $10{,}94\,\%$, el VAN también elegiría A."
+/>
+
+<Quiz client:visible
+  question="Un proyecto tiene dos TIR, $10\,\%$ y $20\,\%$. ¿Qué criterio sigue dando una respuesta clara?"
+  options={['La TIR más baja', 'La media de las dos TIR', 'El VAN a la tasa de descuento']}
+  answer={2}
+  explanation="El VAN se calcula a la tasa $r$ que has elegido y da un solo número. A $15\,\%$ vale $0{,}19$ €."
+/>
+
+## <span class="section-tag">Resumen</span>Qué te llevas
+
+- El **VAN** suma los flujos descontados a $t = 0$, con el desembolso incluido. Acepta si es positivo.
+- La **TIR** es la tasa que anula el VAN: la raíz de la curva del VAN. Con un proyecto convencional, acepta si supera el coste de oportunidad.
+- El **payback** mide solo el tiempo de recuperación. Es sencillo, pero ignora el valor del dinero y lo que pasa después.
+- Con proyectos excluyentes, el ranking de la TIR puede cambiar respecto al del VAN. Manda el VAN.
+- Con varios cambios de signo puede haber **varias TIR**. Entonces usa el VAN.
+
+Siguiente: en el capítulo 4 usarás el mismo descuento de flujos para valorar una acción a partir de sus dividendos.

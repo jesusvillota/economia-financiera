@@ -77,3 +77,44 @@ describe('payback, discounted payback, PI', () => {
     near(profitabilityIndex(0.1, ex7), 148685.2 / 120000, 1e-4);
   });
 });
+
+import { crossoverRate } from '../src/lib/finance/appraisal';
+import { convencional, dosTir, lento, rapido } from '../src/lib/finance/examples';
+
+// Chapter 3 (03-van-tir.mdx): every number quoted in the text.
+describe('chapter 3 examples', () => {
+  it('convencional: VAN 10 % = 227,65; TIR 21,65 %; payback 2,17 y 2,50 descontado; IR 1,23', () => {
+    near(npv(0.1, convencional), 227.65, 0.005);
+    near(npv(0, convencional), 500, 1e-9);
+    near(irr(convencional).roots[0], 0.2165, 5e-5);
+    near(payback(convencional)!, 2.1667, 5e-5);
+    near(discountedPayback(0.1, convencional)!, 2.495, 5e-4);
+    near(profitabilityIndex(0.1, convencional), 1.2276, 5e-5);
+  });
+  it('rápido frente a lento: el VAN y la TIR discrepan al 10 %', () => {
+    near(npv(0.1, rapido), 181.82, 0.005);
+    near(npv(0.1, lento), 202.1, 0.05);
+    near(irr(rapido).roots[0], 0.3, 1e-9);
+    near(irr(lento).roots[0], 1.6 ** (1 / 3) - 1, 1e-9);
+    near(irr(lento).roots[0], 0.1696, 5e-5);
+    near(payback(rapido)!, 0.7692, 5e-5);
+    near(payback(lento)!, 2.625, 1e-9);
+    near(crossoverRate(rapido, lento)!, 0.1094, 5e-5);
+    near(crossoverRate(rapido, lento)!, (1.6 / 1.3) ** 0.5 - 1, 1e-9);
+  });
+  it('al 12 % (por encima del cruce) gana el rápido también por VAN', () => {
+    expect(npv(0.12, rapido)).toBeGreaterThan(npv(0.12, lento));
+  });
+  it('dos TIR: 10 % y 20 %; VAN > 0 entre ambas y < 0 fuera', () => {
+    const { roots, multiple } = irr(dosTir);
+    expect(multiple).toBe(true);
+    near(roots[0], 0.1, 1e-9);
+    near(roots[1], 0.2, 1e-9);
+    near(npv(0.15, dosTir), 0.19, 0.005);
+    expect(npv(0.05, dosTir)).toBeLessThan(0);
+    expect(npv(0.25, dosTir)).toBeLessThan(0);
+  });
+  it('crossoverRate: null sin cruce', () => {
+    expect(crossoverRate([-100, 120], [-100, 110])).toBeNull();
+  });
+});
