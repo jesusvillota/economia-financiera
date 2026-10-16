@@ -1,0 +1,1 @@
+- Ignore GitHub Actions and the PR build check completely. A failing, blocked or unstarted check (including billing errors) is not an acceptance criterion and never a reason to block or leave a PR as draft. Verify locally with the task's ## Verify commands, then mark the PR ready.

@@ -48,6 +48,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/03_teoria_carteras/03_teoria_carteras.tex` §3, “Optimización de Carteras”, says that minimising variance for different equality-constrained return targets gives only efficient portfolios. Targets below the global minimum-variance portfolio's return can instead be dominated. Chapter 8 uses an original three-asset example: means 6/10/14 %, volatilities 12/20/28 %, correlations A–B = 0.20 and A–C = B–C = 0. A target of 7 % has minimum risk 10.68 %, while the global minimum has return 7.83 % and risk 10.33 %. The latter improves both measures. Regression: `tests/capitulo8.test.ts`, “lower target is dominated by the global minimum”. Chapter 8 also makes the short-sale distinction explicit. With unrestricted shorts, weights −1/0/2 already give 22 %; the family (1−t)/0/t has unbounded mean as t grows. The chapter states the long-only restriction and the plot's finite window explicitly.
 
+### Note 03: perfect positive correlation with short sales
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:198–202` places absolute values on each weighted term separately. Outside the long-only interval this loses cancellation. The correct expression is `sigma_p = abs(w_1 sigma_1 + w_2 sigma_2)` when rho = 1, with a single absolute value around the sum. For returns 6 % / 12 %, volatilities 10 % / 20 % and weights 2 / −1, `twoAssetVariance(2, 0.1, 0.2, 1)` is zero; the source's absolute-value sum would give 40 %. Chapter 7 uses the corrected expression. Regression test: `tests/capitulo7.test.ts`, “audit note 03: one absolute value preserves short-sale cancellation”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
