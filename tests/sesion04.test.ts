@@ -81,6 +81,12 @@ describe('PS4: all exercises and independent calculations across 20 random seeds
   for(const chapter of fm.chapters){const data=parse(readFileSync(`src/content/chapters/${chapter}.mdx`,'utf8').split('---')[1]);expect(data.sessions).toContain(slug);}
   for(const ex of fm.exercises){expect(ex.concepts.length).toBeGreaterThan(0);for(const c of ex.concepts)expect(fm.chapters).toContain(c);}
  });
+ it('PS4 Ex 9 solution replaces the malformed source conclusion command',()=>{
+  const sale = fm.exercises.find(e=>e.id==='ej9_venta')!;
+  const solution = sale.steps.map(s=>s.body).join('\n');
+  expect(solution).not.toMatch(/extbf/);
+  expect(solution).toContain('8,14');
+ });
  for(const ex of fm.exercises){
   const defaults=Object.fromEntries(ex.parameters.map(p=>[p.id,p.default]));
   it(`${ex.id}: hints, ranges, steps and resolved placeholders`,()=>{

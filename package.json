@@ -8,6 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "test": "vitest run",
+    "check:audit": "node scripts/check-audit.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "clickthrough": "node scripts/clickthrough-slider.mjs",
     "clickthrough:widgets": "node scripts/clickthrough-widgets.mjs",

@@ -123,12 +123,19 @@ const answers: Answer[] = [
 ];
 
 describe('PS2 valuation: every audited answer, Ex 1–5 and 7', () => {
-  it.each(answers)('%s', (_label, actual, expected, tolerance) => {
+  it.each(answers)('audited PS2 answer: %s', (_label, actual, expected, tolerance) => {
     expect(Math.abs(actual - expected)).toBeLessThanOrEqual(tolerance + Number.EPSILON);
   });
 });
 
 describe('valuation formulas and properties', () => {
+  it('PS2 Ex 7c: discount-rate sensitivity is convex, not exponential', () => {
+    const step = 0.001;
+    expect(project(w7 - step) + project(w7 + step)).toBeGreaterThan(2 * project(w7));
+    // An exponential has equal ratios over equal rate steps; this DCF does not.
+    expect(project(w7 - 0.01) / project(w7)).not.toBeCloseTo(project(w7) / project(w7 + 0.01), 3);
+    expect(terminalValue(75, w7, 0.02)).toBeCloseTo(2627.06, 2);
+  });
   it.each([-0.1, 0, 0.03, 0.1])('Gordon equals a long discounted dividend sum (g=%s)', (g) => {
     const r = g + 0.06;
     // Sum D1 [(1+g)/(1+r)]^(t-1)/(1+r); 2,000 periods make the tail negligible.
