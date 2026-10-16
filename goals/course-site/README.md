@@ -70,6 +70,7 @@ flowchart TD
     TASK_030["TASK-030 Chapter 9: risk-free asset, CAL and tangent portfolio"]
     TASK_031["TASK-031 Chapter 10: CAPM, CML, SML and beta"]
     TASK_032["TASK-032 Chapter 11: beyond CAPM, event studies, Fama-French, APT"]
+    TASK_033["TASK-033 Problem Session 2 (ps2) as an interactive session"]
   end
   subgraph M_4["M-4 · Markets"]
     TASK_017["TASK-017 Plan: decompose M-4"]
@@ -123,6 +124,8 @@ flowchart TD
   TASK_024 --> TASK_030
   TASK_023 --> TASK_031
   TASK_023 --> TASK_032
+  TASK_021 --> TASK_033
+  TASK_020 --> TASK_033
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
