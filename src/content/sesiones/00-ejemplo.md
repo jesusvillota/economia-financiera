@@ -2,7 +2,7 @@
 title: "Sesión de ejemplo"
 number: 1
 source: ps1
-chapters: ["00-ejemplo"]
+chapters: ["01-interes"]
 difficulty: 1
 summary: "Fixture mínimo que valida el esquema."
 exercises:
@@ -25,5 +25,5 @@ exercises:
         value: 1628.894627
         tolerance: { kind: abs, value: 0.01 }
         lib: { module: compound, fn: compound, args: [va, r, t] }
-    concepts: ["00-ejemplo"]
+    concepts: ["01-interes"]
 ---
