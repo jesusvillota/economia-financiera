@@ -32,7 +32,7 @@ Modelo: [options-explained](https://github.com/jesusvillota/options-explained). 
 Las capturas quedan en `screenshots/`. El comando falla si encuentra errores de consola, fórmulas KaTeX o desbordamiento horizontal.
 `npm run screenshots dev` revisa la página de componentes. Sin filtro, `npm run screenshots` revisa todo el curso.
 
-Cada página incluye descripción, URL canónica y etiquetas Open Graph y Twitter. Las descripciones de capítulos y sesiones usan su campo `summary`.
+Las páginas del curso incluyen descripción, URL canónica y etiquetas Open Graph y Twitter. Las descripciones de capítulos y sesiones usan su campo `summary`.
 La tarjeta social `public/og.png` (1200 × 600) procede de `public/course-preview.svg`.
 La compilación genera `dist/404.html` y `dist/sitemap-index.xml`; el mapa excluye la página de desarrollo y la de error.
 
