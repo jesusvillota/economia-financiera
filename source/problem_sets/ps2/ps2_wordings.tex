@@ -1,0 +1,193 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#2}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#2}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 2 Unificado}\\\large Fundamentos de Valoración de Activos}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\EUR}[1]{\ensuremath{#1~\text{EUR}}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+% \maketitle
+
+% \begin{center}
+% \textbf{Objetivo.} Este problem set integra los mejores ejercicios de las cuatro versiones previas para cubrir: (i) valoración de acciones, (ii) valoración corporativa vía FCFF/FCFE, (iii) medición de rentabilidad y riesgo, y (iv) diversificación de carteras. Las dificultades están escalonadas desde recordatorios básicos hasta desafíos avanzados con extensiones conceptuales.
+% \end{center}
+
+% \tableofcontents
+% \newpage
+
+\section{Valoración de acciones}
+
+\begin{ejercicio}{1 (Calentamiento: dividendos finitos)}
+La acción de la empresa Lince pagará dividendos de $D_1=\,\EUR{2.20}$, $D_2=\,\EUR{2.38}$ y $D_3=\,\EUR{2.56}$. Al final del año 3 se espera venderla por $P_3=\,\EUR{34}$. Si la rentabilidad requerida es $r=11\%$, calcule el precio justo hoy $P_0$. ¿Qué porcentaje del valor proviene de los dividendos frente al precio de venta?
+\end{ejercicio}
+
+\begin{ejercicio}{2 (Crecimiento implícito y sensibilidad)}
+Una acción vale hoy $P_0=\,\EUR{30}$ y pagará un dividendo próximo de $D_1=\,\EUR{1.50}$. La rentabilidad requerida es $r=9\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la tasa de crecimiento constante $g$ implícita en la valoración de acuerdo con el modelo de Gordon.
+  \item Si la empresa anuncia que el próximo dividendo ($D_1$) será un 5\% mayor del previsto inicialmente manteniendo $r$, ¿cuál sería el nuevo precio justo? Compare con $P_0$.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{3 (Modelo de dos etapas y descomposición de rentabilidad)}
+El dividendo actual es $D_0=\,\EUR{1.10}$. Se espera que los dividendos crezcan un 15\% anual durante tres años y, a partir de entonces, un ritmo constante $g_2$ de forma indefinida. La tasa de descuento requerida es $r=10\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el precio actual $P_0$ suponiendo $g_2=4\%$.
+  \item Repita el cálculo si el crecimiento perpetuo pasa a $g_2=5\%$ y comente la sensibilidad del valor.
+  \item Con el precio del apartado (a), determine el rendimiento por dividendo y la ganancia de capital esperada durante el primer año y verifique que la suma coincide con la rentabilidad requerida.
+\end{enumerate}
+\end{ejercicio}
+
+\section{Valoración de empresas y flujos de caja}
+
+\begin{ejercicio}{4 (FCFF y FCFE: conciliación)}
+Para una empresa se tiene: $\text{EBIT}=200$, $T_c=30\%$, $\text{Dep\&Amort}=25$, $\text{Capex}=60$, $\Delta\text{WorkingCap}=15$, $\text{NetIncome}=90$ y $\Delta\text{Deuda Neta}=10$ (todo en millones de euros).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\text{FCFF}$
+  \item Calcule $\text{FCFE}$
+  % \item Verifique numéricamente que $\text{FCFF} - \text{Intereses netos después de impuestos} = \text{FCFE}$.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{5 (Valoración por FCFF y WACC)}
+Considere la empresa Pictor con $E=\,\EUR{600}$ millones, $D=\,\EUR{400}$ millones, $r_f=3\%$, $r_m=9\%$, $\beta=1.2$, $R_d=5\%$ y $T_c=30\%$. Los FCFF esperados (millones) son $\{95,110,125,140,150\}$, con crecimiento perpetuo de $3\%$ desde $t=5$. Determine:
+\begin{enumerate}[label=\alph*)]
+  \item El $\text{WACC}$.
+  \item El valor de empresa descontando los FCFF y el valor terminal.
+  % \item El valor del equity tras sumar caja excedente de \EUR{20} millones y restar la deuda.
+  \item La misma empresa tiene $\text{FCFE}_1=85$, $\text{FCFE}_2=90$ y $\text{FCFE}_3=96$ (millones). Desde $t=3$, los flujos crecen al 2\% anual. El coste del equity es 10\% y existen 60 millones de acciones. Calcule el valor del equity hoy y obtenga el precio por acción
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{7 (Proyecto y sensibilidad al WACC)}
+Una firma se financia con \EUR{140} millones de equity y \EUR{560} millones de deuda. $\beta=1.25$, $r_f=2.5\%$, $r_m-r_f=6\%$, $R_d=5.2\%$ y $T_c=30\%$. Se evalúa un proyecto con FCFF (millones) $\{55,60,68,75\}$, inversión inicial de \EUR{950} millones y crecimiento perpetuo del 2\% desde $t=4$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el $\text{WACC}$.
+  \item Obtenga el VAN del proyecto.
+  \item Analice cómo cambiaría el VAN si el WACC aumentara o disminuyera en 1 punto porcentual.
+\end{enumerate}
+\end{ejercicio}
+
+\section{Rentabilidad y riesgo individual}
+
+\begin{ejercicio}{8 (Momentos y beta bajo escenarios)}
+Considere los activos $A$ y $B$ con la siguiente distribución anual:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Escenario & Prob. & $r_A$ & $r_B$ \\
+\midrule
+Expansión & 0.30 & 18\% & 7\% \\
+Base & 0.50 & 5\% & 4\% \\
+Recesión & 0.20 & $-7\%$ & $-2\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Suponga que el rendimiento del mercado en cada escenario es $\{12\%, 6\%, -3\%\}$ respectivamente.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\E[r_A]$, $\E[r_B]$, las varianzas y desviaciones estándar.
+  \item Obtenga la covarianza y correlación entre $A$ y $B$.
+  \item Calcule las betas $\beta_A$ y $\beta_B$ respecto al mercado.
+\end{enumerate}
+\end{ejercicio}
+
+\begin{ejercicio}{9 (Rentabilidades históricas y ruido muestral)}
+Una acción presenta la siguiente información mensual (en euros):
+\begin{center}
+\begin{tabular}{c c c c}
+\toprule
+Mes & Precio inicial & Precio final & Dividendo \\
+\midrule
+1 & 48.00 & 50.00 & 0.30 \\
+2 & 50.00 & 49.00 & 0.30 \\
+3 & 49.00 & 51.00 & 0.30 \\
+4 & 51.00 & 53.00 & 0.30 \\
+5 & 53.00 & 52.00 & 0.35 \\
+6 & 52.00 & 55.00 & 0.35 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule las rentabilidades mensuales $R_t$.
+  \item Obtenga la rentabilidad media muestral y la desviación estándar mensual y anualizada.
+  % \item Comente la precisión de la estimación de la media con sólo seis observaciones.
+\end{enumerate}
+\end{ejercicio}
+
+% \begin{ejercicio}{10 (CAPM, alfas y estrategia)}
+% Con $r_f=3\%$ y $r_m=8.5\%$, tres acciones tienen $\beta_A=0.8$, $\beta_B=1.1$, $\beta_C=1.4$ y rentabilidades esperadas $\{7.2\%, 9.9\%, 12.1\%\}$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule la rentabilidad requerida por CAPM para cada activo.
+%   \item Determine el \textit{alpha} y clasifique cada acción.
+%   \item Proponga una estrategia de cartera de costo cero que explote los alfas positivos identificados.
+% \end{enumerate}
+% \end{ejercicio}
+
+% \section{Carteras y diversificación}
+
+% \begin{ejercicio}{11 (Cartera de dos activos y varianza mínima)}
+% Para los activos del Ejercicio 8 ($\sigma_A^2=0.00582$, $\sigma_B^2=0.00050$, $\text{Cov}(A,B)=-0.00155$):
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\E[r_p]$ y $\sigma_p$ para $w_A=60\%$.
+%   \item Determine el peso $w_A^*$ que minimiza la varianza y la desviación típica asociada.
+% \end{enumerate}
+% \end{ejercicio}
+
+% \begin{ejercicio}{12 (Cartera de tres activos y ratio de Sharpe)}
+% Considere tres activos con pesos $w = (0.40, 0.35, 0.25)$, rentabilidades esperadas $\{6\%, 8\%, 11\%\}$, desviaciones estándar $\{10\%, 14\%, 18\%\}$ y correlaciones $\rho_{12} = 0.45$, $\rho_{13} = 0.25$, $\rho_{23} = 0.50$. Sea $r_f = 2\%$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule la rentabilidad esperada y la desviación típica de la cartera.
+%   \item Determine el ratio de Sharpe.
+% \end{enumerate}
+% \end{ejercicio}
+
+% \begin{ejercicio}{13 (Correlación y diversificación)}
+% Se forma una cartera equiponderada de dos activos con $\sigma_A = 18\%$ y $\sigma_B = 24\%$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\sigma_p$ para $\rho_{AB} = \{-0.3, 0, 0.5, 0.9\}$.
+%   \item Repita el cálculo para pesos $w_A=0.6$, $w_B=0.4$ con $\rho_{AB} = 0.35$ y $-0.20$. Explique la diferencia respecto al caso equiponderado.
+% \end{enumerate}
+% \end{ejercicio}
+
+% \begin{ejercicio}{14 (Límite de diversificación y riesgo sistemático)}
+% Una familia de activos posee varianza individual $\sigma^2 = 0.04$ y covarianza media $\overline{\text{Cov}} = 0.01$. Para carteras equiponderadas de $N$ activos:
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\sigma_p$ para $N = 1, 5, 10, 30$.
+%   \item Muestre que $\lim_{N\to\infty} \sigma_p = \sqrt{\overline{\text{Cov}}}$. Relacione el resultado con el concepto de riesgo sistemático (beta).
+% \end{enumerate}
+% \end{ejercicio}
+
+\end{document}
+

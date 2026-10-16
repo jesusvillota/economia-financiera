@@ -1,0 +1,39 @@
+\begin{tikzpicture}[scale=1.2]
+    % Axes
+    \draw[-Stealth] (0,-1.5) -- (0,3.5) node[above left, font=\normalsize] {VAN};
+    \draw[-Stealth] (-0.5,0) -- (8,0) node[below right, font=\normalsize] {$r$};
+    
+    % Calculate actual Fisher rate intersection point
+    % The curves intersect where: 2.5*exp(-0.28*x) - 0.4 = 3.0*exp(-0.25*x) - 0.45*x + 0.15
+    % This occurs approximately at x = 2.7
+    \def\fisherrate{2.55}
+    
+    % Colored regions
+    % Region where Project B is chosen (left of Fisher rate) - light red
+    \fill[red!15, opacity=0.6] (0,-1.5) rectangle (\fisherrate,3.5);
+    
+    % Region where Project A is chosen (right of Fisher rate) - light blue  
+    \fill[blue!15, opacity=0.6] (\fisherrate,-1.5) rectangle (8,3.5);
+    
+    % Project A curve (slower decay, higher IRR)
+    \draw[thick, blue!80, domain=0.3:7.5, smooth, samples=100] 
+        plot (\x, {2.5*exp(-0.28*\x) - 0.65});
+    \node[blue!80, font=\small, below] at (7.3,{2.5*exp(-0.28*7.3) - 0.65}) {VAN$_A(r)$};
+    
+    % Project B curve (more linear, moderate slope, lower IRR)
+    \draw[thick, red!80, domain=0.3:7.5, smooth, samples=100] 
+        plot (\x, {3.0*exp(-0.25*\x) - 0.45*\x + 0.15});
+    \node[red!80, font=\small] at (7.3,{3.0*exp(-0.25*7.3) - 0.45*7.3 + 0.35 + 0.38}) {VAN$_B(r)$};
+    
+    % IRR points (where curves cross x-axis)
+    % For curve B: solving 3.0*exp(-0.25*x) - 0.45*x + 0.15 = 0 => x ≈ 3.3
+    \coordinate (TIRB) at (3.3,0);
+    \fill[red!80] (TIRB) circle (2.5pt);
+    \node[below, red!80, font=\small] at (3.3,-0.25) {TIR$_B$};
+    
+    % For curve A: 2.5*exp(-0.28*x) - 0.4 = 0 => x ≈ 6.63
+    \coordinate (TIRA) at (4.8,0);
+    \fill[blue!80] (TIRA) circle (2.5pt);
+    \node[below, blue!80, font=\small] at (4.9,-0.25) {TIR$_A$};
+\end{tikzpicture}
+

@@ -1,0 +1,726 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Fundamentos de Valoración de Activos}
+\fancyhead[R]{Problem Set \#2}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session \#2}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Encabezado
+\title{\textbf{Problem Set 2 Unificado}\\\large Fundamentos de Valoración de Activos}
+\author{Jesus Villota Miranda\\CEMFI}
+\date{\today}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Cov}{\mathbb{C}\text{ov}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\EUR}[1]{\ensuremath{#1~\text{EUR}}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+% \maketitle
+
+% \begin{center}
+% \textbf{Objetivo.} Este problem set integra los mejores ejercicios de las cuatro versiones previas para cubrir: (i) valoración de acciones, (ii) valoración corporativa vía FCFF/FCFE, (iii) medición de rentabilidad y riesgo, y (iv) diversificación de carteras. Las dificultades están escalonadas desde recordatorios básicos hasta desafíos avanzados con extensiones conceptuales.
+% \end{center}
+
+% \tableofcontents
+% \newpage
+
+\section{Valoración de acciones}
+
+\begin{ejercicio}{1 (Calentamiento: dividendos finitos)}
+La acción de la empresa Lince pagará dividendos de $D_1=\,\EUR{2.20}$, $D_2=\,\EUR{2.38}$ y $D_3=\,\EUR{2.56}$. Al final del año 3 se espera venderla por $P_3=\,\EUR{34}$. Si la rentabilidad requerida es $r=11\%$, calcule el precio justo hoy $P_0$. ¿Qué porcentaje del valor proviene de los dividendos frente al precio de venta?
+\end{ejercicio}
+\begin{solucion}
+El valor actual se obtiene descontando cada flujo al momento actual ($t=0$). Esto refleja el principio básico de valoración: el valor de un activo es igual al valor presente de todos los flujos de caja futuros que generará. Descontamos cada flujo por separado porque cada uno ocurre en un momento diferente:
+\begin{align*}
+P_0 &= \frac{2.20}{1.11} + \frac{2.38}{1.11^2} + \frac{2.56 + 34}{1.11^3}\\
+    &= 1.982 + 1.932 + 26.732 
+    \\ &= \EUR{30.65}.
+\end{align*}
+Los dividendos aportan 
+$
+\frac{2.20}{1.11} + \frac{2.38}{1.11^2} + \frac{2.56}{1.11^3} = 1.982 + 1.932 + 1.871 = \EUR{5.785}
+$
+, lo cual representa el $\frac{5.785}{30.65} = 18.87\%$ del precio. El valor de reventa aporta el 81.13\% restante.
+\end{solucion}
+
+\begin{ejercicio}{2 (Crecimiento implícito y sensibilidad)}
+Una acción vale hoy $P_0=\,\EUR{30}$ y pagará un dividendo próximo de $D_1=\,\EUR{1.50}$. La rentabilidad requerida es $r=9\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule la tasa de crecimiento constante $g$ implícita en la valoración de acuerdo con el modelo de Gordon.
+  \item Si la empresa anuncia que el próximo dividendo ($D_1$) será un 5\% mayor del previsto inicialmente manteniendo $r$, ¿cuál sería el nuevo precio justo? Compare con $P_0$.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item El modelo de Gordon (o modelo de crecimiento constante de dividendos) establece que $P_0 = \dfrac{D_1}{r-g}$, donde $D_1$ es el próximo dividendo, $r$ es la rentabilidad requerida y $g$ es la tasa de crecimiento constante de los dividendos. Despejando $g$:
+  \[
+  P_0 = \frac{D_1}{r-g} \Rightarrow r-g = \frac{D_1}{P_0} \Rightarrow g = r - \frac{D_1}{P_0}.
+  \]
+  Sustituyendo: $g = 0.09 - \dfrac{1.50}{30} = 0.09 - 0.05 = 0.04$ (4\%). La tasa de crecimiento implícita es la diferencia entre la rentabilidad requerida y el rendimiento por dividendo inicial.
+  
+  \item Si el dividendo aumenta un 5\%, tenemos $D_1^{\text{nuevo}} = 1.50(1.05) = 1.575$. Manteniendo $r=9\%$ y $g=4\%$ constantes, el nuevo precio sería:
+  \[
+  P_0^{\text{nuevo}} = \frac{1.575}{0.09 - 0.04} = \frac{1.575}{0.05} = \EUR{31.50}.
+  \]
+  El precio aumenta de \EUR{30} a \EUR{31.50}, es decir, un incremento de $\dfrac{31.50-30}{30} = 5\%$. Esto ilustra la propiedad de linealidad del modelo de Gordon respecto a $D_1$: un cambio porcentual en $D_1$ se traduce directamente en el mismo cambio porcentual en $P_0$, cuando $r$ y $g$ permanecen constantes.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{3 (Modelo de dos etapas y descomposición de rentabilidad)}
+El dividendo actual es $D_0=\,\EUR{1.10}$. Se espera que los dividendos crezcan un 15\% anual durante tres años y, a partir de entonces, un ritmo constante $g_2$ de forma indefinida. La tasa de descuento requerida es $r=10\%$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el precio actual $P_0$ suponiendo $g_2=4\%$.
+  \item Repita el cálculo si el crecimiento perpetuo pasa a $g_2=5\%$ y comente la sensibilidad del valor.
+  \item Con el precio del apartado (a), determine el rendimiento por dividendo y la ganancia de capital esperada durante el primer año y verifique que la suma coincide con la rentabilidad requerida.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+Este ejercicio utiliza el modelo de valoración de dos etapas: una fase inicial de alto crecimiento (tres años al 15\%) seguida de un crecimiento perpetuo constante ($g_2$). El valor de la acción es la suma del valor presente de los dividendos durante la fase de alto crecimiento más el valor presente del precio terminal (que captura todos los dividendos futuros desde $t=4$ en adelante).
+
+\begin{enumerate}[label=\alph*)]
+  \item Primero calculamos los dividendos durante la fase de alto crecimiento (años 1-3):
+  \[
+  D_1 = 1.10(1.15) = 1.265,\quad D_2 = 1.265(1.15) = 1.4548,\quad D_3 = 1.4548(1.15) = 1.6730.
+  \]
+  A partir del año 4, los dividendos crecen al ritmo constante $g_2=4\%$ de forma indefinida. El dividendo del año 4 es $D_4 = 1.6730(1.04) = 1.7399$. Aplicando el modelo de Gordon desde $t=4$, el valor terminal en $t=3$ (justo después del pago de $D_3$) viene dado por:
+  \[
+  P_3 = \frac{D_4}{r-g_2} = \frac{1.7399}{0.10-0.04} = \frac{1.7399}{0.06} = 28.998 \approx \EUR{29.00}.
+  \]
+  Al descontar los tres dividendos explícitos y el valor terminal al momento actual:
+  \begin{align*}
+  P_0 &= \frac{D_1}{1.10} + \frac{D_2}{1.10^2} + \frac{D_3 + P_3}{1.10^3}\\
+      &= \frac{1.265}{1.10} + \frac{1.4548}{1.10^2} + \frac{1.6730 + 29.00}{1.10^3}\\
+      &= 1.150 + 1.202 + 23.045 = \EUR{25.40}.
+  \end{align*}
+  
+  \item Si $g_2=5\%$, el dividendo del año 4 cambia a $D_4 = 1.6730(1.05) = 1.7567$ y el valor terminal se recalcula:
+  \[
+  P_3^{(5\%)} = \frac{1.7567}{0.10-0.05} = \frac{1.7567}{0.05} = 35.134 \approx \EUR{35.13}.
+  \]
+  El nuevo precio se obtiene descontando los mismos dividendos iniciales y el nuevo valor terminal:
+  \begin{align*}
+  P_0^{(5\%)} &= \frac{1.265}{1.10} + \frac{1.4548}{1.10^2} + \frac{1.6730 + 35.13}{1.10^3}\\
+               &= 1.150 + 1.202 + 27.651 = \EUR{30.00}.
+  \end{align*}
+  El incremento de un punto porcentual en el crecimiento perpetuo (de 4\% a 5\%) aumenta el precio de \EUR{25.40} a \EUR{30.00}, es decir, \EUR{4.60} (un 18.1\%). Esta elevada sensibilidad refleja el peso considerable del valor terminal en la valoración total, especialmente cuando la fase de crecimiento perpetuo comienza relativamente pronto.
+  
+  \item El rendimiento total esperado del primer año se descompone en dos componentes: (i) el rendimiento por dividendo (dividend yield) y (ii) la ganancia de capital esperada. El precio esperado al final del año 1, $P_1$, es el valor presente en $t=1$ de todos los flujos futuros (dividendos y precio terminal) desde $t=2$ en adelante:
+  \[
+  P_1 = \frac{D_2}{1.10} + \frac{D_3 + P_3}{1.10^2} = \frac{1.4548}{1.10} + \frac{1.6730 + 28.998}{1.10^2} = 1.3225 + 25.3471 = \EUR{26.67}.
+  \]
+  Con este valor, calculamos los componentes del rendimiento:
+  \[
+  \text{Dividend yield} = \frac{D_1}{P_0} = \frac{1.265}{25.397} = 0.0498 = 4.98\%,
+  \]
+  \[
+  \text{Ganancia de capital esperada} = \frac{P_1 - P_0}{P_0} = \frac{26.67-25.397}{25.397} = \frac{1.273}{25.397} = 0.0501 = 5.01\%.
+  \]
+  La suma es $4.98\% + 5.01\% = 9.99\% \approx 10\%$, que coincide con la rentabilidad requerida salvo por redondeos menores. Esta verificación confirma que el precio está correctamente valorado. En equilibrio, la rentabilidad total esperada de una acción debe igualar la tasa de descuento utilizada en la valoración, lo que garantiza la consistencia interna del modelo: los inversores obtienen exactamente la rentabilidad que requieren para compensar el riesgo asumido.
+\end{enumerate}
+\end{solucion}
+
+\section{Valoración de empresas y flujos de caja}
+
+\begin{ejercicio}{4 (FCFF y FCFE: conciliación)}
+Para una empresa se tiene: $\text{EBIT}=200$, $T_c=30\%$, $\text{Dep\&Amort}=25$, $\text{Capex}=60$, $\Delta\text{WorkingCap}=15$, $\text{NetIncome}=90$ y $\Delta\text{Deuda Neta}=10$ (todo en millones de euros).
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\text{FCFF}$
+  \item Calcule $\text{FCFE}$
+  % \item Verifique numéricamente que $\text{FCFF} - \text{Intereses netos después de impuestos} = \text{FCFE}$.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+El flujo de caja libre de la empresa (FCFF) representa el efectivo disponible para todos los proveedores de capital (accionistas y acreedores) después de cubrir las inversiones necesarias. El flujo de caja libre del equity (FCFE) representa el efectivo disponible específicamente para los accionistas después de considerar los pagos a los acreedores y las variaciones en el endeudamiento neto.
+
+\begin{enumerate}[label=\alph*)]
+  \item El FCFF se calcula a partir del EBIT (beneficio antes de intereses e impuestos), ajustando por impuestos, añadiendo las partidas no monetarias (depreciación) y restando las inversiones (capex y variación del capital de trabajo):
+  \begin{align*}
+  \text{FCFF} &= \text{EBIT}(1-T_c) + \text{Dep\&Amort} - \text{Capex} - \Delta\text{WorkingCap}\\
+              &= 200(1-0.30) + 25 - 60 - 15\\
+              &= 140 + 25 - 60 - 15 = \EUR{90}~\text{millones}.
+  \end{align*}
+  El término $\text{EBIT}(1-T_c)$ representa el beneficio operativo después de impuestos. Sumamos la depreciación porque es un gasto no monetario que reduce el EBIT pero no consume efectivo. Restamos el capex (inversión en activos fijos) y la variación del capital de trabajo (inversión en activos corrientes netos de pasivos corrientes) porque representan usos de efectivo necesarios para mantener y hacer crecer el negocio.
+  
+  \item El FCFE puede calcularse de dos formas equivalentes. Primera opción: partir del beneficio neto (NetIncome), que ya incluye el efecto de los intereses y los impuestos, y ajustar por las inversiones y la variación de deuda:
+  \begin{align*}
+  \text{FCFE} &= \text{NetIncome} + \text{Dep\&Amort} - \text{Capex} - \Delta\text{WorkingCap} + \Delta\text{Deuda Neta}\\
+              &= 90 + 25 - 60 - 15 + 10 = \EUR{50}~\text{millones}.
+  \end{align*}
+  La diferencia clave con respecto al FCFF es que añadimos $\Delta\text{Deuda Neta}$ (variación de la deuda neta). Un aumento en la deuda representa una entrada de efectivo para los accionistas (pueden usar fondos prestados en lugar de aportar capital propio), mientras que una reducción de deuda es un uso de efectivo que reduce el FCFE. Alternativamente, el FCFE puede obtenerse desde el FCFF restando los pagos netos a los acreedores: $\text{FCFE} = \text{FCFF} - \text{Intereses}(1-T_c) + \Delta\text{Deuda Neta}$.
+  % \item A partir de la identidad $\text{FCFE} = \text{FCFF} - \text{Intereses}(1-T_c) + \Delta\text{Deuda Neta}$, se deduce que $\text{Intereses}(1-T_c) = \text{FCFF} - \text{FCFE} + \Delta\text{Deuda Neta} = 50$. Así, el coste financiero antes de impuestos es $50/(1-0.30) = 71.43$. Esta conciliación muestra que la diferencia entre FCFF y FCFE recoge la carga financiera neta de impuestos menos la financiación obtenida.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{5 (Valoración por FCFF y WACC)}
+Considere la empresa Pictor con $E=\,\EUR{600}$ millones, $D=\,\EUR{400}$ millones, $r_f=3\%$, $r_m=9\%$, $\beta=1.2$, $R_d=5\%$ y $T_c=30\%$. Los FCFF esperados (millones) son $\{95,110,125,140,150\}$, con crecimiento perpetuo de $3\%$ desde $t=5$. Determine:
+\begin{enumerate}[label=\alph*)]
+  \item El $\text{WACC}$.
+  \item El valor de empresa descontando los FCFF y el valor terminal.
+  % \item El valor del equity tras sumar caja excedente de \EUR{20} millones y restar la deuda.
+  \item La misma empresa tiene $\text{FCFE}_1=85$, $\text{FCFE}_2=90$ y $\text{FCFE}_3=96$ (millones). Desde $t=3$, los flujos crecen al 2\% anual. El coste del equity es 10\% y existen 60 millones de acciones. Calcule el valor del equity hoy y obtenga el precio por acción
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item Primero calculamos el coste del equity usando el modelo CAPM (Capital Asset Pricing Model):
+  \[
+  R_e = r_f + \beta(r_m - r_f),
+  \]
+  donde $r_f$ es la tasa libre de riesgo, $\beta$ es la beta del equity y $(r_m - r_f)$ es la prima de riesgo del mercado. Sustituyendo:
+  \[
+  R_e = 0.03 + 1.2(0.09-0.03) = 0.03 + 1.2(0.06) = 0.03 + 0.072 = 0.102 = 10.2\%.
+  \]
+  El WACC (Weighted Average Cost of Capital) es el coste medio ponderado de todas las fuentes de financiación. Con $V=E+D=\EUR{1{,}000}$ millones, tenemos $\tfrac{E}{V}=0.6$ y $\tfrac{D}{V}=0.4$. El coste de la deuda después de impuestos es $R_d(1-T_c)$ porque los intereses son deducibles fiscalmente:
+  \begin{align*}
+  \text{WACC} &= \frac{E}{V} R_e + \frac{D}{V} R_d(1-T_c)\\
+              &= 0.6(0.102) + 0.4(0.05)(1-0.30)\\
+              &= 0.0612 + 0.4(0.035) = 0.0612 + 0.014 = 0.0752 = 7.52\%.
+  \end{align*}
+  
+  \item El factor de descuento es $1+\text{WACC}=1.0752$. Descontamos cada flujo explícito de FCFF:
+  \begin{align*}
+  PV_{FCFF_1} &= \frac{95}{1.0752} = 88.36, &
+  PV_{FCFF_2} &= \frac{110}{1.0752^2} = 95.15,\\[-2pt]
+  PV_{FCFF_3} &= \frac{125}{1.0752^3} = 100.56, &
+  PV_{FCFF_4} &= \frac{140}{1.0752^4} = 104.75,\\[-2pt]
+  PV_{FCFF_5} &= \frac{150}{1.0752^5} = 104.39.
+  \end{align*}
+  A partir de $t=5$, los FCFF crecen al 3\% de forma perpetua. El valor terminal en $t=5$ se calcula aplicando el modelo de Gordon al flujo del año 6 ($\text{FCFF}_6 = 150(1.03) = 154.5$) y descontándolo a perpetuidad:
+  \[
+  TV_5 = \frac{\text{FCFF}_6}{\text{WACC}-g} = \frac{150(1.03)}{0.0752-0.03} = \frac{154.5}{0.0452} = \EUR{3{,}418.14}~\text{millones}.
+  \]
+  El valor presente del valor terminal es:
+  \[
+  PV_{TV} = \frac{3{,}418.14}{1.0752^5} = \EUR{2{,}378.72}~\text{millones}.
+  \]
+  Sumando todos los valores presentes obtenemos el valor de empresa (enterprise value):
+  \[
+  V = 88.36 + 95.15 + 100.56 + 104.75 + 104.39 + 2{,}378.72 = \EUR{2{,}871.93}~\text{millones}.
+  \]
+
+  \item Para valorar el equity directamente usando FCFE, utilizamos el coste del equity ($R_e=10\%$) como tasa de descuento. Descontamos los tres flujos explícitos de FCFE:
+  \begin{align*}
+  PV_{\text{FCFE}_1} &= \frac{85}{1.10} = 77.27,\\
+  PV_{\text{FCFE}_2} &= \frac{90}{1.10^2} = \frac{90}{1.21} = 74.38,\\
+  PV_{\text{FCFE}_3} &= \frac{96}{1.10^3} = \frac{96}{1.331} = 72.17.
+  \end{align*}
+  A partir de $t=3$, los FCFE crecen al 2\% de forma perpetua. El valor terminal en $t=3$ es:
+  \[
+  TV_3 = \frac{\text{FCFE}_4}{R_e - g} = \frac{96(1.02)}{0.10-0.02} = \frac{97.92}{0.08} = \EUR{1{,}224}~\text{millones}.
+  \]
+  El valor presente del valor terminal es:
+  \[
+  PV_{TV_3} = \frac{1{,}224}{1.10^3} = \frac{1{,}224}{1.331} = 919.62.
+  \]
+  El valor total del equity es la suma de todos los valores presentes:
+  \[
+  E = 77.27 + 74.38 + 72.17 + 919.62 = \EUR{1{,}143.44}~\text{millones}.
+  \]
+  Con 60 millones de acciones en circulación, el precio por acción es:
+  \[
+  P_0 = \frac{1{,}143.44}{60} = \EUR{19.06}.
+  \]
+
+  % \item El valor obtenido corresponde al 	extit{enterprise value}. Para llegar al valor del equity restamos la deuda neta y añadimos la caja excedente indicada en el enunciado:
+  % \[
+  % E^* = V - D + \text{Caja} = 2{,}876.4 - 400 + 20 = \EUR{2{,}496.4}.
+  % \]
+  % Este monto representa el valor total para los accionistas antes de dividir entre el número de acciones en circulación.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{7 (Proyecto y sensibilidad al WACC)}
+Una firma se financia con \EUR{140} millones de equity y \EUR{560} millones de deuda. $\beta=1.25$, $r_f=2.5\%$, $r_m-r_f=6\%$, $R_d=5.2\%$ y $T_c=30\%$. Se evalúa un proyecto con FCFF (millones) $\{55,60,68,75\}$, inversión inicial de \EUR{950} millones y crecimiento perpetuo del 2\% desde $t=4$.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule el $\text{WACC}$.
+  \item Obtenga el VAN del proyecto.
+  \item Analice cómo cambiaría el VAN si el WACC aumentara o disminuyera en 1 punto porcentual.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+\item Primero obtenemos el coste del equity usando CAPM: $R_e = r_f + \beta(r_m - r_f) = 0.025 + 1.25(0.06) = 10.0\%$. El valor total de mercado es $V = E + D = 140 + 560 = 700$, lo que implica $E/V = 0.20$ y $D/V = 0.80$. Tras impuestos, el coste de la deuda es $R_d(1-T_c) = 0.052(1-0.30) = 3.64\%$. Por tanto,
+\begin{align*}
+\text{WACC} &= 0.20(0.10) + 0.80(0.052)(1-0.30) \\
+            &= 0.0200 + 0.02912 = 0.04912 \quad (4.912\%).
+\end{align*}
+\item Descontamos cada flujo con el factor $1+\text{WACC} = 1.04912$. Mostramos explícitamente cada presente valor:
+\begin{align*}
+PV_{1} &= \frac{55}{1.04912} = 52.42, &
+PV_{2} &= \frac{60}{1.04912^2} = 54.51,\\[-2pt]
+PV_{3} &= \frac{68}{1.04912^3} = 58.89, &
+PV_{4} &= \frac{75}{1.04912^4} = 61.91.
+\end{align*}
+A partir de $t=4$ los FCFF crecen al 2\%, de modo que el valor terminal se calcula en $t=4$ como
+\[
+TV_4 = \frac{75(1.02)}{0.04912-0.02} = \EUR{2{,}627.06},
+\]
+cuyo presente valor es $PV_{TV} = \dfrac{2{,}627.06}{1.04912^4} = \EUR{2{,}168.55}$. El valor total del proyecto es $PV = 52.42 + 54.51 + 58.89 + 61.91 + 2{,}168.55 = \EUR{2{,}396.29}$ millones y, neteando la inversión inicial, el VAN resulta
+\[
+\text{VAN} = -950 + 2{,}396.29 = \EUR{1{,}446.29}.
+\]
+\item Repetimos el cálculo con WACC ajustado ±1 pp para apreciar la sensibilidad del VAN a cambios en la tasa de descuento. Esta sensibilidad es especialmente relevante dado el peso del valor terminal en la valoración total.
+
+\textbf{Caso 1: WACC disminuye 1 pp (de 4.912\% a 3.912\%)}
+
+Recalculamos todos los valores presentes con el nuevo WACC:
+\begin{align*}
+PV_1' &= \frac{55}{1.03912} = 52.93, &
+PV_2' &= \frac{60}{1.03912^2} = 55.53,\\[-2pt]
+PV_3' &= \frac{68}{1.03912^3} = 60.54, &
+PV_4' &= \frac{75}{1.03912^4} = 64.42.
+\end{align*}
+El valor terminal se recalcula con la nueva tasa:
+\[
+TV_4' = \frac{75(1.02)}{0.03912-0.02} = \frac{76.5}{0.01912} = \EUR{4{,}001.05},
+\]
+y su valor presente es:
+\[
+PV_{TV}' = \frac{4{,}001.05}{1.03912^4} = \EUR{3{,}431.71}.
+\]
+El valor total del proyecto y el VAN resultan:
+\begin{align*}
+PV' &= 52.93 + 55.53 + 60.54 + 64.42 + 3{,}431.71 = \EUR{3{,}665.13},\\
+\text{VAN}' &= -950 + 3{,}665.13 = \EUR{2{,}715.13}.
+\end{align*}
+
+\textbf{Caso 2: WACC aumenta 1 pp (de 4.912\% a 5.912\%)}
+
+Repetimos el cálculo con el WACC incrementado:
+\begin{align*}
+PV_1'' &= \frac{55}{1.05912} = 51.93, &
+PV_2'' &= \frac{60}{1.05912^2} = 53.52,\\[-2pt]
+PV_3'' &= \frac{68}{1.05912^3} = 57.33, &
+PV_4'' &= \frac{75}{1.05912^4} = 59.52.
+\end{align*}
+El valor terminal se reduce significativamente:
+\[
+TV_4'' = \frac{75(1.02)}{0.05912-0.02} = \frac{76.5}{0.03912} = \EUR{1{,}955.52},
+\]
+y su valor presente es:
+\[
+PV_{TV}'' = \frac{1{,}955.52}{1.05912^4} = \EUR{1{,}554.11}.
+\]
+El valor total del proyecto y el VAN resultan:
+\begin{align*}
+PV'' &= 51.93 + 53.52 + 57.33 + 59.52 + 1{,}554.11 = \EUR{1{,}776.41},\\
+\text{VAN}'' &= -950 + 1{,}776.41 = \EUR{826.41}.
+\end{align*}
+
+\textbf{Análisis de sensibilidad:}
+
+Reducir la tasa de descuento en un punto porcentual (de 4.912\% a 3.912\%) aumenta el VAN de \EUR{1{,}446.29} a \EUR{2{,}715.13}, es decir, un incremento de \EUR{1{,}268.84} (87.7\%). Incrementar la tasa en un punto porcentual (de 4.912\% a 5.912\%) reduce el VAN a \EUR{826.41}, una disminución de \EUR{619.88} (42.9\%). Esta elevada sensibilidad refleja el impacto desproporcionado del WACC en el valor terminal, que representa la mayor parte del valor total del proyecto. Pequeños cambios en la tasa de descuento se amplifican exponencialmente en los flujos más distantes.
+\end{enumerate}
+\end{solucion}
+
+\section{Rentabilidad y riesgo individual}
+
+\begin{ejercicio}{8 (Momentos y beta bajo escenarios)}
+Considere los activos $A$ y $B$ con la siguiente distribución anual:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Escenario & Prob. & $r_A$ & $r_B$ \\
+\midrule
+Expansión & 0.30 & 18\% & 7\% \\
+Base & 0.50 & 5\% & 4\% \\
+Recesión & 0.20 & $-7\%$ & $-2\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Suponga que el rendimiento del mercado en cada escenario es $\{12\%, 6\%, -3\%\}$ respectivamente.
+\begin{enumerate}[label=\alph*)]
+  \item Calcule $\E[r_A]$, $\E[r_B]$, las varianzas y desviaciones estándar.
+  \item Obtenga la covarianza y correlación entre $A$ y $B$.
+  \item Calcule las betas $\beta_A$ y $\beta_B$ respecto al mercado.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item Las medias se obtienen ponderando por las probabilidades:
+  \begin{align*}
+  \E[r_A] &= 0.3(0.18) + 0.5(0.05) + 0.2(-0.07) = 0.065 = 6.5\%,\\
+  \E[r_B] &= 0.3(0.07) + 0.5(0.04) + 0.2(-0.02) = 0.037 = 3.7\%.
+  \end{align*}
+  Definimos formalmente la varianza como
+  \begin{align*}
+  \sigma^2(X) := \mathbb{V}[X]
+  &= \sum_i p_i\big(x_i-\E[X]\big)^2 \\
+  &= \E[X^2] - (\E[X])^2.
+  \end{align*}
+  Aplicando la primera expresión (suma de desviaciones al cuadrado):
+  \begin{align*}
+  \sigma^2(r_A) &= 0.3\underbrace{(0.18-0.065)^2}_{(0.115)^2} + 0.5\underbrace{(0.05-0.065)^2}_{(-0.015)^2} + 0.2\underbrace{(-0.07-0.065)^2}_{(-0.135)^2} \\
+  &= 0.3(0.013225) + 0.5(0.000225) + 0.2(0.018225) = 0.00773,
+  \\[6mm]
+  \sigma^2(r_B) &= 0.3(0.07-0.037)^2 + 0.5(0.04-0.037)^2 + 0.2(-0.02-0.037)^2 \\
+  &= 0.3(0.001089) + 0.5(0.000009) + 0.2(0.003249) = 0.00098.
+  \end{align*}
+  Verificamos con la forma alternativa (diferencia de esperanzas):
+  \begin{align*}
+  \E[r_A^2] &= 0.3(0.18)^2 + 0.5(0.05)^2 + 0.2(-0.07)^2 = 0.01195
+  \\ 
+  \sigma^2(r_A) &= 0.01195 - 0.065^2 = 0.00773,
+  \\[6mm]
+  \E[r_B^2] &= 0.3(0.07)^2 + 0.5(0.04)^2 + 0.2(-0.02)^2 = 0.00235, 
+  \\
+  \sigma^2(r_B) &= 0.00235 - 0.037^2 = 0.00098.
+  \end{align*}
+  En ambos casos obtenemos $\sigma(r_A) = \sqrt{0.00773} = 8.79\%$ y $\sigma(r_B) = \sqrt{0.00098} = 3.13\%$.
+
+  \item Definimos la covarianza de dos variables como
+  \[
+  \Cov(X,Y) = \sum_i p_i\big(x_i-\E[X]\big)\big(y_i-\E[Y]\big) = \E[XY] - \E[X]\E[Y].
+  \]
+  Usando la primera expresión (producto de desviaciones):
+  \begin{align*}
+  \Cov(A,B) &= \sum_i p_i(r_{A,i}-\E[r_A])(r_{B,i}-\E[r_B]) \\
+                  &= 0.3(0.115)(0.033) + 0.5(-0.015)(0.003) \\
+                  &\quad +\, 0.2(-0.135)(-0.057) = 0.00266.
+  \end{align*}
+  La segunda expresión (diferencia de esperanzas) conduce al mismo resultado:
+  \begin{align*}
+  \E[r_A r_B] &= 0.3(0.18\cdot0.07) + 0.5(0.05\cdot0.04) \\
+              &\quad +\, 0.2(-0.07\cdot -0.02) = 0.00506,\\
+  \Cov(A,B) &= 0.00506 - 0.065\cdot0.037 = 0.00266.
+  \end{align*}
+  La correlación se obtiene normalizando por las desviaciones estándar:
+  \[
+  \rho_{AB} = \frac{\Cov(A,B)}{\sigma(r_A)\sigma(r_B)} = \frac{0.002655}{0.087892 \cdot 0.031321} = \frac{0.002655}{0.002753} \approx 0.964,
+  \]
+  lo que indica una correlación muy alta y que ambos activos se mueven prácticamente al unísono bajo estos escenarios.
+
+  \item Primero calculamos los momentos del mercado: $\E[r_M] = 0.3(0.12) + 0.5(0.06) + 0.2(-0.03) = 6\%$ y
+  \[
+  \sigma^2(r_M) = 0.3(0.12-0.06)^2 + 0.5(0.06-0.06)^2 + 0.2(-0.03-0.06)^2 = 0.00270,
+  \]
+  por lo que $\sigma(r_M) = 5.20\%$. Las covarianzas con el mercado son
+  \begin{align*}
+  \Cov(A,M) &= 0.3(0.115)(0.06) + 0.5(-0.015)(0) \\
+                  &\quad +\, 0.2(-0.135)(-0.09) = 0.00450,\\
+  \Cov(B,M) &= 0.3(0.033)(0.06) + 0.5(0.003)(0) \\
+                  &\quad +\, 0.2(-0.057)(-0.09) = 0.00162.
+  \end{align*}
+  Reiterando con $\Cov(X,Y) = \E[XY] - \E[X]\E[Y]$:
+  \begin{align*}
+  \E[r_A r_M] &= 0.3(0.18\cdot0.12) + 0.5(0.05\cdot0.06) \\
+              &\quad +\, 0.2(-0.07\cdot-0.03) = 0.00840,\\
+  \Cov(A,M) &= 0.00840 - 0.065\cdot0.06 = 0.00450,
+  \end{align*}
+  \begin{align*}
+  \E[r_B r_M] &= 0.3(0.07\cdot0.12) + 0.5(0.04\cdot0.06) \\
+              &\quad +\, 0.2(-0.02\cdot-0.03) = 0.00384,\\
+  \Cov(B,M) &= 0.00384 - 0.037\cdot0.06 = 0.00162.
+  \end{align*}
+  Finalmente, las betas resultan de dividir cada covarianza por la varianza del mercado:
+  \[
+  \beta_A = \frac{0.00450}{0.00270} \approx 1.67,\qquad
+  \beta_B = \frac{0.00162}{0.00270} \approx 0.60.
+  \]
+  El activo $A$ es más sensible que el mercado (beta $>1$), mientras que $B$ fluctúa con menor intensidad.
+\end{enumerate}
+\end{solucion}
+
+\begin{ejercicio}{9 (Rentabilidades históricas y ruido muestral)}
+Una acción presenta la siguiente información mensual (en euros):
+\begin{center}
+\begin{tabular}{c c c c}
+\toprule
+Mes & Precio inicial & Precio final & Dividendo \\
+\midrule
+1 & 48.00 & 50.00 & 0.30 \\
+2 & 50.00 & 49.00 & 0.30 \\
+3 & 49.00 & 51.00 & 0.30 \\
+4 & 51.00 & 53.00 & 0.30 \\
+5 & 53.00 & 52.00 & 0.35 \\
+6 & 52.00 & 55.00 & 0.35 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{enumerate}[label=\alph*)]
+  \item Calcule las rentabilidades mensuales $R_t$.
+  \item Obtenga la rentabilidad media muestral y la desviación estándar mensual y anualizada.
+  % \item Comente la precisión de la estimación de la media con sólo seis observaciones.
+\end{enumerate}
+\end{ejercicio}
+\begin{solucion}
+\begin{enumerate}[label=\alph*)]
+  \item Cada rentabilidad se calcula como $R_t = \dfrac{P_t + D_t - P_{t-1}}{P_{t-1}}$. Sustituyendo los datos:
+  \begin{align*}
+  R_1 &= \frac{50.00 + 0.30 - 48.00}{48.00} = 0.0479 = 4.79\%,\\[-3pt]
+  R_2 &= \frac{49.00 + 0.30 - 50.00}{50.00} = -0.0140 = -1.40\%,\\[-3pt]
+  R_3 &= \frac{51.00 + 0.30 - 49.00}{49.00} = 0.0469 = 4.69\%,\\[-3pt]
+  R_4 &= \frac{53.00 + 0.30 - 51.00}{51.00} = 0.0451 = 4.51\%,\\[-3pt]
+  R_5 &= \frac{52.00 + 0.35 - 53.00}{53.00} = -0.0123 = -1.23\%,\\[-3pt]
+  R_6 &= \frac{55.00 + 0.35 - 52.00}{52.00} = 0.0644 = 6.44\%.
+  \end{align*}
+  \item La rentabilidad media muestral es la media aritmética de los seis valores observados:
+  \begin{align*}
+  \bar{R} &= \frac{1}{6}\sum_{t=1}^6 R_t \\
+          &= \frac{0.047917 - 0.014000 + 0.046939 + 0.045098 - 0.012264 + 0.064423}{6} \\
+          &= 0.029685 \\ 
+          &\approx 2.97\%\text{ mensual}.
+  \end{align*}
+  Para la desviación típica muestral usamos la fórmula con el divisor $(n-1)$ (corrección de Bessel para obtener un estimador insesgado):
+  \[
+  s = \sqrt{\frac{1}{n-1}\sum_{t=1}^n (R_t - \bar{R})^2}.
+  \]
+  Calculamos cada desviación al cuadrado explícitamente:
+  \begin{align*}
+  (R_1 - \bar{R})^2 &= (0.047917 - 0.029685)^2 = (0.018232)^2 = 0.000332,\\
+  (R_2 - \bar{R})^2 &= (-0.014000 - 0.029685)^2 = (-0.043685)^2 = 0.001908,\\
+  (R_3 - \bar{R})^2 &= (0.046939 - 0.029685)^2 = (0.017254)^2 = 0.000298,\\
+  (R_4 - \bar{R})^2 &= (0.045098 - 0.029685)^2 = (0.015413)^2 = 0.000238,\\
+  (R_5 - \bar{R})^2 &= (-0.012264 - 0.029685)^2 = (-0.041949)^2 = 0.001760,\\
+  (R_6 - \bar{R})^2 &= (0.064423 - 0.029685)^2 = (0.034738)^2 = 0.001207.
+  \end{align*}
+  La suma de las desviaciones al cuadrado es:
+  \[
+  \sum_{t=1}^6 (R_t - \bar{R})^2 = 0.000332 + 0.001908 + 0.000298 + 0.000238 + 0.001760 + 0.001207 = 0.005742.
+  \]
+  Dividiendo entre $n-1=5$ y extrayendo la raíz cuadrada obtenemos la desviación estándar muestral:
+  \[
+  s = \sqrt{\frac{0.005742}{5}} = \sqrt{0.001148} = 0.03388 \approx 3.39\%\text{ mensual}.
+  \]
+  La volatilidad anualizada se obtiene multiplicando por $\sqrt{12}$, lo que refleja el supuesto de que las rentabilidades mensuales son independientes e idénticamente distribuidas:
+  \[
+  s_{\text{anual}} = s\sqrt{12} = 0.03388 \times 3.464 = 0.1174 \approx 11.74\%\text{ anual}.
+  \]
+  Nota: El paso de volatilidad mensual a anual utiliza la propiedad de que, bajo independencia, la varianza de la suma es la suma de varianzas, y $\V(R_{\text{anual}}) = 12 \times \V(R_{\text{mensual}})$, por lo que $\sigma_{\text{anual}} = \sigma_{\text{mensual}} \sqrt{12}$.
+  % \item El error estándar de la media con seis observaciones es $s/\sqrt{n} = 0.0339/\sqrt{6} \approx 0.0138$ (1.38\% mensual). Intervalos de confianza razonables serían amplios, de modo que se requieren más datos para estimar con precisión la rentabilidad esperada.
+\end{enumerate}
+\end{solucion}
+
+% \begin{ejercicio}{10 (CAPM, alfas y estrategia)}
+% Con $r_f=3\%$ y $r_m=8.5\%$, tres acciones tienen $\beta_A=0.8$, $\beta_B=1.1$, $\beta_C=1.4$ y rentabilidades esperadas $\{7.2\%, 9.9\%, 12.1\%\}$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule la rentabilidad requerida por CAPM para cada activo.
+%   \item Determine el \textit{alpha} y clasifique cada acción.
+%   \item Proponga una estrategia de cartera de costo cero que explote los alfas positivos identificados.
+% \end{enumerate}
+% \end{ejercicio}
+% \begin{solucion}
+% \begin{enumerate}[label=\alph*)]
+%   \item $r_f + \beta(r_m - r_f) = \{7.4\%, 9.05\%, 10.7\%\}$.
+%   \item $\alpha = \{-0.2\%, 0.85\%, 1.4\%\}$. A está ligeramente sobrevalorada; B y C infravaloradas.
+%   \item Una estrategia long-short: tomar posiciones largas en B y C (ponderadas por alfas/varianzas) financiadas con una posición corta en A o en el índice para mantener beta neta cercana a cero.
+% \end{enumerate}
+% \end{solucion}
+
+% \section{Carteras y diversificación}
+
+% \begin{ejercicio}{11 (Cartera de dos activos y varianza mínima)}
+% Para los activos del Ejercicio 8 ($\sigma_A^2=0.00582$, $\sigma_B^2=0.00050$, $\Cov(A,B)=-0.00155$):
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\E[r_p]$ y $\sigma_p$ para $w_A=60\%$.
+%   \item Determine el peso $w_A^*$ que minimiza la varianza y la desviación típica asociada.
+% \end{enumerate}
+% \end{ejercicio}
+% \begin{solucion}
+% \begin{enumerate}[label=\alph*)]
+%   \item $\E[r_p] = 0.6(9.6\%) + 0.4(6.2\%) = 8.2\%$. $\sigma_p^2 = 0.00143 \Rightarrow \sigma_p = 3.8\%$.
+%   \item $w_A^* = \dfrac{\sigma_B^2 - \Cov}{\sigma_A^2 + \sigma_B^2 - 2\Cov} = 0.22$. Se obtiene $\sigma_{p^*} = 0.7\%$, mostrando el poder de una correlación negativa.
+% \end{enumerate}
+% \end{solucion}
+
+% \begin{ejercicio}{12 (Cartera de tres activos y ratio de Sharpe)}
+% Considere tres activos con pesos $w = (0.40, 0.35, 0.25)$, rentabilidades esperadas $\{6\%, 8\%, 11\%\}$, desviaciones estándar $\{10\%, 14\%, 18\%\}$ y correlaciones $\rho_{12} = 0.45$, $\rho_{13} = 0.25$, $\rho_{23} = 0.50$. Sea $r_f = 2\%$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule la rentabilidad esperada y la desviación típica de la cartera.
+%   \item Determine el ratio de Sharpe.
+% \end{enumerate}
+% \end{ejercicio}
+% \begin{solucion}
+% \begin{enumerate}[label=\alph*)]
+%   \item $\E[r_p] = 7.95\%$. La varianza total es $0.01090 \Rightarrow \sigma_p = 10.4\%$.
+%   \item $\text{Sharpe} = \dfrac{0.0795 - 0.02}{0.104} = 0.57$.
+% \end{enumerate}
+% \end{solucion}
+
+% \begin{ejercicio}{13 (Correlación y diversificación)}
+% Se forma una cartera equiponderada de dos activos con $\sigma_A = 18\%$ y $\sigma_B = 24\%$.
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\sigma_p$ para $\rho_{AB} = \{-0.3, 0, 0.5, 0.9\}$.
+%   \item Repita el cálculo para pesos $w_A=0.6$, $w_B=0.4$ con $\rho_{AB} = 0.35$ y $-0.20$. Explique la diferencia respecto al caso equiponderado.
+% \end{enumerate}
+% \end{ejercicio}
+% \begin{solucion}
+% \begin{enumerate}[label=\alph*)]
+%   \item Con pesos iguales, $\sigma_p^2 = 0.25\sigma_A^2 + 0.25\sigma_B^2 + 0.5\rho_{AB}\sigma_A\sigma_B = 0.0225 + 0.0216\rho_{AB}$. Esto produce $\sigma_p = \{12.7\%, 15.0\%, 18.3\%, 20.5\%\}$.
+%   \item Para $w_A=0.6$, $\sigma_p = 13.27\%$ si $\rho=0.35$ y $10.91\%$ si $\rho=-0.20$. La combinación con peso mayor en el activo más volátil amplifica la sensibilidad a la correlación.
+% \end{enumerate}
+% \end{solucion}
+
+% \begin{ejercicio}{14 (Límite de diversificación y riesgo sistemático)}
+% Una familia de activos posee varianza individual $\sigma^2 = 0.04$ y covarianza media $\overline{\Cov} = 0.01$. Para carteras equiponderadas de $N$ activos:
+% \begin{enumerate}[label=\alph*)]
+%   \item Calcule $\sigma_p$ para $N = 1, 5, 10, 30$.
+%   \item Muestre que $\lim_{N\to\infty} \sigma_p = \sqrt{\overline{\Cov}}$. Relacione el resultado con el concepto de riesgo sistemático (beta).
+% \end{enumerate}
+% \end{ejercicio}
+% \begin{solucion}
+% \begin{enumerate}[label=\alph*)]
+%   \item $\sigma_p^2 = \tfrac{1}{N}\sigma^2 + (1-\tfrac{1}{N})\overline{\Cov}$. Sustituyendo: 20\%, 12.6\%, 10.4\% y 10.0\% para $N=1,5,10,30$.
+%   \item El límite es $\sqrt{0.01} = 10\%$, interpretado como el riesgo sistemático que no puede eliminarse. En CAPM, este componente se refleja en la beta: carteras ampliamente diversificadas sólo pagan por el riesgo correlacionado con el mercado.
+% \end{enumerate}
+% \end{solucion}
+
+\newpage
+\appendix
+
+\section*{Apéndice: Fórmulas Prácticas para Cálculo de Momentos}
+
+Este apéndice proporciona las fórmulas esenciales para calcular momentos estadísticos en escenarios discretos (con probabilidades definidas). Estas fórmulas son directamente aplicables a los ejercicios del problem set.
+
+\subsection*{Notación}
+
+Consideramos una variable aleatoria discreta $X$ que puede tomar $n$ valores $\{x_1, x_2, \ldots, x_n\}$ con probabilidades $\{p_1, p_2, \ldots, p_n\}$, donde $\sum_{i=1}^n p_i = 1$.
+
+\subsection*{Esperanza (Valor Esperado)}
+
+La esperanza o media poblacional se calcula como:
+\[
+\E[X] = \sum_{i=1}^{n} p_i x_i = p_1 x_1 + p_2 x_2 + \cdots + p_n x_n
+\]
+
+\textbf{Ejemplo:} Si una acción tiene rentabilidades $\{10\%, 5\%, -3\%\}$ con probabilidades $\{0.3, 0.5, 0.2\}$:
+\[
+\E[r] = 0.3(0.10) + 0.5(0.05) + 0.2(-0.03) = 0.049 = 4.9\%
+\]
+
+\subsection*{Varianza y Desviación Estándar}
+
+La varianza mide la dispersión alrededor de la media. Hay dos fórmulas equivalentes:
+
+\textbf{Fórmula 1 (suma de desviaciones al cuadrado):}
+\[
+\V[X] = \sigma^2(X) = \sum_{i=1}^{n} p_i (x_i - \E[X])^2
+\]
+
+\textbf{Fórmula 2 (diferencia de esperanzas):}
+\[
+\V[X] = \E[X^2] - (\E[X])^2 = \sum_{i=1}^{n} p_i x_i^2 - \left(\sum_{i=1}^{n} p_i x_i\right)^2
+\]
+
+La desviación estándar es la raíz cuadrada de la varianza:
+\[
+\sigma(X) = \sqrt{\V[X]}
+\]
+
+\textbf{Ejemplo:} Continuando con el ejemplo anterior donde $\E[r] = 4.9\%$:
+\begin{align*}
+\V[r] &= 0.3(0.10 - 0.049)^2 + 0.5(0.05 - 0.049)^2 + 0.2(-0.03 - 0.049)^2\\
+      &= 0.3(0.051)^2 + 0.5(0.001)^2 + 0.2(-0.079)^2\\
+      &= 0.00078 + 0.0000005 + 0.00125 = 0.00203
+\end{align*}
+\[
+\sigma(r) = \sqrt{0.00203} = 0.0451 = 4.51\%
+\]
+
+\subsection*{Covarianza}
+
+La covarianza entre dos variables $X$ e $Y$ mide cómo varían conjuntamente. También tiene dos fórmulas equivalentes:
+
+\textbf{Fórmula 1 (producto de desviaciones):}
+\[
+\Cov(X,Y) = \sum_{i=1}^{n} p_i (x_i - \E[X])(y_i - \E[Y])
+\]
+
+\textbf{Fórmula 2 (diferencia de esperanzas):}
+\[
+\Cov(X,Y) = \E[XY] - \E[X]\E[Y] = \sum_{i=1}^{n} p_i x_i y_i - \E[X]\E[Y]
+\]
+
+\textbf{Ejemplo:} Suponga dos activos $A$ y $B$ con rentabilidades y probabilidades:
+\begin{center}
+\begin{tabular}{ccc}
+Probabilidad & $r_A$ & $r_B$ \\
+\hline
+0.3 & 12\% & 8\% \\
+0.5 & 6\% & 5\% \\
+0.2 & -2\% & 1\% \\
+\end{tabular}
+\end{center}
+
+Si $\E[r_A] = 6.2\%$ y $\E[r_B] = 5.3\%$:
+\begin{align*}
+\Cov(A,B) &= 0.3(0.12-0.062)(0.08-0.053) \\
+          &\quad + 0.5(0.06-0.062)(0.05-0.053) \\
+          &\quad + 0.2(-0.02-0.062)(0.01-0.053)\\
+          &= 0.3(0.058)(0.027) + 0.5(-0.002)(-0.003) + 0.2(-0.082)(-0.043)\\
+          &= 0.00047 + 0.000003 + 0.00071 = 0.00118
+\end{align*}
+
+\subsection*{Correlación}
+
+El coeficiente de correlación normaliza la covarianza:
+\[
+\rho_{XY} = \frac{\Cov(X,Y)}{\sigma(X) \sigma(Y)}
+\]
+
+El coeficiente de correlación siempre está entre $-1$ y $+1$. Valores cercanos a $+1$ indican que las variables se mueven juntas, valores cercanos a $-1$ indican que se mueven en direcciones opuestas, y valores cercanos a $0$ indican poca relación lineal.
+
+\subsection*{Beta}
+
+La beta de un activo respecto al mercado mide su sensibilidad a los movimientos del mercado:
+\[
+\beta = \frac{\Cov(r, r_M)}{\V[r_M]}
+\]
+
+donde $r$ es la rentabilidad del activo y $r_M$ es la rentabilidad del mercado.
+
+\textbf{Ejemplo:} Si $\Cov(A, M) = 0.0045$ y $\V[r_M] = 0.0027$:
+\[
+\beta_A = \frac{0.0045}{0.0027} = 1.67
+\]
+
+Una beta mayor que 1 indica que el activo es más volátil que el mercado; una beta menor que 1 indica menor volatilidad.
+
+\subsection*{Consejos Prácticos}
+
+\begin{enumerate}
+\item \textbf{Organización:} Cree una tabla con todos los escenarios, probabilidades y valores antes de calcular.
+\item \textbf{Unidades:} Mantenga consistencia en las unidades (si trabaja en porcentajes como decimales: $10\% = 0.10$).
+\item \textbf{Verificación:} Las probabilidades deben sumar 1. Si no suman exactamente 1 por redondeo, ajuste ligeramente.
+\item \textbf{Fórmula alternativa:} Use la fórmula 2 (diferencia de esperanzas) para varianza y covarianza cuando sea más simple computacionalmente.
+\item \textbf{Precisión:} Mantenga suficientes decimales en los cálculos intermedios para evitar errores de redondeo significativos en el resultado final.
+\end{enumerate}
+
+\subsection*{Resumen de Fórmulas Clave}
+
+\begin{align*}
+\text{Esperanza:} \quad & \E[X] = \sum_{i=1}^{n} p_i x_i\\[4pt]
+\text{Varianza:} \quad & \V[X] = \sum_{i=1}^{n} p_i (x_i - \E[X])^2 = \E[X^2] - (\E[X])^2\\[4pt]
+\text{Desviación estándar:} \quad & \sigma(X) = \sqrt{\V[X]}\\[4pt]
+\text{Covarianza:} \quad & \Cov(X,Y) = \sum_{i=1}^{n} p_i (x_i - \E[X])(y_i - \E[Y]) = \E[XY] - \E[X]\E[Y]\\[4pt]
+\text{Correlación:} \quad & \rho_{XY} = \dfrac{\Cov(X,Y)}{\sigma(X) \sigma(Y)}\\[4pt]
+\text{Beta:} \quad & \beta = \dfrac{\Cov(r, r_M)}{\V[r_M]}
+\end{align*}
+
+\end{document}

@@ -1,0 +1,629 @@
+\input{../preamble.tex}
+
+% Título del documento
+\title{\textbf{Decisiones de Cartera: El Modelo de Markowitz}\\
+\large Portfolio Decisions: The Markowitz Model}
+\author{Jesus Villota Miranda\\
+CEMFI}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Este documento presenta un tratamiento riguroso y autocontenido de las decisiones de cartera, con especial énfasis en el modelo de Markowitz o modelo media-varianza. El contenido está estructurado para proporcionar una base matemática sólida que permita al lector comprender cómo los inversores pueden construir carteras óptimas que maximicen su utilidad esperada, considerando el trade-off entre rentabilidad y riesgo.
+
+La teoría de carteras estudia cómo construir carteras que maximicen la utilidad esperada del inversor. Aunque existen diferentes modelos o teorías, quizás el modelo más importante históricamente en teoría de carteras ha sido el \textbf{Modelo de Markowitz} o \textbf{Modelo Media-Varianza}, desarrollado en los años 50 por Harry Markowitz, por el cual se le concedió el Premio Nobel en Economía.
+
+El documento se organiza en dos secciones principales: (1) el análisis del efecto diversificación y las propiedades de carteras de dos activos bajo diferentes coeficientes de correlación, y (2) el modelo de Markowitz, incluyendo la construcción de la frontera eficiente, la introducción del activo libre de riesgo, la línea de asignación de capital (CAL), y el teorema de separación de fondos. Cada sección incluye definiciones formales, derivaciones matemáticas rigurosas, ejemplos aplicados y ejercicios prácticos.
+
+\section{Análisis del Efecto Diversificación}
+
+\subsection{Fundamentos de Carteras de Dos Activos}
+
+En esta sección analizamos cómo la combinación de dos activos con riesgo puede generar beneficios de diversificación, reduciendo el riesgo total de la cartera sin necesariamente reducir la rentabilidad esperada. El efecto diversificación depende crucialmente del coeficiente de correlación entre los activos.
+
+\begin{definicion}[Cartera de Dos Activos]
+Una \textbf{cartera} $p$ formada por dos activos con riesgo (activos 1 y 2) se define como una combinación de ambos activos con pesos $w_1$ y $w_2$, respectivamente, donde $w_1 + w_2 = 1$ y $w_i \geq 0$ para $i = 1, 2$ (asumiendo que no se permiten ventas en corto).
+\end{definicion}
+
+El peso $w_i$ representa la proporción del capital total invertido en el activo $i$. Si no se permiten ventas en corto, entonces $w_i \geq 0$ para todo $i$.
+
+\begin{teorema}[Rentabilidad Esperada de una Cartera de Dos Activos]
+La rentabilidad esperada de una cartera $p$ formada por dos activos con rentabilidades esperadas $\E[R_1]$ y $\E[R_2]$ es:
+\begin{equation}
+\E[R_p] = w_1 \E[R_1] + w_2 \E[R_2] = w_1 \E[R_1] + (1 - w_1) \E[R_2]
+\end{equation}
+donde $w_1$ y $w_2$ son los pesos de los activos 1 y 2, respectivamente, con $w_1 + w_2 = 1$.
+\end{teorema}
+
+\begin{proof}
+La rentabilidad de la cartera es $R_p = w_1 R_1 + w_2 R_2$. Tomando el valor esperado y utilizando la linealidad del operador esperanza:
+$$\E[R_p] = \E[w_1 R_1 + w_2 R_2] = w_1 \E[R_1] + w_2 \E[R_2]$$
+Sustituyendo $w_2 = 1 - w_1$, obtenemos la segunda igualdad.
+\end{proof}
+
+\begin{teorema}[Varianza de una Cartera de Dos Activos]
+La varianza de una cartera $p$ formada por dos activos con varianzas $\sigma_1^2$ y $\sigma_2^2$ y covarianza $\sigma_{1,2}$ es:
+\begin{equation}
+\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \sigma_{1,2}
+\end{equation}
+Alternativamente, expresando en términos del coeficiente de correlación $\rho_{1,2}$:
+\begin{equation}
+\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{1,2} \sigma_1 \sigma_2
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+La varianza de la cartera es:
+$$\sigma_p^2 = \V[w_1 R_1 + w_2 R_2]$$
+
+Utilizando las propiedades de la varianza para combinaciones lineales:
+$$\sigma_p^2 = w_1^2 \V[R_1] + w_2^2 \V[R_2] + 2w_1 w_2 \Cov[R_1, R_2]$$
+
+Dado que $\V[R_i] = \sigma_i^2$ y $\Cov[R_1, R_2] = \sigma_{1,2} = \rho_{1,2} \sigma_1 \sigma_2$, obtenemos ambas expresiones del teorema.
+\end{proof}
+
+La desviación típica (volatilidad) de la cartera es simplemente la raíz cuadrada de la varianza:
+\begin{equation}
+\sigma_p = \sqrt{w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{1,2} \sigma_1 \sigma_2}
+\end{equation}
+
+\subsection{Caso 1: Coeficiente de Correlación Igual a +1}
+
+Cuando los activos están perfectamente correlacionados positivamente, el efecto diversificación es nulo.
+
+\begin{teorema}[Volatilidad de Cartera con Correlación Perfecta Positiva]
+Si $\rho_{1,2} = +1$, entonces la volatilidad de la cartera es una combinación lineal de las volatilidades individuales:
+\begin{equation}
+\sigma_p = w_1 \sigma_1 + (1 - w_1) \sigma_2 = w_1 \sigma_1 + w_2 \sigma_2
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Cuando $\rho_{1,2} = +1$, la fórmula de la varianza de la cartera se convierte en:
+$$\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \sigma_1 \sigma_2$$
+
+Reconociendo que esta expresión es un cuadrado perfecto basado en la identidad $(a + b)^2 = a^2 + b^2 + 2ab$:
+$$\sigma_p^2 = (w_1 \sigma_1 + w_2 \sigma_2)^2$$
+
+Tomando la raíz cuadrada (y notando que todas las cantidades son positivas):
+$$\sigma_p = w_1 \sigma_1 + w_2 \sigma_2 = w_1 \sigma_1 + (1 - w_1) \sigma_2$$
+\end{proof}
+
+\begin{proposicion}[Ausencia de Diversificación con Correlación +1]
+Cuando $\rho_{1,2} = +1$, no existe efecto diversificación. La volatilidad de la cartera es simplemente el promedio ponderado de las volatilidades individuales, y el conjunto de oportunidades de inversión es una línea recta que conecta los dos activos en el espacio rentabilidad-riesgo.
+\end{proposicion}
+
+\begin{ejemplo}[Cartera con Correlación Perfecta Positiva]
+Supongamos que tenemos dos activos con las siguientes características:
+\begin{itemize}
+\item Activo 1: $\E[R_1] = 15\%$, $\sigma_1 = 20\%$
+\item Activo 2: $\E[R_2] = 10\%$, $\sigma_2 = 15\%$
+\item $\rho_{1,2} = +1$
+\end{itemize}
+
+Para una cartera con $w_1 = 0.6$ y $w_2 = 0.4$:
+\begin{align*}
+\E[R_p] &= 0.6 \times 15\% + 0.4 \times 10\% = 13\%\\
+\sigma_p &= 0.6 \times 20\% + 0.4 \times 15\% = 18\%
+\end{align*}
+
+Todas las posibles carteras se encuentran en la línea recta que conecta el punto $(15\%, 20\%)$ con el punto $(10\%, 15\%)$ en el espacio rentabilidad-riesgo.
+\end{ejemplo}
+
+\subsection{Caso 2: Coeficiente de Correlación Igual a -1}
+
+Cuando los activos están perfectamente correlacionados negativamente, es posible lograr una cartera con riesgo cero (si se permiten ventas en corto) o riesgo mínimo (si no se permiten ventas en corto).
+
+\begin{teorema}[Volatilidad de Cartera con Correlación Perfecta Negativa]
+Si $\rho_{1,2} = -1$, entonces la volatilidad de la cartera es:
+\begin{equation}
+\sigma_p = |w_1 \sigma_1 - (1 - w_1) \sigma_2| = |w_1 \sigma_1 - w_2 \sigma_2|
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Cuando $\rho_{1,2} = -1$, la fórmula de la varianza de la cartera se convierte en:
+$$\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 - 2w_1 w_2 \sigma_1 \sigma_2$$
+
+Reconociendo que esta expresión es un cuadrado perfecto basado en la identidad $(a - b)^2 = a^2 + b^2 - 2ab$:
+$$\sigma_p^2 = (w_1 \sigma_1 - w_2 \sigma_2)^2$$
+
+Tomando la raíz cuadrada:
+$$\sigma_p = |w_1 \sigma_1 - w_2 \sigma_2| = |w_1 \sigma_1 - (1 - w_1) \sigma_2|$$
+\end{proof}
+
+\begin{proposicion}[Cartera de Varianza Nula con Correlación -1]
+Cuando $\rho_{1,2} = -1$ y se permite la venta en corto, existe una combinación de pesos que resulta en una cartera con varianza cero. Esta combinación es:
+\begin{equation}
+w_1^* = \frac{\sigma_2}{\sigma_1 + \sigma_2}, \quad w_2^* = \frac{\sigma_1}{\sigma_1 + \sigma_2}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Para encontrar la cartera de varianza cero, resolvemos:
+$$w_1 \sigma_1 - (1 - w_1) \sigma_2 = 0$$
+
+Esto implica:
+$$w_1 \sigma_1 = (1 - w_1) \sigma_2 = \sigma_2 - w_1 \sigma_2$$
+
+Reorganizando:
+$$w_1 (\sigma_1 + \sigma_2) = \sigma_2$$
+
+Por tanto:
+$$w_1^* = \frac{\sigma_2}{\sigma_1 + \sigma_2}$$
+
+Y $w_2^* = 1 - w_1^* = \frac{\sigma_1}{\sigma_1 + \sigma_2}$.
+\end{proof}
+
+\subsection{Caso 3: Coeficiente de Correlación entre -1 y +1}
+
+Este es el caso más común en la práctica. La diversificación reduce el riesgo de la cartera, y el conjunto de oportunidades de inversión forma una hipérbola cóncava hacia el origen.
+
+\begin{proposicion}[Efecto Diversificación con Correlación Intermedia]
+Cuando $-1 < \rho_{1,2} < +1$, la volatilidad de la cartera es menor que el promedio ponderado de las volatilidades individuales (excepto en los casos extremos donde $w_1 = 0$ o $w_2 = 0$). Cuanto menor sea el coeficiente de correlación, mayor será el beneficio de diversificación.
+\end{proposicion}
+
+\begin{proof}
+Comparando la volatilidad de la cartera con el promedio ponderado:
+$$\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \rho_{1,2} \sigma_1 \sigma_2$$
+
+Mientras que el cuadrado del promedio ponderado es:
+$$(w_1 \sigma_1 + w_2 \sigma_2)^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2w_1 w_2 \sigma_1 \sigma_2$$
+
+La diferencia es:
+$$(w_1 \sigma_1 + w_2 \sigma_2)^2 - \sigma_p^2 = 2w_1 w_2 \sigma_1 \sigma_2 (1 - \rho_{1,2})$$
+
+Dado que $w_1, w_2, \sigma_1, \sigma_2 > 0$ y $\rho_{1,2} < 1$, esta diferencia es positiva, lo que implica que $\sigma_p < w_1 \sigma_1 + w_2 \sigma_2$.
+\end{proof}
+
+El conjunto de oportunidades de inversión para dos activos con correlación intermedia forma una curva cóncava hacia el origen en el espacio rentabilidad-riesgo. La curvatura de esta hipérbola depende del valor del coeficiente de correlación: menor correlación implica mayor curvatura y mayor beneficio de diversificación.
+
+\section{El Modelo de Markowitz}
+
+\subsection{Introducción a la Teoría de Carteras}
+
+\begin{definicion}[Teoría de Carteras]
+La \textbf{Teoría de Carteras} estudia cómo construir carteras que maximicen la utilidad esperada del inversor, considerando el trade-off entre rentabilidad esperada y riesgo.
+\end{definicion}
+
+\begin{definicion}[Cartera]
+Una \textbf{cartera} es un conjunto de activos (acciones, bonos, letras del tesoro, derivados, etc.) invertidos en determinadas proporciones $(w_i)$, donde cada peso $w_i$ representa la fracción del capital total invertido en el activo $i$, y $\sum_{i=1}^N w_i = 1$.
+\end{definicion}
+
+El Modelo de Markowitz, también conocido como Modelo Media-Varianza, constituye uno de los pilares fundamentales de las finanzas y de la teoría de carteras. Su conclusión fundamental puede resumirse en el principio: \textit{"no deben ponerse todos los huevos en la misma cesta"}.
+
+\subsection{Características del Modelo Media-Varianza}
+
+\begin{definicion}[Modelo Media-Varianza]
+El \textbf{Modelo Media-Varianza} de Markowitz es un modelo de selección de carteras que se basa únicamente en dos momentos de la distribución de rentabilidades:
+\begin{enumerate}
+\item \textbf{Momento de primer orden}: la rentabilidad esperada (media) $\E[R_p]$
+\item \textbf{Momento de segundo orden}: la varianza $\sigma_p^2$ (o desviación típica $\sigma_p$)
+\end{enumerate}
+\end{definicion}
+
+El modelo es un \textbf{modelo estático} que se enfoca únicamente en el siguiente período. No considera otros factores como la asimetría de la distribución de rentabilidades o la liquidez de los activos.
+
+\begin{proposicion}[Supuestos del Modelo Media-Varianza]
+Para que el modelo de Markowitz sea válido, es necesario que \textbf{al menos uno} de los siguientes supuestos se cumpla:
+\begin{enumerate}
+\item Las rentabilidades de los activos siguen una distribución normal.
+\item Los inversores están representados por una función de utilidad cuadrática.
+\end{enumerate}
+\end{proposicion}
+
+\begin{definicion}[Aversión al Riesgo]
+En el modelo de Markowitz se supone que los inversores son \textbf{aversos al riesgo}, es decir, quieren:
+\begin{itemize}
+\item Maximizar la rentabilidad esperada $\E[R_p]$
+\item Minimizar el riesgo $\sigma_p$
+\end{itemize}
+\end{definicion}
+
+Esto implica que los inversores prefieren:
+\begin{itemize}
+\item Para un mismo nivel de rentabilidad esperada, la cartera con menor riesgo.
+\item Para un mismo nivel de riesgo, la cartera con mayor rentabilidad esperada.
+\end{itemize}
+
+\subsection{Formación de Carteras con Dos Activos}
+
+Cuando tenemos dos activos individuales, todas las carteras posibles se encuentran en una curva (hipérbola) que conecta los dos activos en el espacio rentabilidad-riesgo. Esta curva representa el conjunto de oportunidades de inversión.
+
+\begin{definicion}[Conjunto de Oportunidades de Inversión]
+El \textbf{conjunto de oportunidades de inversión} es el conjunto de todas las carteras factibles que pueden formarse combinando los activos disponibles, representado en el espacio rentabilidad-riesgo.
+\end{definicion}
+
+\begin{definicion}[Cartera de Mínima Varianza]
+La \textbf{cartera de mínima varianza} es aquella cartera que tiene la menor varianza (riesgo) entre todas las carteras posibles del conjunto de oportunidades de inversión.
+\end{definicion}
+
+\begin{definicion}[Carteras Dominadas]
+Las \textbf{carteras dominadas} son aquellas carteras para las cuales existe al menos otra cartera que ofrece:
+\begin{itemize}
+\item Mayor rentabilidad esperada para el mismo nivel de riesgo, o
+\item Menor riesgo para el mismo nivel de rentabilidad esperada
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Carteras Eficientes]
+Las \textbf{carteras eficientes} son aquellas que permiten maximizar la rentabilidad para cada nivel de riesgo, o minimizar el riesgo para cada nivel de rentabilidad esperada. Estas carteras no están dominadas por ninguna otra cartera.
+\end{definicion}
+
+\begin{definicion}[Frontera Eficiente]
+La \textbf{frontera eficiente} es el conjunto de todas las carteras eficientes. En el caso de dos activos, la frontera eficiente es la porción de la hipérbola que va desde la cartera de mínima varianza hasta la cartera de máxima rentabilidad esperada.
+\end{definicion}
+
+\subsection{Formación de Carteras con Tres o Más Activos}
+
+Cuando tenemos tres o más activos individuales, el conjunto de oportunidades de inversión ya no es solo una curva, sino una región bidimensional en el espacio rentabilidad-riesgo.
+
+\begin{proposicion}[Conjunto de Oportunidades con Múltiples Activos]
+Con tres o más activos, no solo tendremos carteras en la frontera (hipérbola), sino también carteras en el interior de la región factible. La frontera eficiente sigue siendo la curva que va desde la cartera de mínima varianza hasta la cartera de máxima rentabilidad esperada.
+\end{proposicion}
+
+El inversor elegirá siempre una cartera de entre las que están en la frontera eficiente, ya que cualquier cartera del interior está dominada por alguna cartera de la frontera.
+
+\subsection{Problema de Optimización de Markowitz}
+
+El problema de encontrar las carteras de la frontera eficiente puede formularse como un problema de optimización cuadrática.
+
+\begin{teorema}[Formulación del Problema de Optimización de Markowitz]
+El problema de encontrar la cartera de mínima varianza para una rentabilidad esperada objetivo $\phi$ puede formularse como:
+\begin{align}
+\min_{w_1, \ldots, w_N} \quad & \sigma_p^2 = \sum_{i=1}^N w_i^2 \sigma_i^2 + \sum_{i=1}^N \sum_{\substack{j=1 \\ j \neq i}}^N w_i w_j \sigma_{i,j} \label{eq:min_var}\\
+\text{s.a.} \quad & \E[R_p] = \sum_{i=1}^N w_i \E[R_i] = \phi \label{eq:const_ret}\\
+& \sum_{i=1}^N w_i = 1 \label{eq:const_sum}\\
+& w_i \geq 0 \quad i = 1, \ldots, N \label{eq:const_short}
+\end{align}
+\end{teorema}
+
+Este es un problema dual. Alternativamente, podemos formularlo como un problema de maximización de rentabilidad esperada sujeto a una varianza objetivo:
+
+\begin{teorema}[Formulación Dual del Problema de Markowitz]
+El problema dual consiste en maximizar la rentabilidad esperada sujeto a una varianza objetivo $\lambda$:
+\begin{align}
+\max_{w_1, \ldots, w_N} \quad & \E[R_p] = \sum_{i=1}^N w_i \E[R_i] \label{eq:max_ret}\\
+\text{s.a.} \quad & \sigma_p^2 = \sum_{i=1}^N w_i^2 \sigma_i^2 + \sum_{i=1}^N \sum_{\substack{j=1 \\ j \neq i}}^N w_i w_j \sigma_{i,j} = \lambda \label{eq:const_var}\\
+& \sum_{i=1}^N w_i = 1 \label{eq:const_sum2}\\
+& w_i \geq 0 \quad i = 1, \ldots, N \label{eq:const_short2}
+\end{align}
+\end{teorema}
+
+La solución de cualquiera de estos problemas para diferentes valores de $\phi$ (o $\lambda$) genera la frontera eficiente.
+
+\subsection{Carteras con Activos con Riesgo y Activo Libre de Riesgo}
+
+Hasta ahora hemos analizado cómo construir y analizar una cartera combinando únicamente activos con riesgo. Sin embargo, en la realidad los inversores pueden combinar activos con riesgo y sin riesgo en sus carteras.
+
+\begin{definicion}[Activo Libre de Riesgo]
+Un \textbf{activo libre de riesgo} es un activo cuya rentabilidad es conocida con certeza. Su varianza es cero ($\sigma_f^2 = 0$) y su rentabilidad esperada es la tasa libre de riesgo $r_f$.
+\end{definicion}
+
+El Modelo de Markowitz analiza cómo formar una cartera óptima bajo los siguientes supuestos:
+\begin{enumerate}
+\item Existen activos con riesgo y un activo libre de riesgo ($r_f$).
+\item Todos los agentes son aversos al riesgo.
+\item Es posible tomar prestado y prestar al mismo tipo de interés (la tasa libre de riesgo $r_f$).
+\end{enumerate}
+
+\begin{teorema}[Rentabilidad y Varianza de Cartera con Activo Libre de Riesgo]
+Si un inversor invierte una proporción $w$ de su cartera en una cartera con riesgo $c$ y el resto $(1-w)$ en el activo libre de riesgo, entonces:
+\begin{align}
+\E[R_p] &= (1-w)r_f + w\E[R_c] = r_f + w(\E[R_c] - r_f) \label{eq:ret_riskfree}\\
+\sigma_p^2 &= w^2 \sigma_c^2 \label{eq:var_riskfree}
+\end{align}
+\end{teorema}
+
+\begin{proof}
+La rentabilidad de la cartera es $R_p = (1-w)r_f + wR_c$. Tomando el valor esperado:
+$$\E[R_p] = (1-w)r_f + w\E[R_c] = r_f + w(\E[R_c] - r_f)$$
+
+Para la varianza, dado que $r_f$ es una constante:
+$$\sigma_p^2 = \V[(1-w)r_f + wR_c] = w^2 \V[R_c] = w^2 \sigma_c^2$$
+\end{proof}
+
+La desviación típica de la cartera es:
+\begin{equation}
+\sigma_p = w \sigma_c
+\end{equation}
+
+Despejando $w$ de la ecuación de la desviación típica y sustituyendo en la ecuación de rentabilidad esperada, obtenemos:
+
+\begin{teorema}[Línea de Asignación de Capital]
+La rentabilidad esperada de la cartera como función de su desviación típica es:
+\begin{equation}
+\E[R_p] = r_f + \frac{\sigma_p}{\sigma_c} (\E[R_c] - r_f)
+\end{equation}
+Esta relación es una línea recta en el espacio rentabilidad-riesgo, denominada \textbf{Línea de Asignación de Capital} (CAL, por sus siglas en inglés: Capital Allocation Line).
+\end{teorema}
+
+\begin{proof}
+De $\sigma_p = w \sigma_c$, tenemos $w = \frac{\sigma_p}{\sigma_c}$. Sustituyendo en la ecuación de rentabilidad esperada:
+$$\E[R_p] = r_f + \frac{\sigma_p}{\sigma_c} (\E[R_c] - r_f)$$
+\end{proof}
+
+\begin{definicion}[Línea de Asignación de Capital (CAL)]
+La \textbf{Línea de Asignación de Capital} (CAL) es la línea recta en el espacio rentabilidad-riesgo que contiene todas las carteras que puede formar el inversor combinando una cartera con riesgo (cartera $c$) y el activo libre de riesgo. La CAL puede extenderse por encima del punto donde está la cartera $c$ si se permite el endeudamiento (venta en corto del activo libre de riesgo).
+\end{definicion}
+
+\begin{proposicion}[Pendiente de la CAL]
+La pendiente de la CAL es:
+\begin{equation}
+\frac{\partial \E[R_p]}{\partial \sigma_p} = \frac{\E[R_c] - r_f}{\sigma_c}
+\end{equation}
+Esta pendiente representa el ratio de Sharpe de la cartera con riesgo $c$, es decir, el exceso de rentabilidad por unidad de riesgo.
+\end{proposicion}
+
+\subsection{Selección de la Cartera Óptima con Riesgo}
+
+Dado que existen múltiples carteras con riesgo posibles, el inversor puede formar distintas rectas CAL dependiendo de dónde se sitúe la cartera con riesgo que elija.
+
+\begin{teorema}[Criterio de Selección de la CAL]
+El inversor elegirá aquella CAL con \textbf{mayor pendiente}, es decir, aquella que maximiza el ratio de Sharpe:
+\begin{equation}
+\max_c \frac{\E[R_c] - r_f}{\sigma_c}
+\end{equation}
+\end{teorema}
+
+La pendiente de la CAL es el ratio de Sharpe, que mide el exceso de rentabilidad esperada por unidad de riesgo asumido. Una mayor pendiente implica un mejor trade-off entre rentabilidad y riesgo.
+
+\subsection{La Cartera Tangente y el Teorema de Separación}
+
+\begin{definicion}[Cartera Tangente]
+La \textbf{cartera tangente} (denotada por $T$) es la cartera eficiente de activos con riesgo que maximiza el ratio de Sharpe, es decir, aquella para la cual la CAL es tangente a la frontera eficiente de activos con riesgo.
+\end{definicion}
+
+La cartera tangente es la única cartera de activos con riesgo que un inversor debería considerar, independientemente de sus preferencias de riesgo.
+
+\begin{teorema}[Teorema de Separación de Fondos]
+Cualquier inversor maximizará su utilidad esperada, con independencia de su comportamiento frente al riesgo, repartiendo su presupuesto únicamente entre $r_f$ y la cartera tangente $T$. La proporción específica entre estos dos activos depende de las preferencias de riesgo del inversor.
+\end{teorema}
+
+Este teorema implica que el problema de selección de cartera puede resolverse en dos etapas:
+
+\begin{enumerate}
+\item \textbf{Etapa 1}: Determinar la composición de la cartera tangente $T$ (la misma para todos los inversores).
+\item \textbf{Etapa 2}: Decidir la proporción a invertir en $T$ y qué parte prestar o pedir prestada a $r_f$, según las preferencias de riesgo del inversor.
+\end{enumerate}
+
+La solución del problema en dos etapas tiene importantes implicaciones prácticas:
+\begin{itemize}
+\item Todos los inversores deberían mantener la misma cartera de activos con riesgo (la cartera tangente).
+\item Las diferencias en las carteras finales de los inversores se deben únicamente a sus diferentes preferencias de riesgo, reflejadas en la proporción entre la cartera tangente y el activo libre de riesgo.
+\item Los inversores más aversos al riesgo prestarán dinero (invertirán más en el activo libre de riesgo), mientras que los inversores menos aversos al riesgo pedirán prestado (invertirán más de su capital en la cartera tangente mediante apalancamiento).
+\end{itemize}
+
+\section{Ejercicios y Ejemplos}
+
+\subsection{Ejercicio: Cartera con Tres Activos}
+
+\begin{ejemplo}[Cálculo de Rentabilidad y Riesgo para Tres Activos]
+Supongamos que tenemos los precios de cierre mensuales de tres acciones (Alcatel, Corning e IBM) durante el último año, como se muestra en la siguiente tabla:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Mes & Alcatel & Corning & IBM \\
+\midrule
+Enero & 100 & 50 & 12.5 \\
+Febrero & 102 & 51 & 12.9 \\
+Marzo & 102.5 & 52 & 13.2 \\
+Abril & 104 & 53.5 & 11.3 \\
+Mayo & 103.6 & 53.8 & 11 \\
+Junio & 102.8 & 52.5 & 10.5 \\
+Julio & 104 & 52.6 & 11.5 \\
+Agosto & 106 & 53.6 & 12.6 \\
+Septiembre & 105.5 & 54.9 & 13.5 \\
+Octubre & 107 & 54 & 14.3 \\
+Noviembre & 108 & 54.9 & 14 \\
+Diciembre & 107.5 & 55.3 & 15.5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Se pide determinar:
+\begin{enumerate}
+\item La rentabilidad esperada y riesgo de cada activo.
+\item La rentabilidad esperada y riesgo de una cartera formada por 30\% Alcatel, 60\% Corning y 10\% IBM.
+\item La volatilidad de esa cartera.
+\item Representar gráficamente la rentabilidad y riesgo de los activos individuales y de la cartera. ¿Qué conclusiones puede extraer?
+\end{enumerate}
+
+\textbf{Solución:}
+
+\textbf{Paso 1: Cálculo de rentabilidades mensuales}
+
+Para cada activo, calculamos las rentabilidades mensuales como $R_t = \frac{P_t - P_{t-1}}{P_{t-1}}$:
+
+\begin{itemize}
+\item \textbf{Alcatel}: Las rentabilidades mensuales se calculan a partir de los precios. Por ejemplo, de enero a febrero: $R_2 = \frac{102-100}{100} = 2\%$.
+\item \textbf{Corning}: Similarmente, de enero a febrero: $R_2 = \frac{51-50}{50} = 2\%$.
+\item \textbf{IBM}: De enero a febrero: $R_2 = \frac{12.9-12.5}{12.5} = 3.2\%$.
+\end{itemize}
+
+Continuando este proceso para todos los meses, obtenemos 11 rentabilidades mensuales para cada activo.
+
+\textbf{Paso 2: Estadísticos de cada activo}
+
+Para cada activo $i$, calculamos:
+\begin{itemize}
+\item Rentabilidad esperada: $\E[R_i] = \frac{1}{11}\sum_{t=1}^{11} R_{i,t}$
+\item Varianza: $\sigma_i^2 = \frac{1}{11}\sum_{t=1}^{11} (R_{i,t} - \E[R_i])^2$
+\item Desviación típica: $\sigma_i = \sqrt{\sigma_i^2}$
+\end{itemize}
+
+\textbf{Paso 3: Cálculo de la cartera}
+
+Para una cartera con pesos $w_1 = 0.3$ (Alcatel), $w_2 = 0.6$ (Corning) y $w_3 = 0.1$ (IBM), donde $w_1 + w_2 + w_3 = 1$:
+
+\begin{align*}
+\E[R_p] &= w_1 \E[R_1] + w_2 \E[R_2] + w_3 \E[R_3]\\
+&= 0.3 \times \E[R_{\text{Alcatel}}] + 0.6 \times \E[R_{\text{Corning}}] + 0.1 \times \E[R_{\text{IBM}}]
+\end{align*}
+
+Para la varianza de la cartera con tres activos:
+\begin{align*}
+\sigma_p^2 &= w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + w_3^2 \sigma_3^2\\
+&\quad + 2w_1 w_2 \sigma_{1,2} + 2w_1 w_3 \sigma_{1,3} + 2w_2 w_3 \sigma_{2,3}
+\end{align*}
+
+donde $\sigma_{i,j}$ representa la covarianza entre los activos $i$ y $j$.
+
+La volatilidad de la cartera es $\sigma_p = \sqrt{\sigma_p^2}$.
+
+\textbf{Paso 4: Representación gráfica y conclusiones}
+
+Al representar los activos individuales y la cartera en un gráfico rentabilidad-riesgo, observamos:
+\begin{itemize}
+\item La cartera generalmente tiene un riesgo menor que el promedio ponderado de los riesgos individuales debido al efecto diversificación.
+\item La rentabilidad esperada de la cartera es el promedio ponderado de las rentabilidades esperadas de los activos individuales.
+\item El beneficio de diversificación depende de las correlaciones entre los activos: cuanto menor sea la correlación, mayor será el beneficio de diversificación.
+\end{itemize}
+
+Este ejercicio ilustra cómo la combinación de múltiples activos puede reducir el riesgo total de la cartera sin necesariamente reducir la rentabilidad esperada, demostrando el principio fundamental de la diversificación.
+\end{ejemplo}
+
+\subsection{Ejercicio: El Efecto Diversificación}
+
+\begin{ejemplo}[Cartera de Mínima Varianza con Diferentes Correlaciones]
+Supongamos que un gestor de cartera puede invertir en dos acciones del NYSE (DELL y YELP) con rentabilidades esperadas del 15\% y 22\%, respectivamente, y desviaciones estándar del 20\% y 39\%. Determinar la proporción a invertir en cada una para conseguir la cartera con menor riesgo posible en los siguientes casos:
+
+\textbf{a)} El coeficiente de correlación entre las rentabilidades de las acciones de Dell y Yelp es igual a 1, y no se permite la venta en corto.
+
+\textbf{b)} El coeficiente de correlación entre las rentabilidades de las acciones de Dell y Yelp es igual a 1, y sí se permite la venta en corto.
+
+\textbf{c)} El coeficiente de correlación entre las rentabilidades de las acciones de Dell y Yelp es igual a $-1$, y sí se permite la venta en corto.
+
+\textbf{d)} El coeficiente de correlación entre las rentabilidades de las acciones de Dell y Yelp está entre $-1$ y $1$. Determinar la fórmula general que permite calcular la composición de la cartera para cualquier valor del coeficiente de correlación.
+
+\textbf{e)} El coeficiente de correlación es igual a $0.1$.
+
+\textbf{Solución:}
+
+Datos: $\E[R_1] = 15\%$, $\sigma_1 = 20\%$, $\E[R_2] = 22\%$, $\sigma_2 = 39\%$.
+
+\textbf{a)} Con $\rho = 1$ y sin ventas en corto:
+$$\sigma_p = w_1 \sigma_1 + (1-w_1) \sigma_2 = w_1 \times 20\% + (1-w_1) \times 39\% = 39\% - 19\% w_1$$
+
+Para minimizar $\sigma_p$ sujeto a $0 \leq w_1 \leq 1$, elegimos $w_1 = 1$ (invertir todo en DELL, el activo con menor riesgo). Por tanto, $w_1^* = 1$, $w_2^* = 0$, y $\sigma_p^* = 20\%$.
+
+\textbf{b)} Con $\rho = 1$ y con ventas en corto:
+La misma solución que en (a), ya que la función objetivo es lineal y creciente en $w_1$ en el sentido negativo.
+
+\textbf{c)} Con $\rho = -1$ y con ventas en corto:
+$$\sigma_p = |w_1 \sigma_1 - (1-w_1) \sigma_2| = |w_1 \times 20\% - (1-w_1) \times 39\%| = |59\% w_1 - 39\%|$$
+
+Para minimizar, igualamos a cero: $59\% w_1 - 39\% = 0$, por tanto $w_1^* = \frac{39}{59} \approx 0.661$, $w_2^* = \frac{20}{59} \approx 0.339$, y $\sigma_p^* = 0$.
+
+\textbf{d)} Fórmula general:
+Minimizamos $\sigma_p^2 = w_1^2 \sigma_1^2 + (1-w_1)^2 \sigma_2^2 + 2w_1(1-w_1)\rho \sigma_1 \sigma_2$.
+
+Condición de primer orden:
+$$\frac{\partial \sigma_p^2}{\partial w_1} = 2w_1 \sigma_1^2 - 2(1-w_1)\sigma_2^2 + 2(1-2w_1)\rho \sigma_1 \sigma_2 = 0$$
+
+Resolviendo:
+$$w_1^* = \frac{\sigma_2^2 - \rho \sigma_1 \sigma_2}{\sigma_1^2 + \sigma_2^2 - 2\rho \sigma_1 \sigma_2}$$
+
+\textbf{e)} Con $\rho = 0.1$:
+$$w_1^* = \frac{0.39^2 - 0.1 \times 0.20 \times 0.39}{0.20^2 + 0.39^2 - 2 \times 0.1 \times 0.20 \times 0.39} = \frac{0.1521 - 0.0078}{0.04 + 0.1521 - 0.0156} = \frac{0.1443}{0.1765} \approx 0.818$$
+
+Por tanto, $w_1^* \approx 0.818$, $w_2^* \approx 0.182$.
+\end{ejemplo}
+
+\subsection{Ejemplo: Cartera con ACCIONA y BBVA}
+
+\begin{ejemplo}[Análisis de Cartera Equiponderada]
+Supongamos que tenemos una cartera equiponderada formada por las acciones de las empresas ACCIONA y BBVA. Los datos obtenidos en el último año se muestran en la siguiente tabla:
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Activo & $R_i$ & Varianza & Covarianza \\
+\midrule
+ACCIONA & 10\% & 0.0076 & -0.0024 \\
+BBVA & 8\% & 0.00708 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Calcular la rentabilidad y riesgo de la cartera para diferentes pesos.
+
+\textbf{Solución:}
+
+Para una cartera con pesos $w_1$ (ACCIONA) y $w_2 = 1-w_1$ (BBVA):
+
+\begin{align*}
+\E[R_p] &= w_1 \times 10\% + (1-w_1) \times 8\% = 8\% + 2\% w_1\\
+\sigma_p^2 &= w_1^2 \times 0.0076 + (1-w_1)^2 \times 0.00708 + 2w_1(1-w_1) \times (-0.0024)
+\end{align*}
+
+Para diferentes valores de $w_1$, podemos calcular $\E[R_p]$ y $\sigma_p$. La siguiente tabla muestra los resultados para pesos desde $w_1 = 0$ hasta $w_1 = 1$ en incrementos de 0.1:
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+ACCIONA $(w_1)$ & BBVA $(w_2)$ & $R_p$ & $\sigma_p$ \\
+\midrule
+0.0 & 1.0 & 8.00\% & 8.41\% \\
+0.1 & 0.9 & 8.20\% & 7.33\% \\
+0.2 & 0.8 & 8.40\% & 6.38\% \\
+0.3 & 0.7 & 8.60\% & 5.61\% \\
+0.4 & 0.6 & 8.80\% & 5.11\% \\
+0.5 & 0.5 & 9.00\% & 4.97\% \\
+0.6 & 0.4 & 9.20\% & 5.21\% \\
+0.7 & 0.3 & 9.40\% & 5.79\% \\
+0.8 & 0.2 & 9.60\% & 6.62\% \\
+0.9 & 0.1 & 9.80\% & 7.61\% \\
+1.0 & 0.0 & 10.00\% & 8.72\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Los valores de la tabla se calculan utilizando las fórmulas:
+\begin{align*}
+\E[R_p] &= w_1 \times 10\% + (1-w_1) \times 8\% = 8\% + 2\% w_1\\
+\sigma_p^2 &= w_1^2 \times 0.0076 + (1-w_1)^2 \times 0.00708 + 2w_1(1-w_1) \times (-0.0024)
+\end{align*}
+
+Por ejemplo, para $w_1 = 0.5$:
+\begin{align*}
+\E[R_p] &= 8\% + 2\% \times 0.5 = 9\%\\
+\sigma_p^2 &= 0.25 \times 0.0076 + 0.25 \times 0.00708 - 0.5 \times 0.0024\\
+&= 0.0019 + 0.00177 - 0.0012 = 0.00247
+\end{align*}
+
+Por tanto, $\sigma_p = \sqrt{0.00247} \approx 4.97\%$.
+
+Observamos que la cartera con $w_1 = 0.5$ tiene el menor riesgo ($\sigma_p = 4.97\%$), lo que corresponde a la cartera de mínima varianza. Esto se debe a la covarianza negativa entre los activos ($\sigma_{1,2} = -0.0024$), que genera beneficios de diversificación.
+
+Al representar estos resultados en un gráfico rentabilidad-riesgo, obtenemos la curva de oportunidades de inversión, de la cual podemos identificar la frontera eficiente. La frontera eficiente es la porción de la curva que va desde la cartera de mínima varianza hasta la cartera de máxima rentabilidad esperada (en este caso, la cartera con $w_1 = 1$, que corresponde a invertir todo en ACCIONA).
+\end{ejemplo}
+
+\section{Resumen}
+
+En este documento hemos estudiado:
+
+\begin{itemize}
+\item El conjunto de posibilidades de inversión y riesgo para el caso de 2 activos y diferentes valores del coeficiente de correlación, analizando cómo la correlación afecta al beneficio de diversificación.
+
+\item El \textbf{Modelo de Markowitz}: modelo media-varianza que constituye un modelo clásico en la gestión de activos, desarrollado en los años 50 y por el cual Harry Markowitz recibió el Premio Nobel en Economía.
+
+\item Los \textbf{conceptos clave}: cartera mínima varianza, cartera eficiente, frontera eficiente, que permiten identificar las carteras óptimas para los inversores.
+
+\item La \textbf{CAL} (Línea de Asignación de Capital): todas las carteras que puede formar el inversor con la cartera con riesgo (cartera $c$) y con el activo libre de riesgo. La pendiente de la CAL es el ratio de Sharpe.
+
+\item La \textbf{cartera tangente}: la cartera eficiente que elegirá un inversor si existe la posibilidad también de invertir en un activo libre de riesgo. Esta cartera maximiza el ratio de Sharpe y es la misma para todos los inversores, según el teorema de separación de fondos.
+\end{itemize}
+
+El modelo de Markowitz proporciona el fundamento teórico para la construcción de carteras óptimas y establece las bases para modelos más avanzados de valoración de activos, como el CAPM.
+
+\end{document}
+

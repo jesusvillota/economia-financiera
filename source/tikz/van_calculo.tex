@@ -1,0 +1,50 @@
+\begin{tikzpicture}[scale=1.1]
+    % Main box
+    \node[draw, rectangle, minimum width=8cm, minimum height=6cm, fill=blue!5] at (4,2) {};
+    
+    % Title
+    \node[font=\bfseries] at (4,5.2) {Cálculo del VAN};
+    
+    % Step 1: Cash flows
+    \node[draw, rectangle, fill=green!20, minimum width=7cm, minimum height=0.8cm] at (4,4.2) {
+        \textbf{Paso 1:} Identificar flujos de caja: $CF_0, CF_1, \ldots, CF_n$
+    };
+    
+    % Arrow
+    \draw[-Stealth, thick] (4,3.7) -- (4,3.3);
+    
+    % Step 2: Discount rate
+    \node[draw, rectangle, fill=orange!20, minimum width=7cm, minimum height=0.8cm] at (4,2.9) {
+        \textbf{Paso 2:} Determinar tasa de descuento $r$ (coste de oportunidad)
+    };
+    
+    % Arrow
+    \draw[-Stealth, thick] (4,2.4) -- (4,2.0);
+    
+    % Step 3: Present value
+    \node[draw, rectangle, fill=yellow!30, minimum width=7cm, minimum height=0.8cm] at (4,1.6) {
+        \textbf{Paso 3:} Descontar cada flujo: $\displaystyle \frac{CF_t}{(1+r)^t}$
+    };
+    
+    % Arrow
+    \draw[-Stealth, thick] (4,1.1) -- (4,0.7);
+    
+    % Step 4: Sum
+    \node[draw, rectangle, fill=red!20, minimum width=7cm, minimum height=0.8cm] at (4,0.3) {
+        \textbf{Paso 4:} Sumar: $\displaystyle \text{VAN} = \sum_{t=0}^{n} \frac{CF_t}{(1+r)^t}$
+    };
+    
+    % Decision arrow
+    \draw[-Stealth, thick, blue!70] (4,-0.2) -- (4,-0.8);
+    
+    % Decision box
+    \node[draw, diamond, aspect=2, fill=purple!20, font=\small] at (4,-1.5) {VAN $>$ 0?};
+    
+    % Decision outcomes
+    \draw[-Stealth, thick, green!70] (2.5,-1.5) -- (1,-1.5);
+    \node[left, font=\small, green!70!black] at (1,-1.5) {\textbf{Sí: Aceptar}};
+    
+    \draw[-Stealth, thick, red!70] (5.5,-1.5) -- (7,-1.5);
+    \node[right, font=\small, red!70!black] at (7,-1.5) {\textbf{No: Rechazar}};
+\end{tikzpicture}
+

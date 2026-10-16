@@ -1,0 +1,551 @@
+\input{../preamble.tex}
+
+% Título del documento
+\title{\textbf{Eficiencia del Mercado y Finanzas Conductuales}\\
+\large Mercados e Instituciones Financieras}
+\author{Jesus Villota Miranda\\
+CEMFI}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+Este documento presenta un tratamiento riguroso y autocontenido de la eficiencia de mercado y las finanzas conductuales. La eficiencia de mercado es uno de los conceptos fundamentales en finanzas modernas, estableciendo las condiciones bajo las cuales los precios de los activos reflejan toda la información disponible. Por otro lado, las finanzas conductuales examinan cómo los sesgos psicológicos y cognitivos de los inversores pueden afectar las decisiones de inversión y, en consecuencia, la eficiencia del mercado.
+
+El documento se organiza en cuatro secciones principales: (1) el concepto de eficiencia y sus diferentes formas, (2) la hipótesis de eficiencia de mercado en sus tres formas (débil, semi-fuerte y fuerte), (3) la evidencia empírica sobre la eficiencia de mercado, y (4) las finanzas conductuales y su relación con la eficiencia del mercado. Cada sección incluye definiciones formales, análisis teórico riguroso y evidencia empírica relevante.
+
+La investigación sobre eficiencia de mercado y finanzas conductuales ha sido fundamental en el desarrollo de las finanzas modernas. En reconocimiento a estas contribuciones, el Premio Nobel en Ciencias Económicas de 2013 fue otorgado conjuntamente a Eugene Fama, Lars Peter Hansen y Robert Shiller por sus trabajos sobre la previsibilidad de los precios de los activos. Una de las paradojas centrales que emerge de esta investigación es que, si bien es extremadamente difícil predecir los movimientos de precios de acciones y bonos en el corto plazo (días o semanas), es posible prever tendencias amplias en horizontes más largos (3-5 años). Esta aparente contradicción entre la imprevisibilidad a corto plazo y la previsibilidad a largo plazo constituye uno de los hallazgos más importantes en finanzas empíricas y conecta directamente con los temas centrales de este documento: la eficiencia de mercado y las finanzas conductuales.
+
+\section{El Concepto de Eficiencia}
+
+\subsection{Definiciones de Eficiencia}
+
+En el contexto de los mercados financieros, el concepto de eficiencia puede entenderse desde dos perspectivas fundamentales: la eficiencia asignativa y la eficiencia informacional.
+
+\begin{definicion}[Eficiencia Asignativa]
+Una asignación es \textbf{Pareto eficiente} si no existe una posible redistribución que haga que al menos una persona esté mejor sin perjudicar a otra. En el contexto de las finanzas, esto implica la \textbf{asignación óptima del riesgo} entre los participantes del mercado.
+\end{definicion}
+
+La eficiencia asignativa se refiere a la capacidad del mercado para asignar recursos de manera óptima. Sin embargo, el foco principal de este documento está en la eficiencia informacional, también conocida como eficiencia de mercado.
+
+\begin{definicion}[Eficiencia Informacional]
+Un mercado es \textbf{informacionalmente eficiente} si los precios de los activos reflejan toda la información disponible. Formalmente, un mercado es eficiente con respecto a un conjunto particular de información si es imposible obtener ganancias anormales (excepto por casualidad) utilizando este conjunto de información para formular decisiones de compra y venta.
+\end{definicion}
+
+La eficiencia informacional implica que los precios de los activos se ajustan rápidamente y de manera racional a la nueva información, reflejando plenamente toda la información disponible. En un mercado eficiente, los inversores deberían esperar obtener una tasa de rendimiento "normal", ajustada por riesgo. Si un mercado no es eficiente, pueden existir oportunidades para obtener beneficios mediante la recopilación y el procesamiento de información.
+
+\subsection{Eficiencia y Asignación de Recursos}
+
+Los mercados ineficientes tienen consecuencias importantes para la asignación de recursos en la economía:
+
+\begin{proposicion}[Consecuencias de la Ineficiencia de Mercado]
+Si un mercado es ineficiente, se produce una asignación sistemática errónea de los recursos:
+\begin{enumerate}
+\item Los valores sobrevalorados pueden obtener capital a un coste demasiado bajo.
+\item Las empresas con valores infravalorados pueden perder oportunidades rentables porque el coste de obtener capital es demasiado elevado.
+\item Los mercados ineficientes pueden tener consecuencias más amplias, como crisis económicas.
+\end{enumerate}
+\end{proposicion}
+
+\subsection{Factores que Afectan la Eficiencia del Mercado}
+
+Los mercados financieros no suelen clasificarse en los dos extremos de completamente ineficientes o completamente eficientes, sino que presentan diversos grados de eficiencia de mercado. Existen factores que contribuyen a la eficiencia del mercado y factores que la obstaculizan:
+
+\begin{enumerate}
+\item \textbf{Transparencia, disponibilidad de información y divulgación financiera}: Ambos factores deben promover la eficiencia del mercado. Los factores que los afectan incluyen dónde se negocia el valor y las normas de divulgación, las regulaciones para promover la integridad del mercado, y cómo está organizado el mercado.
+
+\item \textbf{Restricciones a la negociación}: Límites al arbitraje relacionados con ineficiencias operativas, altos costes de negociación y falta de transparencia, restricciones a la venta en corto.
+
+\item \textbf{Participantes en el mercado}: Número y tipo de inversores, número de analistas financieros, actividad comercial.
+
+\item \textbf{Liquidez}: La liquidez del mercado facilita el ajuste rápido de los precios a la nueva información.
+
+\item \textbf{Competencia}: Un mayor número de participantes informados compitiendo en el mercado promueve la eficiencia.
+\end{enumerate}
+
+\section{Hipótesis de Eficiencia de Mercado}
+
+La Hipótesis de Eficiencia de Mercado (HEM) establece que los precios de los activos reflejan toda la información disponible. Esta hipótesis puede formularse en tres formas diferentes, cada una con implicaciones distintas sobre qué tipo de información está reflejada en los precios.
+
+\subsection{Rendimientos Anormales}
+
+Antes de definir las formas de eficiencia, es necesario establecer qué entendemos por rendimientos anormales.
+
+\begin{definicion}[Rendimientos Anormales]
+Los \textbf{rendimientos anormales} son rendimientos superiores a los esperados, teniendo en cuenta el riesgo de un valor y el rendimiento del mercado. Formalmente, si $R_i$ es el rendimiento del activo $i$, $R_f$ es la tasa libre de riesgo, $\beta_i$ es el coeficiente beta del activo, y $R_m$ es el rendimiento del mercado, entonces el rendimiento esperado según el CAPM es:
+\begin{equation}
+E(R_i) = R_f + \beta_i[E(R_m) - R_f]
+\end{equation}
+El rendimiento anormal (alpha de Jensen) se define como:
+\begin{equation}
+\alpha_i = R_i - (R_f + \beta_i[E(R_m) - R_f])
+\end{equation}
+\end{definicion}
+
+La constatación de que los inversores pueden obtener sistemáticamente rendimientos anormales negociando sobre la base de la información es una prueba contraria a la eficiencia del mercado.
+
+\subsection{Forma Débil de Eficiencia}
+
+\begin{definicion}[Forma Débil de Eficiencia]
+En la \textbf{hipótesis de mercado eficiente en su forma débil}, los precios de los valores reflejan plenamente todos los datos históricos del mercado, lo que incluye toda la información histórica sobre precios y volúmenes de negociación.
+\end{definicion}
+
+En un mercado débilmente eficiente, los datos históricos de negociación ya se reflejan en los precios actuales y los inversores no pueden predecir las variaciones futuras de los precios extrapolando los precios o las pautas de precios del pasado. Es decir, los precios siguen una trayectoria aleatoria (los precios de las acciones son aleatorios e impredecibles).
+
+\begin{proposicion}[Fundamento de la Forma Débil]
+Consideremos una situación con un patrón de precios existente. Si el mercado tiene muchos inversores, este patrón será detectado. Si es rentable, explotar este patrón acabará afectando a los precios y el patrón dejará de existir. Se eliminará por arbitraje. Esto hará que el mercado vuelva a la eficiencia débil.
+\end{proposicion}
+
+La hipótesis de la forma débil implica que el análisis técnico no debería dar lugar a rendimientos anormales. El análisis técnico se centra en los patrones de precios de las acciones y en indicadores que funcionan como proxies de la presión de compra o venta en el mercado. La razón principal para su éxito potencial sería la respuesta lenta de los precios a los factores fundamentales que afectan a la oferta y la demanda.
+
+\subsection{Forma Semi-Fuerte de Eficiencia}
+
+\begin{definicion}[Forma Semi-Fuerte de Eficiencia]
+Un mercado es \textbf{semi-fuertemente eficiente} si los precios reflejan rápidamente toda la información pública y disponible. La información públicamente disponible incluye estados financieros y datos del mercado financiero, lo que también abarca los datos históricos del mercado (forma débil).
+\end{definicion}
+
+Si un mercado es semi-fuertemente eficiente, también debe ser débilmente eficiente. Esto implica que no es posible lograr rendimientos anormales analizando información públicamente disponible. El fundamento es que en los mercados semi-fuertes, ningún inversor tiene acceso a información que no esté ya disponible para otros participantes del mercado, y por lo tanto, ningún inversor puede obtener rendimientos anormales prediciendo los precios futuros de los valores.
+
+\begin{definicion}[Análisis Fundamental]
+El \textbf{análisis fundamental} utiliza modelos de valoración para encontrar el valor fundamental de un activo. La hipótesis del mercado eficiente de forma semi-fuerte implica que el análisis fundamental no debería dar lugar a rendimientos anormales.
+\end{definicion}
+
+\subsection{Valor Fundamental y Valor de Mercado}
+
+Para comprender mejor la eficiencia de mercado, es útil distinguir entre el valor de mercado y el valor fundamental:
+
+\begin{definicion}[Valor de Mercado]
+El \textbf{valor de mercado}, $MV$, es el precio al que se puede comprar o vender un activo en la actualidad. Es la intersección entre la oferta y la demanda del activo.
+\end{definicion}
+
+\begin{definicion}[Valor Fundamental]
+El \textbf{valor fundamental} (o valor intrínseco), $FV$, es el valor del activo estimado por los inversores si tuvieran un conocimiento completo de las características de inversión del activo. A menudo se define como el valor actual de todos los flujos de efectivo futuros esperados del activo. En la práctica, el valor fundamental no se conoce con certeza, pero se puede estimar.
+\end{definicion}
+
+En un mercado eficiente, el valor de mercado debería igualar el valor fundamental. La estrategia de inversión basada en esta comparación es:
+\begin{itemize}
+\item Si $FV > MV$, entonces comprar.
+\item Si $MV > FV$, vender o vender en corto.
+\item Si $MV = FV$, mantener o no hacer nada.
+\end{itemize}
+
+\subsection{Forma Fuerte de Eficiencia}
+
+\begin{definicion}[Forma Fuerte de Eficiencia]
+Un mercado es \textbf{fuertemente eficiente} si los precios reflejan toda la información, tanto pública como privada (información privilegiada).
+\end{definicion}
+
+La forma fuerte es la más restrictiva de las tres formas de eficiencia. Implica que incluso los inversores con información privilegiada no pueden obtener rendimientos anormales de manera sistemática.
+
+\subsection{Observaciones sobre los Mercados Perfectamente Eficientes}
+
+Si los mercados fueran perfectamente eficientes, se seguirían varias implicaciones importantes:
+
+\begin{enumerate}
+\item \textbf{Rendimientos normales}: Los inversores deben esperar un rendimiento normal (según el CAPM) de su inversión, no más.
+
+\item \textbf{Paradoja de la eficiencia}: Los mercados serán eficientes sólo si bastantes inversores creen que no son eficientes. Los inversores que analizan cuidadosamente los valores harán que los precios reflejen los valores de inversión. Sin embargo, si todos creyeran que los mercados son eficientes, entonces se darían cuenta de que no ganarían nada buscando valores subvaluados, y por lo tanto, nadie se molestaría en analizar valores. Por consiguiente, los precios de los valores no reaccionarían instantáneamente a la divulgación de la información, sino que responderían despacio.
+
+\item \textbf{Estrategias públicas}: No se puede esperar que las estrategias de inversión conocidas públicamente generen rendimientos anormales.
+
+\item \textbf{Gestión pasiva}: La gestión profesional no obtendrá mejores rendimientos que el mercado. Favorece la gestión pasiva.
+
+\item \textbf{Desempeño pasado}: Algunos inversores desplegarán registros de desempeño impresionantes, pero el desempeño pasado no es un indicador del desempeño futuro.
+\end{enumerate}
+
+\section{Evidencia Empírica}
+
+\subsection{Características de las Pruebas}
+
+Antes de examinar la evidencia empírica, es importante establecer qué características debe tener una prueba para demostrar que el mercado no es eficiente.
+
+\begin{definicion}[Anomalía de Mercado]
+Se produce una \textbf{anomalía en el mercado} cuando una variación en el precio de un activo no puede vincularse directamente con información relevante conocida en el mercado o con la publicación de nueva información en el mercado.
+\end{definicion}
+
+Para que una anomalía demuestre que el mercado no es eficiente, debe cumplir las siguientes características:
+
+\begin{enumerate}
+\item \textbf{Persistencia}: La anomalía debe ser constante durante un período razonablemente largo para garantizar que no se trata de un artefacto de la minería de datos.
+
+\item \textbf{Estrategia negociable}: Se debe poder encontrar una estrategia de negociación que hubiera generado rendimientos anormales.
+
+\item \textbf{Costes de transacción}: Se deben tener en cuenta los costes de transacción.
+
+\item \textbf{Ajuste por riesgo}: Se tiene que ajustar los rendimientos por los riesgos.
+\end{enumerate}
+
+\subsection{Pruebas de la Forma Débil}
+
+Las pruebas de la forma débil analizan la búsqueda de patrones en los precios. Es un test de si el análisis técnico puede generar retornos anormales de forma sistemática.
+
+\subsubsection{Rendimientos a Corto Plazo}
+
+Para los rendimientos a corto plazo, se analiza la autocorrelación en los rendimientos del mercado de valores. Si hay autocorrelación, vemos que los rendimientos pasados pueden predecir movimientos futuros. Si es positiva (momentum, inversión por impulso) y si es negativa (corrección, reversión de tendencia).
+
+El trabajo pionero de Eugene Fama en la década de 1960 estableció los fundamentos empíricos para entender la imprevisibilidad de los precios a corto plazo. A través de extensos análisis estadísticos, Fama demostró que los precios pasados son de poca utilidad para predecir los rendimientos inmediatos futuros. Esta evidencia respalda la hipótesis del paseo aleatorio (random walk), según la cual los cambios en los precios de los activos reflejan la llegada de nueva información y, por tanto, son impredecibles. En mercados bien funcionados, si los inversores pudieran predecir un aumento en el valor de una acción, la comprarían inmediatamente, lo que elevaría su precio hasta que ya no sea atractiva. Lo que permanece es un patrón de precios impredecible que refleja la llegada de noticias, conocido como paseo aleatorio.
+
+\begin{proposicion}[Autocorrelación a Corto Plazo]
+Estudios académicos de valores NYSE demuestran que a corto plazo hay autocorrelación positiva, pero esta autocorrelación es débil y no sugiere que el análisis técnico pueda generar rendimientos anormales después de considerar los costes de transacción. El trabajo empírico de Fama confirma que los precios pasados no son útiles para predecir los rendimientos futuros inmediatos, lo cual es consistente con la hipótesis de eficiencia de mercado en su forma débil.
+\end{proposicion}
+
+\subsubsection{Rendimientos a Medio Plazo}
+
+Para rendimientos a medio plazo (3-12 meses), se observa el efecto momentum (impulso), es decir, que el rendimiento positivo o negativo reciente continúa a medio plazo. Aunque el rendimiento de valores individuales no es predecible, carteras de los valores con mejores rendimientos a medio plazo superan el rendimiento de carteras con otros activos, generando rendimientos anormales.
+
+\subsubsection{Rendimientos a Largo Plazo}
+
+Las pruebas de rendimientos a largo plazo demuestran que después de observar momentum (autocorrelación positiva) en el medio plazo, se observa una corrección (autocorrelación negativa) después de un rendimiento anormal. Esto se explica por una sobre-reacción a noticias positivas que después se corrige en el mercado.
+
+\begin{proposicion}[Sobre-reacción y Corrección]
+Los precios pueden alejarse temporalmente de su valor real porque los inversores siguen modas o tendencias pasajeras (estrategia impulso), pero eventualmente estos desvíos se corrigen cuando el mercado reconoce los errores pasados (estrategia contraria).
+\end{proposicion}
+
+Esta proposición está respaldada por evidencia empírica que muestra que los precios de las acciones pueden desviarse significativamente de sus valores fundamentales durante períodos prolongados, pero eventualmente convergen hacia valores más fundamentales.
+
+\subsubsection{Previsibilidad a Largo Plazo y Volatilidad Excesiva}
+
+Mientras que la evidencia empírica sugiere que la previsibilidad a corto plazo es limitada, la investigación de Robert Shiller (1981) demostró que los precios de las acciones exhiben previsibilidad a largo plazo, aunque de una manera que desafía las teorías estándar de valoración. Shiller encontró que los precios de las acciones se mueven mucho más de lo que puede explicarse por los flujos de dividendos, lo que lleva a una volatilidad "excesiva" de los precios en comparación con la teoría básica de valoración basada en el valor presente descontado de los dividendos futuros.
+
+Estos movimientos excesivos implican un patrón predecible: un ratio precio-dividendo alto en un año tiende a ser seguido por caídas en años posteriores, y viceversa. Esta previsibilidad a largo plazo ha sido demostrada tanto en mercados de acciones como de bonos y ha sido confirmada por otros investigadores. El contraste entre la imprevisibilidad a corto plazo y la previsibilidad a largo plazo plantea importantes preguntas sobre los mecanismos que determinan los precios de los activos y conecta directamente con las explicaciones conductuales de las desviaciones de los valores fundamentales, que se discuten en la sección de finanzas conductuales.
+
+\begin{proposicion}[Previsibilidad a Largo Plazo]
+Aunque los precios de los activos son difíciles de predecir a corto plazo, exhiben previsibilidad a largo plazo. Los ratios precio-dividendo altos tienden a ser seguidos por rendimientos relativamente bajos en períodos posteriores, mientras que los ratios bajos tienden a ser seguidos por rendimientos relativamente altos. Esta previsibilidad a largo plazo está asociada con la volatilidad excesiva de los precios en relación con los fundamentos.
+\end{proposicion}
+
+\subsection{Pruebas de la Forma Semi-Fuerte}
+
+Las pruebas de la forma semi-fuerte examinan si los inversores pueden obtener rendimientos anormales utilizando información pública.
+
+\subsubsection{Estudios de Eventos}
+
+\begin{definicion}[Estudio de Eventos]
+Un \textbf{estudio de eventos} (event study) es una metodología en finanzas y econometría usada para medir cómo un evento específico afecta el precio o rendimiento de un activo. Es una herramienta clave para analizar la eficiencia del mercado, la reacción a noticias y el impacto económico de un suceso puntual.
+\end{definicion}
+
+El estudio fundacional de Fama, Fisher, Jensen y Roll (1969) sobre desdoblamientos de acciones (stock splits) estableció la metodología de estudios de eventos y proporcionó evidencia temprana sobre la rapidez con la que los mercados incorporan información. Para su sorpresa, encontraron que el mercado incorporaba la información de manera muy rápida. Si los precios hubieran reaccionado lentamente, la trayectoria de precios habría sido predecible, pero no se encontró tal patrón. Este estudio fue seguido por muchos otros que confirmaron los hallazgos originales: después de la reacción inicial a un evento informativo, el precio de una acción se vuelve extremadamente difícil de predecir, lo cual es consistente con la eficiencia semi-fuerte del mercado.
+
+En un mercado semi-fuertemente eficiente, si la información es una buena (mala) noticia, cabría esperar que el precio aumentara (disminuyera) inmediatamente en el momento del anuncio. Los estudios de eventos han encontrado evidencia mixta:
+
+\begin{itemize}
+\item \textbf{Ejemplo de eficiencia semi-fuerte pero violación de eficiencia fuerte}: Los estudios sobre intentos de adquisición muestran que los rendimientos anormales acumulados de las empresas objetivo aumentan significativamente antes del anuncio público, sugiriendo que la información privilegiada se está utilizando. Sin embargo, después del anuncio público, los precios se ajustan rápidamente, lo que es consistente con la eficiencia semi-fuerte.
+
+\item \textbf{Violación de eficiencia semi-fuerte}: Los estudios sobre anuncios de resultados muestran que los rendimientos anormales continúan aumentando (o disminuyendo) durante semanas o meses después del anuncio, lo que sugiere una reacción incompleta del mercado a la información pública.
+\end{itemize}
+
+\subsubsection{Efecto del Tamaño}
+
+\begin{definicion}[Efecto del Tamaño]
+El \textbf{efecto del tamaño} se deriva de la observación de que las empresas de pequeña capitalización tienden a superar a las de gran capitalización en términos ajustados al riesgo.
+\end{definicion}
+
+La investigación empírica sobre las diferencias en los rendimientos de los activos a lo largo del tiempo y entre diferentes activos plantea la pregunta de si la "selección de acciones" es rentable y qué factores deberían usar los inversores. El modelo clásico de valoración de activos de capital (CAPM) proporciona un marco para evaluar las diferencias en los rendimientos, pero la investigación empírica de Fama y otros ha demostrado que otros factores son más importantes que la correlación con el mercado.
+
+La evidencia empírica muestra que las carteras de acciones pequeñas han generado rendimientos promedio anuales significativamente más altos que las carteras de acciones grandes durante períodos prolongados (por ejemplo, 1926-2011). Sin embargo, cabe señalar que:
+
+\begin{enumerate}
+\item Las empresas más pequeñas tienden a ser más arriesgadas que las grandes.
+\item El modelo de tres factores de Fama y French incorpora el tamaño como fuente de riesgo sistemático, lo que puede explicar parte del efecto del tamaño como una prima de riesgo legítima en lugar de una anomalía.
+\end{enumerate}
+
+\subsubsection{Efecto Valor}
+
+\begin{definicion}[Efecto Valor]
+El \textbf{efecto valor} es un efecto documentado empíricamente según el cual las acciones de valor han superado sistemáticamente a las acciones de crecimiento durante largos períodos de tiempo.
+\end{definicion}
+
+Las acciones de valor suelen tener ratios precio-beneficio (P/E) y mercado-valor contable (M/B) por debajo de la media, y rendimientos por dividendo por encima de la media. Si este efecto persiste, la anomalía de las acciones de valor contradice la eficiencia semi-fuerte del mercado, ya que toda la información utilizada para clasificar las acciones de esta manera es información pública.
+
+Fama y otros investigadores encontraron que el tamaño de una empresa (valor total de mercado) y su ratio valor contable-valor de mercado (book-to-market ratio) tienen un poder explicativo significativo para los rendimientos futuros. Específicamente, las empresas grandes o las empresas con ratios valor contable-valor de mercado bajos tienden a tener rendimientos posteriores bajos. Este hallazgo es similar al trabajo de Shiller sobre previsibilidad a largo plazo, donde una valoración general baja relativa a los dividendos predice altos rendimientos futuros. Las "acciones de valor" (con alto ratio valor contable-valor de mercado) tienden a generar rendimientos altos en comparación con acciones con ratios bajos. Sin embargo, Fama y French descubrieron que, cuando aplican el modelo de tres factores en lugar del CAPM, la anomalía de las acciones de valor desaparece. Esto sugiere que el efecto valor puede explicarse como una prima de riesgo adicional en lugar de una violación de la eficiencia de mercado. La investigación intensiva de Fama y otros ha mejorado significativamente nuestra comprensión de los precios de los activos en comparación con hace tres décadas.
+
+\subsubsection{Modelo Fama-French-Carhart}
+
+El modelo de Fama-French-Carhart extiende la versión empírica del CAPM aumentando factores:
+
+\begin{equation}
+R_p = \alpha_p + R_f + \beta_{p1}RMRF + \beta_{p2}SMB + \beta_{p3}HML + \beta_{p4}WML + \varepsilon_p
+\end{equation}
+
+donde:
+\begin{itemize}
+\item $R_p$ es el rendimiento de la cartera y $R_f$ es la tasa libre de riesgo.
+\item $\alpha_p$ es el exceso de rendimiento dado el nivel de riesgo sistemático de la cartera.
+\item $\beta_p$ es la sensibilidad de la cartera a un factor dado.
+\item $RMRF$ es el rendimiento de un índice ponderado por la capitalización bursátil en exceso a la tasa libre de riesgo.
+\item $SMB$ (Small Minus Big) es la prima por el factor tamaño.
+\item $HML$ (High Minus Low) es la prima por el factor valor.
+\item $WML$ (Winners Minus Losers) es la prima por el factor impulso (momentum).
+\item $\varepsilon_p$ es un término de error que representa la porción no explicada del rendimiento de la cartera.
+\end{itemize}
+
+Este modelo sugiere que muchas de las "anomalías" observadas pueden explicarse como primas de riesgo adicionales, en lugar de violaciones de la eficiencia de mercado.
+
+\subsection{Pruebas de la Forma Fuerte}
+
+Las pruebas de la forma fuerte examinan si los inversores pueden obtener beneficios anormales negociando con información no pública.
+
+\begin{proposicion}[Ineficiencia de la Forma Fuerte]
+La mayoría de las pruebas coinciden con la opinión de que los mercados no son eficientes en su forma fuerte. De hecho, se pueden obtener beneficios cuando se utiliza información privada.
+\end{proposicion}
+
+La evidencia empírica muestra que los operadores con información privilegiada pueden obtener rendimientos anormales significativos, particularmente en transacciones clasificadas como "otras disposiciones" (other dispositions). Los estudios recientes muestran que los rendimientos anormales de estas transacciones han aumentado significativamente en períodos recientes (2020-2023), lo que sugiere que la información privilegiada sigue siendo una fuente de rendimientos anormales.
+
+\subsection{Burbujas y Caídas}
+
+\begin{definicion}[Burbuja Especulativa]
+Las \textbf{burbujas especulativas} se producen cuando los precios de mercado de un activo aumentan con el tiempo muy por encima de lo que sugerirían los cambios en los fundamentos.
+\end{definicion}
+
+Cuando las burbujas estallan, se produce una caída. Las burbujas típicamente pasan por varias fases:
+
+\begin{enumerate}
+\item \textbf{Fase de sigilo (Stealth Phase)}: Los inversores informados ("Smart Money") comienzan a invertir, y los precios aumentan gradualmente.
+
+\item \textbf{Fase de concienciación (Awareness Phase)}: Los inversores institucionales se involucran, hay un "despegue" en los precios, y la atención de los medios aumenta. Puede haber una primera venta ("First Sell off") seguida de una "trampa del oso" (Bear trap).
+
+\item \textbf{Fase de manía (Mania Phase)}: El público en general participa activamente. Los sentimientos progresan desde el entusiasmo hasta la codicia y la ilusión. En el pico, el sentimiento es de "Nuevo Paradigma", sugiriendo que las reglas tradicionales de valoración ya no aplican.
+
+\item \textbf{Fase de explosión (Blow off Phase)}: Después del pico, hay una negación inicial, seguida de una "trampa del toro" (Bull trap), luego miedo, capitulación, y finalmente un retorno a la media, a menudo por debajo del valor fundamental, asociado con la desesperación.
+\end{enumerate}
+
+Las burbujas históricas, como la burbuja tecnológica de 2000, la burbuja japonesa de 1989, y el "Nifty 50" de 1973, muestran múltiplos precio-beneficio extremadamente altos que eventualmente colapsaron.
+
+\subsection{Desempeño de la Gestión Activa}
+
+La evidencia empírica sobre el desempeño de la gestión activa es mixta:
+
+\begin{proposicion}[Desempeño de Fondos Activos]
+En promedio, los fondos de inversión activos no superan consistentemente a sus índices de referencia después de considerar las comisiones y los costes. Sin embargo, hay variación significativa entre diferentes categorías de activos y períodos de tiempo.
+\end{proposicion}
+
+La evidencia muestra que:
+\begin{itemize}
+\item Para acciones estadounidenses de gran capitalización, los fondos índice generalmente superan a los fondos activos.
+\item Para acciones extranjeras y bonos, los fondos activos a veces superan a los fondos índice.
+\item El desempeño pasado de un fondo no predice consistentemente el desempeño futuro.
+\end{itemize}
+
+\subsection{Resumen de la Evidencia Empírica}
+
+\begin{enumerate}
+\item \textbf{Forma débil}: Para los mercados de valores desarrollados, no hay mucha previsibilidad como para que esto sea una regla de negociación rentable después de tener en cuenta los costes de transacción. Los inversores no pueden obtener beneficios anormales de forma sistemática utilizando el análisis técnico. Sin embargo, pueden existir oportunidades en otras clases de activos o en mercados no desarrollados.
+
+\item \textbf{Forma semi-fuerte}: Las pruebas son contradictorias: los fondos de inversión, en promedio, no superan los índices de referencia; sin embargo, las anomalías y los estudios de eventos muestran pruebas en contra. Es importante el análisis fundamental para descubrir el valor de la información.
+
+\item \textbf{Forma fuerte}: No hay pruebas de que los mercados sean eficientes en su forma fuerte. La información privilegiada puede generar rendimientos anormales.
+\end{enumerate}
+
+\subsection{Explicaciones de las Anomalías}
+
+Continuamente se descubren nuevas anomalías en los precios. Hay dos tipos de explicaciones:
+
+\begin{enumerate}
+\item \textbf{Explicaciones estadísticas}: ¿Son rechazos del modelo de referencia (CAPM, CAPM+) para calcular los rendimientos anormales? Estas explicaciones se basan en modelos de fijación de precios de activos que incorporan factores de riesgo adicionales.
+
+\item \textbf{Explicaciones conductuales}: ¿Son violaciones de la hipótesis? Las explicaciones conductuales se basan en la psicología de los inversores.
+\end{enumerate}
+
+Por un lado, si los inversores deben ser racionales para que existan mercados eficientes, entonces todas las imperfecciones de los inversores humanos sugieren que los mercados no pueden ser eficientes. Por otro lado, si todo lo que se requiere para que los mercados sean eficientes es que los inversores no puedan superar constantemente al mercado en términos ajustados al riesgo, entonces las pruebas respaldan cierta forma de eficiencia del mercado.
+
+\section{Finanzas Conductuales}
+
+\subsection{Introducción a las Finanzas Conductuales}
+
+\begin{definicion}[Finanzas Conductuales]
+Las \textbf{finanzas conductuales} examinan el comportamiento de los inversores para entender cómo las personas toman decisiones, tanto individual como colectivamente, e introducen la psicología y otras disciplinas relacionadas en la toma de decisiones financieras.
+\end{definicion}
+
+Las finanzas conductuales cuestionan el supuesto de racionalidad en la mayoría de los modelos financieros, lo que podría afectar el comportamiento financiero y sus resultados derivados. La premisa fundamental es que los inversores no siempre se comportan de manera racional como lo predicen los modelos tradicionales basados en la teoría de la utilidad esperada.
+
+El trabajo de Robert Shiller sobre volatilidad excesiva proporcionó evidencia empírica fundamental que motivó el desarrollo de las finanzas conductuales. Shiller demostró que los precios de los activos se desvían sistemáticamente de sus valores fundamentales, mostrando una volatilidad que excede lo que puede explicarse por cambios en los flujos de efectivo esperados. Estas desviaciones pueden explicarse mediante mecanismos psicológicos, como expectativas erróneas (por ejemplo, sobreestimaciones de flujos de pago futuros) y mecanismos psicológicos como el exceso de optimismo. Sin embargo, un desafío importante para el enfoque conductual es explicar por qué inversores más racionales no eliminan estas oscilaciones excesivas de precios apostando contra inversores menos racionales. Las explicaciones conductuales sugieren que limitaciones institucionales, como restricciones crediticias, pueden impedir que los inversores racionales actúen a una escala suficiente para corregir las ineficiencias de precios.
+
+\subsection{Sesgos de la Racionalidad}
+
+Los sesgos en la racionalidad pueden clasificarse en dos categorías principales:
+
+\begin{enumerate}
+\item \textbf{Sesgos en el procesamiento de la información}: Los inversores no siempre procesan la información correctamente. Resultado: distribuciones de probabilidad incorrectas sobre los rendimientos futuros.
+
+\item \textbf{Sesgos conductuales}: Incluso cuando se les proporciona una distribución de probabilidad de los rendimientos, los inversores pueden tomar decisiones incoherentes o subóptimas. Resultado: tienen sesgos conductuales.
+\end{enumerate}
+
+\subsection{Sesgos en el Procesamiento de la Información}
+
+\subsubsection{Exceso de Confianza}
+
+\begin{definicion}[Exceso de Confianza]
+El \textbf{exceso de confianza} es la tendencia de los inversores a sobreestimar su capacidad para procesar e interpretar la información sobre un valor.
+\end{definicion}
+
+\textbf{Efectos del exceso de confianza}:
+\begin{itemize}
+\item Valoración errónea de las acciones.
+\item Negociación excesiva.
+\item Los analistas tienden a sobreestimar la exactitud de sus previsiones.
+\item Contribuye a la formación de burbujas y colapsos.
+\end{itemize}
+
+\subsubsection{Efecto Rebaño}
+
+\begin{definicion}[Efecto Rebaño]
+El \textbf{efecto rebaño} (o efecto manada) ocurre cuando los inversores operan en el mismo lado del mercado con los mismos valores, o cuando los inversores descartan su propia información privada y/o analistas, actuando en su lugar basándose en lo que otros inversores están haciendo.
+\end{definicion}
+
+\textbf{Efectos del efecto rebaño}:
+\begin{itemize}
+\item Puede generar una reacción excesiva o insuficiente a la información, dependiendo de la dirección del rebaño.
+\item Puede llevar a fenómenos de mercado como burbujas y colapsos, impulsados por el impulso.
+\end{itemize}
+
+\subsubsection{Representatividad}
+
+\begin{definicion}[Representatividad]
+La \textbf{representatividad} es la tendencia de los inversores a evaluar la nueva información y las probabilidades de los resultados basándose en la similitud con la situación actual o con una clasificación familiar.
+\end{definicion}
+
+La representatividad es similar al sesgo de disponibilidad, en el que los inversores dan una importancia excesiva a la información más accesible y fácil de recordar.
+
+\textbf{Efectos de la representatividad}:
+\begin{itemize}
+\item Reacción exagerada ante acontecimientos poco frecuentes.
+\item Clasificación errónea de eventos basándose en estereotipos en lugar de probabilidades objetivas.
+\end{itemize}
+
+\subsubsection{Conservadurismo y Sesgo hacia el Statu Quo}
+
+\begin{definicion}[Conservadurismo]
+El \textbf{conservadurismo} es la tendencia de los inversores a reaccionar lentamente ante la nueva información y seguir manteniendo sus opiniones o previsiones anteriores.
+\end{definicion}
+
+El conservadurismo está relacionado con el sesgo del statu quo, por el que los inversores no hacen nada o mantienen el statu quo en lugar de realizar cambios.
+
+\textbf{Efectos del conservadurismo}:
+\begin{itemize}
+\item Puede generar inercia en la construcción de la cartera.
+\item Sesgo local (home bias): los inversores tienden a invertir desproporcionadamente en activos domésticos en lugar de diversificar internacionalmente.
+\end{itemize}
+
+\subsubsection{Atención Limitada}
+
+\begin{definicion}[Atención Limitada]
+La \textbf{atención limitada} se refiere a que el cerebro solo puede procesar una cantidad muy limitada de información en un momento dado. El cerebro tiene una capacidad limitada para procesar información.
+\end{definicion}
+
+\textbf{Efectos de la atención limitada}:
+\begin{itemize}
+\item Reacción incompleta del mercado ante las noticias.
+\item Los precios muestran una deriva tras el anuncio, en lugar de ajustarse inmediatamente.
+\end{itemize}
+
+\subsection{Sesgos Cognitivos}
+
+\subsubsection{Aversión a las Pérdidas}
+
+\begin{definicion}[Aversión a las Pérdidas]
+La \textbf{aversión a las pérdidas} se refiere a la tendencia de las personas a rechazar las pérdidas más que a valorar las ganancias comparables.
+\end{definicion}
+
+Esto da lugar a una fuerte tendencia a evitar las pérdidas en lugar de obtener ganancias. Esto desafía las propiedades de la función de utilidad clásica, que asume que los individuos son igualmente sensibles a las ganancias y pérdidas.
+
+La teoría de la perspectiva (prospect theory) de Kahneman y Tversky proporciona un marco para entender la aversión a las pérdidas. La función de valor de la teoría de la perspectiva tiene las siguientes características:
+
+\begin{enumerate}
+\item Es cóncava para las ganancias (utilidad marginal decreciente).
+\item Es convexa para las pérdidas (sensibilidad decreciente a pérdidas mayores).
+\item Es más pronunciada para las pérdidas que para las ganancias (aversión a las pérdidas).
+\end{enumerate}
+
+La aversión a las pérdidas puede proporcionar una explicación a la anomalía de la reacción exagerada si la aversión a las pérdidas es más importante que la aversión al riesgo.
+
+\subsubsection{Efecto Dotación}
+
+\begin{definicion}[Efecto Dotación]
+El \textbf{efecto dotación} es la tendencia de las personas a valorar más un objeto que poseen que un objeto idéntico que no poseen.
+\end{definicion}
+
+\textbf{Efectos del efecto dotación}:
+\begin{itemize}
+\item Sobrevaloración de un activo que se posee.
+\item Resistencia a vender activos que se poseen, incluso cuando sería óptimo hacerlo.
+\end{itemize}
+
+\subsubsection{Contabilidad Mental}
+
+\begin{definicion}[Contabilidad Mental]
+La \textbf{contabilidad mental} se refiere a que los inversores llevan un registro de las ganancias y pérdidas de las diferentes inversiones en cuentas mentales separadas y tratan esas cuentas de forma diferente.
+\end{definicion}
+
+\textbf{Efectos de la contabilidad mental}:
+\begin{itemize}
+\item Operaciones subóptimas.
+\item Los inversores pueden tomar decisiones diferentes sobre activos equivalentes dependiendo de cómo estén categorizados mentalmente.
+\end{itemize}
+
+\subsubsection{Enmarcado, Anclaje y Ajuste}
+
+\begin{definicion}[Enmarcado]
+El \textbf{enmarcado} se refiere a que los inversores responden a las cuestiones en función de cómo se plantean estas.
+\end{definicion}
+
+\begin{definicion}[Anclaje]
+El \textbf{anclaje} es la tendencia de que el marco para interpretar y analizar la información disponible puede verse influido de manera desproporcionada por una posición inicial predeterminada o un anclaje. Los ajustes del anclaje tienden a incorporar de manera insuficiente la nueva información.
+\end{definicion}
+
+\textbf{Efectos del anclaje}:
+\begin{itemize}
+\item Las empresas que presentan resultados pueden verse afectadas por el anclaje a expectativas previas.
+\item Los inversores pueden ajustar insuficientemente sus expectativas cuando reciben nueva información.
+\end{itemize}
+
+\subsection{¿Cómo Pueden Afectar las Finanzas Conductuales a la Eficiencia del Mercado?}
+
+Los inversores pueden tomar decisiones que no se ajustan a lo previsto por los modelos basados en la racionalidad. Esto plantea la pregunta: ¿Cómo afectan los sesgos conductuales a las decisiones de inversión?
+
+\begin{enumerate}
+\item Pueden proporcionar explicaciones a las anomalías que hemos comentado anteriormente.
+
+\item Es importante tener en cuenta que la eficiencia del mercado no requiere la racionalidad individual de cada inversor; basta con que "el mercado sea racional", es decir, que las desviaciones de la racionalidad individual sean aprovechadas por otros (por ejemplo, por arbitrajistas).
+\end{enumerate}
+
+Sin embargo, ¿por qué el "mercado agregado" puede ser irracional?
+
+\begin{enumerate}
+\item \textbf{Limitaciones del arbitraje}: Los arbitrajistas tienen una capacidad de actuación limitada y, por lo tanto, son insuficientes para forzar que los precios se ajusten al valor intrínseco.
+
+\item \textbf{Restricciones de mercado}: Las restricciones al arbitraje (como restricciones a la venta en corto, costes de transacción, riesgo de modelo) pueden impedir que los arbitrajistas corrijan las ineficiencias.
+
+\item \textbf{Explicaciones conductuales}: Si suficientes inversores tienen los mismos sesgos, pueden mover los precios de manera sistemática lejos de los valores fundamentales.
+\end{enumerate}
+
+\subsection{Implicaciones para la Gestión de Carteras}
+
+Las finanzas conductuales tienen implicaciones importantes para la gestión de carteras:
+
+\begin{enumerate}
+\item \textbf{Comprensión de sesgos}: Comprender los sesgos informacionales y conductuales de los inversores debería ser tan importante como descubrir su nivel de tolerancia al riesgo.
+
+\item \textbf{Relaciones asesor-cliente}: Los factores conductuales deben tenerse en cuenta en las relaciones entre asesores y clientes.
+
+\item \textbf{Sesgos profesionales}: Todos los participantes en el mercado, incluidos los profesionales, pueden mostrar sesgos informacionales y conductuales. Por ejemplo, los analistas son propensos a la confianza excesiva, la representatividad, la disponibilidad, la ilusión de control y los sesgos retrospectivos.
+
+\item \textbf{Decisiones en comités}: Los comités suelen tener la responsabilidad de tomar decisiones de inversión y están sujetos a sesgos conductuales, como el pensamiento grupal (groupthink).
+
+\item \textbf{Explicación de anomalías}: Las finanzas conductuales tienen el potencial de explicar algunas anomalías del mercado que no pueden explicarse completamente por factores de riesgo adicionales.
+\end{enumerate}
+
+\section{Conclusiones}
+
+Este documento ha presentado un análisis riguroso de la eficiencia de mercado y las finanzas conductuales. La evidencia empírica sugiere que los mercados financieros exhiben diferentes grados de eficiencia dependiendo de la forma considerada y del contexto específico. Mientras que la forma débil parece mantenerse razonablemente bien para los mercados desarrollados, la evidencia sobre la forma semi-fuerte es mixta, y la forma fuerte claramente no se cumple.
+
+Las finanzas conductuales proporcionan un marco alternativo para entender las decisiones de inversión y las anomalías del mercado. Los sesgos cognitivos y conductuales pueden explicar por qué los precios pueden desviarse de los valores fundamentales y por qué ciertas anomalías persisten a pesar de las oportunidades de arbitraje.
+
+La comprensión de ambos enfoques—la eficiencia de mercado y las finanzas conductuales—es esencial para una gestión de carteras efectiva y para entender el funcionamiento de los mercados financieros modernos. La integración de estos conceptos permite una visión más completa y realista de cómo funcionan los mercados financieros en la práctica.
+
+\end{document}
+

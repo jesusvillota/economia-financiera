@@ -1,0 +1,941 @@
+\input{../preamble.tex}
+
+% Título del documento
+\title{\textbf{Fundamentos de Valoración de Activos}\\
+\large Parte II: Valoración de Activos Financieros y Análisis de Riesgo}
+\author{Jesus Villota Miranda\\
+CEMFI}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Valoración de Activos Financieros de Renta Variable}
+
+\subsection{Valoración de Acciones}
+
+Las acciones ordinarias representan la propiedad residual de una empresa. A diferencia de los bonos, que tienen una fecha de vencimiento y flujos de caja contractuales, las acciones no tienen vencimiento y sus flujos de caja (dividendos) son discrecionales. Sin embargo, el principio fundamental de valoración sigue siendo el mismo: el valor de un activo es igual al valor presente de los flujos de caja esperados.
+
+Existen diferentes formas de calcular el valor de una acción, pero algunas de ellas no interesan directamente al accionista:
+
+\begin{definicion}[Valor Contable]
+El \textbf{valor contable} es la valoración neta de la empresa según el balance. Corresponde al patrimonio neto (Activos - Pasivos). Es el capital aportado por los accionistas más los beneficios reinvertidos.
+\end{definicion}
+
+\begin{definicion}[Valor de Liquidación]
+El \textbf{valor de liquidación} es la tesorería obtenida si se venden todos los activos de la empresa y se paga a los acreedores. Sería la cantidad de euros por acción que una empresa podría conseguir si cierra y liquida todos sus activos.
+\end{definicion}
+
+\begin{definicion}[Valor de Mercado]
+El \textbf{valor de mercado} es el precio de la acción en el mercado secundario. Es lo que los inversores valoran esa empresa. Los inversores valoran la capacidad de la empresa de generar beneficios y las expectativas futuras de crecimiento de beneficios.
+\end{definicion}
+
+\begin{definicion}[Rentabilidad de una Acción]
+La rentabilidad obtenida en un período por una acción es la suma del dividendo recibido y la ganancia (o pérdida) de capital:
+\begin{equation}
+r_t = \frac{D_t + P_t - P_{t-1}}{P_{t-1}} = \frac{D_t}{P_{t-1}} + \frac{P_t - P_{t-1}}{P_{t-1}}
+\end{equation}
+donde $D_t$ es el dividendo recibido en el período $t$, $P_t$ es el precio de la acción al final del período $t$, y $P_{t-1}$ es el precio al inicio del período.
+\end{definicion}
+
+El primer término de la ecuación representa el \textbf{yield por dividendos} y el segundo término representa la \textbf{ganancia de capital}.
+
+\begin{itemize}[leftmargin=*, topsep=2pt]
+\item \textbf{Dividendos}: pagos periódicos a los accionistas.
+\item \textbf{Ganancia de capital}: variación del precio de la acción entre periodos.
+\end{itemize}
+
+Los accionistas pueden esperar dos tipos de flujos de caja: el cobro de dividendos y las ganancias de capital. El dividendo de una empresa se puede calcular como:
+\begin{equation}
+\text{DPA} = \text{BPA} \times \text{Pay Out}
+\end{equation}
+donde $\text{DPA}$ es el dividendo por acción (Dividend Per Share), $\text{BPA}$ es el beneficio por acción (Earnings Per Share), y $\text{Pay Out}$ es la proporción de beneficios distribuidos como dividendos (payout ratio).
+
+\begin{teorema}[Fórmula General de Valoración de Acciones]
+El valor actual de una acción $P_0$ es igual al valor presente de todos los dividendos futuros esperados más el valor presente del precio de venta esperado:
+\begin{equation}
+P_0 = \sum_{j=1}^{N} \frac{D_j}{(1+r)^j} + \frac{P_N}{(1+r)^N}
+\end{equation}
+donde $D_j$ es el dividendo esperado en el período $j$, $P_N$ es el precio esperado de venta en el período $N$, y $r$ es la rentabilidad esperada requerida (tasa de descuento) que refleja el riesgo de la acción.
+\end{teorema}
+
+\begin{proof}
+La demostración se basa en el principio de valoración por descuento de flujos de caja. Si un inversor compra una acción en $t=0$ y la vende en $t=N$, el valor que está dispuesto a pagar es el valor presente de los dividendos recibidos durante la tenencia más el valor presente del precio de venta.
+
+Para $t=1$: el valor presente del dividendo $D_1$ es $\frac{D_1}{(1+r)}$.
+Para $t=2$: el valor presente del dividendo $D_2$ es $\frac{D_2}{(1+r)^2}$.
+...
+Para $t=N$: el valor presente del dividendo $D_N$ y el precio $P_N$ es $\frac{D_N + P_N}{(1+r)^N}$.
+
+Sumando todos los flujos de caja descontados, obtenemos la fórmula del teorema.
+\end{proof}
+
+Esta fórmula general es válida para cualquier horizonte de inversión $N$. Sin embargo, dado que las acciones no tienen fecha de vencimiento, podemos extender el horizonte al infinito.
+
+\begin{teorema}[Valoración de Acciones con Horizonte Infinito]
+El valor actual de una acción cuando el horizonte de inversión tiende al infinito es:
+\begin{equation}
+P_0 = \sum_{j=1}^{\infty} \frac{D_j}{(1+r)^j}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Tomando el límite cuando $N \to \infty$ en la fórmula general:
+$$P_0 = \lim_{N \to \infty} \left[\sum_{j=1}^{N} \frac{D_j}{(1+r)^j} + \frac{P_N}{(1+r)^N}\right]$$
+
+Si $r > 0$, el término $\frac{P_N}{(1+r)^N} \to 0$ cuando $N \to \infty$ (ver Teorema en Apéndice A.3 de \textcolor{blue}{Notes \#1}). Además, el precio de venta $P_N$ en el infinito puede considerarse como el valor presente de todos los dividendos desde $N+1$ en adelante, por lo que la fórmula se simplifica a la suma infinita de dividendos descontados.
+\end{proof}
+
+\begin{ejemplo}[Valoración de Acciones de REPSOL]
+Calcular el precio actual que deberían tener las acciones de la empresa REPSOL si se esperan dividendos de €2.00 en el primer año y €2.50 en el segundo año, y el precio estimado de venta al final del segundo año es de €11.50. La rentabilidad esperada requerida para acciones de riesgo similar es del 8.8\%.
+
+\textbf{Solución:}
+\begin{itemize}
+\item $D_1 = 2.00$ euros
+\item $D_2 = 2.50$ euros
+\item $P_2 = 11.50$ euros
+\item $r = 0.088$
+\end{itemize}
+
+Aplicando la fórmula de valoración:
+\begin{align*}
+P_0 &= \frac{D_1}{(1+r)} + \frac{D_2 + P_2}{(1+r)^2} \\
+&= \frac{2.00}{1.088} + \frac{2.50 + 11.50}{(1.088)^2} \\
+&= \frac{2.00}{1.088} + \frac{14.00}{1.1845} \\
+&= 1.838 + 11.819 \\
+&= \text{€}13.66
+\end{align*}
+
+Por tanto, el precio actual justo de las acciones de REPSOL sería €13.66.
+\end{ejemplo}
+
+Para simplificar el cálculo del valor de una acción, es útil hacer supuestos sobre el patrón de crecimiento de los dividendos. El modelo más común es el modelo de crecimiento constante de Gordon.
+
+\begin{definicion}[Modelo de Crecimiento de Gordon]
+El \textbf{modelo de crecimiento de Gordon} (también conocido como modelo de crecimiento constante de dividendos) supone que los dividendos crecen a una tasa constante $g$ indefinidamente, donde $g < r$.
+\end{definicion}
+
+\begin{teorema}[Fórmula de Gordon]
+Si los dividendos crecen a una tasa constante $g$ indefinidamente y $g < r$, entonces el valor de la acción es:
+\begin{equation}
+P_0 = \frac{D_1}{r - g}
+\end{equation}
+donde $D_1$ es el dividendo esperado en el próximo período, $r$ es la tasa de descuento requerida, y $g$ es la tasa de crecimiento constante de los dividendos.
+\end{teorema}
+
+\begin{proof}
+Si los dividendos crecen a una tasa constante $g$, entonces $D_t = D_1(1+g)^{t-1}$ para $t = 1, 2, \ldots$.
+
+Sustituyendo en la fórmula de valoración infinita:
+$$P_0 = \sum_{t=1}^{\infty} \frac{D_1(1+g)^{t-1}}{(1+r)^t} = \frac{D_1}{1+r} \sum_{t=1}^{\infty} \left(\frac{1+g}{1+r}\right)^{t-1}$$
+
+Sea $x = \frac{1+g}{1+r}$. Como $g < r$, tenemos $0 < x < 1$. Utilizando la fórmula de la serie geométrica infinita (ver Apéndice A.1 de Notes \#1):
+$$\sum_{t=1}^{\infty} x^{t-1} = \sum_{k=0}^{\infty} x^k = \frac{1}{1-x}$$
+
+Por tanto:
+$$P_0 = \frac{D_1}{1+r} \cdot \frac{1}{1 - \frac{1+g}{1+r}} = \frac{D_1}{1+r} \cdot \frac{1+r}{(1+r) - (1+g)} = \frac{D_1}{r - g}$$
+\end{proof}
+
+\begin{proposicion}[Caso Especial: Dividendos Constantes]
+Si los dividendos no crecen ($g = 0$), el valor de la acción se reduce a una perpetuidad:
+\begin{equation}
+P_0 = \frac{D}{r}
+\end{equation}
+donde $D$ es el dividendo constante por período.
+\end{proposicion}
+
+\begin{proof}
+Sustituyendo $g = 0$ en la fórmula de Gordon, obtenemos inmediatamente $P_0 = \frac{D_1}{r}$. Si $D_1 = D$ (constante), entonces $P_0 = \frac{D}{r}$, que es precisamente la fórmula del valor presente de una perpetuidad (ver Sección 2.2 de \textcolor{blue}{Notes \#1}).
+\end{proof}
+
+\subsection{Valoración de Empresas}
+
+La valoración de empresas completas requiere considerar todos los flujos de caja disponibles para todos los proveedores de capital (accionistas y acreedores). A diferencia de la valoración de acciones, que considera solo los flujos para accionistas, la valoración de empresas considera el flujo de caja libre total.
+
+\subsubsection{Estados financieros básicos}
+\textbf{Balance}: muestra la situación financiera en un momento del tiempo (activos, pasivos y patrimonio). Resume lo que la empresa tiene y debe, y permite derivar magnitudes como el capital de trabajo.
+
+La estructura del balance se organiza según la ecuación fundamental de la contabilidad: $\text{Activos} = \text{Pasivos} + \text{Patrimonio Neto}$.
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tabular}{p{7cm}|p{7cm}}
+\toprule
+\multicolumn{1}{c|}{\textbf{ACTIVO (Usos de Fondos)}} & \multicolumn{1}{c}{\textbf{PASIVO Y PATRIMONIO (Fuentes)}} \\
+\midrule
+\textbf{Activo No Corriente (ANC)} & \textbf{Patrimonio Neto (PN)} \\
+\quad • Inmovilizado intangible & \quad • Capital social \\
+\quad • Inmovilizado material & \quad • Reservas \\
+\quad • Inversiones financieras a L/P & \quad • Resultados acumulados \\
+& \\
+\textbf{Activo Corriente (AC)} & \textbf{Pasivo No Corriente (PNC)} \\
+\quad • Existencias (inventario) & \quad • Deuda a largo plazo \\
+\quad • Cuentas por cobrar & \quad • Bonos y obligaciones \\
+\quad • Inversiones financieras a C/P & \quad • Provisiones a largo plazo \\
+\quad • Efectivo y equivalentes & \\
+& \textbf{Pasivo Corriente (PC)} \\
+& \quad • Deuda a corto plazo \\
+& \quad • Cuentas por pagar \\
+& \quad • Impuestos pendientes \\
+\midrule
+\textbf{TOTAL ACTIVO} & \textbf{TOTAL PASIVO + PATRIMONIO} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textit{Nota:} El activo se ordena de menor a mayor liquidez (facilidad de conversión en efectivo), mientras que el pasivo y patrimonio se ordenan de menor a mayor exigibilidad (urgencia de pago). Los activos representan lo que la empresa tiene y cómo utiliza sus recursos, mientras que los pasivos y patrimonio neto representan de dónde proviene el financiamiento.
+
+\vspace{0.5cm}
+
+\textbf{Cuenta de Pérdidas y Ganancias (PyG)}: resume ingresos y gastos de un periodo y mide el desempeño operativo; aquí se encuentran magnitudes como el \textit{EBIT} y la carga fiscal.
+
+La estructura jerárquica de la cuenta de pérdidas y ganancias sigue el siguiente flujo de cálculo:
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tabular}{lp{8cm}}
+\toprule
+\textbf{Concepto} & \textbf{Descripción} \\
+\midrule
+\textbf{Ventas o Ingresos} & Ingresos totales por ventas de productos/servicios \\
+\quad $-$ Costo de Ventas (COGS) & Costos directos de producción \\
+\midrule
+\textbf{= MARGEN BRUTO} & Diferencia entre ingresos y costos directos \\
+\quad $-$ Otros gastos variables & Gastos variables adicionales \\
+\midrule
+\textbf{= MARGEN DE CONTRIBUCIÓN} & Contribución a cubrir gastos fijos \\
+\quad $-$ Gastos fijos (excepto Dep.) & Gastos operativos fijos \\
+\midrule
+\textbf{= EBITDA} & \textit{Earnings Before Interest, Taxes,} \\
+& \textit{Depreciation \& Amortization} \\
+\quad $-$ Depreciaciones & Pérdida de valor de activos \\
+\midrule
+\textbf{= EBIT} & \textit{Earnings Before Interest and Taxes} \\
+& (Beneficio operativo) \\
+\quad $-$ Intereses & Gastos/Ingresos financieros \\
+\quad $-$ Partidas extraordinarias & Ingresos/Gastos no recurrentes \\
+\midrule
+\textbf{= EBT} & \textit{Earnings Before Taxes} \\
+\quad $-$ Impuestos & Carga fiscal ($T_c$) \\
+\midrule
+\textbf{= EAT} & \textit{Earnings After Taxes} (Beneficio neto) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Estado de Flujos de Efectivo (EFE)}: clasifica entradas y salidas de efectivo en actividades de explotación, inversión y financiación; aquí se identifican \textit{Capex} y, junto con el balance, el cambio en capital de trabajo $\Delta \text{WC}$.
+
+\begin{definicion}[Flujo de Caja Libre para la Empresa (FCFF)]
+El \textbf{Flujo de Caja Libre para la Empresa} (FCFF, \textit{Free Cash Flow to the Firm}) es el flujo de efectivo disponible para todos los proveedores de capital (accionistas y acreedores) después de cubrir todos los gastos operativos, impuestos, inversiones en capital de trabajo e inversiones en activos de capital. Se calcula como:
+\begin{equation}
+\text{FCFF} = \text{EBIT}(1 - T_c) + \text{Dep} - \text{Capex} - \Delta \text{WC}
+\end{equation}
+donde:
+\begin{itemize}
+\item $\text{EBIT}$ es el beneficio antes de intereses e impuestos
+\item $T_c$ es la tasa impositiva corporativa
+\item $\text{Dep}$ es la depreciación y amortización
+\item $\text{Capex}$ son las inversiones en capital (capital expenditures)
+\item $\Delta \text{WC}$ es el cambio en el capital de trabajo
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Flujo de Caja Libre para el Capital (FCFE)]
+El \textbf{Flujo de Caja Libre para el Capital} (FCFE, \textit{Free Cash Flow to Equity}) es el flujo de efectivo disponible exclusivamente para los accionistas después de pagar todos los gastos, impuestos, inversiones y deuda. Se calcula como:
+\begin{equation}
+\text{FCFE} = \text{Net Income} + \text{Dep} - \text{Capex} - \Delta \text{WC} + \Delta \text{Deuda Neta}
+\end{equation}
+donde $\Delta \text{Deuda Neta}$ es el cambio en la deuda neta (nueva deuda emitida menos reembolsos de deuda).
+\end{definicion}
+
+\begin{ejemplo}[Cálculo de FCFF y FCFE desde estados]
+Considere la siguiente información (en millones) para los años 1 y 2:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+ & Año 1 & Año 2 \\
+\midrule
+EBIT & 120 & 140 \\
+$T_c$ & 25\% & 25\% \\
+Depreciación (Dep) & 30 & 32 \\
+Capex & 50 & 60 \\
+$\Delta$WC & 10 & 8 \\
+Deuda neta (variación) & 5 & -2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Recordatorio de fórmulas: $\text{FCFF} = \text{EBIT}(1 - T_c) + \text{Dep} - \text{Capex} - \Delta \text{WC}$,\; $\text{FCFE} = \text{Net~Income} + \text{Dep} - \text{Capex} - \Delta \text{WC} + \Delta \text{Deuda Neta}$.
+
+Calcule $\text{FCFF}_2$ y $\text{FCFE}_2$.
+\end{ejemplo}
+
+\begin{teorema}[Valoración de Empresas mediante FCFF]
+El valor de la empresa $V$ (valor de mercado de todo el capital: equity + deuda) se calcula descontando los FCFF futuros al WACC:
+\begin{equation}
+V = \sum_{t=1}^{N} \frac{\text{FCFF}_t}{(1 + \text{WACC})^t} + \frac{\text{Valor Terminal}_N}{(1 + \text{WACC})^N}
+\end{equation}
+donde el valor terminal captura el valor de los FCFF desde el período $N+1$ en adelante.
+\end{teorema}
+
+\begin{definicion}[Costo Promedio Ponderado de Capital (WACC)]
+El \textbf{Costo Promedio Ponderado de Capital} (WACC) es el costo promedio que tiene una empresa por financiarse, considerando tanto el capital propio como la deuda, ponderados según su proporción en la estructura de capital:
+\begin{equation}
+\text{WACC} = \frac{E}{V} \cdot R_e + \frac{D}{V} \cdot R_d (1 - T_c)
+\end{equation}
+Donde $\frac{E}{V}$ y $\frac{D}{V}$ representan, respectivamente, las \textit{proporciones} de financiación aportadas por el capital propio y la deuda, y satisfacen $\frac{E}{V} + \frac{D}{V} = 1$.
+donde:
+\begin{itemize}
+\item $E$ es el valor de mercado del capital propio (equity)
+\item $D$ es el valor de mercado de la deuda (debt)
+\item $V = E + D$ es el valor total de mercado de la financiación
+\item $R_e$ es el coste del capital propio (calculado mediante el CAPM: $R_e = r_f + \beta \cdot (r_m - r_f)$)
+\item $R_d$ es el coste de la deuda
+\item $T_c$ es la tasa impositiva corporativa
+\end{itemize}
+\end{definicion}
+
+\begin{definicion}[Valor Terminal]
+El \textbf{valor terminal} es el valor presente de todos los flujos de caja esperados desde un período futuro $N+1$ en adelante. Si se asume que los FCFF crecen a una tasa constante $g$ indefinidamente, el valor terminal en el período $N$ es:
+\begin{equation}
+\text{Valor Terminal}_N = \frac{\text{FCFF}_{N+1}}{\text{WACC} - g} = \frac{\text{FCFF}_N (1 + g)}{\text{WACC} - g}
+\end{equation}
+donde $g < \text{WACC}$.
+\end{definicion}
+
+\begin{proof}
+El valor terminal es el valor presente de una perpetuidad creciente que comienza en el período $N+1$. Aplicando la fórmula del valor presente de una perpetuidad creciente (ver Sección 2.2 de \textcolor{blue}{Notes \#1}):
+$$\text{Valor Terminal}_N = \frac{\text{FCFF}_{N+1}}{\text{WACC} - g}$$
+
+Como $\text{FCFF}_{N+1} = \text{FCFF}_N (1 + g)$, obtenemos la segunda igualdad.
+\end{proof}
+
+\begin{teorema}[Valoración de Equity mediante FCFE]
+El valor del capital propio (equity) $E$ se calcula descontando los FCFE futuros al coste del capital propio $R_e$:
+\begin{equation}
+E = \sum_{t=1}^{N} \frac{\text{FCFE}_t}{(1 + R_e)^t} + \frac{\text{Valor Terminal Equity}_N}{(1 + R_e)^N}
+\end{equation}
+donde el valor terminal del equity se calcula de forma similar al valor terminal de la empresa, pero usando FCFE y $R_e$.
+\end{teorema}
+
+\textbf{Nota:} Los flujos \textit{FCFE} pertenecen exclusivamente a los accionistas; por tanto, la tasa de descuento adecuada es $R_e$ (coste del capital propio), no el WACC.
+
+\begin{proof}
+La demostración es análoga a la del teorema de valoración mediante FCFF, pero considerando solo los flujos disponibles para accionistas y descontando al coste del capital propio, que refleja el riesgo específico del equity.
+\end{proof}
+
+\section{Rentabilidad y Riesgo de Activos Financieros}
+
+\subsection{Conceptos Fundamentales}
+
+La rentabilidad y el riesgo son los dos conceptos fundamentales en la valoración de activos financieros. Los inversores requieren una compensación (prima de riesgo) por asumir riesgo adicional, y esta relación es la base de la teoría moderna de carteras.
+
+\begin{definicion}[Rentabilidad de un Activo Financiero]
+La \textbf{rentabilidad} de un activo financiero $i$ en el período $[t-1, t]$ se define como:
+\begin{equation}
+r_{i,t} = \frac{P_{i,t} + D_{i,t} - P_{i,t-1}}{P_{i,t-1}}
+\end{equation}
+donde $P_{i,t}$ es el precio del activo $i$ al final del período $t$, $D_{i,t}$ son los ingresos (dividendos, cupones, etc.) recibidos durante el período, y $P_{i,t-1}$ es el precio al inicio del período.
+\end{definicion}
+
+\begin{definicion}[Rentabilidad Esperada]
+La \textbf{rentabilidad esperada} de un activo $i$ es el valor esperado de su distribución de rentabilidades. Si conocemos la distribución de probabilidades, se calcula como:
+\begin{equation}
+\E[r_i] = \sum_{s=1}^{S} p_s \cdot r_{i,s}
+\end{equation}
+donde $S$ es el número total de escenarios posibles, $p_s$ es la probabilidad del escenario $s$ ($s = 1, 2, \ldots, S$), $r_{i,s}$ es la rentabilidad del activo $i$ en el escenario $s$, y $\sum_{s=1}^{S} p_s = 1$.
+\end{definicion}
+
+Si no conocemos la distribución de probabilidades pero tenemos datos históricos, estimamos la rentabilidad esperada como la media muestral:
+\begin{equation}
+\bar{r}_i = \frac{1}{T} \sum_{t=1}^{T} r_{i,t}
+\end{equation}
+donde $T$ es el número de observaciones históricas.
+
+\begin{ejemplo}[Cálculo de Rentabilidad Esperada con Probabilidades]
+Suponga que un analista financiero desea calcular la rentabilidad esperada de unas acciones que darán una rentabilidad del 1.5\% con una probabilidad del 15\%, o una rentabilidad del 5\% con una probabilidad del 25\%, y 4\% en el resto de situaciones.
+
+\textbf{Solución:}
+
+Primero, determinamos la probabilidad del tercer escenario. Si $p_1 = 0.15$ (15\%) y $p_2 = 0.25$ (25\%), entonces $p_3 = 1 - 0.15 - 0.25 = 0.60$ (60\%).
+
+Aplicando la fórmula de rentabilidad esperada:
+\begin{align*}
+\E[r] &= \sum_{s=1}^{3} p_s \cdot r_s \\
+&= 0.15 \times 0.015 + 0.25 \times 0.05 + 0.60 \times 0.04 \\
+&= 0.00225 + 0.0125 + 0.024 \\
+&= 0.03875 = 3.875\%
+\end{align*}
+
+Por tanto, la rentabilidad esperada de estas acciones es del 3.875\%.
+\end{ejemplo}
+
+\begin{definicion}[Riesgo de un Activo]
+El \textbf{riesgo} de un activo se mide mediante la varianza $\V(r_i)$ o la desviación estándar $\sigma_i = \sqrt{\V(r_i)}$ de sus rentabilidades. La varianza se calcula como:
+\begin{equation}
+\V(r_i) = \E[(r_i - \E[r_i])^2] = \E[r_i^2] - (\E[r_i])^2
+\end{equation}
+\end{definicion}
+
+\begin{teorema}[Varianza de Rentabilidades]
+Para una distribución discreta de rentabilidades con probabilidades $p_s$ ($s = 1, 2, \ldots, S$):
+\begin{equation}
+\V(r_i) = \sum_{s=1}^{S} p_s (r_{i,s} - \E[r_i])^2
+\end{equation}
+O, equivalentemente:
+\begin{equation}
+\V(r_i) = \E[r_i^2] - (\E[r_i])^2 = \sum_{s=1}^{S} p_s r_{i,s}^2 - \left(\sum_{s=1}^{S} p_s r_{i,s}\right)^2
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Por definición de varianza:
+$$\V(r_i) = \E[(r_i - \E[r_i])^2] = \sum_{s=1}^{S} p_s (r_{i,s} - \E[r_i])^2$$
+
+Para obtener la fórmula equivalente, desarrollamos el cuadrado:
+\begin{align*}
+\V(r_i) &= \sum_{s=1}^{S} p_s (r_{i,s} - \E[r_i])^2 \\
+&= \sum_{s=1}^{S} p_s (r_{i,s}^2 - 2r_{i,s}\E[r_i] + (\E[r_i])^2) \\
+&= \sum_{s=1}^{S} p_s r_{i,s}^2 - 2\E[r_i]\sum_{s=1}^{S} p_s r_{i,s} + (\E[r_i])^2 \sum_{s=1}^{S} p_s \\
+&= \sum_{s=1}^{S} p_s r_{i,s}^2 - 2\E[r_i] \cdot \E[r_i] + (\E[r_i])^2 \cdot 1 \\
+&= \sum_{s=1}^{S} p_s r_{i,s}^2 - 2(\E[r_i])^2 + (\E[r_i])^2 \\
+&= \sum_{s=1}^{S} p_s r_{i,s}^2 - (\E[r_i])^2 \\
+&= \E[r_i^2] - (\E[r_i])^2
+\end{align*}
+donde se utiliza que $\sum_{s=1}^{S} p_s r_{i,s} = \E[r_i]$ por definición de esperanza, y que $\sum_{s=1}^{S} p_s = 1$.
+\end{proof}
+
+Para datos históricos, la varianza muestral se estima como:
+\begin{equation}
+s_i^2 = \frac{1}{T-1} \sum_{t=1}^{T} (r_{i,t} - \bar{r}_i)^2
+\end{equation}
+
+\begin{proposicion}[Prima de Riesgo]
+Los inversores aversos al riesgo requieren una \textbf{prima de riesgo} adicional sobre la rentabilidad libre de riesgo para compensar la variabilidad de los resultados. La prima de riesgo del activo $i$ es:
+\begin{equation}
+\text{Prima}_i = \E[r_i] - r_f
+\end{equation}
+donde $r_f$ es la rentabilidad libre de riesgo.
+\end{proposicion}
+
+\textbf{Nota histórica:} La evidencia histórica (por ejemplo, series de EE.UU. 1926--2001 reportadas en Bodie, Kane y Marcus, 2004) muestra primas de riesgo de renta variable positivas a largo plazo, coherentes con la aversión al riesgo de los inversores.
+
+\begin{ejemplo}[Cálculo de Rentabilidad y Riesgo Histórico]
+Determine la rentabilidad y riesgo histórico obtenidos por las acciones de la empresa URARSA, a partir de los siguientes datos mensuales:
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+Mes & Precio Inicial & Precio Final & Dividendo \\
+\midrule
+1 & €100.00 & €102.00 & €0.50 \\
+2 & €102.00 & €98.00 & €0.50 \\
+3 & €98.00 & €105.00 & €0.50 \\
+4 & €105.00 & €107.00 & €0.50 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Solución:}
+
+Primero calculamos las rentabilidades mensuales $R_t$:
+\begin{align*}
+R_1 &= \frac{102.00 + 0.50 - 100.00}{100.00} = 0.025 = 2.5\% \\
+R_2 &= \frac{98.00 + 0.50 - 102.00}{102.00} = -0.0343 = -3.43\% \\
+R_3 &= \frac{105.00 + 0.50 - 98.00}{98.00} = 0.0765 = 7.65\% \\
+R_4 &= \frac{107.00 + 0.50 - 105.00}{105.00} = 0.0238 = 2.38\%
+\end{align*}
+
+Rentabilidad media histórica:
+$$\bar{R} = \frac{1}{4}(0.025 - 0.0343 + 0.0765 + 0.0238) = \frac{0.0910}{4} = 0.02275 = 2.275\% \text{ mensual}$$
+
+Varianza muestral:
+\begin{align*}
+s^2 &= \frac{1}{3}[(0.025 - 0.02275)^2 + (-0.0343 - 0.02275)^2 \\
+&\quad + (0.0765 - 0.02275)^2 + (0.0238 - 0.02275)^2] \\
+&= \frac{1}{3}[(0.00225)^2 + (-0.05705)^2 + (0.05375)^2 + (0.00105)^2] \\
+&= \frac{1}{3}[0.000005 + 0.003255 + 0.002891 + 0.000001] \\
+&= \frac{0.006152}{3} = 0.002051
+\end{align*}
+
+Desviación estándar: $s = \sqrt{0.002051} = 0.0453 = 4.53\%$ mensual
+
+Anualizando (asumiendo independencia mensual): $\sigma_{\text{anual}} = 0.0453 \times \sqrt{12} = 0.157 = 15.7\%$ anual.
+\end{ejemplo}
+
+\subsection{Rentabilidad y Riesgo de Carteras}
+
+Los inversores generalmente poseen múltiples activos, formando una cartera. La rentabilidad y el riesgo de una cartera no son simplemente promedios ponderados de los activos individuales, debido al efecto de la diversificación.
+
+\begin{definicion}[Cartera de Activos]
+Una \textbf{cartera} $p$ es una combinación de $N$ activos con pesos $w_1, w_2, \ldots, w_N$, donde $\sum_{i=1}^{N} w_i = 1$ y $w_i \geq 0$ (asumiendo ventas en corto no permitidas). El peso $w_i$ representa la proporción del capital total invertido en el activo $i$.
+\end{definicion}
+
+\begin{teorema}[Rentabilidad Esperada de una Cartera]
+La rentabilidad esperada de una cartera es la suma ponderada de las rentabilidades esperadas de los activos individuales:
+\begin{equation}
+\E[r_p] = \sum_{i=1}^{N} w_i \cdot \E[r_i]
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+La rentabilidad de la cartera es $r_p = \sum_{i=1}^{N} w_i r_i$. Tomando el valor esperado:
+$$\E[r_p] = \E\left[\sum_{i=1}^{N} w_i r_i\right] = \sum_{i=1}^{N} w_i \E[r_i]$$
+donde la última igualdad se debe a la linealidad del operador esperanza.
+\end{proof}
+
+Para rentabilidades históricas, la rentabilidad histórica de la cartera es:
+\begin{equation}
+\bar{r}_p = \sum_{i=1}^{N} w_i \cdot \bar{r}_i
+\end{equation}
+
+\begin{definicion}[Covarianza entre Dos Activos]
+La \textbf{covarianza} entre las rentabilidades de dos activos $i$ y $j$ mide cómo se mueven conjuntamente sus rentabilidades:
+\begin{equation}
+\Cov(r_i, r_j) = \E[(r_i - \E[r_i])(r_j - \E[r_j])] = \E[r_i r_j] - \E[r_i]\E[r_j]
+\end{equation}
+\end{definicion}
+
+Para datos históricos, la covarianza muestral se estima como:
+\begin{equation}
+s_{ij} = \frac{1}{T-1} \sum_{t=1}^{T} (r_{i,t} - \bar{r}_i)(r_{j,t} - \bar{r}_j)
+\end{equation}
+
+\begin{definicion}[Coeficiente de Correlación]
+El \textbf{coeficiente de correlación} entre dos activos $i$ y $j$ es una medida normalizada de la covarianza:
+\begin{equation}
+\rho_{ij} = \frac{\Cov(r_i, r_j)}{\sigma_i \sigma_j}
+\end{equation}
+donde $-1 \leq \rho_{ij} \leq 1$.
+\end{definicion}
+
+\begin{proposicion}[Propiedades del Coeficiente de Correlación]
+El coeficiente de correlación satisface:
+\begin{enumerate}
+\item $\rho_{ij} = 1$ si y solo si $r_i$ y $r_j$ están perfectamente correlacionados positivamente
+\item $\rho_{ij} = -1$ si y solo si $r_i$ y $r_j$ están perfectamente correlacionados negativamente
+\item $\rho_{ij} = 0$ si y solo si $r_i$ y $r_j$ no están correlacionados (independencia lineal)
+\item $\rho_{ij} = \rho_{ji}$ (simetría)
+\end{enumerate}
+\end{proposicion}
+
+\begin{teorema}[Varianza de una Cartera de Dos Activos]
+La varianza de una cartera formada por dos activos $A$ y $B$ con pesos $w_A$ y $w_B$ es:
+\begin{equation}
+\sigma_p^2 = w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \Cov(r_A, r_B)
+\end{equation}
+o equivalentemente:
+\begin{equation}
+\sigma_p^2 = w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \rho_{AB} \sigma_A \sigma_B
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+La rentabilidad de la cartera es $r_p = w_A r_A + w_B r_B$. La varianza es:
+\begin{align*}
+\sigma_p^2 &= \V(w_A r_A + w_B r_B) \\
+&= \V(w_A r_A) + \V(w_B r_B) + 2\Cov(w_A r_A, w_B r_B) \\
+&= w_A^2 \V(r_A) + w_B^2 \V(r_B) + 2 w_A w_B \Cov(r_A, r_B) \\
+&= w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \Cov(r_A, r_B)
+\end{align*}
+
+Sustituyendo $\Cov(r_A, r_B) = \rho_{AB} \sigma_A \sigma_B$, obtenemos la segunda expresión.
+\end{proof}
+
+\begin{teorema}[Varianza de una Cartera de N Activos]
+La varianza de una cartera formada por $N$ activos es:
+\begin{equation}
+\sigma_p^2 = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \Cov(r_i, r_j) = \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \rho_{ij} \sigma_i \sigma_j
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+La rentabilidad de la cartera es $r_p = \sum_{i=1}^{N} w_i r_i$. La varianza es:
+\begin{align*}
+\sigma_p^2 &= \V\left(\sum_{i=1}^{N} w_i r_i\right) \\
+&= \sum_{i=1}^{N} \sum_{j=1}^{N} w_i w_j \Cov(r_i, r_j) \\
+&= \sum_{i=1}^{N} w_i^2 \sigma_i^2 + \sum_{i=1}^{N} \sum_{j \neq i} w_i w_j \Cov(r_i, r_j)
+\end{align*}
+donde el primer término representa la varianza de cada activo individual y el segundo término representa las covarianzas entre pares de activos.
+\end{proof}
+
+\begin{ejemplo}[Cartera Equiponderada: ACCIONA y BBVA]
+Suponga que tenemos una cartera equiponderada formada por las acciones de ACCIONA y BBVA. Los datos históricos mensuales del último año son:
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+& ACCIONA & BBVA \\
+\midrule
+Rentabilidad media mensual & 1.2\% & 0.8\% \\
+Desviación estándar mensual & 5.0\% & 4.0\% \\
+Covarianza & & 0.0012 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Calcule la rentabilidad esperada y el riesgo de la cartera.
+
+\textbf{Solución:}
+
+Como la cartera es equiponderada: $w_A = w_B = 0.5$.
+
+Rentabilidad esperada de la cartera:
+$$\E[r_p] = 0.5 \times 0.012 + 0.5 \times 0.008 = 0.006 + 0.004 = 0.01 = 1.0\% \text{ mensual}$$
+
+Varianza de la cartera:
+\begin{align*}
+\sigma_p^2 &= (0.5)^2 (0.05)^2 + (0.5)^2 (0.04)^2 + 2 \times 0.5 \times 0.5 \times 0.0012 \\
+&= 0.25 \times 0.0025 + 0.25 \times 0.0016 + 0.0003 \\
+&= 0.000625 + 0.0004 + 0.0003 \\
+&= 0.001325
+\end{align*}
+
+Desviación estándar: $\sigma_p = \sqrt{0.001325} = 0.0364 = 3.64\%$ mensual
+
+\textbf{Observación:} La desviación estándar de la cartera (3.64\%) es menor que la desviación estándar de cualquiera de los activos individuales (5.0\% y 4.0\%). Esto demuestra el efecto de diversificación.
+\end{ejemplo}
+
+\subsection{Diversificación y Componentes del Riesgo}
+
+Uno de los hallazgos más importantes de la teoría moderna de carteras es que la diversificación puede reducir el riesgo sin reducir la rentabilidad esperada. Este efecto depende críticamente de las correlaciones entre los activos.
+
+\begin{definicion}[Riesgo Específico]
+El \textbf{riesgo específico} (también llamado riesgo idiosincrático, riesgo único o riesgo no sistemático) es la parte del riesgo de un activo que puede eliminarse mediante diversificación. Se debe a factores únicos de cada activo.
+\end{definicion}
+
+\begin{definicion}[Riesgo Sistemático]
+El \textbf{riesgo sistemático} (también llamado riesgo de mercado o riesgo no diversificable) es la parte del riesgo que no puede eliminarse mediante diversificación. Se debe a factores comunes que afectan a todos los activos del mercado.
+\end{definicion}
+
+\begin{teorema}[Descomposición del Riesgo Total]
+El riesgo total de un activo puede descomponerse en riesgo específico y riesgo sistemático:
+\begin{equation}
+\sigma_i^2 = \sigma_{\text{específico},i}^2 + \sigma_{\text{sistemático},i}^2
+\end{equation}
+donde $\sigma_{\text{sistemático},i}^2 = \beta_i^2 \sigma_M^2$ y $\sigma_{\text{específico},i}^2 = \V(\varepsilon_i)$, siendo $\beta_i$ el coeficiente beta del activo $i$ y $\sigma_M^2$ la varianza del mercado.
+\end{teorema}
+
+\begin{proof}
+La demostración se basa en el \textbf{modelo de mercado} (también conocido como modelo de índice único), que establece que la rentabilidad de un activo $i$ puede expresarse como:
+$$r_i = \alpha_i + \beta_i r_M + \varepsilon_i$$
+donde:
+\begin{itemize}
+\item $r_M$ es la rentabilidad del mercado
+\item $\beta_i$ es el coeficiente beta que mide la sensibilidad del activo a los movimientos del mercado
+\item $\varepsilon_i$ es el término de error (riesgo específico) que captura los factores únicos del activo
+\item Se asume que $\Cov(r_M, \varepsilon_i) = 0$ (el riesgo específico no está correlacionado con el mercado)
+\end{itemize}
+
+Aplicando la fórmula de varianza a esta expresión:
+\begin{align*}
+\sigma_i^2 &= \V(r_i) = \V(\alpha_i + \beta_i r_M + \varepsilon_i)
+\end{align*}
+
+Como $\alpha_i$ es una constante, $\V(\alpha_i) = 0$. Además, utilizando las propiedades de la varianza y la asunción de que $\Cov(r_M, \varepsilon_i) = 0$:
+\begin{align*}
+\sigma_i^2 &= \V(\beta_i r_M) + \V(\varepsilon_i) + 2\Cov(\beta_i r_M, \varepsilon_i) \\
+&= \beta_i^2 \V(r_M) + \V(\varepsilon_i) + 2\beta_i \Cov(r_M, \varepsilon_i) \\
+&= \beta_i^2 \sigma_M^2 + \V(\varepsilon_i) + 0 \\
+&= \beta_i^2 \sigma_M^2 + \sigma_{\varepsilon_i}^2
+\end{align*}
+
+Por tanto:
+\begin{align*}
+\sigma_{\text{sistemático},i}^2 &= \beta_i^2 \sigma_M^2 \\
+\sigma_{\text{específico},i}^2 &= \V(\varepsilon_i) = \sigma_{\varepsilon_i}^2
+\end{align*}
+
+y se cumple que $\sigma_i^2 = \sigma_{\text{específico},i}^2 + \sigma_{\text{sistemático},i}^2$.
+\end{proof}
+
+\begin{proposicion}[Efecto de Diversificación]
+Para una cartera equiponderada de $N$ activos con varianza promedio $\bar{\sigma}^2$ y covarianza promedio $\overline{\Cov}$, la varianza de la cartera es:
+\begin{equation}
+\sigma_p^2 = \frac{1}{N} \bar{\sigma}^2 + \left(1 - \frac{1}{N}\right) \overline{\Cov}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Para una cartera equiponderada, $w_i = \frac{1}{N}$ para todo $i$. La varianza es:
+\begin{align*}
+\sigma_p^2 &= \sum_{i=1}^{N} \sum_{j=1}^{N} \frac{1}{N} \frac{1}{N} \Cov(r_i, r_j) \\
+&= \frac{1}{N^2} \sum_{i=1}^{N} \sum_{j=1}^{N} \Cov(r_i, r_j) \\
+&= \frac{1}{N^2} \left[\sum_{i=1}^{N} \V(r_i) + \sum_{i=1}^{N} \sum_{j \neq i} \Cov(r_i, r_j)\right] \\
+&= \frac{1}{N^2} \left[N \bar{\sigma}^2 + N(N-1) \overline{\Cov}\right] \\
+&= \frac{1}{N} \bar{\sigma}^2 + \frac{N-1}{N} \overline{\Cov} \\
+&= \frac{1}{N} \bar{\sigma}^2 + \left(1 - \frac{1}{N}\right) \overline{\Cov}
+\end{align*}
+\end{proof}
+
+\begin{teorema}[Límite de Diversificación]
+Cuando el número de activos $N$ tiende al infinito, la varianza de una cartera equiponderada converge a la covarianza promedio:
+\begin{equation}
+\lim_{N \to \infty} \sigma_p^2 = \overline{\Cov}
+\end{equation}
+\end{teorema}
+
+\begin{proof}
+Tomando el límite en la fórmula anterior:
+$$\lim_{N \to \infty} \sigma_p^2 = \lim_{N \to \infty} \left[\frac{1}{N} \bar{\sigma}^2 + \left(1 - \frac{1}{N}\right) \overline{\Cov}\right] = 0 + \overline{\Cov} = \overline{\Cov}$$
+\end{proof}
+
+Este teorema muestra que el riesgo individual de los activos (medido por $\bar{\sigma}^2$) puede eliminarse completamente mediante la diversificación, pero el riesgo común (medido por $\overline{\Cov}$) no puede eliminarse.
+
+% \begin{proposicion}[Efecto del Coeficiente de Correlación]
+% Para una cartera de dos activos con la misma varianza ($\sigma_A^2 = \sigma_B^2 = \sigma^2$) y pesos iguales ($w_A = w_B = 0.5$):
+% \begin{equation}
+% \sigma_p^2 = \frac{1}{2}\sigma^2(1 + \rho_{AB})
+% \end{equation}
+% \end{proposicion}
+
+% \begin{proof}
+% Aplicando la fórmula de varianza de cartera de dos activos con $w_A = w_B = 0.5$ y $\sigma_A = \sigma_B = \sigma$:
+% \begin{align*}
+% \sigma_p^2 &= (0.5)^2 \sigma^2 + (0.5)^2 \sigma^2 + 2 \times 0.5 \times 0.5 \times \rho_{AB} \sigma^2 \\
+% &= 0.25\sigma^2 + 0.25\sigma^2 + 0.5 \rho_{AB} \sigma^2 \\
+% &= 0.5\sigma^2 + 0.5 \rho_{AB} \sigma^2 \\
+% &= \frac{1}{2}\sigma^2(1 + \rho_{AB})
+% \end{align*}
+% \end{proof}
+
+% \textbf{Observaciones importantes:}
+% \begin{itemize}
+% \item Si $\rho_{AB} = 1$ (correlación perfecta positiva): $\sigma_p^2 = \sigma^2$ (no hay diversificación)
+% \item Si $\rho_{AB} = 0$ (no correlacionados): $\sigma_p^2 = \frac{1}{2}\sigma^2$ (reducción del 50\%)
+% \item Si $\rho_{AB} = -1$ (correlación perfecta negativa): $\sigma_p^2 = 0$ (riesgo completamente eliminado)
+% \end{itemize}
+
+% \begin{ejemplo}[Demostración Matemática de Reducción de Riesgo]
+% Suponga que tenemos dos activos $A$ y $B$ con la misma varianza $\sigma_A^2 = \sigma_B^2 = 0.04$ (desviación estándar del 20\%) y correlación $\rho_{AB} = 0.3$. Si formamos una cartera equiponderada:
+
+% Varianza de la cartera:
+% $$\sigma_p^2 = \frac{1}{2} \times 0.04 \times (1 + 0.3) = 0.02 \times 1.3 = 0.026$$
+
+% Desviación estándar: $\sigma_p = \sqrt{0.026} = 0.161 = 16.1\%$
+
+% La desviación estándar de la cartera (16.1\%) es menor que la desviación estándar individual (20\%), demostrando el beneficio de la diversificación cuando $\rho < 1$.
+% \end{ejemplo}
+
+% La diversificación es más efectiva cuando los activos tienen correlaciones bajas o negativas. En el límite, cuando una cartera está suficientemente diversificada, solo queda el riesgo sistemático, que se mide mediante la beta del activo (concepto que se estudiará en temas avanzados de finanzas).
+
+\newpage
+\appendix
+
+\section*{Apéndice: Momentos Estadísticos}
+
+Este apéndice revisa las definiciones básicas sobre momentos estadísticos.
+
+\subsection*{Variables Aleatorias}
+
+Una \textit{variable aleatoria} es una función medible $X: \Omega \to \mathbb{R}$ definida sobre un espacio de probabilidad $(\Omega, \mathcal{F}, \mathbb{P})$, donde:
+\begin{itemize}
+  \item $\Omega$ es el \textit{espacio muestral}, el conjunto de todos los resultados posibles de un experimento aleatorio.
+  \item $\mathcal{F}$ es una \textit{$\sigma$-álgebra} (sigma-álgebra) sobre $\Omega$, que representa la colección de eventos a los que se les puede asignar una probabilidad.
+  \item $\mathbb{P}$ es una \textit{medida de probabilidad} que asigna a cada evento $A \in \mathcal{F}$ un número $\mathbb{P}(A) \in [0,1]$ tal que $\mathbb{P}(\Omega) = 1$ y $\mathbb{P}$ es $\sigma$-aditiva.
+\end{itemize}
+
+Las variables aleatorias se clasifican en dos tipos principales:
+
+\begin{enumerate}
+  \item \textbf{Discretas}: Toman valores en un conjunto finito o infinito numerable. Se caracterizan por su \textit{función de masa de probabilidad} (PMF):
+  \[
+  p_X(x) = \mathbb{P}(X = x), \quad \text{con } \sum_{x} p_X(x) = 1.
+  \]
+  
+  \item \textbf{Continuas}: Toman valores en un intervalo continuo. Se caracterizan por su \textit{función de densidad de probabilidad} (PDF) $f_X(x)$ tal que:
+  \[
+  \mathbb{P}(a \leq X \leq b) = \int_a^b f_X(x) dx, \quad \text{con } \int_{-\infty}^{\infty} f_X(x) dx = 1.
+  \]
+\end{enumerate}
+
+Ambos tipos comparten la \textit{función de distribución acumulativa} (CDF):
+\[
+F_X(x) = \mathbb{P}(X \leq x) = \begin{cases}
+\sum_{t \leq x} p_X(t) & \text{si } X \text{ es discreta},\\
+\int_{-\infty}^{x} f_X(t) dt & \text{si } X \text{ es continua}.
+\end{cases}
+\]
+
+\subsection*{Esperanza Matemática}
+
+La \textit{esperanza matemática} (o valor esperado) de una variable aleatoria $X$ se define formalmente como la integral de Lebesgue:
+\[
+\E[X] = \int_{\Omega} X(\omega) d\mathbb{P}(\omega).
+\]
+
+Para variables discretas, esta definición se reduce a:
+\[
+\E[X] = \sum_{i} p_i x_i, \quad \text{donde } p_i = \mathbb{P}(X = x_i).
+\]
+% Para el caso continuo: $\E[X] = \int_{-\infty}^{\infty} x f_X(x) dx$.
+
+La esperanza matemática satisface la propiedad de \textit{linealidad}. Para constantes $a, b \in \mathbb{R}$:
+\begin{align*}
+\E[aX + b] &= \E[aX] + \E[b]\\
+            &= a\E[X] + b,
+\end{align*}
+donde la segunda igualdad se obtiene aplicando la definición: $\E[aX] = a\E[X]$ (por linealidad de la integral) y $\E[b] = b$ (pues $b$ es constante).
+
+\subsection*{Varianza}
+
+La \textit{varianza} de una variable aleatoria $X$ mide la dispersión de sus valores alrededor de la media. Se define formalmente como:
+\[
+\V[X] = \E[(X - \E[X])^2].
+\]
+
+Para desarrollar esta expresión, expandimos el cuadrado:
+\[
+(X - \E[X])^2 = X^2 - 2X\E[X] + (\E[X])^2.
+\]
+
+Aplicando el operador esperanza y utilizando la propiedad de linealidad:
+\begin{align*}
+\V[X] &= \E[(X - \E[X])^2]\\
+      &= \E[X^2 - 2X\E[X] + (\E[X])^2]\\
+      &= \E[X^2] - 2\E[X\E[X]] + \E[(\E[X])^2]\\
+      &= \E[X^2] - 2\E[X]\E[X] + (\E[X])^2\\
+      &= \E[X^2] - 2(\E[X])^2 + (\E[X])^2\\
+      &= \E[X^2] - (\E[X])^2.
+\end{align*}
+
+La tercera igualdad utiliza que $\E[X]$ es una constante, por lo que $\E[X\E[X]] = \E[X]\E[X]$ y $\E[(\E[X])^2] = (\E[X])^2$.
+
+La fórmula computacional equivalente para el caso discreto es:
+\[
+\sigma^2 = \sum_i p_i (x_i - \mu)^2 = \sum_i p_i x_i^2 - \mu^2,
+\]
+donde $\mu = \E[X]$.
+% Para el caso continuo: $\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f_X(x) dx = \int_{-\infty}^{\infty} x^2 f_X(x) dx - \mu^2$.
+
+La varianza satisface la siguiente propiedad para transformaciones lineales:
+\begin{align*}
+\V[aX + b] &= \E[(aX + b - \E[aX + b])^2]\\
+            &= \E[(aX + b - a\E[X] - b)^2]\\
+            &= \E[(aX - a\E[X])^2]\\
+            &= \E[a^2(X - \E[X])^2]\\
+            &= a^2\E[(X - \E[X])^2]\\
+            &= a^2\V[X].
+\end{align*}
+
+\subsection*{Desviación Estándar}
+
+La \textit{desviación estándar} es la raíz cuadrada de la varianza:
+\[
+\sigma(X) = \sqrt{\V[X]}.
+\]
+
+Proporciona una medida de dispersión en las mismas unidades que la variable aleatoria. Para una transformación lineal:
+\[
+\sigma(aX + b) = \sqrt{\V[aX + b]} = \sqrt{a^2\V[X]} = |a|\sigma(X).
+\]
+
+\subsection*{Covarianza}
+
+La \textit{covarianza} entre dos variables aleatorias $X$ e $Y$ mide la relación lineal entre ellas. Se define como:
+\[
+\Cov(X,Y) = \E[(X - \E[X])(Y - \E[Y])].
+\]
+
+Desarrollando el producto:
+\[
+(X - \E[X])(Y - \E[Y]) = XY - X\E[Y] - Y\E[X] + \E[X]\E[Y].
+\]
+
+Aplicando el operador esperanza:
+\begin{align*}
+\Cov(X,Y) &= \E[(X - \E[X])(Y - \E[Y])]\\
+          &= \E[XY - X\E[Y] - Y\E[X] + \E[X]\E[Y]]\\
+          &= \E[XY] - \E[X\E[Y]] - \E[Y\E[X]] + \E[\E[X]\E[Y]]\\
+          &= \E[XY] - \E[X]\E[Y] - \E[Y]\E[X] + \E[X]\E[Y]\\
+          &= \E[XY] - \E[X]\E[Y].
+\end{align*}
+
+Las igualdades intermedias utilizan que $\E[X]$ y $\E[Y]$ son constantes, por lo que $\E[X\E[Y]] = \E[X]\E[Y]$, $\E[Y\E[X]] = \E[Y]\E[X]$ y $\E[\E[X]\E[Y]] = \E[X]\E[Y]$.
+
+La fórmula computacional para el caso discreto es:
+\[
+\Cov(X,Y) = \sum_i p_i (x_i - \mu_X)(y_i - \mu_Y) = \sum_i p_i x_i y_i - \mu_X \mu_Y,
+\]
+donde $\mu_X = \E[X]$ y $\mu_Y = \E[Y]$.
+
+La covarianza satisface las siguientes propiedades:
+\begin{itemize}
+  \item \textit{Simetría}: $\Cov(X,Y) = \Cov(Y,X)$.
+  \item \textit{Bilinealidad}: $\Cov(aX + bY, Z) = a\Cov(X,Z) + b\Cov(Y,Z)$.
+  \item \textit{Relación con la varianza}: $\V[X] = \Cov(X,X)$.
+\end{itemize}
+
+\subsection*{Correlación}
+
+El \textit{coeficiente de correlación} normaliza la covarianza por las desviaciones estándar de ambas variables:
+\[
+\rho_{XY} = \frac{\Cov(X,Y)}{\sigma_X \sigma_Y}.
+\]
+
+El coeficiente de correlación satisface $-1 \leq \rho_{XY} \leq 1$ por la desigualdad de Cauchy-Schwarz. Esta propiedad garantiza que la correlación es una medida normalizada de la relación lineal entre variables:
+\begin{itemize}
+  \item $\rho_{XY} = 1$: correlación positiva perfecta (relación lineal positiva).
+  \item $\rho_{XY} = -1$: correlación negativa perfecta (relación lineal negativa).
+  \item $\rho_{XY} = 0$: ausencia de correlación lineal (independencia implica $\rho = 0$, pero no viceversa).
+\end{itemize}
+
+La relación inversa permite expresar la covarianza en términos de la correlación:
+\[
+\Cov(X,Y) = \rho_{XY} \sigma_X \sigma_Y.
+\]
+
+\subsection*{Estimadores Muestrales}
+
+En la práctica, los momentos poblacionales se estiman a partir de muestras de datos. Dada una muestra $\{x_1, x_2, \ldots, x_n\}$ de observaciones independientes e idénticamente distribuidas de una variable aleatoria $X$:
+
+\begin{itemize}
+  \item \textbf{Media muestral} (estimador de $\E[X]$):
+  \[
+  \bar{x} = \frac{1}{n}\sum_{i=1}^n x_i.
+  \]
+  
+  \item \textbf{Varianza muestral} (estimador insesgado de $\V[X]$):
+  \[
+  s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2.
+  \]
+  
+  El divisor $(n-1)$ en lugar de $n$ se denomina \textit{corrección de Bessel} y garantiza que $s^2$ sea un estimador insesgado de la varianza poblacional. Desarrollando la expresión:
+  \begin{align*}
+  s^2 &= \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2\\
+      &= \frac{1}{n-1}\sum_{i=1}^n (x_i^2 - 2x_i\bar{x} + \bar{x}^2)\\
+      &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i^2 - 2\bar{x}\sum_{i=1}^n x_i + n\bar{x}^2\right]\\
+      &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i^2 - 2n\bar{x}^2 + n\bar{x}^2\right]\\
+      &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i^2 - n\bar{x}^2\right],
+  \end{align*}
+  donde la tercera igualdad utiliza que $\sum_{i=1}^n x_i = n\bar{x}$.
+  
+  \item \textbf{Covarianza muestral} (estimador insesgado de $\Cov(X,Y)$):
+  \[
+  s_{XY} = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}).
+  \]
+  
+  Desarrollando la expresión:
+  \begin{align*}
+  s_{XY} &= \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})\\
+         &= \frac{1}{n-1}\sum_{i=1}^n (x_i y_i - x_i\bar{y} - y_i\bar{x} + \bar{x}\bar{y})\\
+         &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i y_i - \bar{y}\sum_{i=1}^n x_i - \bar{x}\sum_{i=1}^n y_i + n\bar{x}\bar{y}\right]\\
+         &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} - n\bar{x}\bar{y} + n\bar{x}\bar{y}\right]\\
+         &= \frac{1}{n-1}\left[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}\right],
+  \end{align*}
+  donde se utiliza que $\sum_{i=1}^n x_i = n\bar{x}$ y $\sum_{i=1}^n y_i = n\bar{y}$.
+  
+  \item \textbf{Correlación muestral}:
+  \[
+  r_{XY} = \frac{s_{XY}}{s_X s_Y},
+  \]
+  donde $s_X = \sqrt{s_X^2}$ y $s_Y = \sqrt{s_Y^2}$ son las desviaciones estándar muestrales.
+\end{itemize}
+
+\end{document}
+

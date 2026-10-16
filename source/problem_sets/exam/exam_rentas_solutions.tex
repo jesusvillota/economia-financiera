@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\geometry{margin=2.5cm}
+
+% Encabezado estilo notas de clase
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+% \fancyhead[L]{Fundamentos de Valoración de Activos}
+% \fancyhead[R]{Exam}
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{TA Session}
+\fancyfoot[R]{Jesus Villota Miranda}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\newcommand{\R}{\mathbb{R}}
+
+% Formato de ejercicios
+\newenvironment{ejercicio}[1]{\subsection*{Ejercicio #1}}{}
+\newenvironment{solucion}{\paragraph{Solución.}}{}
+
+\begin{document}
+
+\section{Rentas}
+
+\begin{ejercicio}{1 (Renta semestral creciente diferida)}
+Considere una renta semestral perpetua cuyo primer pago es $\alpha$ en el segundo año ($t=2$) y crece geométricamente a una tasa anual compuesta $\beta$, se descuenta con un tipo efectivo trimestral compuesto $\gamma$.
+Asumiendo que $(1+\beta)^{1 / 2}<(1+\gamma)^2$, calcule el valor de la renta en $t=0$ en función de $\alpha$, $\beta$ y $\gamma$.
+
+\medskip
+\begin{enumerate}[label=\alph*)]
+  \item $V=\dfrac{\alpha}{\left[(1+\gamma)^2-(1+\beta)^{1 / 2}\right]}$
+  \item $\boxed{V=\dfrac{\alpha}{\left[(1+\gamma)^2-(1+\beta)^{1 / 2}\right] (1+\gamma)^6}}$
+  \item $V=\dfrac{\alpha}{\left[(1+\gamma)^{1.5}-(1+\beta)^{1 / 2}\right] (1+\gamma)^{4.5}}$
+\end{enumerate}
+\end{ejercicio}
+
+\begin{solucion}
+\textbf{Notación y periodicidades.} \; Usaremos:
+\begin{itemize}
+  \item $A:=\alpha$ es el primer pago (en valor nominal).
+  \item $g_1:=\beta$ es el crecimiento efectivo \emph{anual}. Necesitamos llevarlo a semestres.
+  \item $i_4:=\gamma$ es el tipo efectivo \emph{trimestral}. Necesitamos llevarlo a semestres.
+\end{itemize}
+
+\textbf{Paso 1 (convertir crecimiento anual a crecimiento semestral).} \;
+Los pagos son semestrales; queremos el crecimiento por semestre $g_2$ que, aplicado dos veces, reproduzca $g_1$:
+\[
+(1+g_2)^2=1+g_1
+\quad\Rightarrow\quad
+g_2=(1+g_1)^{1/2}-1.
+\]
+
+\textbf{Paso 2 (convertir descuento trimestral a descuento semestral).} \;
+Un semestre contiene 2 trimestres; el tipo efectivo semestral $i_2$ equivalente a $i_4$ verifica:
+\[
+(1+i_2)=(1+i_4)^2
+\quad\Rightarrow\quad
+i_2=(1+i_4)^2-1.
+\]
+
+\textbf{Paso 3 (valorar la perpetuidad creciente en el instante adecuado).} \;
+La renta es una \textbf{perpetuidad creciente} con pagos semestrales y primer pago en $t=2$.
+El valor justo un semestre antes del primer pago ($t=1.5$) es:
+\[
+V_{1.5}=\frac{A}{i_2-g_2},
+\qquad \text{(requiere } i_2>g_2\text{)}.
+\]
+
+\textbf{Paso 4 (descontar hasta $t=0$).} \;
+Desde $t=0$ hasta $t=1.5$ hay $3$ semestres, así que:
+\[
+V_0=\frac{V_{1.5}}{(1+i_2)^3}
+=\frac{A}{(i_2-g_2)(1+i_2)^3}.
+\]
+Sustituyendo $i_2=(1+i_4)^2-1$ y $g_2=(1+g_1)^{1/2}-1$:
+\[
+\boxed{
+V_0=\frac{\alpha}{\left[(1+\gamma)^2-(1+\beta)^{1/2}\right]\,(1+\gamma)^6}
+}
+\]
+donde hemos usado que $(1+i_2)^3=((1+i_4)^2)^3=(1+i_4)^6$.
+
+\medskip
+\textbf{Cómo leer las opciones:}
+\begin{itemize}
+  \item \textbf{a)} coincide con $V_{1.5}=\dfrac{A}{i_2-g_2}$: calcula el valor una semestralidad antes del primer pago, ya en periodicidad semestral (sin descontar a $t=0$).
+  \item \textbf{b)} incluye el descuento adicional de 3 semestres, es decir, $V_0=\dfrac{A}{(i_2-g_2)(1+i_2)^3}$, que es la respuesta buscada.
+  \item \textbf{c)} reproduce la misma estructura pero interpretando erróneamente $\gamma$ como \emph{tipo efectivo cuatrimestral} (i.e., 3 periodos/año) y sin alinear periodicidades; por eso entrega un valor con bases $(1+\gamma)^{1.5}$ y $(1+\gamma)^{4.5}$ que no corresponde al enunciado.
+\end{itemize}
+\end{solucion}
+
+\end{document}
+
+
