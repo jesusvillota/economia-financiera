@@ -64,6 +64,17 @@ try {
       await box.press('ArrowUp');
       assert.equal(await options.first().getAttribute('aria-selected'), 'true');
       assert.equal(await box.getAttribute('aria-activedescendant'), await options.first().getAttribute('id'));
+      if (width === 360) {
+        assert.ok(await page.locator('.mobile-nav-panel').evaluate((element) => element.clientHeight > innerHeight * 0.75), 'mobile menu fills viewport');
+      }
+      assert.ok(await box.evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        return document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2) === element;
+      }), 'input remains visible after keyboard navigation');
+      assert.ok(await options.first().locator('a').evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
+      }), 'first result is visible and clickable');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'page overflow');
       assert.ok(await search.evaluate((element) => element.scrollWidth <= element.clientWidth + 1), 'search overflow');
       await page.screenshot({ path: `screenshots/search-${theme}-${width}.png` });
@@ -89,6 +100,17 @@ try {
       assert.equal(await nextSearch.getByRole('option').count(), 0);
       await nextBox.fill('   ');
       assert.equal(await nextBox.getAttribute('aria-expanded'), 'false');
+      const session = index.find((entry) => entry.kind === 'session');
+      await nextBox.fill(session.title);
+      await nextSearch.getByRole('option').first().waitFor();
+      assert.equal(await nextSearch.getByRole('option').first().locator('a').getAttribute('href'), session.url);
+      const term = index.find((entry) => entry.kind === 'glossary' && entry.title === 'Sesgo de confirmación');
+      await nextBox.fill(term.title);
+      assert.equal(await nextSearch.getByRole('option').first().locator('a').getAttribute('href'), term.url);
+      await nextSearch.getByRole('option').first().locator('a').click();
+      await page.waitForURL(`**${term.url}`);
+      await page.waitForLoadState('networkidle');
+      assert.ok(await page.locator(`#${term.url.split('#')[1]}`).isVisible(), 'glossary term reached');
       assert.deepEqual(errors, []);
       console.log(`✓ ${theme} ${width}px: duración → chapter 19 first; TIR results; accents, /, arrows, Enter, Esc; no console errors or overflow`);
       await context.close();
