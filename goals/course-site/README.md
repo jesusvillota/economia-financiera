@@ -67,6 +67,7 @@ flowchart TD
     TASK_027["TASK-027 Chapter 6: return and risk of one asset"]
     TASK_028["TASK-028 Chapter 7: two assets, correlation and diversification"]
     TASK_029["TASK-029 Chapter 8: Markowitz, many assets and the efficient frontier"]
+    TASK_030["TASK-030 Chapter 9: risk-free asset, CAL and tangent portfolio"]
   end
   subgraph M_4["M-4 · Markets"]
     TASK_017["TASK-017 Plan: decompose M-4"]
@@ -116,6 +117,8 @@ flowchart TD
   TASK_021 --> TASK_027
   TASK_024 --> TASK_028
   TASK_024 --> TASK_029
+  TASK_023 --> TASK_030
+  TASK_024 --> TASK_030
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
