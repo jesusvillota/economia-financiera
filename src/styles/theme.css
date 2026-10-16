@@ -1,0 +1,77 @@
+/*
+ * Design tokens. Colour semantics are fixed across the whole course:
+ * Dark is the default theme.
+ */
+:root {
+  --c-pv: #58c4dd;
+  --c-fv: #f4d345;
+  --c-return: #83c167;
+  --c-risk: #fc6255;
+  --c-time: #5cd0b3;
+  --c-rate: #ff862f;
+
+  --bg: #0f1117;
+  --bg-raised: #171a23;
+  --bg-inset: #0b0d12;
+  --text: #e8e6e3;
+  --text-muted: #a3a8b4;
+  --border: rgba(232, 230, 227, 0.14);
+  --grid: rgba(232, 230, 227, 0.1);
+  --axis: rgba(232, 230, 227, 0.45);
+  --link: var(--c-pv);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
+
+  --font-body: 'Source Serif 4 Variable', 'Source Serif Pro', Georgia, serif;
+  --font-ui: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --measure: 42rem;
+  --radius: 10px;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --c-pv: #1f7fa3;
+  --c-fv: #a8860b;
+  --c-return: #3e7f2a;
+  --c-risk: #c0392b;
+  --c-time: #1e8c72;
+  --c-rate: #c25e12;
+
+  --bg: #fafaf7;
+  --bg-raised: #ffffff;
+  --bg-inset: #f1f1ec;
+  --text: #1a1a1a;
+  --text-muted: #5b6070;
+  --border: rgba(26, 26, 26, 0.12);
+  --grid: rgba(26, 26, 26, 0.08);
+  --axis: rgba(26, 26, 26, 0.5);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.06);
+  color-scheme: light;
+}
+
+/* KaTeX colour macros (\VA, \VF, \Rate, ...) map to these classes. */
+.c-pv { color: var(--c-pv); }
+.c-fv { color: var(--c-fv); }
+.c-return { color: var(--c-return); }
+.c-risk { color: var(--c-risk); }
+.c-time { color: var(--c-time); }
+.c-rate { color: var(--c-rate); }
+
+/* Mafs picks up the site theme. */
+.MafsView {
+  --mafs-bg: var(--bg-inset); /* also the halo behind text labels */
+  --mafs-fg: var(--text);
+  --mafs-origin-color: var(--axis);
+  --mafs-line-color: var(--grid);
+  --mafs-blue: var(--c-pv);
+  --mafs-yellow: var(--c-fv);
+  --mafs-green: var(--c-return);
+  --mafs-red: var(--c-risk);
+  --mafs-violet: var(--c-time);
+  --mafs-orange: var(--c-rate);
+  font-family: var(--font-ui);
+}
+
+/* A thicker halo behind plot labels so they stay readable over lines. */
+.MafsView .mafs-shadow { stroke: var(--bg-inset); stroke-width: 5px; stroke-linejoin: round; }

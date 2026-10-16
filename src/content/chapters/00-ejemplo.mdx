@@ -1,0 +1,32 @@
+---
+title: "Capitalización compuesta (ejemplo)"
+part: 1
+chapter: 1
+difficulty: 1
+prerequisites: []
+summary: "Capítulo de prueba: demuestra el deslizador interactivo, las fórmulas y el cuestionario."
+---
+import CompoundGrowth from '../../components/plots/CompoundGrowth';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>Dinero que crece solo
+
+Si hoy tienes $\VA$ euros y los inviertes a una tasa $\Rate{r}$ durante $t$ años, tendrás
+
+$$\VF = \VA\,(1+\Rate{r})^t.$$
+
+Mueve el deslizador y mira cómo cambia la curva:
+
+<CompoundGrowth client:visible />
+
+<Callout type="key">
+Este capítulo es solo un ejemplo para probar la infraestructura del sitio.
+</Callout>
+
+<Quiz client:visible
+  question="Con $r = 10\,\%$ anual, ¿cuánto valen 100 € dentro de 2 años?"
+  options={['120 €', '121 €', '110 €']}
+  answer={1}
+  explanation="$100 \cdot 1{,}1^2 = 121$: el segundo año también cobra interés sobre el interés del primero."
+/>
