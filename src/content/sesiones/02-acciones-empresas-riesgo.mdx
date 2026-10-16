@@ -1,0 +1,280 @@
+---
+title: Acciones, empresas y riesgo
+number: 2
+source: ps2
+chapters:
+  - 04-dividendos
+  - 05-empresa-wacc
+  - 06-rentabilidad-riesgo
+difficulty: 2
+summary: Ocho ejercicios de valoración por dividendos, flujos de caja, sensibilidad al coste del capital y medición del riesgo.
+exercises:
+  - id: ej1
+    statement: Lince pagará dividendos de {{d1}}, {{d2}} y {{d3}} € al final de los próximos tres años. Se vende después del tercer dividendo por {{sale}} €. Exiges {{r}} % anual. Calcula el precio hoy y los porcentajes de su valor debidos a dividendos y venta.
+    parameters:
+      - { id: d1, label: Dividendo año 1, default: 2.2, unit: €, min: 1.5, max: 3, step: 0.1 }
+      - { id: d2, label: Dividendo año 2, default: 2.38, unit: €, min: 2, max: 4, step: 0.1 }
+      - { id: d3, label: Dividendo año 3, default: 2.56, unit: €, min: 2, max: 4, step: 0.1 }
+      - { id: sale, label: Precio de venta año 3, default: 34, unit: €, min: 25, max: 45, step: 1 }
+      - { id: r, label: Rentabilidad requerida, default: 11, unit: "%", min: 8, max: 14, step: 1 }
+    seed: 33
+    difficulty: 1
+    hints:
+      - Trae a hoy cada cobro, incluido el precio de venta.
+      - El último cobro reúne $D_3+P_3$. Divide cada cobro entre $(1+r)^t$.
+      - Empieza por ${{d1}}/(1+{{r}}/100)$. Para cada porcentaje, divide su valor actual entre el precio total.
+    steps:
+      - { title: Descontar cobros, body: "$P_0=D_1/(1+r)+D_2/(1+r)^2+(D_3+P_3)/(1+r)^3={{price}}$ €." }
+      - { title: Origen del valor, body: "Divide el valor actual de los dividendos entre el precio: {{div_share}} %. La venta aporta el resto: {{sale_share}} %." }
+    answers:
+      - { id: price, label: Precio hoy, unit: €, value: 30.65, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: finitePrice, args: [ d1, d2, d3, sale, r ] } }
+      - { id: div_share, label: Valor debido a dividendos, unit: "%", value: 18.88, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: dividendShare, args: [ d1, d2, d3, sale, r ] } }
+      - { id: sale_share, label: Valor debido a venta, unit: "%", value: 81.12, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: resaleShare, args: [ d1, d2, d3, sale, r ] } }
+    concepts:
+      - 04-dividendos
+  - id: ej2
+    statement: Una acción vale {{price}} € y pagará {{d1}} € dentro de un año. Exiges {{r}} %. (a) Despeja el crecimiento perpetuo implícito. (b) El próximo dividendo aumenta {{change}} %; mantén fijos ese crecimiento y la rentabilidad requerida. Calcula el nuevo precio y su cambio porcentual.
+    parameters:
+      - { id: price, label: Precio inicial, default: 30, unit: €, min: 25, max: 40, step: 1 }
+      - { id: d1, label: Próximo dividendo, default: 1.5, unit: €, min: 1, max: 2, step: 0.1 }
+      - { id: r, label: Rentabilidad requerida, default: 9, unit: "%", min: 9, max: 12, step: 1 }
+      - { id: change, label: Aumento del dividendo, default: 5, unit: "%", min: 2, max: 10, step: 1 }
+    seed: 33
+    difficulty: 2
+    hints:
+      - "Usa Gordon: el precio depende del próximo dividendo y del crecimiento."
+      - Despeja $g=r-D_1/P_0$. Conserva ese g en (b).
+      - Empieza por ${{r}}/100-{{d1}}/{{price}}$. El nuevo dividendo es $D_1(1+{{change}}/100)$.
+    steps:
+      - { title: Despejar crecimiento, body: "De $P_0=D_1/(r-g)$ sale $g=r-D_1/P_0={{growth}}$ %." }
+      - { title: Nuevo precio, body: "Con el mismo r−g, el nuevo precio es {{new_price}} €." }
+      - { title: Comparar, body: "$100(P_0^{nuevo}/P_0-1)={{price_change}}$ %. El precio cambia proporcionalmente al dividendo." }
+    answers:
+      - { id: growth, label: Crecimiento implícito, unit: "%", value: 4, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: growth, args: [ price, d1, r ] } }
+      - { id: new_price, label: Nuevo precio, unit: €, value: 31.5, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: revisedPrice, args: [ price, d1, r, change ] } }
+      - { id: price_change, label: Cambio del precio, unit: "%", value: 5, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: revisedChange, args: [ price, d1, r, change ] } }
+    concepts:
+      - 04-dividendos
+  - id: ej3
+    statement: El dividendo actual es {{d0}} €. Crece {{g1}} % anual durante {{n}} años y después {{g2}} % perpetuo. Exiges {{r}} %. (a) Calcula el precio hoy y el precio terminal. (b) Repite el precio hoy con crecimiento perpetuo {{g_alt}} %. (c) Con (a), calcula el precio después del primer dividendo, la rentabilidad por dividendo, la ganancia de capital y su suma.
+    parameters:
+      - { id: d0, label: Dividendo actual, default: 1.1, unit: €, min: 0.8, max: 2, step: 0.1 }
+      - { id: g1, label: Crecimiento inicial, default: 15, unit: "%", min: 10, max: 20, step: 1 }
+      - { id: n, label: Años iniciales, default: 3, unit: años, min: 2, max: 5, step: 1 }
+      - { id: g2, label: Crecimiento perpetuo, default: 4, unit: "%", min: 2, max: 4, step: 1 }
+      - { id: g_alt, label: Crecimiento alternativo, default: 5, unit: "%", min: 5, max: 7, step: 1 }
+      - { id: r, label: Rentabilidad requerida, default: 10, unit: "%", min: 9, max: 13, step: 1 }
+    seed: 33
+    difficulty: 3
+    hints:
+      - Separa los dividendos iniciales de la perpetuidad posterior.
+      - Calcula $D_t=D_0(1+g_1)^t$ y $P_n=D_n(1+g_2)/(r-g_2)$. Descuenta ambos.
+      - El primer dividendo es ${{d0}}(1+{{g1}}/100)$. Para (c), usa $P_1=P_0(1+r)-D_1$.
+    steps:
+      - { title: Valor terminal, body: "$D_n=D_0(1+g_1)^n$ y $P_n=D_n(1+g_2)/(r-g_2)={{terminal}}$ €." }
+      - { title: Precio hoy, body: "Suma los dividendos descontados y $P_n/(1+r)^n$: {{price}} €." }
+      - { title: Otro crecimiento, body: "Sustituye solo el crecimiento perpetuo por {{g_alt}} %: {{alternative}} €. El precio es más sensible cuando g se acerca a r." }
+      - { title: Un año después, body: "Después de pagar $D_1$, $P_1=P_0(1+r)-D_1={{year_one}}$ €." }
+      - { title: Descomponer retorno, body: "$D_1/P_0$: {{yield}} %. $(P_1-P_0)/P_0$: {{gain}} %. La suma es {{total}} %, igual a la rentabilidad requerida." }
+    answers:
+      - { id: price, label: Precio hoy (a), unit: €, value: 25.4, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: twoStagePrice, args: [ d0, g1, n, g2, r ] } }
+      - { id: terminal, label: Precio terminal (a), unit: €, value: 29, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: twoStageTerminal, args: [ d0, g1, n, g2, r ] } }
+      - { id: alternative, label: Precio hoy (b), unit: €, value: 30, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: twoStagePrice, args: [ d0, g1, n, g_alt, r ] } }
+      - { id: year_one, label: Precio después del dividendo del año 1, unit: €, value: 26.67, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: twoStageYearOne, args: [ d0, g1, n, g2, r ] } }
+      - { id: yield, label: Rentabilidad por dividendo, unit: "%", value: 4.98, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: dividendYield, args: [ d0, g1, n, g2, r ] } }
+      - { id: gain, label: Ganancia de capital, unit: "%", value: 5.02, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: capitalGain, args: [ d0, g1, n, g2, r ] } }
+      - { id: total, label: Rentabilidad total, unit: "%", value: 10, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: totalReturn, args: [ d0, g1, n, g2, r ] } }
+    concepts:
+      - 04-dividendos
+  - id: ej4
+    statement: Todos los importes están en millones de euros. El beneficio operativo antes de intereses e impuestos (EBIT) es {{ebit}}. El impuesto es {{tax}} %. La amortización es {{dep}}, la inversión en activos (Capex) {{capex}} y el aumento del capital circulante {{wc}}. El beneficio neto es {{income}} y la deuda neta emitida {{debt}}. Calcula el flujo libre para la empresa (FCFF) y para los accionistas (FCFE).
+    parameters:
+      - { id: ebit, label: EBIT, default: 200, unit: millones de €, min: 180, max: 240, step: 5 }
+      - { id: tax, label: Impuesto, default: 30, unit: "%", min: 20, max: 35, step: 5 }
+      - { id: dep, label: Amortización, default: 25, unit: millones de €, min: 20, max: 35, step: 5 }
+      - { id: capex, label: Capex, default: 60, unit: millones de €, min: 50, max: 70, step: 5 }
+      - { id: wc, label: Aumento del circulante, default: 15, unit: millones de €, min: 5, max: 20, step: 5 }
+      - { id: income, label: Beneficio neto, default: 90, unit: millones de €, min: 70, max: 100, step: 5 }
+      - { id: debt, label: Deuda neta emitida, default: 10, unit: millones de €, min: 5, max: 20, step: 5 }
+    seed: 33
+    difficulty: 2
+    hints:
+      - FCFF pertenece a todos los financiadores; FCFE, solo a los accionistas.
+      - Suma la amortización, que no es una salida de caja. Resta Capex y el aumento del circulante.
+      - Empieza el FCFF con ${{ebit}}(1-{{tax}}/100)$. El FCFE empieza con el beneficio neto y añade la deuda neta emitida.
+    steps:
+      - { title: FCFF, body: "Multiplica EBIT por uno menos el impuesto. Suma amortización; resta Capex y el aumento del circulante: FCFF = {{firm_flow}} millones de euros." }
+      - { title: FCFE, body: "Parte del beneficio neto. Suma amortización y deuda neta emitida; resta Capex y el aumento del circulante: FCFE = {{equity_flow}} millones. Los intereses ya están incluidos en el beneficio neto." }
+    answers:
+      - { id: firm_flow, label: FCFF, unit: millones de €, value: 90, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmFlow, args: [ ebit, tax, dep, capex, wc ] } }
+      - { id: equity_flow, label: FCFE, unit: millones de €, value: 50, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityFlow, args: [ income, dep, capex, wc, debt ] } }
+    concepts:
+      - 05-empresa-wacc
+  - id: ej5
+    statement: "Pictor tiene E={{e}} y D={{debt}}, en millones de euros. La tasa libre de riesgo es {{rf}} %, la prima del mercado {{premium}} %, beta {{beta}}, coste de deuda {{kd}} % e impuesto {{tax}} %. Usa $\\ke =\\rf +\\beta(\\rM -\\rf )$. (a) Calcula el coste del capital propio y el coste medio ponderado del capital (WACC). (b) Los FCFF son {{c1}}, {{c2}}, {{c3}}, {{c4}}, {{c5}} millones en años 1–5; crecen {{g}} % desde el año 6. Calcula el valor terminal y el valor de empresa. (c) Por separado, los FCFE son {{f1}}, {{f2}}, {{f3}} millones en años 1–3; crecen {{ge}} % desde el año 4. Descuéntalos al coste del capital propio dado de {{re}} %, con {{shares}} millones de acciones. Calcula el valor del capital propio y el precio por acción. Las tasas de descuento se mantienen fijas en las variantes."
+    parameters:
+      - { id: e, label: Capital propio de mercado, default: 600, unit: millones de € }
+      - { id: debt, label: Deuda de mercado, default: 400, unit: millones de € }
+      - { id: rf, label: Tasa libre de riesgo, default: 3, unit: "%" }
+      - { id: premium, label: Prima del mercado, default: 6, unit: "%" }
+      - { id: beta, label: Beta, default: 1.2, unit: "" }
+      - { id: kd, label: Coste de deuda, default: 5, unit: "%" }
+      - { id: tax, label: Impuesto, default: 30, unit: "%" }
+      - { id: c1, label: FCFF año 1, default: 95, unit: millones de €, min: 85, max: 105, step: 5 }
+      - { id: c2, label: FCFF año 2, default: 110, unit: millones de €, min: 100, max: 120, step: 5 }
+      - { id: c3, label: FCFF año 3, default: 125, unit: millones de €, min: 115, max: 135, step: 5 }
+      - { id: c4, label: FCFF año 4, default: 140, unit: millones de €, min: 130, max: 150, step: 5 }
+      - { id: c5, label: FCFF año 5, default: 150, unit: millones de €, min: 140, max: 160, step: 5 }
+      - { id: g, label: Crecimiento FCFF, default: 3, unit: "%", min: 1, max: 4, step: 1 }
+      - { id: f1, label: FCFE año 1, default: 85, unit: millones de €, min: 75, max: 95, step: 5 }
+      - { id: f2, label: FCFE año 2, default: 90, unit: millones de €, min: 80, max: 100, step: 5 }
+      - { id: f3, label: FCFE año 3, default: 96, unit: millones de €, min: 90, max: 110, step: 2 }
+      - { id: re, label: Coste de capital propio (c), default: 10, unit: "%" }
+      - { id: ge, label: Crecimiento FCFE, default: 2, unit: "%", min: 1, max: 4, step: 1 }
+      - { id: shares, label: Acciones, default: 60, unit: millones, min: 50, max: 80, step: 5 }
+      - { id: t3, label: Fecha del último FCFE, default: 3, unit: años }
+    seed: 33
+    difficulty: 3
+    hints:
+      - Pondera las fuentes de financiación por sus valores de mercado. FCFF y FCFE tienen tasas distintas.
+      - $WACC=w_E \ke +w_D \kd (1-T)$. El terminal usa el flujo del año siguiente.
+      - Empieza por $\ke ={{rf}}+{{beta}}\times{{premium}}$ en %. En (c), usa {{re}} % y no restes deuda otra vez.
+    steps:
+      - { title: Coste del capital, body: "$\\ke =\\rf +\\beta(\\rM -\\rf )={{cost}}$ %. $WACC=E \\ke /(E+D)+D \\kd (1-T)/(E+D)={{capital_cost}}$ %." }
+      - { title: Valor de empresa, body: "El terminal en año 5 es $FCFF_5(1+g)/(WACC-g)={{terminal}}$ millones. Descuéntalo y suma los cinco FCFF descontados: {{firm_value}} millones." }
+      - { title: Capital propio por FCFE, body: "El tercer FCFE descontado es $FCFE_3/(1+\\ke )^3={{third_pv}}$ millones. Suma los tres FCFE y su terminal descontados: {{equity_value}} millones. Usa el coste separado de {{re}} %." }
+      - { title: Precio por acción, body: "Divide entre {{shares}} millones de acciones: {{price}} €. Los millones se cancelan. No restes deuda al FCFE." }
+    answers:
+      - { id: cost, label: Coste del capital propio (a), unit: "%", value: 10.2, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityCost, args: [ rf, beta, premium ] } }
+      - { id: capital_cost, label: WACC (a), unit: "%", value: 7.52, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: capitalCost, args: [ e, debt, rf, beta, premium, kd, tax ] } }
+      - { id: terminal, label: Valor terminal FCFF año 5, unit: millones de €, value: 3418.14, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmTerminal, args: [ c5, e, debt, rf, beta, premium, kd, tax, g ] } }
+      - { id: firm_value, label: Valor de empresa (b), unit: millones de €, value: 2871.93, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmValue, args: [ c1, c2, c3, c4, c5, e, debt, rf, beta, premium, kd, tax, g ] } }
+      - { id: third_pv, label: Valor actual del tercer FCFE (c), unit: millones de €, value: 72.13, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: flowPV, args: [ f3, re, t3 ] } }
+      - { id: equity_value, label: Capital propio (c), unit: millones de €, value: 1143.39, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityValue, args: [ f1, f2, f3, re, ge ] } }
+      - { id: price, label: Precio por acción (c), unit: €, value: 19.06, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityPrice, args: [ f1, f2, f3, re, ge, shares ] } }
+    concepts:
+      - 05-empresa-wacc
+  - id: ej7
+    statement: "La firma tiene E={{e}} y D={{debt}} millones de euros; beta {{beta}}, tasa libre de riesgo {{rf}} %, prima del mercado {{premium}} %, coste de deuda {{kd}} % e impuesto {{tax}} %. Usa $\\ke =\\rf +\\beta(\\rM -\\rf )$. Un proyecto exige {{investment}} millones hoy y genera {{c1}}, {{c2}}, {{c3}}, {{c4}} millones en años 1–4. Crece {{g}} % desde el año 5. (a) Calcula el WACC. (b) Calcula el valor actual neto (VAN). (c) Repite el VAN al reducir y aumentar el WACC en un punto porcentual; compara los cambios."
+    parameters:
+      - { id: e, label: Capital propio, default: 140, unit: millones de €, min: 120, max: 180, step: 20 }
+      - { id: debt, label: Deuda, default: 560, unit: millones de €, min: 500, max: 600, step: 20 }
+      - { id: rf, label: Tasa libre de riesgo, default: 2.5, unit: "%" }
+      - { id: beta, label: Beta, default: 1.25, unit: "" }
+      - { id: premium, label: Prima del mercado, default: 6, unit: "%" }
+      - { id: kd, label: Coste de deuda, default: 5.2, unit: "%" }
+      - { id: tax, label: Impuesto, default: 30, unit: "%" }
+      - { id: investment, label: Inversión inicial, default: 950, unit: millones de €, min: 850, max: 1050, step: 50 }
+      - { id: c1, label: FCFF año 1, default: 55, unit: millones de €, min: 45, max: 65, step: 5 }
+      - { id: c2, label: FCFF año 2, default: 60, unit: millones de €, min: 50, max: 70, step: 5 }
+      - { id: c3, label: FCFF año 3, default: 68, unit: millones de €, min: 58, max: 78, step: 5 }
+      - { id: c4, label: FCFF año 4, default: 75, unit: millones de €, min: 65, max: 85, step: 5 }
+      - { id: g, label: Crecimiento perpetuo, default: 2, unit: "%", min: 1, max: 2, step: 0.5 }
+      - { id: base, label: Cambio base, default: 0, unit: puntos porcentuales }
+      - { id: low, label: Reducción WACC, default: -1, unit: puntos porcentuales }
+      - { id: high, label: Aumento WACC, default: 1, unit: puntos porcentuales }
+    seed: 33
+    difficulty: 3
+    hints:
+      - Calcula primero el descuento. Resta el desembolso inicial una sola vez.
+      - $\VAN =\sum_{t=1}^4 FCFF_t/(1+WACC)^t+VT_4/(1+WACC)^4-I_0$.
+      - Un punto porcentual es 0,01 en tanto por uno. Recalcula el terminal y todos los descuentos con cada tasa.
+    steps:
+      - { title: WACC, body: "Pondera $\\ke =\\rf +\\beta(\\rM -\\rf )$ y $\\kd (1-T)$ por E y D: {{capital_cost}} %." }
+      - { title: VAN base, body: "El terminal es $FCFF_4(1+g)/(WACC-g)$. Descuenta cada flujo y el terminal; resta {{investment}} millones: {{npv}} millones." }
+      - { title: Tasa menor, body: "Resta un punto porcentual al WACC y repite todo: {{npv_low}} millones." }
+      - { title: Tasa mayor, body: "Suma un punto porcentual al WACC y repite: {{npv_high}} millones. Compara ambos con {{npv}}." }
+      - { title: Interpretación, body: "Los efectos no son simétricos. La relación $1/(WACC-g)$ es convexa, no exponencial; es más sensible cerca de g." }
+    answers:
+      - { id: capital_cost, label: WACC, unit: "%", value: 4.912, tolerance: { kind: abs, value: 0.0005 }, lib: { module: sesion02, fn: capitalCost, args: [ e, debt, rf, beta, premium, kd, tax ] } }
+      - { id: npv, label: VAN base, unit: millones de €, value: 1446.29, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, base ] } }
+      - { id: npv_low, label: VAN con WACC menor, unit: millones de €, value: 2715.14, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, low ] } }
+      - { id: npv_high, label: VAN con WACC mayor, unit: millones de €, value: 826.37, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, high ] } }
+    concepts:
+      - 05-empresa-wacc
+  - id: ej8
+    statement: "Los escenarios son expansión, base y recesión, con probabilidades {{p1}}, {{p2}} y $1-{{p1}}-{{p2}}$. Los retornos de A son {{a1}}, {{a2}}, {{a3}} %; los de B, {{b1}}, {{b2}}, {{b3}} %; los del mercado, {{m1}}, {{m2}}, {{m3}} %. (a) Calcula medias, varianzas y desviaciones típicas de A y B. (b) Calcula covarianza y correlación de A con B. (c) Calcula ambas betas con $\\beta_j=\\Cov(r_j,\\rM )/\\sigma_M^2$. Usa retornos en tanto por uno para varianzas y covarianza."
+    parameters:
+      - { id: p1, label: Probabilidad expansión, default: 0.3, unit: "", min: 0.2, max: 0.4, step: 0.05 }
+      - { id: p2, label: Probabilidad base, default: 0.5, unit: "", min: 0.35, max: 0.5, step: 0.05 }
+      - { id: a1, label: "A: expansión", default: 18, unit: "%", min: 14, max: 22, step: 1 }
+      - { id: a2, label: "A: base", default: 5, unit: "%", min: 3, max: 7, step: 1 }
+      - { id: a3, label: "A: recesión", default: -7, unit: "%", min: -10, max: -5, step: 1 }
+      - { id: b1, label: "B: expansión", default: 7, unit: "%", min: 6, max: 10, step: 1 }
+      - { id: b2, label: "B: base", default: 4, unit: "%", min: 2, max: 5, step: 1 }
+      - { id: b3, label: "B: recesión", default: -2, unit: "%", min: -4, max: -1, step: 1 }
+      - { id: m1, label: "Mercado: expansión", default: 12, unit: "%", min: 10, max: 16, step: 1 }
+      - { id: m2, label: "Mercado: base", default: 6, unit: "%", min: 4, max: 7, step: 1 }
+      - { id: m3, label: "Mercado: recesión", default: -3, unit: "%", min: -6, max: -2, step: 1 }
+    seed: 33
+    difficulty: 3
+    hints:
+      - Usa probabilidades para escenarios, no el divisor muestral n−1.
+      - Calcula $\mu=\sum p_s r_s$ y $\sigma^2=\sum p_s(r_s-\mu)^2$; toma la raíz para la desviación.
+      - Pondera $(r_A-\mu_A)(r_B-\mu_B)$. Divide entre las desviaciones para correlación; entre la varianza del mercado para beta.
+    steps:
+      - { title: Medias, body: "Pondera cada retorno por su probabilidad: A {{a_mean}} % y B {{b_mean}} %." }
+      - { title: Riesgo, body: "Centra los retornos y pondera sus cuadrados: varianzas A {{a_var}} y B {{b_var}}. Las raíces en % son {{a_sd}} y {{b_sd}}." }
+      - { title: Covarianza y correlación, body: "La suma ponderada de productos centrados es {{covariance}}. Divide entre $\\sigma_A\\sigma_B$: {{correlation}}." }
+      - { title: Betas, body: "Divide cada covarianza con el mercado entre su varianza: $\\beta_A={{beta_a}}$, $\\beta_B={{beta_b}}$. Beta mide sensibilidad al mercado; no es la desviación típica." }
+    answers:
+      - { id: a_mean, label: Media A, unit: "%", value: 6.5, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: mean, args: [ a1, a2, a3, p1, p2 ] } }
+      - { id: a_var, label: Varianza A, unit: "", value: 0.007725, tolerance: { kind: abs, value: 0.00005 }, lib: { module: sesion02, fn: variance, args: [ a1, a2, a3, p1, p2 ] } }
+      - { id: a_sd, label: Desviación típica A, unit: "%", value: 8.789198, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: deviation, args: [ a1, a2, a3, p1, p2 ] } }
+      - { id: b_mean, label: Media B, unit: "%", value: 3.7, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: mean, args: [ b1, b2, b3, p1, p2 ] } }
+      - { id: b_var, label: Varianza B, unit: "", value: 0.000981, tolerance: { kind: abs, value: 0.00005 }, lib: { module: sesion02, fn: variance, args: [ b1, b2, b3, p1, p2 ] } }
+      - { id: b_sd, label: Desviación típica B, unit: "%", value: 3.132092, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: deviation, args: [ b1, b2, b3, p1, p2 ] } }
+      - { id: covariance, label: "Covarianza A, B", unit: "", value: 0.002655, tolerance: { kind: abs, value: 0.00005 }, lib: { module: sesion02, fn: cov, args: [ a1, a2, a3, b1, b2, b3, p1, p2 ] } }
+      - { id: correlation, label: "Correlación A, B", unit: "", value: 0.964452, tolerance: { kind: abs, value: 0.0001 }, lib: { module: sesion02, fn: corr, args: [ a1, a2, a3, b1, b2, b3, p1, p2 ] } }
+      - { id: beta_a, label: Beta A, unit: "", value: 1.666667, tolerance: { kind: abs, value: 0.0001 }, lib: { module: sesion02, fn: beta, args: [ a1, a2, a3, m1, m2, m3, p1, p2 ] } }
+      - { id: beta_b, label: Beta B, unit: "", value: 0.6, tolerance: { kind: abs, value: 0.0001 }, lib: { module: sesion02, fn: beta, args: [ b1, b2, b3, m1, m2, m3, p1, p2 ] } }
+    concepts:
+      - 06-rentabilidad-riesgo
+  - id: ej9
+    statement: Los precios mensuales consecutivos son {{p0}}, {{p1}}, {{p2}}, {{p3}}, {{p4}}, {{p5}}, {{p6}} €. Cobras {{d}} € al final de cada uno de los cuatro primeros meses y {{dl}} € en cada uno de los dos últimos. (a) Calcula los seis retornos mensuales. (b) Calcula la media, la desviación típica muestral mensual y la anualizada. Para anualizar, supone retornos mensuales sin correlación y con igual varianza.
+    parameters:
+      - { id: p0, label: Precio mes 0, default: 48, unit: €, min: 45, max: 51, step: 1 }
+      - { id: p1, label: Precio mes 1, default: 50, unit: €, min: 47, max: 53, step: 1 }
+      - { id: p2, label: Precio mes 2, default: 49, unit: €, min: 46, max: 52, step: 1 }
+      - { id: p3, label: Precio mes 3, default: 51, unit: €, min: 48, max: 54, step: 1 }
+      - { id: p4, label: Precio mes 4, default: 53, unit: €, min: 50, max: 56, step: 1 }
+      - { id: p5, label: Precio mes 5, default: 52, unit: €, min: 49, max: 55, step: 1 }
+      - { id: p6, label: Precio mes 6, default: 55, unit: €, min: 52, max: 58, step: 1 }
+      - { id: d, label: Dividendo meses 1–4, default: 0.3, unit: €, min: 0.2, max: 0.4, step: 0.05 }
+      - { id: dl, label: Dividendo meses 5–6, default: 0.35, unit: €, min: 0.25, max: 0.5, step: 0.05 }
+    seed: 33
+    difficulty: 2
+    hints:
+      - Incluye el dividendo. Cada mes tiene su propio precio inicial.
+      - Usa $r_t=(P_t-P_{t-1}+D_t)/P_{t-1}$. La varianza muestral divide entre n−1.
+      - El primer retorno usa $({{p1}}-{{p0}}+{{d}})/{{p0}}$. Anualiza multiplicando la desviación por $\sqrt{12}$.
+    steps:
+      - { title: Retornos, body: "Aplica la fórmula a cada mes. En %: {{r1}}, {{r2}}, {{r3}}, {{r4}}, {{r5}}, {{r6}}." }
+      - { title: Media mensual, body: "Suma los seis retornos y divide entre seis: {{mean}} %." }
+      - { title: Riesgo mensual, body: "Suma las desviaciones cuadradas y divide entre cinco. La raíz es {{sd}} % mensual. Conserva los decimales hasta el final." }
+      - { title: Riesgo anualizado, body: "Multiplica por $\\sqrt{12}$: {{annual}} %. Seis meses aportan poca información para estimar el futuro." }
+    answers:
+      - { id: r1, label: Retorno mes 1, unit: "%", value: 4.791667, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p0, p1, d ] } }
+      - { id: r2, label: Retorno mes 2, unit: "%", value: -1.4, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p1, p2, d ] } }
+      - { id: r3, label: Retorno mes 3, unit: "%", value: 4.693878, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p2, p3, d ] } }
+      - { id: r4, label: Retorno mes 4, unit: "%", value: 4.509804, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p3, p4, d ] } }
+      - { id: r5, label: Retorno mes 5, unit: "%", value: -1.226415, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p4, p5, dl ] } }
+      - { id: r6, label: Retorno mes 6, unit: "%", value: 6.442308, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: periodReturn, args: [ p5, p6, dl ] } }
+      - { id: mean, label: Media mensual, unit: "%", value: 2.96854, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: historicalMean, args: [ p0, p1, p2, p3, p4, p5, p6, d, dl ] } }
+      - { id: sd, label: Desviación típica mensual, unit: "%", value: 3.38895, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: historicalDeviation, args: [ p0, p1, p2, p3, p4, p5, p6, d, dl ] } }
+      - { id: annual, label: Desviación típica anualizada, unit: "%", value: 11.739669, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: historicalAnnual, args: [ p0, p1, p2, p3, p4, p5, p6, d, dl ] } }
+    concepts:
+      - 06-rentabilidad-riesgo
+---
+
+Practica con los datos originales. Después pulsa **Nueva variante** para cambiar los números.
+
+Las tarjetas siguen los ejercicios 1–5 y 7–9 de PS2; el original no contiene un ejercicio 6.
+Los importes corporativos están en millones de euros. Los precios por acción están en euros.
+Escribe las tasas y rentabilidades en porcentaje; las varianzas y covarianzas usan retornos en tanto por uno.
+
+Las soluciones conservan la precisión hasta el final y corrigen los errores de 5(c) y 7(c).
+Para beta y el coste del capital propio, aplica las ecuaciones dadas en los enunciados.
+
+Aceptamos un error absoluto de 0,01 en importes y porcentajes, salvo el WACC del proyecto: 0,0005 puntos porcentuales.
+En varianzas y covarianza, el margen es 0,00005; en correlación y betas, 0,0001.
