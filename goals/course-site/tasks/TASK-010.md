@@ -3,7 +3,7 @@ id: TASK-010
 title: 'Shared widgets: cash-flow timeline and growth curves'
 milestone: M-2
 state: approved
-depends_on: [TASK-003, TASK-007, TASK-009]
+depends_on: [TASK-007, TASK-009]
 delivery: pr
 ---
 
