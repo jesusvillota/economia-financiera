@@ -150,6 +150,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.
 - Notation clashes: see section 3.
 
+### Note 08 §3.1: abnormal returns can be negative
+
+The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.

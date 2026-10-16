@@ -1,0 +1,153 @@
+---
+title: "Eficiencia de mercado"
+part: 4
+chapter: 15
+difficulty: 2
+prerequisites: [11]
+summary: "Distingue información pasada, pública y privada. Prueba una pauta con costes y separa una simulación de la evidencia real."
+sessions: []
+---
+import EfficiencyDemo from '../../components/plots/EfficiencyDemo';
+import EventWindow from '../../components/plots/EventWindow';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Comprarías después de una subida?
+
+Una pantalla muestra una acción que sube durante varias sesiones. Dibujas una flecha hacia arriba y piensas comprar. Pero otra persona ve exactamente la misma pantalla. Si la subida siguiente fuera fácil de anticipar, ¿por qué te vendería al precio actual?
+
+La **eficiencia informativa** pregunta cuánto de la información disponible ya recoge el precio. No exige que nadie pierda dinero. Tampoco exige que todos ganen lo mismo. Pregunta si una información concreta permite obtener beneficios extraordinarios de forma sistemática, después de considerar riesgo y costes.
+
+La cuestión práctica no es encontrar una curva bonita. Es saber qué conocías antes de operar y qué resultado podías esperar entonces. Una explicación construida después de ver el precio puede sonar convincente y no servir para decidir mañana.
+
+## <span class="section-tag">Intuición</span>La misma pantalla, distintas informaciones
+
+Imagina una noticia sobre una empresa de almacenamiento. Antes del anuncio, los compradores forman sus expectativas. Cuando llega una noticia favorable e inesperada, el precio puede saltar. Ese salto puede mostrar que la información entra en el precio. No implica una oportunidad disponible después de leer el anuncio.
+
+La **forma débil** considera los precios, rendimientos y volúmenes pasados. Afirma que usar ese historial no permite obtener una rentabilidad anormal sistemática neta de costes. El análisis técnico busca pautas en esos datos. La prueba relevante compara una regla que podías ejecutar con una referencia adecuada al riesgo asumido.
+
+La **forma semifuerte** amplía el conjunto a toda la información pública. Incluye cuentas, anuncios y datos históricos de negociación. Por eso contiene la forma débil. Analizar balances puede ayudar a valorar una empresa, pero esta hipótesis niega que hacerlo permita superar sistemáticamente la referencia neta de costes.
+
+La **forma fuerte** añade la información privada. Es una exigencia mucho mayor: tampoco alguien con información aún no publicada podría obtener una ventaja sistemática. La evidencia de ventajas informativas de personas con acceso privilegiado contradice esta versión general. La forma semifuerte no afirma que nadie posea información privada.
+
+| Forma | Información que el precio incorpora | Pregunta de una prueba |
+|---|---|---|
+| Débil | Historial de mercado | ¿Una pauta pasada permite ganar después de costes y ajuste por riesgo? |
+| Semifuerte | Toda la información pública | ¿Queda una respuesta aprovechable después de un anuncio público? |
+| Fuerte | Información pública y privada | ¿Existe ventaja sistemática con acceso a información privada? |
+
+La eficiencia informativa difiere de la **eficiencia asignativa**. Esta última estudia cómo se distribuyen recursos y riesgos entre personas. Un precio informativo facilita decisiones de inversión. Sin embargo, no garantiza por sí solo una distribución óptima ni elimina problemas como los efectos ambientales no incluidos en precios.
+
+## <span class="section-tag">Formalización</span>Una pauta necesita una prueba
+
+### El paseo es un ejemplo, no la definición
+
+Un **paseo aleatorio** es un modelo donde las variaciones sucesivas no se pueden anticipar con las anteriores. Aquí simulamos el logaritmo del precio. El **rendimiento logarítmico** convierte cocientes de precios en diferencias que se pueden sumar:
+
+$$\ell_t=\ln(P_t/P_{t-1}),\qquad P_t=P_{t-1}e^{\ell_t}.$$
+
+La simulación añade una sorpresa nueva en cada sesión:
+
+$$\ell_t=\mu+\phi(\ell_{t-1}-\mu)+\sigma z_t.$$
+
+Las sorpresas $z_t$ son normales independientes, con media cero y varianza uno. La media diaria es $\mu$; $\sigma$ mide la desviación de la sorpresa. El parámetro $\phi$ controla cuánto persiste el rendimiento anterior. Antes del primer paso fijamos el rendimiento en su media. Con $\phi=0$ obtenemos el paseo; con persistencia positiva aparecen rachas más largas.
+
+Las curvas del juego empiezan en 100 € y duran 120 sesiones. Usan una media logarítmica diaria del 0,05 % y una desviación de las sorpresas del 2 %. No son tasas anuales. La semilla inicial es 42: una clave que permite repetir las mismas sorpresas. Cambiar la semilla cambia la muestra, no la hipótesis.
+
+El paseo permite una tendencia media positiva. «Aleatorio» no significa precio constante ni ausencia de crecimiento esperado. Además, la eficiencia admite primas de riesgo que cambian con el tiempo. Por eso rechazar este paseo concreto no basta para rechazar toda forma de eficiencia.
+
+### Autocorrelación y cociente de varianzas
+
+La **autocorrelación** compara un rendimiento con otro anterior. La lectura del juego usa el retraso de una sesión. Un valor positivo indica persistencia en esa muestra; uno negativo indica alternancia. Para una serie no constante de $n$ observaciones, calculamos:
+
+$$\widehat\rho_1=\frac{\sum_{t=2}^{n}(\ell_t-\bar\ell)(\ell_{t-1}-\bar\ell)}{\sum_{t=1}^{n}(\ell_t-\bar\ell)^2}.$$
+
+Aquí $\bar\ell$ es la media muestral. Un paseo puede presentar autocorrelación muestral distinta de cero por azar. Además, una correlación nula no descarta todas las dependencias posibles. Esta lectura es una descripción, no una prueba de significación ni una recomendación de compra.
+
+El **cociente de varianzas**, $\mathrm{VR}(q)$, compara la dispersión de rendimientos acumulados durante $q$ sesiones con la dispersión diaria:
+
+$$\mathrm{VR}(q)=\frac{\Var(\ell_t+\cdots+\ell_{t-q+1})}{q\Var(\ell_t)}.$$
+
+Si los rendimientos son independientes y tienen varianza constante, la varianza de una suma crece proporcionalmente al horizonte. Entonces el cociente poblacional es uno. La persistencia positiva tiende a elevarlo; la reversión puede reducirlo. En muestras finitas no esperes igualdad exacta.
+
+El juego usa sumas solapadas. Una sesión puede aparecer en varias ventanas. Calcula la varianza diaria con divisor $n$ y centra las sumas en $q\bar\ell$. Divide la suma de sus desviaciones cuadradas entre el número de ventanas completas. Esta convención reproduce la biblioteca; no añade correcciones de muestra pequeña ni intervalos de confianza.
+
+### Una regla que solo mira hacia atrás
+
+La regla **momentum** mantiene la acción cuando la suma de los rendimientos simples anteriores es positiva. En otro caso mantiene efectivo. El número de sesiones previas se elige antes de calcular el resultado. No usamos el rendimiento de la sesión que vamos a negociar para decidir su posición.
+
+$$r_t=e^{\ell_t}-1,\qquad r_{p,t}=w_t r_t-c\lvert w_t-w_{t-1}\rvert.$$
+
+El peso $w_t$ vale uno con la acción y cero con efectivo. El coste $c$ se resta de la rentabilidad en cada entrada o salida. Es una simplificación explícita de ejecución: no modelamos una horquilla ni costes que dependan del tamaño. La riqueza multiplica los factores $1+r_{p,t}$.
+
+El ejemplo inicial mira las 5 sesiones anteriores y cobra 0,10 % por cambio de posición. Parte de una unidad de riqueza en efectivo. Las primeras sesiones sin historial suficiente permanecen en efectivo. Comprar y mantener paga el mismo coste una vez, al principio. No forzamos una venta al final. El efectivo no cobra interés; omitimos impuestos y dividendos.
+
+<Callout type="warning">
+La riqueza final de momentum y la de mantener no tienen necesariamente el mismo riesgo. Su diferencia no es un alfa. Un resultado favorable en una simulación tampoco demuestra una anomalía en datos reales.
+</Callout>
+
+### Qué dice la evidencia y qué queda abierto
+
+Las pruebas de forma débil estudian autocorrelaciones y reglas negociables. Muchas pautas de corto plazo son pequeñas y sensibles a la negociación. También se ha documentado momentum en carteras y reversión en algunos horizontes. Su alcance depende del mercado, la muestra, los costes y el modelo de riesgo. No existe una promesa universal de continuidad ni de corrección.
+
+Las pruebas de forma semifuerte estudian la reacción a anuncios. Muchos eventos muestran ajustes rápidos. Otros presentan ajustes posteriores que motivan nuevas pruebas. Hay que fechar la información, considerar noticias simultáneas y estimar la incertidumbre. Las pruebas de forma fuerte estudian ventajas de acceso privado; su rechazo no implica rechazar automáticamente las otras formas.
+
+Una **hipótesis conjunta** significa que probamos dos ideas a la vez: la eficiencia y el modelo de rendimiento normal. Un rendimiento anormal puede señalar información mal incorporada o una referencia incompleta. Como viste en el [capítulo de estudios de eventos](/economia-financiera/chapters/11-mas-alla-capm/), cambiar la referencia cambia la sorpresa medida.
+
+La minería de datos busca tantas reglas que alguna parece buena por casualidad. Para reducir ese problema, fija la regla antes de probarla en una muestra nueva. Incluye empresas que desaparecieron y operaciones ejecutables a precios disponibles entonces. Compara después de costes y ajusta por riesgo. La gestión activa debe justificar sus gastos; la gestión pasiva reduce costes, pero sigue expuesta al riesgo del mercado.
+
+## <span class="section-tag">Zona de juego</span>Cambia la muestra antes de creer la pauta
+
+Las curvas comparten las mismas sorpresas. La línea azul continua muestra el paseo; la naranja discontinua añade persistencia. Seleccionar una serie cambia las lecturas y la regla aplicada. El parámetro de persistencia solo cambia la curva naranja. El horizonte del cociente de varianzas no cambia los precios.
+
+<EfficiencyDemo client:visible />
+
+**Prueba esto:**
+
+1. Selecciona «Persistencia» y compara sus lecturas con «Paseo». Después lleva $\phi$ a cero: las curvas deben coincidir.
+2. Mantén la muestra fija y sube el coste. La riqueza de momentum baja cuando hay cambios de posición. Pulsa «Otra trayectoria» y comprueba si tu conclusión se mantiene. «Restablecer» recupera el ejemplo inicial.
+
+### Una noticia pública y su ventana
+
+Ahora reutilizamos los datos ficticios del capítulo de estudios de eventos. El **AR** resta el rendimiento normal al observado. El **CAR** suma esos AR en una ventana inclusiva. El día del anuncio se marca como cero. Este panel mide sorpresas respecto a una referencia; no simula una nueva trayectoria.
+
+<EventWindow client:visible />
+
+Con los parámetros iniciales, el AR del anuncio es 1,50 % y el CAR de toda la ventana es 1,30 %. La diferencia muestra que ampliar una ventana no garantiza acumular más sorpresa positiva. No convertimos ese CAR en un rendimiento compuesto.
+
+**Prueba esto:** aísla el día del anuncio. Después selecciona solo los días posteriores. El CAR posterior es −0,20 %. Ese movimiento aislado no demuestra una estrategia rentable después de la noticia. Cambia beta o el intercepto: verás que el resultado también depende del modelo normal. Una prueba empírica necesitaría muchos eventos, incertidumbre estimada y costes de ejecución.
+
+Buscar información también cuesta dinero. Si nadie analizara noticias, sería difícil que el precio las incorporara. Esta tensión explica por qué la eficiencia no exige que todos dejen de investigar. La competencia puede reducir la ventaja hasta compensar los costes de obtenerla. No asegura que cada analista recupere sus gastos.
+
+## <span class="section-tag">Compruébalo</span>Qué puedes concluir
+
+<Quiz client:visible
+  question="¿Qué información añade la forma semifuerte respecto a la débil?"
+  options={['Solo el historial de precios', 'Toda la información pública', 'Toda la información privada']}
+  answer={1}
+  explanation="Incluye anuncios y cuentas públicas, además del historial. La información privada corresponde a la forma fuerte."
+/>
+
+<Quiz client:visible
+  question="Momentum acaba con más riqueza que mantener en una trayectoria simulada. ¿Qué demuestra?"
+  options={['Que el mercado real es ineficiente', 'Que la regla funcionará mañana', 'Solo una comparación en esa muestra y con esos supuestos']}
+  answer={2}
+  explanation="Faltan datos reales, una muestra nueva y ajuste por riesgo. Los costes también pueden cambiar la comparación."
+/>
+
+<Quiz client:visible
+  question="El AR del anuncio es 1,50 %. El CAR posterior es −0,20 %. ¿Qué puedes afirmar?"
+  options={['La forma semifuerte queda rechazada', 'Hay una pequeña reversión respecto a la referencia elegida', 'Existe arbitraje sin riesgo']}
+  answer={1}
+  explanation="Es una descripción de datos ficticios. Sin medir incertidumbre ni descartar otras noticias, no basta para rechazar eficiencia."
+/>
+
+## <span class="section-tag">Resumen</span>Información, riesgo y costes
+
+- Las formas débil, semifuerte y fuerte amplían el conjunto de información que suponemos incorporado en precios.
+- Un paseo es un modelo útil para comparar pautas. La eficiencia no exige exactamente ese proceso estadístico.
+- Autocorrelación y cociente de varianzas describen una muestra. No certifican beneficios ni sustituyen una prueba de significación.
+- Una estrategia debe usar información disponible antes de operar. Comprueba costes, riesgo y resultados en otra muestra.
+- Un estudio de eventos prueba conjuntamente eficiencia y una referencia de rendimiento normal. Un CAR aislado no decide entre ambas.
+
+**Siguiente:** finanzas conductuales. Estudiaremos cómo los sesgos de decisión y los límites del arbitraje pueden afectar a los precios.
