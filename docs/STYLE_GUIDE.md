@@ -142,6 +142,23 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Futures contracts / multiplier | $n$, $q$ | | $q$ units per contract; margin figures are totals for all $n$ contracts |
 | Futures initial / maintenance margin | $M_0$, $M_{\mathrm{mant}}$ | | Deposits, not a premium or trading profit |
 | Futures balance / balance before call / top-up | $B_d$, $B_d^-$, $A_d$ | | Chapter 20: no withdrawals; a strict breach restores the initial margin |
+| Option terminal price / exercise price | $S_T$, $K$ | | Chapter 21: nonnegative underlying price; European exercise at maturity |
+| Call / put premium | $c$, $p$ | | Chapter 21: per-unit initial premiums, not the tangent fund or scenario probabilities |
+| Option or leg payoff / strategy payoff | $H_C$, $H_P$, $H_j$, $H$ | | Gross terminal payments; include stock liquidation proceeds where present |
+| Strategy profit / signed initial cost | $\Pi$, $C_0$ | | Nominal payoff less initial cost; premiums are not compounded |
+| Signed leg quantity / unit initial cost | $q_j$, $a_j$ | | Positive quantity buys, negative sells; stock costs $S_0$, options cost their premiums |
+| Bond YTM / maturity | $y$, $T$ | `\Rate{y}` | Chapter 19 uses annual coupons and annual effective YTM; $T$ in years |
+| Bond present-value weight | $w_t$ | | $C_t/(1+y)^t$ divided by price; not a portfolio allocation or probability |
+| Macaulay / modified duration | $D_{\mathrm{Mac}}$, $D_{\mathrm{mod}}$ | | Years; annual convention: $D_{\mathrm{mod}}=D_{\mathrm{Mac}}/(1+y)$ |
+| Bond convexity / rate shock | $K$, $\Delta y$ | | $K=P''(y)/P(y)$ in years squared; shock in decimal units, not percentage points |
+| Spot / discount factor | $r_t$, $d_t$ | | Chapter 18: annual effective rate to t; $d_t=(1+r_t)^{-t}$ and $d_0=1$ |
+| Forward interval / annual effective forward | $s$, $k$, $f_{s,k}$ | | Chapter 18: starts at s, lasts k years, ends at s+k; second index is duration |
+| Bond face / initial price | $N$, $P_0$ | | Chapter 18: nominal principal / value today; cash flows use $C_t$ |
+| Bond face / annual coupon rate / coupon payment | $F$, $c$, $A$ | | Chapter 17: $A=Fc/m$; face repaid at maturity; $c$ is not a fund here |
+| Bond maturity / payments per year / period count | $T$, $m$, $n$ | | Chapter 17: $n=mT$ at a coupon boundary; $T$ is not a tangent fund here |
+| Yield to maturity | $y$ | `\Rate{y}` | Annual effective for annual payments; nominal annual compounded $m$ times when explicitly stated |
+| Clean / dirty bond price / accrued coupon | $P_{\mathrm{limpio}}$, $P_{\mathrm{sucio}}$, $CC$ | | Euros; dirty equals clean plus accrued; no ex-coupon period in chapter 17 |
+| Days elapsed / days in coupon period | $d$, $D$ | | Chapter 17 Actual/Actual coupon-period day counts; $D$ is not corporate debt here |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 

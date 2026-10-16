@@ -1,0 +1,17 @@
+# TASK-046 outcome
+
+## Acceptance
+
+- [x] `npm test` passes, including `tests/capitulo19.test.ts` covering every number in the text. This resumed session ran the suite after syncing the branch: **37 files, 1,200 tests passed**, exit 0. The chapter adds eight tests for cash flows, prices, Macaulay and modified duration, convexity, shocks, approximation errors, both PS4 comparisons, and an inventory that detects new numerical literals.
+- [x] `npm run build` passes and `/chapters/19-duracion/` renders six sections in order. Exit 0: **134 files checked, zero errors/warnings/hints, 23 pages built**. The Playwright script received HTTP 200 and checked Gancho → Intuición → Formalización → Zona de juego → Compruébalo → Resumen in all four theme/viewport combinations.
+- [x] `npm run screenshots 19` is clean. Exit 0 with **four passing captures**, dark/light × desktop 1280 px/phone 375 px; no browser console errors, KaTeX errors or horizontal overflow. Inspected all four full-page images and enlarged widget crops in this session. Images remain in the ignored `screenshots/` directory.
+- [x] `npm run clickthrough:cap19` exercises each widget and compares readouts with library values. Exit 0: **600 comparisons against `bonds.ts`** across dark/light × 1280/360 px. Exercises all four sliders, boundary combinations, positive/negative/zero shocks, zero coupon, keyboard input, reset, the expandable derivation, and wrong/retry/correct paths for all three quizzes. No console, KaTeX, page-overflow or widget-overflow errors.
+- [x] No claim contradicts `docs/AUDIT.md`. Re-read the chapter against the audit and PS4 Ex 6c/6d source. Regression tests verify corrected prices, euro and percentage losses, purchase-YTM durations, and rounded versus exact spot conventions. The new section-2 audit entry corrects the source's claim that the zero-coupon bond loses more euros: losses are **8.95 € versus 9.64 €**, while relative losses are **0.959% versus 0.937%**.
+
+## Summary
+
+Resumed the existing Chapter 19 implementation on `goal/course-site/task-046`. It provides six Spanish sections, three quizzes and a duration explorer using only `src/lib/finance/bonds.ts` for financial calculations. The chapter distinguishes Macaulay duration, modified duration and convexity, explains local approximation limits, and separates purchase-YTM sensitivity from spot-curve repricing. Added notation, the PS4 audit correction, numerical regression tests and the click-through command. `sessions: []` remains for PS4 integration.
+
+Verified implementation revision: `40014c26ede4052b3f4d8775c37b877d2cf274fa`. This outcome is a documentation-only follow-up. Preserved both existing branch histories with a merge, resolving the single script conflict by keeping the derivation-specific selector. Merged `origin/main` before final verification. No financial library changes, task-spec edits, decision edits or other chapter changes. Goal metadata updates came only from upstream merges. No material decision or follow-up is needed.
+
+All four required Verify commands passed locally in this session. GitHub Actions and the PR build check are ignored under the explicit owner override. PR #39 has no review threads, reviews or issue comments at the final review check. Delivery updates the existing PR body with the task marker and verification evidence, retains `goal:course-site`, pushes this branch and marks the PR ready. Never merge.

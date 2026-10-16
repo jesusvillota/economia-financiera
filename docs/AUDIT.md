@@ -170,6 +170,18 @@ The definition calls abnormal returns only «rendimientos superiores a los esper
 
 The solution at lines 606–632 uses `F_0` and `F_t` for the value of an existing forward, while calling the delivery price `K`. Chapter 20 uses `F_{t,T}` for the delivery quote of a new zero-value contract and `V_t` for an existing contract. At inception, setting `K=F_{t,T}` makes `V_t=0`; the delivery quote itself is not zero. The existing Ex 10b correction remains **0.9429 / €45.26 / €4.74**, not €4.76, with **1.5 years remaining**. Regression tests: `tests/capitulo20.test.ts`, “gancho y quiz 1”, “PS4 Ex 10a” and “audit PS4 Ex 10b”. The chapter adds an original seeded futures exercise; it does not attribute it to the source PS4.
 
+### PS4 Ex 6d: absolute versus relative price changes
+
+`source/problem_sets/ps4/ps4_solutions.tex:321` claims the zero-coupon bond has the larger absolute price change. With the source-rounded new spots (3.5%, 4%), corrected old/new prices are 933.51/924.56 for the zero and 1028.73/1019.09 for the coupon bond. Losses are **8.95 euros (0.959%)** and **9.64 euros (0.937%)** respectively. The coupon bond loses more euros; the zero loses more proportionally. Chapter 19 distinguishes both measures and keeps Ex 6c purchase-YTM duration separate from Ex 6d spot-curve repricing. The exact spot implied by the new 4.5% forward is slightly below 4%; the printed Ex 6d prices use the rounded spot. Regression: `tests/capitulo19.test.ts`, “audit PS4 6d”, tests the ordering, all prices and percentages, the existing corrected 6a final-payment PV 980.19, and exact-forward versus rounded-spot conventions.
+
+### PS4 Ex 8d: implied forwards do not guarantee future spots
+
+`source/problem_sets/ps4/ps4_solutions.tex:385–391` identifies the implied forward with the future spot expected by the market and recommends locking a loan solely from that comparison. No-arbitrage alone relates current discount factors; it does not identify a forecast or ensure that waiting costs more. With the source curve, the corrected annual forward from year 2 to year 3 is 5.01%. A contract at 4.5% is cheaper than that implied fixed rate for otherwise identical terms. A future spot of either 2% or 8% remains possible without changing today’s curve. Chapter 18 states the uncertainty and the extra assumptions needed for an expectations interpretation. Regression: `tests/capitulo18.test.ts`, “audit PS4 Ex 8d: future spots can differ from the locked forward”, compares repayment under both future scenarios with the library. The existing 5.01% correction is also tested there.
+
+### ps4 Ex 9: month fractions are not actual day counts
+
+The solution of Ex 9c describes 15 February to 15 April 2026 as 60 days of a 90-day coupon period. Actual calendar counts are 59 elapsed days and 89 days to 15 May. The stipulated two-thirds month fraction gives 24.17 € accrued on a 36.25 € coupon; Actual/Actual coupon-period gives 24.03 €. The existing PS4 corrected answers above retain the exercise's month fractions. Chapter 17's original example and widget explicitly use Actual/Actual, so they must not substitute those figures into PS4's calculation. Regression: `tests/capitulo17.test.ts`, “audit §2: PS4 Ex 9 month fractions are not actual calendar days”.
+
 ## 3. Notation inventory
 
 Counts are occurrences in `class_notes/*.tex`.

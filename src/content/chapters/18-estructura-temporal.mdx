@@ -1,0 +1,153 @@
+---
+title: "Estructura temporal y tipos forward"
+part: 5
+chapter: 18
+difficulty: 3
+prerequisites: [17]
+summary: "Descuenta cada pago con su spot y deduce el tipo de una inversión futura mediante ausencia de arbitraje."
+sessions: []
+---
+import SpotForwardBuilder from '../../components/plots/SpotForwardBuilder';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Qué tipo corresponde al segundo año?
+
+Puedes invertir hoy al 2 % durante un año o al 3 % anual durante dos años. ¿Qué interés corresponde al segundo año? Restar ambos porcentajes no resuelve la pregunta. El tipo largo remunera todo el plazo, incluido el primer año. Además, los intereses se capitalizan.
+
+Con 1000 € obtendrías 1060,90 € al terminar los dos años de la inversión larga. La inversión corta entrega 1020 € al terminar el primer año. Para llegar al mismo importe final, esos 1020 € deben ganar un 4,01 % durante el segundo año. Este es un tipo **forward implícito**: una tasa para un periodo futuro, deducida de precios actuales.
+
+La pregunta práctica es sencilla: ¿cómo repartir el precio del tiempo entre fechas? Necesitamos una curva, no un único tipo. La misma curva permite valorar un bono con varios pagos. Cada pago usa el tipo de su fecha, como cada trayecto usa su propio precio.
+
+## <span class="section-tag">Intuición</span>Dos caminos hacia el mismo cobro
+
+Un **tipo spot** es el tipo contratado hoy para invertir desde hoy hasta una fecha concreta. La **estructura temporal** reúne los tipos spot para distintos plazos. Para compararlos, mantenemos la moneda, la fecha de valoración y el riesgo de crédito. Aquí suponemos pagos ciertos, sin impuestos ni costes, y tipos efectivos anuales.
+
+Un bono **cupón cero** entrega solo su nominal al vencimiento. Su precio revela el spot de ese plazo. Un bono con cupones mezcla fechas. Su TIR resume su precio con una tasa única; no proporciona directamente el spot de cada fecha. Conviene recordar esta diferencia del capítulo previo antes de comparar bonos distintos.
+
+Mira los dos caminos del ejemplo. La segunda ruta solo queda fijada hoy si contratas también la reinversión futura:
+
+| Ruta | Hoy | Dentro de un año | Dentro de dos años |
+|---|---|---|---|
+| Inversión larga | Inviertes 1000 € | No cobras | Cobras 1060,90 € |
+| Inversión corta y forward | Inviertes 1000 € | Reinviertes 1020 € | Cobras 1060,90 € |
+
+El forward funciona como un puente contratado hoy entre fechas futuras. Si dejas la reinversión sin contratar, el puente sigue sin precio conocido. El tipo que encuentres entonces puede resultar mayor o menor. Por eso invertir a corto y esperar no es una réplica segura de invertir a largo.
+
+La **ausencia de arbitraje** exige el mismo precio para cobros equivalentes bajo estas condiciones. Un arbitraje sería una combinación de operaciones sin riesgo que produce una ganancia sin inversión neta. Si puedes prestar y pedir prestado a los mismos tipos, una diferencia permitiría financiar la ruta barata vendiendo la cara. Los límites de crédito y los costes pueden impedir esa operación en mercados reales.
+
+Una curva creciente hace que los forwards de los tramos correspondientes queden por encima de los spots de partida. La razón es la compensación: el tramo posterior debe elevar la capitalización acumulada hasta la que exige el plazo largo. Una curva plana da forwards iguales a los spots. Una curva descendente puede dar forwards menores, incluso negativos, sin romper por sí sola la igualdad entre rutas.
+
+## <span class="section-tag">Formalización</span>Descontar por fechas y separar tramos
+
+### El descuento spot
+
+Escribimos $r_t$ para el spot efectivo anual hasta el año $t$. El **factor de descuento** $d_t$ es el precio hoy de una unidad monetaria cierta en esa fecha:
+
+$$d_t=\frac{1}{(1+\Rate{r_t})^t}.$$
+
+Un cupón cero de nominal $N$ vale $P_0=Nd_t$. Si conocemos su precio, podemos despejar:
+
+$$\Rate{r_t}=\left(\frac{N}{P_0}\right)^{1/t}-1.$$
+
+Para varios pagos $C_t$, sumamos sus valores actuales. Aquí la suma recorre las fechas de pago, que no tienen por qué ser consecutivas:
+
+$$P_0=\sum_t C_t d_t=\sum_t\frac{C_t}{(1+\Rate{r_t})^t}.$$
+
+En nuestro ejemplo original, los spots a uno, dos y tres años son 2 %, 3 % y 4 %. Un cupón cero de 1000 € a tres años vale 889,00 €. Un bono del mismo nominal, con cupón anual del 5 % y vencimiento a tres años, paga 50 €, 50 € y 1050 €. Su precio es:
+
+$$P_0=\frac{50}{1{,}02}+\frac{50}{1{,}03^2}+\frac{1050}{1{,}04^3}\approx1029{,}60\,€.$$
+
+Los valores actuales de sus pagos son 49,02 €, 47,13 € y 933,45 €. Sumamos sin redondear; el precio final se redondea después. No reemplazamos todos los spots por el último. Eso descontaría también los primeros cupones con una tasa que no corresponde a su plazo.
+
+### El forward entre dos fechas
+
+Usamos $f_{s,k}$ para el tipo efectivo anual del intervalo que empieza dentro de $s$ años y dura $k$ años. El segundo índice mide duración, no fecha final. Con $s\geq0$ y $k>0$, igualamos las dos capitalizaciones:
+
+$$(1+r_{s+k})^{s+k}=(1+r_s)^s(1+f_{s,k})^k.$$
+
+Cuando $s=0$, el factor inicial es la unidad y no necesitamos un spot a plazo cero. El forward coincide con el spot hasta el final. Para despejar en el caso general, dividimos por la capitalización hasta el inicio. Después tomamos la raíz correspondiente a la duración y restamos la unidad:
+
+$$f_{s,k}=\left[\frac{(1+r_{s+k})^{s+k}}{(1+r_s)^s}\right]^{1/k}-1.$$
+
+También podemos escribir $(1+f_{s,k})^k=d_s/d_{s+k}$, con $d_0=1$. Es una relación de precios observados hoy. No contiene el tipo spot que se observará en la fecha futura.
+
+Para los spots del gancho:
+
+$$f_{1,1}=\frac{1{,}03^2}{1{,}02}-1\approx4{,}01\,\%.$$
+
+El tramo entre el primer y el tercer año dura dos años. Con el spot a tres años del ejemplo:
+
+$$f_{1,2}=\left(\frac{1{,}04^3}{1{,}02}\right)^{1/2}-1\approx5{,}01\,\%.$$
+
+La cifra sigue siendo anual. Para obtener la rentabilidad de todo ese intervalo, capitaliza durante su duración. No multipliques el tipo por los años: el interés del primer año también gana intereses. La fórmula permite intervalos de longitud distinta, siempre que conozcas los spots de ambos extremos.
+
+<details>
+<summary>Cómo obtener spots de bonos con cupones</summary>
+
+La **extracción secuencial** o *bootstrap* recupera spots a partir de bonos ordenados por vencimiento. Empieza por el pago más cercano. Una vez conocido su descuento, puedes restar el valor de ese pago al precio de un bono más largo. El resto del precio corresponde al pago final y revela el siguiente spot.
+
+En el ejemplo, el cupón cero a un año vale 980,39 €. Usa su precio sin redondear para recuperar el 2 %. Un bono a dos años, con nominal de 1000 € y cupón anual del 5 %, vale 1038,75 €. Restar el valor actual del cupón inicial deja el valor actual del pago final. Al despejar, recuperas el spot del 3 %.
+
+Debes disponer de información para cada fecha de cupón anterior. Si falta un nodo, necesitas más precios o una hipótesis explícita de interpolación. No puedes obtener una curva única de cualquier colección incompleta de bonos. El constructor de este capítulo trabaja solo con nodos anuales y no interpola.
+
+</details>
+
+<Callout type="warning" title="Un forward no es una promesa sobre el spot futuro">
+El forward fija hoy una tasa futura por equivalencia de precios. Puede incorporar primas por riesgo y por plazo. Identificarlo con una expectativa exige hipótesis adicionales. Comparar un préstamo fijo con esperar requiere valorar también tu exposición a tipos inciertos.
+</Callout>
+
+### Lectura crítica de PS4
+
+PS4, ejercicio 8, usa spots del 3 %, 3,5 %, 4 %, 4,2 % y 4,3 % para los cinco primeros años. Dan $f_{1,1}=4{,}00\,\%$, $f_{2,1}=5{,}01\,\%$ y $f_{1,2}=4{,}50\,\%$, redondeados. La solución original imprime 5,00 % para el segundo forward. Usamos la corrección de la auditoría.
+
+Un préstamo forward ofrecido al 4,5 % cuesta menos que el 5,01 % implícito, si las demás condiciones coinciden. Eso compara dos tasas fijadas hoy. No demuestra que esperar vaya a costar más: el spot futuro es desconocido. Tampoco basta una oferta aislada para asegurar un arbitraje ejecutable con crédito, garantías y costes reales.
+
+## <span class="section-tag">Zona de juego</span>Construye una curva por nodos
+
+Arrastra verticalmente los puntos azules o usa sus deslizadores. El punto naranja de cada fecha muestra el forward del año que termina allí. La tabla muestra también un forward cuyo inicio y duración puedes elegir. Las líneas unen los nodos para guiar la vista; no representan tipos calculados para fechas intermedias.
+
+<SpotForwardBuilder client:visible />
+
+**Prueba esto:**
+
+1. Iguala todos los spots al 3 %. Todos los forwards quedan al 3 %. El bono inicial vale 1056,57 €.
+2. Restablece el ejemplo. Sube solo el spot final. Observa los forwards vecinos y los bonos cuyos pagos alcanzan esa fecha.
+3. Pon el cupón en cero. Los precios de ambos bonos coinciden. Después cambia el vencimiento para aislar cada descuento.
+
+Al subir un nodo interior, aumenta el forward que termina allí y disminuye el que empieza allí. Cambias el punto de unión entre dos tramos. Esto explica por qué pequeños cambios en spots pueden producir movimientos mayores en forwards. No atribuyas cada ondulación a una predicción económica precisa.
+
+El ejercicio 6d de PS4 recorre el camino inverso: usa un spot y un forward para recuperar el siguiente spot. Después valora de nuevo los bonos. Trabaja con toda la precisión y redondea solo al comunicar el resultado. Separar el cambio de curva del cambio de cupón evita confundir el precio de mercado con los pagos prometidos.
+
+## <span class="section-tag">Compruébalo</span>Elige la interpretación correcta
+
+<Quiz client:visible
+  question="Con spots del 2 % a un año y del 3 % a dos años, ¿qué forward anual empieza dentro de un año?"
+  options={['1 %', '4,01 %', '3 %']}
+  answer={1}
+  explanation="Divide 1,03² entre 1,02 y resta la unidad. Obtienes 4,01 % tras redondear, sin restar los dos tipos."
+/>
+
+<Quiz client:visible
+  question="Un forward queda fijado hoy. ¿Qué puedes concluir sobre el spot que observarás al empezar ese periodo?"
+  options={['Será necesariamente igual', 'Será necesariamente mayor', 'Puede ser distinto']}
+  answer={2}
+  explanation="La ausencia de arbitraje relaciona precios actuales. No garantiza el tipo futuro ni elimina el riesgo de esperar sin contratar."
+/>
+
+<Quiz client:visible
+  question="Todos los spots son del 3 %. ¿Qué forward anual tiene cualquier intervalo cubierto por la curva?"
+  options={['Depende siempre del cupón', '3 %', 'La suma de los spots']}
+  answer={1}
+  explanation="Al dividir las capitalizaciones se obtiene una potencia de 1,03. Su raíz devuelve el mismo 3 % anual."
+/>
+
+## <span class="section-tag">Resumen</span>Una fecha, un descuento
+
+- El spot remunera una inversión desde hoy hasta un vencimiento concreto.
+- Cada pago del bono usa el descuento de su fecha. La TIR única no sustituye la curva spot.
+- El forward separa dos capitalizaciones actuales. Sus índices indican inicio y duración.
+- Fijar un forward elimina la incertidumbre de esa tasa contractual. Esperar mantiene expuesto al inversor al spot futuro.
+- El precio se calcula sin redondeos intermedios. Una curva requiere datos o hipótesis para cada fecha necesaria.
+
+**Siguiente:** duración y riesgo de tipo de interés. Mediremos cuánto cambia el precio de un bono cuando cambian los tipos.
