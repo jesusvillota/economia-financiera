@@ -19,7 +19,8 @@
     "clickthrough:van-tir": "node scripts/clickthrough-van-tir.mjs",
     "clickthrough:cap4": "node scripts/clickthrough-cap4.mjs",
     "clickthrough:cap10": "node scripts/clickthrough-cap10.mjs",
-    "clickthrough:cap7": "node scripts/clickthrough-cap7.mjs"
+    "clickthrough:cap7": "node scripts/clickthrough-cap7.mjs",
+    "clickthrough:cap11": "node scripts/clickthrough-cap11.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
