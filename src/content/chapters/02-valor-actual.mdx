@@ -1,0 +1,176 @@
+---
+title: "Valor actual, rentas y perpetuidades"
+part: 1
+chapter: 2
+difficulty: 1
+prerequisites: [1]
+summary: "Cómo valorar hoy un cobro futuro, una serie de cobros iguales y una serie que no se acaba nunca."
+---
+import CashFlowTimeline from '../../components/plots/CashFlowTimeline';
+import AnnuityBuilder from '../../components/plots/AnnuityBuilder';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Cuánto vale hoy un cobro futuro?
+
+Te ofrecen 1000 € dentro de cinco años. ¿Cuánto pagarías por ese derecho hoy?
+
+No pagarías 1000 €. Con ese dinero en el banco, en cinco años tendrías más. Pero tampoco sabes todavía cuánto menos. La respuesta depende de una sola cosa: el tipo de interés al que podrías invertir tu dinero mientras esperas.
+
+La pregunta se complica pronto. Un alquiler te paga 1000 € cada año durante diez años. Una finca te paga 1000 € cada año *para siempre*. ¿Cuánto valen? Parece que hacen falta diez cuentas en el primer caso y infinitas en el segundo. En este capítulo verás que basta una fórmula corta para cada caso.
+
+Usaremos la tasa $\Rate{r}$ del [capítulo 1](/economia-financiera/chapters/01-interes/). Salvo que digamos otra cosa, es una tasa anual efectiva y el ejemplo de referencia es el 5 %.
+
+## <span class="section-tag">Intuición</span>Descontar es capitalizar al revés
+
+### Un solo flujo
+
+En el capítulo 1 viste que 100 € de hoy valen $100\cdot 1{,}05 = 105$ € dentro de un año. Dale la vuelta a la pregunta: ¿qué cantidad de hoy equivale a 105 € dentro de un año? Son 100 €. Para pasar del futuro al presente se **divide** por $1+\Rate{r}$ en lugar de multiplicar.
+
+Eso se llama **descontar**. El resultado es el **valor actual** ($\VA$, *present value* en inglés) del cobro. Si el cobro está a $t$ años, se divide $t$ veces:
+
+$$\VA = \frac{\VF}{(1+\Rate{r})^t}.$$
+
+Con 1000 € a 5 años y $\Rate{r}=5\,\%$ se obtiene $1000/1{,}05^5 = 783{,}53$ €. El número $1{,}05^{-5} = 0{,}7835$ es el **factor de descuento**: lo que vale hoy un euro que llega dentro de 5 años.
+
+### Varios flujos: cada uno se descuenta por separado
+
+La línea temporal de abajo muestra tres cobros y un pago. Pulsa **Descontar a $t=0$** y cada flecha se desliza hasta hoy y se encoge. El tamaño de cada flecha final es su valor actual. Los valores actuales ya están en la misma fecha, así que se pueden **sumar**.
+
+<CashFlowTimeline client:visible />
+
+**Prueba esto.** Sube la tasa hasta el 20 % y descuenta. Las flechas lejanas se encogen mucho más que las cercanas. Después baja la tasa a 0 %: nada se encoge, porque sin interés un euro de mañana vale lo mismo que uno de hoy.
+
+### Una renta es una pila de flechas
+
+Una **renta** (o *anualidad*) es una serie de pagos iguales $A$ a intervalos regulares. El alquiler del gancho es una renta de 10 pagos de 1000 €. No necesitas nada nuevo para valorarla: descuentas cada pago y sumas.
+
+Eso da diez términos. Con 40 pagos mensuales serían 40. Hay un atajo, y lo verás en la sección siguiente. Antes, fíjate en la forma. Los pagos son todos iguales, pero sus valores actuales **decrecen**: el pago del año 10 vale mucho menos hoy que el del año 1. La figura de la zona de juego te lo enseña barra a barra.
+
+## <span class="section-tag">Formalización</span>Las fórmulas, paso a paso
+
+### Renta pospagable
+
+Una renta es **pospagable** (o *ordinaria*) si cada pago llega al **final** de su periodo: el primer pago está en $t=1$ y el último en $t=n$. Su valor actual es la suma de los valores actuales de los pagos:
+
+$$V_0 = \sum_{t=1}^{n} \frac{A}{(1+\Rate{r})^t}.$$
+
+Esta suma tiene una forma conocida: cada término es el anterior multiplicado por $x = 1/(1+\Rate{r})$. Es una serie geométrica.
+
+<details>
+<summary>Derivación completa</summary>
+
+Saca $A$ y el primer factor $x$:
+
+$$V_0 = A\sum_{t=1}^{n} x^t = A\,x\,(1 + x + \dots + x^{n-1}) = A\,x\,\frac{1-x^n}{1-x}.$$
+
+Ahora $1 - x = 1 - \frac{1}{1+r} = \frac{r}{1+r}$, así que $x/(1-x) = 1/r$. Queda
+
+$$V_0 = A\cdot\frac{1-(1+\Rate{r})^{-n}}{\Rate{r}}.$$
+
+</details>
+
+Esta es la fórmula de la renta pospagable:
+
+$$\boxed{V_0 = A\cdot\frac{1-(1+\Rate{r})^{-n}}{\Rate{r}}}$$
+
+*Lectura sencilla:* el factor $\frac{1-(1+r)^{-n}}{r}$ dice cuántos euros de hoy valen $n$ pagos de un euro. Para $n=10$ y $r=5\,\%$ vale $7{,}7217$. Diez pagos de 1000 € valen entonces $7721{,}73$ € hoy, bastante menos que 10.000 €.
+
+### Pospagable frente a prepagable
+
+Una renta es **prepagable** (o *anticipada*) si cada pago llega al **inicio** del periodo: el primero está en $t=0$. Cada pago llega un año antes, así que vale un factor $(1+\Rate{r})$ más:
+
+$$V_0^{\text{pre}} = (1+\Rate{r})\cdot A\cdot\frac{1-(1+\Rate{r})^{-n}}{\Rate{r}}.$$
+
+Con los mismos datos: $7721{,}73\cdot 1{,}05 = 8107{,}82$ €. Cobrar al principio vale más.
+
+### Perpetuidad: el límite de una renta
+
+Una **perpetuidad** es una renta que no termina. Mira qué pasa en la fórmula cuando $n$ crece. Si $\Rate{r}>0$, el término $(1+\Rate{r})^{-n}$ tiende a 0. Queda:
+
+$$\boxed{V_0 = \frac{A}{\Rate{r}}}$$
+
+Una perpetuidad de 1000 € al 5 % vale $1000/0{,}05 = 20.000$ €. Dos observaciones:
+
+- Una renta de **50** pagos ya vale $18.255{,}93$ €. Los pagos lejanos pesan muy poco.
+- Los 10 primeros pagos valen $7721{,}73$ €. Los infinitos pagos restantes valen $12.278{,}27$ € hoy. Una cola infinita puede tener valor finito.
+
+<Callout type="key">
+La perpetuidad exige $\Rate{r}>0$. Con $r=0$ la suma de pagos no tiene límite.
+</Callout>
+
+### Renta creciente
+
+A veces el pago crece cada periodo a una tasa $g$ (alquileres con inflación, por ejemplo). El primer pago $A$ llega en $t=1$ y el siguiente es $A(1+g)$. Con $x = \frac{1+g}{1+r}$ la suma es otra serie geométrica y sale:
+
+$$\boxed{V_0 = A\cdot\frac{1-\left(\frac{1+g}{1+\Rate{r}}\right)^{n}}{\Rate{r}-g}}\qquad (\Rate{r}\neq g).$$
+
+Si $\Rate{r}=g$, cada término vale $A/(1+\Rate{r})$ y el total es $nA/(1+\Rate{r})$. Con $n\to\infty$ y $\Rate{r}>g$, el cociente $\frac{1+g}{1+r}$ es menor que 1 y su potencia tiende a 0:
+
+$$V_0 = \frac{A}{\Rate{r}-g}.$$
+
+**Ejemplo.** Un contrato paga 1000 € el primer año, crece un 5 % al año y dura 10 años. Descontamos al 10 %:
+
+$$V_0 = 1000\cdot\frac{1-(1{,}05/1{,}10)^{10}}{0{,}10-0{,}05} = 1000\cdot\frac{1-0{,}628}{0{,}05} = 7439{,}81\ €.$$
+
+(Con tres cifras, $(1{,}05/1{,}10)^{10}=0{,}628$. El valor de $7439{,}81$ € usa todas las cifras.) El último pago es $1000\cdot 1{,}05^{9} = 1551{,}33$ €. La versión perpetua del mismo contrato vale $1000/(0{,}10-0{,}05)=20.000$ €.
+
+<Callout type="warn">
+Con $g\ge \Rate{r}$ no existe la perpetuidad creciente: los pagos crecen más deprisa que el descuento y la suma no converge. En el constructor, la casilla de perpetuidad muestra $r\le g$ en ese caso.
+</Callout>
+
+### Resumen de las fórmulas
+
+| Renta | Valor actual |
+|---|---|
+| Un flujo $C$ en $t$ | $C/(1+\Rate{r})^t$ |
+| Pospagable, $n$ pagos $A$ | $A\,\dfrac{1-(1+\Rate{r})^{-n}}{\Rate{r}}$ |
+| Prepagable | pospagable $\times\,(1+\Rate{r})$ |
+| Perpetuidad | $A/\Rate{r}$ |
+| Creciente, $n$ pagos | $A\,\dfrac{1-\left(\frac{1+g}{1+r}\right)^n}{r-g}$ |
+| Perpetuidad creciente | $A/(r-g)$ |
+
+Todas las cifras de este capítulo salen de `src/lib/finance` y están comprobadas con pruebas automáticas.
+
+## <span class="section-tag">Zona de juego</span>Construye tu renta
+
+Cada pago es una flecha verde. Junto a ella hay una flecha azul: su valor actual. La suma de las azules es el valor actual de la renta. El primer resultado usa la fórmula y el segundo suma las azules una por una. Los dos coinciden siempre.
+
+<AnnuityBuilder client:visible />
+
+**Prueba esto.**
+
+1. Deja $n=10$, $r=5\,\%$ y $A=100$ €. Cambia entre *Final de año* e *Inicio de año*. El valor actual sube un 5 %. ¿Por qué?
+2. Pon $g=0$ y sube $n$ hasta 20. Compara el valor actual con la perpetuidad. ¿Cuánto falta? Después sube $g$ hasta que sea igual a $r$ y mira qué pasa con la perpetuidad.
+
+## <span class="section-tag">Compruébalo</span>Tres preguntas
+
+<Quiz client:visible
+  question="Si la tasa sube, ¿qué pasa con el valor actual de un cobro futuro?"
+  options={['Sube', 'Baja', 'No cambia']}
+  answer={1}
+  explanation="El factor de descuento $(1+r)^{-t}$ es más pequeño cuanto mayor es $r$. Un cobro lejano se ve más afectado que uno cercano."
+/>
+
+<Quiz client:visible
+  question="Una perpetuidad paga 1000 € al año y $r = 5\,\%$. Vale 20.000 €. ¿Cuánto valdría con $r = 10\,\%$?"
+  options={['40.000 €', '10.000 €', '20.000 €']}
+  answer={1}
+  explanation="$V_0 = A/r = 1000/0{,}10 = 10.000$. La tasa está en el denominador: al doblarla, el valor se divide por dos."
+/>
+
+<Quiz client:visible
+  question="Alquilas un local con 10 pagos anuales iguales. ¿Qué forma de pago tiene mayor valor actual, a la misma tasa?"
+  options={['Pagos al final de cada año', 'Pagos al inicio de cada año', 'Las dos valen lo mismo']}
+  answer={1}
+  explanation="Cada pago llega un año antes, así que se descuenta un año menos. El valor actual de la renta prepagable es el de la pospagable multiplicado por $(1+r)$."
+/>
+
+## <span class="section-tag">Resumen</span>Lo esencial
+
+- **Descontar** es dividir por $(1+\Rate{r})^t$. El valor actual de varios flujos es la suma de sus valores actuales.
+- Una **renta pospagable** de $n$ pagos $A$ vale $A\,\frac{1-(1+r)^{-n}}{r}$. La **prepagable** vale $(1+r)$ veces más.
+- Una **perpetuidad** vale $A/r$. Es el límite de la renta cuando $n\to\infty$.
+- Si los pagos crecen a tasa $g$, la renta vale $A\,\frac{1-((1+g)/(1+r))^n}{r-g}$ y la perpetuidad $A/(r-g)$, solo si $r>g$.
+
+Los ejercicios de este capítulo están en la [sesión de problemas 1](/economia-financiera/sesiones/ps1/). Con el valor actual de una serie de flujos ya puedes decidir si un proyecto merece la pena. Es el tema del siguiente capítulo: el **VAN** y la **TIR**.

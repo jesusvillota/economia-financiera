@@ -10,7 +10,8 @@
     "test": "vitest run",
     "screenshots": "node scripts/screenshots.mjs",
     "clickthrough": "node scripts/clickthrough-slider.mjs",
-    "clickthrough:widgets": "node scripts/clickthrough-widgets.mjs"
+    "clickthrough:widgets": "node scripts/clickthrough-widgets.mjs",
+    "clickthrough:cap2": "node scripts/clickthrough-cap2.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

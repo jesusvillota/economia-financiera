@@ -2,12 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CashFlowTimeline from '../../components/plots/CashFlowTimeline';
 import GrowthCurves from '../../components/plots/GrowthCurves';
+import AnnuityBuilder from "../../components/plots/AnnuityBuilder";
 ---
 <BaseLayout title="Galería de widgets (desarrollo)">
   <main id="main" class="gallery">
     <h1>Galería de widgets</h1>
     <CashFlowTimeline client:visible />
     <GrowthCurves client:visible />
+    <AnnuityBuilder client:visible />
   </main>
 </BaseLayout>
 
