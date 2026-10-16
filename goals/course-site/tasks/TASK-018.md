@@ -2,11 +2,12 @@
 id: TASK-018
 title: 'Plan: decompose M-5'
 milestone: M-5
-state: approved
+state: done
 depends_on: [TASK-037, TASK-038, TASK-039, TASK-040, TASK-041]
 delivery: manual
 kind: plan
 route: {platform: claude, model: sonnet, effort: high}
+reason: M-5 decomposed into TASK-042..048, 050, 051 with filled specs; goal check ok.
 ---
 
 ## Why
