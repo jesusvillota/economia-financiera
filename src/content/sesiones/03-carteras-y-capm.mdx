@@ -1,0 +1,1579 @@
+---
+title: Carteras y CAPM
+number: 3
+source: ps3
+chapters:
+  - 07-dos-activos
+  - 08-markowitz
+  - 09-activo-libre-riesgo
+  - 10-capm
+difficulty: 3
+summary: "Diversificación, mínima varianza, activo libre de riesgo y CAPM: nueve ejercicios con pistas y variantes reproducibles."
+exercises:
+  - id: ej1
+    difficulty: 3
+    seed: 31
+    statement: Diversificación. A ofrece {{a}} % con volatilidad {{sa}} %; B ofrece {{b}} % con volatilidad {{sb}} %. (a) Con {{w}} % en A, calcula la rentabilidad y el riesgo para cada correlación indicada. (b) Dibuja riesgo frente a correlación; usa la figura superior para comprobar la forma con los datos originales. (c) Para correlación {{rho}}, calcula el peso de A, la rentabilidad y el riesgo de mínima varianza. El peso de B completa el 100 %.
+    parameters:
+      - id: a
+        label: Rentabilidad A
+        default: 12
+        min: 10
+        max: 14
+        step: 1
+        unit: "%"
+      - id: b
+        label: Rentabilidad B
+        default: 8
+        min: 6
+        max: 9
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad A
+        default: 18
+        min: 17
+        max: 21
+        step: 1
+        unit: "%"
+      - id: sb
+        label: Volatilidad B
+        default: 15
+        min: 12
+        max: 16
+        step: 1
+        unit: "%"
+      - id: w
+        label: Peso A (%)
+        default: 50
+      - id: rho
+        label: Correlación para el mínimo
+        default: 0.3
+        min: 0.1
+        max: 0.5
+        step: 0.1
+      - id: libre
+        label: Sin restricción de pesos
+        default: 0
+      - id: rho_uno
+        label: Correlación 1
+        default: 1
+      - id: rho_medio
+        label: Correlación 0.5
+        default: 0.5
+      - id: rho_cero
+        label: Correlación 0
+        default: 0
+      - id: rho_neg
+        label: Correlación -0.5
+        default: -0.5
+      - id: rho_menos
+        label: Correlación -1
+        default: -1
+    hints:
+      - La correlación cambia el riesgo conjunto, pero no la rentabilidad media.
+      - Usa $\sigma_p^2=w_A^2\sigma_A^2+(1-w_A)^2\sigma_B^2+2w_A(1-w_A)\rho\sigma_A\sigma_B$.
+      - "Para el mínimo deriva la varianza: $w_A=(\\sigma_B^2-\\rho\\sigma_A\\sigma_B)/(\\sigma_A^2+\\sigma_B^2-2\\rho\\sigma_A\\sigma_B)$."
+    steps:
+      - title: Media
+        body: "Convierte el peso a fracción: $\\E[r_p]=w_A\\E[r_A]+(1-w_A)\\E[r_B]={{media}}\\%$."
+      - title: Cinco riesgos
+        body: "Sustituye cada correlación y toma la raíz: $\\rho=1$: {{s_uno}} %; $0{,}5$: {{s_medio}} %; $0$: {{s_cero}} %; $-0{,}5$: {{s_neg}} %; $-1$: {{s_menos}} %."
+      - title: Forma de la curva
+        body: La varianza crece linealmente con la correlación; su raíz crece con pendiente decreciente. Menor correlación permite más diversificación.
+      - title: Mínima varianza
+        body: La derivada nula da {{peso}} % en A. B completa el 100 %. La media es {{rmin}} % y el riesgo {{smin}} %.
+    answers:
+      - id: media
+        label: a) Rentabilidad común
+        unit: "%"
+        value: 10
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retorno
+          args:
+            - w
+            - a
+            - b
+      - id: s_uno
+        label: a) Riesgo con correlación 1
+        unit: "%"
+        value: 16.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho_uno
+      - id: s_medio
+        label: a) Riesgo con correlación 0.5
+        unit: "%"
+        value: 14.309088021254185
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho_medio
+      - id: s_cero
+        label: a) Riesgo con correlación 0
+        unit: "%"
+        value: 11.715374513859981
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho_cero
+      - id: s_neg
+        label: a) Riesgo con correlación -0.5
+        unit: "%"
+        value: 8.351646544245034
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho_neg
+      - id: s_menos
+        label: a) Riesgo con correlación -1
+        unit: "%"
+        value: 1.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho_menos
+      - id: peso
+        label: c) Peso A mínimo
+        unit: "%"
+        value: 37.2093023255814
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: rmin
+        label: c) Rentabilidad mínima varianza
+        unit: "%"
+        value: 9.488372093023255
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: smin
+        label: c) Riesgo mínimo
+        unit: "%"
+        value: 13.092692796027974
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+    concepts:
+      - 07-dos-activos
+  - id: ej2_pos
+    difficulty: 3
+    seed: 32
+    statement: Ejercicio fuente 2 (a y b). Correlación positiva. SANTANDER ofrece {{a}} % y volatilidad {{sa}} %; TELEFÓNICA ofrece {{b}} % y volatilidad {{sb}} %. La correlación es {{rho}}. Calcula el peso de SANTANDER, la rentabilidad y el riesgo mínimos, primero sin cortos y después con cortos. TELEFÓNICA completa el 100 %. Un peso negativo vende acciones prestadas.
+    parameters:
+      - id: a
+        label: Rentabilidad SANTANDER
+        default: 10
+        min: 9
+        max: 12
+        step: 1
+        unit: "%"
+      - id: b
+        label: Rentabilidad TELEFÓNICA
+        default: 9
+        min: 6
+        max: 9
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad SANTANDER
+        default: 22
+        unit: "%"
+      - id: sb
+        label: Volatilidad TELEFÓNICA
+        default: 20
+        unit: "%"
+      - id: rho
+        label: Correlación
+        default: 0.8
+      - id: limitado
+        label: Sin cortos
+        default: 1
+      - id: libre
+        label: Con cortos
+        default: 0
+    hints:
+      - Minimiza el riesgo antes de usar las rentabilidades.
+      - Sin cortos, el peso debe estar entre cero y uno. Si el mínimo libre sale fuera, usa el extremo más cercano.
+      - Empieza con $\sigma_B^2-\rho\sigma_A\sigma_B$ en el numerador del peso libre.
+    steps:
+      - title: Mínimo libre
+        body: La derivada de la varianza da {{peso_libre}} % en SANTANDER. TELEFÓNICA completa el 100 %.
+      - title: Restricción
+        body: "Limita ese peso al intervalo de 0 % a 100 %: {{peso_limitado}} %."
+      - title: Resultados
+        body: "Sin cortos: media {{r_limitado}} %, riesgo {{s_limitado}} %. Con cortos: media {{r_libre}} %, riesgo {{s_libre}} %."
+      - title: Interpretación
+        body: Ambos mínimos coinciden porque el peso libre está dentro del intervalo permitido.
+    answers:
+      - id: peso_limitado
+        label: Peso SANTANDER limitado
+        unit: "%"
+        value: 26.666666666666668
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: r_limitado
+        label: Rentabilidad limitado
+        unit: "%"
+        value: 9.266666666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: s_limitado
+        label: Riesgo limitado
+        unit: "%"
+        value: 19.67739820199815
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: peso_libre
+        label: Peso SANTANDER libre
+        unit: "%"
+        value: 26.666666666666668
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: r_libre
+        label: Rentabilidad libre
+        unit: "%"
+        value: 9.266666666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: s_libre
+        label: Riesgo libre
+        unit: "%"
+        value: 19.67739820199815
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+    concepts:
+      - 07-dos-activos
+  - id: ej2_neg
+    difficulty: 3
+    seed: 33
+    statement: Ejercicio fuente 2 (c y d). Correlación negativa. SANTANDER ofrece {{a}} % y volatilidad {{sa}} %; TELEFÓNICA ofrece {{b}} % y volatilidad {{sb}} %. La correlación es {{rho}}. Calcula el peso de SANTANDER, la rentabilidad y el riesgo mínimos, primero sin cortos y después con cortos. TELEFÓNICA completa el 100 %. Un peso negativo vende acciones prestadas.
+    parameters:
+      - id: a
+        label: Rentabilidad SANTANDER
+        default: 10
+        min: 9
+        max: 12
+        step: 1
+        unit: "%"
+      - id: b
+        label: Rentabilidad TELEFÓNICA
+        default: 9
+        min: 6
+        max: 9
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad SANTANDER
+        default: 22
+        unit: "%"
+      - id: sb
+        label: Volatilidad TELEFÓNICA
+        default: 20
+        unit: "%"
+      - id: rho
+        label: Correlación
+        default: -0.2
+      - id: limitado
+        label: Sin cortos
+        default: 1
+      - id: libre
+        label: Con cortos
+        default: 0
+    hints:
+      - Minimiza el riesgo antes de usar las rentabilidades.
+      - Sin cortos, el peso debe estar entre cero y uno. Si el mínimo libre sale fuera, usa el extremo más cercano.
+      - Empieza con $\sigma_B^2-\rho\sigma_A\sigma_B$ en el numerador del peso libre.
+    steps:
+      - title: Mínimo libre
+        body: La derivada de la varianza da {{peso_libre}} % en SANTANDER. TELEFÓNICA completa el 100 %.
+      - title: Restricción
+        body: "Limita ese peso al intervalo de 0 % a 100 %: {{peso_limitado}} %."
+      - title: Resultados
+        body: "Sin cortos: media {{r_limitado}} %, riesgo {{s_limitado}} %. Con cortos: media {{r_libre}} %, riesgo {{s_libre}} %."
+      - title: Interpretación
+        body: Ambos mínimos coinciden porque el peso libre está dentro del intervalo permitido.
+    answers:
+      - id: peso_limitado
+        label: Peso SANTANDER limitado
+        unit: "%"
+        value: 46.0377358490566
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: r_limitado
+        label: Rentabilidad limitado
+        unit: "%"
+        value: 9.460377358490565
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: s_limitado
+        label: Riesgo limitado
+        unit: "%"
+        value: 13.241444371993705
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: peso_libre
+        label: Peso SANTANDER libre
+        unit: "%"
+        value: 46.0377358490566
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: r_libre
+        label: Rentabilidad libre
+        unit: "%"
+        value: 9.460377358490565
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: s_libre
+        label: Riesgo libre
+        unit: "%"
+        value: 13.241444371993705
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+    concepts:
+      - 07-dos-activos
+  - id: ej2_corto
+    difficulty: 3
+    seed: 34
+    statement: Ejercicio fuente 2 (variante adicional). Variante con venta en corto. SANTANDER ofrece {{a}} % y volatilidad {{sa}} %; TELEFÓNICA ofrece {{b}} % y volatilidad {{sb}} %. La correlación es {{rho}}. Calcula el peso de SANTANDER, la rentabilidad y el riesgo mínimos, primero sin cortos y después con cortos. TELEFÓNICA completa el 100 %. Un peso negativo vende acciones prestadas.
+    parameters:
+      - id: a
+        label: Rentabilidad SANTANDER
+        default: 10
+        min: 9
+        max: 12
+        step: 1
+        unit: "%"
+      - id: b
+        label: Rentabilidad TELEFÓNICA
+        default: 9
+        min: 6
+        max: 9
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad SANTANDER
+        default: 22
+        unit: "%"
+      - id: sb
+        label: Volatilidad TELEFÓNICA
+        default: 20
+        unit: "%"
+      - id: rho
+        label: Correlación
+        default: 0.95
+      - id: limitado
+        label: Sin cortos
+        default: 1
+      - id: libre
+        label: Con cortos
+        default: 0
+    hints:
+      - Minimiza el riesgo antes de usar las rentabilidades.
+      - Sin cortos, el peso debe estar entre cero y uno. Si el mínimo libre sale fuera, usa el extremo más cercano.
+      - Empieza con $\sigma_B^2-\rho\sigma_A\sigma_B$ en el numerador del peso libre.
+    steps:
+      - title: Mínimo libre
+        body: La derivada de la varianza da {{peso_libre}} % en SANTANDER. TELEFÓNICA completa el 100 %.
+      - title: Restricción
+        body: "Limita ese peso al intervalo de 0 % a 100 %: {{peso_limitado}} %."
+      - title: Resultados
+        body: "Sin cortos: media {{r_limitado}} %, riesgo {{s_limitado}} %. Con cortos: media {{r_libre}} %, riesgo {{s_libre}} %."
+      - title: Interpretación
+        body: "El peso libre es negativo: vende SANTANDER en corto y compra más del 100 % en TELEFÓNICA. La restricción sí cambia el mínimo."
+    answers:
+      - id: peso_limitado
+        label: Peso SANTANDER limitado
+        unit: "%"
+        value: 0
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: r_limitado
+        label: Rentabilidad limitado
+        unit: "%"
+        value: 9
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: s_limitado
+        label: Riesgo limitado
+        unit: "%"
+        value: 20
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - limitado
+      - id: peso_libre
+        label: Peso SANTANDER libre
+        unit: "%"
+        value: -37.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: r_libre
+        label: Rentabilidad libre
+        unit: "%"
+        value: 8.625
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: s_libre
+        label: Riesgo libre
+        unit: "%"
+        value: 19.83053201505194
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+    concepts:
+      - 07-dos-activos
+  - id: ej3
+    difficulty: 3
+    seed: 35
+    statement: Tres activos tienen medias {{a}} %, {{b}} %, {{c}} % y volatilidades {{sa}} %, {{sb}} %, {{sc}} %. Los pesos son 40 %, 35 % y 25 %. Las correlaciones son 0,45 (1–2), 0,30 (1–3) y 0,55 (2–3). Calcula media, varianza, volatilidad y las tres covarianzas. ¿Basta con elegir el par menos correlacionado para mantener la media y reducir riesgo?
+    parameters:
+      - id: a
+        label: Media 1
+        default: 14
+        min: 13
+        max: 16
+        step: 1
+        unit: "%"
+      - id: b
+        label: Media 2
+        default: 11
+        min: 10
+        max: 12
+        step: 1
+        unit: "%"
+      - id: c
+        label: Media 3
+        default: 9
+        min: 7
+        max: 9
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad 1
+        default: 25
+        min: 22
+        max: 28
+        step: 1
+        unit: "%"
+      - id: sb
+        label: Volatilidad 2
+        default: 18
+        min: 16
+        max: 20
+        step: 1
+        unit: "%"
+      - id: sc
+        label: Volatilidad 3
+        default: 15
+        min: 12
+        max: 16
+        step: 1
+        unit: "%"
+      - id: r12
+        label: Correlación 1–2
+        default: 0.45
+      - id: r13
+        label: Correlación 1–3
+        default: 0.3
+      - id: r23
+        label: Correlación 2–3
+        default: 0.55
+    hints:
+      - La media es una suma ponderada. La varianza también incluye todos los pares.
+      - Calcula cada covarianza como correlación por ambas volatilidades en fracción.
+      - En la varianza incluye dos veces cada término cruzado $w_jw_k\Cov(r_j,r_k)$.
+    steps:
+      - title: Media
+        body: "Multiplica las medias por 0,40, 0,35 y 0,25: {{media}} %."
+      - title: Covarianzas
+        body: "Con volatilidades en fracción: $\\Cov(r_1,r_2)={{c12}}$, $\\Cov(r_1,r_3)={{c13}}$, $\\Cov(r_2,r_3)={{c23}}$."
+      - title: Riesgo
+        body: "Suma términos propios y cruzados: $\\sigma_p^2={{varianza}}$; después $\\sigma_p={{riesgo}}\\%$."
+      - title: Recomendación
+        body: El par 1–3 tiene menor correlación, pero eso no basta. Busca el mínimo de varianza sujeto a la misma media y pesos que sumen uno. También importan volatilidades y rentabilidades.
+    answers:
+      - id: media
+        label: Media
+        unit: "%"
+        value: 11.7
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoTres
+          args:
+            - a
+            - b
+            - c
+      - id: varianza
+        label: Varianza (retorno decimal al cuadrado)
+        unit: decimal²
+        value: 0.025894
+        tolerance:
+          kind: abs
+          value: 5e-8
+        lib:
+          module: sesion03
+          fn: varianzaTres
+          args:
+            - sa
+            - sb
+            - sc
+      - id: riesgo
+        label: Volatilidad
+        unit: "%"
+        value: 16.091612722160573
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoTres
+          args:
+            - sa
+            - sb
+            - sc
+      - id: c12
+        label: Covarianza 1–2
+        unit: decimal²
+        value: 0.02025
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion03
+          fn: covarianza
+          args:
+            - sa
+            - sb
+            - r12
+      - id: c13
+        label: Covarianza 1–3
+        unit: decimal²
+        value: 0.01125
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion03
+          fn: covarianza
+          args:
+            - sa
+            - sc
+            - r13
+      - id: c23
+        label: Covarianza 2–3
+        unit: decimal²
+        value: 0.01485
+        tolerance:
+          kind: abs
+          value: 0.00005
+        lib:
+          module: sesion03
+          fn: covarianza
+          args:
+            - sb
+            - sc
+            - r23
+    concepts:
+      - 08-markowitz
+  - id: ej4
+    difficulty: 3
+    seed: 36
+    statement: La cartera C ofrece {{r}} % y volatilidad {{s}} %. El activo libre de riesgo paga {{rf}} %. Calcula media y riesgo con {{wl}} % y {{wb}} % en C. Deduce la CAL, calcula su pendiente (ratio de Sharpe) y el peso de C necesario para riesgo {{objetivo}} %. Se puede prestar y pedir prestado al mismo tipo.
+    parameters:
+      - id: r
+        label: Media C
+        default: 13
+        min: 11
+        max: 15
+        step: 1
+        unit: "%"
+      - id: s
+        label: Volatilidad C
+        default: 18
+        min: 16
+        max: 22
+        step: 1
+        unit: "%"
+      - id: rf
+        label: Tipo libre
+        default: 4
+        min: 2
+        max: 5
+        step: 1
+        unit: "%"
+      - id: wl
+        label: Peso C al prestar
+        default: 60
+        min: 40
+        max: 80
+        step: 10
+        unit: "%"
+      - id: wb
+        label: Peso C al pedir prestado
+        default: 120
+        min: 110
+        max: 150
+        step: 10
+        unit: "%"
+      - id: objetivo
+        label: Riesgo objetivo
+        default: 12
+        min: 8
+        max: 14
+        step: 1
+        unit: "%"
+    hints:
+      - El activo libre de riesgo no añade varianza.
+      - Con peso $y$ en C, $\E[r_p]=r_f+y(\E[r_C]-r_f)$ y $\sigma_p=|y|\sigma_C$.
+      - Divide el riesgo objetivo entre el de C para hallar su peso.
+    steps:
+      - title: Prestar
+        body: "Con {{wl}} % en C, el resto se presta: media {{rl}} %, riesgo {{sl}} %."
+      - title: Pedir prestado
+        body: "Con {{wb}} % en C, el peso libre de riesgo es negativo: media {{rb}} %, riesgo {{sb}} %."
+      - title: CAL y Sharpe
+        body: "Para pesos no negativos en C: $\\E[r_p]=r_f+S\\sigma_p$, con $S=(\\E[r_C]-r_f)/\\sigma_C={{pendiente}}$. Usa las mismas unidades para riesgo y rentabilidad."
+      - title: Objetivo
+        body: El peso $y=\sigma_p/\sigma_C$ da {{peso}} % en C; el resto queda libre de riesgo.
+    answers:
+      - id: rl
+        label: a) Media prestando
+        unit: "%"
+        value: 9.4
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMixto
+          args:
+            - rf
+            - r
+            - s
+            - wl
+      - id: sl
+        label: a) Riesgo prestando
+        unit: "%"
+        value: 10.8
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMixto
+          args:
+            - rf
+            - r
+            - s
+            - wl
+      - id: rb
+        label: b) Media con préstamo
+        unit: "%"
+        value: 14.8
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMixto
+          args:
+            - rf
+            - r
+            - s
+            - wb
+      - id: sb
+        label: b) Riesgo con préstamo
+        unit: "%"
+        value: 21.6
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMixto
+          args:
+            - rf
+            - r
+            - s
+            - wb
+      - id: pendiente
+        label: c/d) Pendiente CAL y Sharpe
+        unit: ratio
+        value: 0.5
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: sharpe
+          args:
+            - rf
+            - r
+            - s
+      - id: peso
+        label: e) Peso C para el objetivo
+        unit: "%"
+        value: 66.66666666666667
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: asignacion
+          args:
+            - rf
+            - r
+            - s
+            - objetivo
+    concepts:
+      - 09-activo-libre-riesgo
+  - id: ej5
+    difficulty: 3
+    seed: 37
+    statement: "CAPM. Las covarianzas de X, Y, Z con el mercado son {{cx}}, {{cy}}, {{cz}}. La varianza del mercado es {{vm}}. Media de mercado: {{rm}} %; tipo libre: {{rf}} %. Las medias observadas son {{ox}} %, {{oy}} %, {{oz}} %. Calcula cada beta, clasifica las acciones y calcula rentabilidades requeridas y brechas (observada menos requerida). Dibuja la SML y sitúa ambos puntos de cada acción. La figura superior usa los datos originales. Todos los momentos y rentabilidades se refieren al mismo periodo mensual; no anualices."
+    parameters:
+      - id: cx
+        label: Covarianza X
+        default: 0.0028
+        min: 0.0024
+        max: 0.0032
+        step: 0.0002
+      - id: cy
+        label: Covarianza Y
+        default: 0.0012
+        min: 0.0008
+        max: 0.0014
+        step: 0.0002
+      - id: cz
+        label: Covarianza Z
+        default: 0.0036
+        min: 0.0034
+        max: 0.004
+        step: 0.0002
+      - id: vm
+        label: Varianza mercado
+        default: 0.0016
+      - id: rf
+        label: Tipo libre
+        default: 3.5
+        min: 3
+        max: 4
+        step: 0.5
+        unit: "%"
+      - id: rm
+        label: Media mercado
+        default: 11
+        min: 10
+        max: 12
+        step: 1
+        unit: "%"
+      - id: ox
+        label: Media observada X
+        default: 14
+        min: 13
+        max: 15
+        step: 1
+        unit: "%"
+      - id: oy
+        label: Media observada Y
+        default: 6
+        min: 5
+        max: 7
+        step: 1
+        unit: "%"
+      - id: oz
+        label: Media observada Z
+        default: 15
+        min: 14
+        max: 16
+        step: 1
+        unit: "%"
+    hints:
+      - Beta mide la exposición al mercado; no es la volatilidad total.
+      - Divide la covarianza entre la varianza del mercado.
+      - Después usa $\E[r_j]=r_f+\beta_j(\E[r_M]-r_f)$. La brecha es observada menos requerida.
+    steps:
+      - title: Betas
+        body: "Dividir por {{vm}} da X: {{bx}}, Y: {{by}}, Z: {{bz}}. Beta menor que uno es defensiva; igual a uno, neutra; mayor que uno, agresiva."
+      - title: SML
+        body: "El intercepto es {{rf}} % y la prima de mercado es la diferencia entre {{rm}} % y {{rf}} %. Las requeridas son X: {{rx}} %, Y: {{ry}} %, Z: {{rz}} %."
+      - title: Valoración
+        body: "Las brechas son X: {{ax}} puntos porcentuales, Y: {{ay}} y Z: {{az}}. Una brecha negativa queda debajo de la SML y sugiere sobrevaloración, si aceptamos CAPM. Una positiva sugiere infravaloración."
+    answers:
+      - id: bx
+        label: Beta X
+        unit: beta
+        value: 1.75
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: betaActivo
+          args:
+            - cx
+            - vm
+      - id: rx
+        label: Requerida X
+        unit: "%"
+        value: 16.625
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requeridoCov
+          args:
+            - rf
+            - rm
+            - cx
+            - vm
+      - id: ax
+        label: Brecha X
+        unit: puntos porcentuales
+        value: -2.625
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: brechaCov
+          args:
+            - ox
+            - rf
+            - rm
+            - cx
+            - vm
+      - id: by
+        label: Beta Y
+        unit: beta
+        value: 0.7499999999999999
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: betaActivo
+          args:
+            - cy
+            - vm
+      - id: ry
+        label: Requerida Y
+        unit: "%"
+        value: 9.125
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requeridoCov
+          args:
+            - rf
+            - rm
+            - cy
+            - vm
+      - id: ay
+        label: Brecha Y
+        unit: puntos porcentuales
+        value: -3.124999999999999
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: brechaCov
+          args:
+            - oy
+            - rf
+            - rm
+            - cy
+            - vm
+      - id: bz
+        label: Beta Z
+        unit: beta
+        value: 2.25
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: betaActivo
+          args:
+            - cz
+            - vm
+      - id: rz
+        label: Requerida Z
+        unit: "%"
+        value: 20.375
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requeridoCov
+          args:
+            - rf
+            - rm
+            - cz
+            - vm
+      - id: az
+        label: Brecha Z
+        unit: puntos porcentuales
+        value: -5.375
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: brechaCov
+          args:
+            - oz
+            - rf
+            - rm
+            - cz
+            - vm
+    concepts:
+      - 10-capm
+  - id: ej6
+    difficulty: 3
+    seed: 38
+    statement: Los cuatro activos tienen betas {{b1}}, {{b2}}, {{b3}}, {{b4}}. Los pesos iniciales son 25 %, 30 %, 20 %, 25 %; los nuevos son 30 %, 25 %, 25 %, 20 %. Calcula beta y rentabilidad CAPM de ambas carteras con mercado {{rm}} % y tipo libre {{rf}} %. Explica qué cambio aumenta la exposición al mercado.
+    parameters:
+      - id: b1
+        label: Beta 1
+        default: 0.8
+        min: 0.7
+        max: 0.9
+        step: 0.1
+      - id: b2
+        label: Beta 2
+        default: 1.2
+        min: 1.1
+        max: 1.3
+        step: 0.1
+      - id: b3
+        label: Beta 3
+        default: 1.5
+        min: 1.4
+        max: 1.6
+        step: 0.1
+      - id: b4
+        label: Beta 4
+        default: 0.6
+        min: 0.4
+        max: 0.6
+        step: 0.1
+      - id: rf
+        label: Tipo libre
+        default: 3
+        min: 2
+        max: 4
+        step: 1
+        unit: "%"
+      - id: rm
+        label: Media mercado
+        default: 10
+        min: 9
+        max: 12
+        step: 1
+        unit: "%"
+      - id: inicial
+        label: Composición inicial
+        default: 0
+      - id: nueva
+        label: Composición nueva
+        default: 1
+    hints:
+      - Beta se agrega con los pesos de la cartera.
+      - Calcula $\beta_p=\sum_j w_j\beta_j$ antes de aplicar CAPM.
+      - "Compara las aportaciones: suben los pesos de 1 y 3; bajan los de 2 y 4."
+    steps:
+      - title: Inicial
+        body: La suma ponderada da beta {{bi}} y rentabilidad {{ri}} %.
+      - title: Nueva
+        body: Con los nuevos pesos, beta {{bn}} y rentabilidad {{rn}} %.
+      - title: Comparación
+        body: "La variación es $0{,}05(\\beta_1-\\beta_2+\\beta_3-\\beta_4)$. Con estos rangos es positiva: aumenta la exposición y la rentabilidad requerida."
+    answers:
+      - id: bi
+        label: a) Beta inicial
+        unit: beta
+        value: 1.01
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: betaCartera
+          args:
+            - b1
+            - b2
+            - b3
+            - b4
+            - inicial
+      - id: ri
+        label: b) Rentabilidad inicial
+        unit: "%"
+        value: 10.07
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requeridoCartera
+          args:
+            - rf
+            - rm
+            - b1
+            - b2
+            - b3
+            - b4
+            - inicial
+      - id: bn
+        label: c) Beta nueva
+        unit: beta
+        value: 1.035
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: betaCartera
+          args:
+            - b1
+            - b2
+            - b3
+            - b4
+            - nueva
+      - id: rn
+        label: c) Rentabilidad nueva
+        unit: "%"
+        value: 10.245
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requeridoCartera
+          args:
+            - rf
+            - rm
+            - b1
+            - b2
+            - b3
+            - b4
+            - nueva
+    concepts:
+      - 10-capm
+  - id: ej7
+    difficulty: 3
+    seed: 39
+    statement: Análisis integrado. INDITEX tiene media {{a}} %, volatilidad {{sa}} % y beta {{ba}}. REPSOL tiene media {{b}} %, volatilidad {{sb}} % y beta {{bb}}. Correlación {{rho}}, tipo libre {{rf}} % y media de mercado {{rm}} %. (a) Calcula media y riesgo equiponderados. (b/c) Halla pesos, media y riesgo de mínima varianza. (d) Calcula su Sharpe. (e) Calcula rentabilidades CAPM y compáralas con las observadas. (f) Combina esa cartera con el activo libre para riesgo {{objetivo}} %. Indica ambos pesos. No supongas que la cartera de mínima varianza sea la tangente.
+    parameters:
+      - id: a
+        label: Media INDITEX
+        default: 12
+        min: 11
+        max: 13
+        step: 1
+        unit: "%"
+      - id: b
+        label: Media REPSOL
+        default: 9
+        min: 8
+        max: 10
+        step: 1
+        unit: "%"
+      - id: sa
+        label: Volatilidad INDITEX
+        default: 20
+        min: 19
+        max: 22
+        step: 1
+        unit: "%"
+      - id: sb
+        label: Volatilidad REPSOL
+        default: 16
+        min: 14
+        max: 17
+        step: 1
+        unit: "%"
+      - id: rho
+        label: Correlación
+        default: 0.35
+        min: 0.2
+        max: 0.5
+        step: 0.05
+      - id: rf
+        label: Tipo libre
+        default: 3
+        min: 2
+        max: 4
+        step: 1
+        unit: "%"
+      - id: rm
+        label: Media mercado
+        default: 10
+        min: 9
+        max: 11
+        step: 1
+        unit: "%"
+      - id: ba
+        label: Beta INDITEX
+        default: 1.3
+        min: 1.2
+        max: 1.4
+        step: 0.1
+      - id: bb
+        label: Beta REPSOL
+        default: 0.9
+        min: 0.8
+        max: 1
+        step: 0.1
+      - id: objetivo
+        label: Riesgo final
+        default: 10
+        min: 8
+        max: 11
+        step: 1
+        unit: "%"
+      - id: w
+        label: Peso equiponderado
+        default: 50
+      - id: libre
+        label: Sin restricción de pesos
+        default: 0
+    hints:
+      - Resuelve primero el problema de mínima varianza de los dos activos con riesgo.
+      - Para Sharpe divide el exceso de rentabilidad entre la volatilidad, sin redondear antes.
+      - Para el objetivo usa $y=\sigma_{objetivo}/\sigma_{min}$; el peso libre de riesgo es $1-y$.
+    steps:
+      - title: Equiponderada
+        body: La media es {{media}} % y el riesgo {{riesgo}} %. La varianza incluye el término cruzado.
+      - title: Mínima varianza
+        body: El peso de INDITEX es {{peso}} %. REPSOL completa el 100 %. La media es {{rmin}} % y el riesgo {{smin}} %.
+      - title: Sharpe
+        body: "Resta el tipo libre de riesgo a la media y divide por el riesgo: {{sharpe}}. Esta CAL usa la cartera indicada; no tiene por qué ser la mejor CAL."
+      - title: CAPM
+        body: INDITEX requiere {{ra}} % frente a {{a}} % observado; REPSOL requiere {{rb}} % frente a {{b}} %. Si la observada es menor, CAPM sugiere sobrevaloración.
+      - title: Asignación final
+        body: Sin redondeos intermedios, invierte {{yr}} % en la cartera de mínima varianza y {{yf}} % en el activo libre. Los pesos suman 100 %.
+    answers:
+      - id: media
+        label: a) Media equiponderada
+        unit: "%"
+        value: 10.5
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retorno
+          args:
+            - w
+            - a
+            - b
+      - id: riesgo
+        label: a) Riesgo equiponderado
+        unit: "%"
+        value: 14.832396974191326
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgo
+          args:
+            - w
+            - sa
+            - sb
+            - rho
+      - id: peso
+        label: b) Peso INDITEX mínimo
+        unit: "%"
+        value: 33.333333333333336
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: pesoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: rmin
+        label: c) Media mínima varianza
+        unit: "%"
+        value: 10
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: retornoMinimo
+          args:
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: smin
+        label: c) Riesgo mínimo
+        unit: "%"
+        value: 14.422205101855956
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: riesgoMinimo
+          args:
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: sharpe
+        label: d) Sharpe mínimo
+        unit: ratio
+        value: 0.4853626716970756
+        tolerance:
+          kind: abs
+          value: 0.0001
+        lib:
+          module: sesion03
+          fn: sharpeMinimo
+          args:
+            - rf
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+      - id: ra
+        label: e) CAPM INDITEX
+        unit: "%"
+        value: 12.1
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requerido
+          args:
+            - rf
+            - rm
+            - ba
+      - id: rb
+        label: e) CAPM REPSOL
+        unit: "%"
+        value: 9.3
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: requerido
+          args:
+            - rf
+            - rm
+            - bb
+      - id: yr
+        label: f) Peso cartera arriesgada
+        unit: "%"
+        value: 69.33752452815365
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: asignacionMinima
+          args:
+            - rf
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+            - objetivo
+      - id: yf
+        label: f) Peso libre de riesgo
+        unit: "%"
+        value: 30.66247547184635
+        tolerance:
+          kind: abs
+          value: 0.005
+        lib:
+          module: sesion03
+          fn: efectivoMinimo
+          args:
+            - rf
+            - a
+            - b
+            - sa
+            - sb
+            - rho
+            - libre
+            - objetivo
+    concepts:
+      - 10-capm
+---
+
+import GraficosPS3 from "../../components/sesiones/GraficosPS3";
+
+Combinar activos puede reducir el riesgo sin reducir la media. Practica primero con dos activos y termina con CAPM.
+
+Los ejercicios 2, 3 y 4 de esta página corresponden al ejercicio fuente 2: correlación positiva, negativa y venta en corto. Los siguientes conservan el orden del original. No se elimina ningún apartado.
+
+Las rentabilidades, volatilidades y pesos se introducen en porcentaje. Las varianzas y covarianzas usan rentabilidades decimales al cuadrado. Las brechas usan puntos porcentuales. Usa coma o punto decimal.
+
+Las figuras usan los datos originales de los ejercicios fuente 1 y 5. Si pulsas «Nueva variante», dibuja de nuevo con los datos de tu ejercicio. Los capítulos 7 a 10 se enlazarán cuando estén publicados.
+
+<GraficosPS3 client:visible />
+
+Prueba esto: baja la correlación y observa el riesgo. Después compara cada punto observado con la recta CAPM.
