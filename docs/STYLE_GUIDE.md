@@ -119,6 +119,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
 | Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
 | Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
+| Behavioural change / subjective value | $x$, $x_s$, $v(x)$, $V$ | | Euro change from a fixed reference / dimensionless subjective score; $V=\sum_s w(p_s)v(x_s)$ |
+| Prospect curvature / loss aversion | $\alpha$, $\beta$, $\lambda$ | | Chapter 16: $0<\alpha,\beta\leq1$, $\lambda\geq1$; not CAPM alpha or beta, nor an APT premium |
+| Probability weight / curvature | $w(p)$, $\gamma$ | | Decision weight, not a portfolio weight; $\gamma=1$ gives $w(p)=p$; chapter 16 optionally uses $0{,}61$ |
+| Monetary gamble / expected payoff | $X$, $\E[X]$ | | Random euro change; scenario probabilities $p_s$ sum to one |
 | Executed shares / fill size and price / average execution | $n_{\mathrm{ej}}$, $q_k$, $p_k$, $\overline P$ | | Chapter 13: level index $k$; weighted average over executed shares only |
 | Execution reference / implicit cost | $P_{\mathrm{ref}}$, $K_{\mathrm{imp}}$ | | Positive for buying above or selling below the stated reference |
 | Margin account capital / margin ratio / maintenance | $E$, $E_0$, $m$, $m_{\mathrm{mant}}$ | | Chapter 13: account capital, not company equity; $m$ is not a target portfolio return here |
