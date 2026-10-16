@@ -136,6 +136,9 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
+| Spot / discount factor | $r_t$, $d_t$ | | Chapter 18: annual effective rate to t; $d_t=(1+r_t)^{-t}$ and $d_0=1$ |
+| Forward interval / annual effective forward | $s$, $k$, $f_{s,k}$ | | Chapter 18: starts at s, lasts k years, ends at s+k; second index is duration |
+| Bond face / initial price | $N$, $P_0$ | | Chapter 18: nominal principal / value today; cash flows use $C_t$ |
 | Bond face / annual coupon rate / coupon payment | $F$, $c$, $A$ | | Chapter 17: $A=Fc/m$; face repaid at maturity; $c$ is not a fund here |
 | Bond maturity / payments per year / period count | $T$, $m$, $n$ | | Chapter 17: $n=mT$ at a coupon boundary; $T$ is not a tangent fund here |
 | Yield to maturity | $y$ | `\Rate{y}` | Annual effective for annual payments; nominal annual compounded $m$ times when explicitly stated |
