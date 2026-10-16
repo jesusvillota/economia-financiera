@@ -32,6 +32,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 **The existing `ps2/numerical_errors_report.md` is wrong.** It reports P0 = 31.00 in Ex 3(b); the file already says 30.00 (line 129). It reports 4.96% in Ex 3(c); the file says 5.01%. It misses the errors below in Ex 5, Ex 7 and the appendix.
 
+### Note 01: growing annuity
+
+`source/class_notes/01_fundamentos_basicos/01_fundamentos_basicos.tex:464` reports **7.710 €** for ten growing payments. With first payment 1.000 € at year 1, growth 5 % and discount rate 10 %, the correct present value is **7.439,81 €**: `1000 * (1 - (1.05 / 1.10) ** 10) / (0.10 - 0.05)`. The source overstates the value by 270,19 €. Chapter 2 uses the corrected value. Regression test: `tests/annuities.test.ts`, “growing annuity 1.000 €, g = 5 %, r = 10 %, n = 10 (the source says 7.710: wrong)”, checks `growingAnnuityPV(1000, 0.1, 0.05, 10)` against `7439.81` to two decimals.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |

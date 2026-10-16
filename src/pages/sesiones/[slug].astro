@@ -12,7 +12,8 @@ export async function getStaticPaths() {
 
 const { entry, prev, next } = Astro.props;
 const { Content } = await render(entry);
-const { title, summary, exercises, number } = entry.data;
+const { title, summary, exercises, number, chapters } = entry.data;
+const relatedChapters = (await getCollection('chapters')).filter((chapter) => chapters.includes(chapter.id));
 ---
 <BaseLayout title={title} description={summary}>
   <main id="main" class="ses-page">
@@ -23,6 +24,12 @@ const { title, summary, exercises, number } = entry.data;
         <p class="summary">{summary}</p>
       </header>
       <Content />
+      <nav aria-label="Capítulos de esta sesión">
+        <p>Repasa los conceptos:</p>
+        <ul>
+          {relatedChapters.map((chapter) => <li><a href={url(`chapters/${chapter.id}/`)}>{chapter.data.title}</a></li>)}
+        </ul>
+      </nav>
     </article>
     {exercises.map((ex, i) => <Ejercicio client:load slug={entry.id} index={i} exercise={ex} />)}
     <nav class="prev-next" aria-label="Navegación entre sesiones">
