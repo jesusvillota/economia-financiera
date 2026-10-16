@@ -136,6 +136,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
+| Bond YTM / maturity | $y$, $T$ | `\Rate{y}` | Chapter 19 uses annual coupons and annual effective YTM; $T$ in years |
+| Bond present-value weight | $w_t$ | | $C_t/(1+y)^t$ divided by price; not a portfolio allocation or probability |
+| Macaulay / modified duration | $D_{\mathrm{Mac}}$, $D_{\mathrm{mod}}$ | | Years; annual convention: $D_{\mathrm{mod}}=D_{\mathrm{Mac}}/(1+y)$ |
+| Bond convexity / rate shock | $K$, $\Delta y$ | | $K=P''(y)/P(y)$ in years squared; shock in decimal units, not percentage points |
 | Spot / discount factor | $r_t$, $d_t$ | | Chapter 18: annual effective rate to t; $d_t=(1+r_t)^{-t}$ and $d_0=1$ |
 | Forward interval / annual effective forward | $s$, $k$, $f_{s,k}$ | | Chapter 18: starts at s, lasts k years, ends at s+k; second index is duration |
 | Bond face / initial price | $N$, $P_0$ | | Chapter 18: nominal principal / value today; cash flows use $C_t$ |
