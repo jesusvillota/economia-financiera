@@ -9,16 +9,23 @@ delivery: pr
 
 ## Why
 
-<the success criterion or milestone this serves>
+Chapters 7 to 10 all draw the risk-return plane; one shared widget avoids four copies.
 
 ## Scope
 
-<included work, touched areas and interfaces, explicitly out of scope>
+Add `src/components/plots/EfficientFrontier.tsx` (Mafs, `PlotFrame` + `WidgetFrame`): plots the frontier of 2 or 3 assets from `portfolio.ts`, marks individual assets, the minimum-variance portfolio, a draggable portfolio point, correlation slider, short-sale toggle, optional overlay slot for a CAL or SML (props, so chapters 9 and 10 extend it). Gallery entry in `/dev/widgets` and a click-through script `npm run clickthrough:frontier`. Only calls the library.
 
 ## Acceptance
 
-- <observable criterion, provable by command output>
+- `npm run clickthrough:frontier` sets rho and the toggle and the readouts equal `portfolio.ts` values.
+- `npm run screenshots dev` is clean.
+- `npm test` and `npm run build` pass.
 
 ## Verify
 
-<commands that prove the acceptance criteria>
+```sh
+npm test
+npm run build
+npm run screenshots dev
+npm run clickthrough:frontier
+```
