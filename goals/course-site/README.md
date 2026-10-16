@@ -28,6 +28,7 @@ flowchart TD
     TASK_005["TASK-005 Contract: chapter and problem-session schemas"]
     TASK_006["TASK-006 Problem-session components and routes"]
     TASK_007["TASK-007 Style guide, notation table and repo CLAUDE.md"]
+    TASK_008["TASK-008 Landing page and course map"]
   end
   subgraph M_2["M-2 · Reference slice (Part I + PS1)"]
   end
@@ -50,6 +51,8 @@ flowchart TD
   TASK_003 --> TASK_007
   DEC_001 --> TASK_007
   DEC_002 --> TASK_007
+  TASK_007 --> TASK_008
+  DEC_002 --> TASK_008
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
