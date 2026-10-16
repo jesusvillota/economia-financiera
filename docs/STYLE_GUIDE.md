@@ -119,6 +119,10 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
 | Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
 | Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
+| IPO offer shares / offer price / first-day close | $n_{\mathrm{of}}$, $P_{\mathrm{of}}$, $P_c$ | | Offer size differs from total company shares; close is not fundamental value |
+| IPO limit request / demand | $p_j$, $q_j$, $Q(p)$ | | Incremental requests; accumulate limits at or above the offer price |
+| IPO gross / fee / net | $G$, $F$, $N_{\mathrm{OPI}}$, $f$ | | Net after proportional placement fee only |
+| IPO initial return / money left | $u$, $M$ | | Close relative to offer; both may be negative |
 | Log return / sample mean | $\ell_t$, $\bar\ell$ | | $\ell_t=\ln(P_t/P_{t-1})$; use simple returns $r_t$ for wealth |
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
