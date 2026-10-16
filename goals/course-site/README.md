@@ -82,6 +82,7 @@ flowchart TD
     TASK_038["TASK-038 Chapter 13: trading, orders, margin, short sales and costs"]
     TASK_039["TASK-039 Chapter 14: initial public offerings"]
     TASK_040["TASK-040 Chapter 15: market efficiency"]
+    TASK_041["TASK-041 Chapter 16: behavioural finance"]
   end
   subgraph M_5["M-5 · Fixed income"]
     TASK_018["TASK-018 Plan: decompose M-5"]
@@ -145,6 +146,7 @@ flowchart TD
   TASK_035 --> TASK_038
   TASK_035 --> TASK_039
   TASK_036 --> TASK_040
+  TASK_036 --> TASK_041
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
