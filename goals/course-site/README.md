@@ -102,6 +102,7 @@ flowchart TD
     TASK_053["TASK-053 Link and consistency QA: internal links, anchors, chapter-session cross-links, curriculum sync checked on the built site"]
     TASK_054["TASK-054 Audit trace: every AUDIT.md fix lists its test, checked by a script"]
     TASK_055["TASK-055 Deploy check: clean-checkout build, Pages workflow, base path and content licence"]
+    TASK_056["TASK-056 Search: client-side full-text search over chapters, sessions and glossary"]
   end
   TASK_004 --> DEC_001
   TASK_004 --> DEC_002
@@ -178,6 +179,7 @@ flowchart TD
   TASK_047 --> TASK_050
   TASK_048 --> TASK_050
   TASK_044 --> TASK_051
+  TASK_052 --> TASK_056
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
