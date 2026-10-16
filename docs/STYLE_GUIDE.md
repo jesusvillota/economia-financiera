@@ -86,6 +86,9 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Expectation | $\E[\cdot]$ | `\E` | Square brackets, not `E(R)` |
 | Variance | $\sigma^2$ | `\Var` | Write `\Var` only in definitions |
 | Covariance | $\Cov(\cdot,\cdot)$ | `\Cov` | |
+| Proposed expected return / Jensen alpha | $\widehat r_j$, $\alpha_j$ | | Forecast input / forecast less CAPM required return |
+| Market allocation / perturbation | $w_M$, $h$ | | Market weight / small debt-financed position in the SML derivation |
+| Market-model residual / residual variance | $\varepsilon_j$, $\sigma_{\varepsilon_j}^2$ | | Mean zero and uncorrelated with the market |
 | Beta | $\beta_j$ | | |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |

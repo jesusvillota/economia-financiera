@@ -44,6 +44,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 `source/class_notes/02_valoracion_activos/02_valoracion_activos.tex:90` claims that a positive discount rate alone makes the discounted resale price tend to zero. This also requires a restriction on the future price: `P_N / (1+r)^N → 0`. A counterexample is `P_N = 50(1.10)^N` at `r = 10 %`: its discounted value stays at 50, even as N grows. Chapter 4 states the limit as an additional assumption before replacing finite-horizon valuation with the infinite dividend sum. Regression test: `tests/capitulo4.test.ts`, “audit note 02 §1.1”, checks the counterexample with `dividendPrice` at four horizons and verifies that a Gordon-consistent discounted tail shrinks when `r > g`.
 
+### Note 03: beta does not rank total volatility
+
+`source/class_notes/03_teoria_carteras/03_teoria_carteras.tex:1007` says beta below 1 implies lower total volatility than the market. This fails when specific risk is large (also repeated in the portfolio interpretation at line 1133). With market variance 0.04, asset beta 0.6 and asset variance 0.09, systematic variance is 0.0144 and residual variance is 0.0756. Asset volatility is 30 %, above the market’s 20 %, despite beta below 1. Beta measures linear market sensitivity, not a ranking of total volatility. Chapter 10 uses this distinction. Regression test: `tests/capitulo10.test.ts`, “audit note 03: low beta can coexist with higher total volatility”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
