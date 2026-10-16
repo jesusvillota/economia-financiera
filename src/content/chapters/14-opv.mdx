@@ -1,0 +1,169 @@
+---
+title: "Ofertas públicas de venta (OPV)"
+part: 4
+chapter: 14
+difficulty: 2
+prerequisites: [5]
+summary: "Sigue una salida a bolsa, construye el libro de demanda y distingue financiación, rentabilidad inicial y resultados posteriores."
+sessions: []
+---
+import BookBuilding from '../../components/plots/BookBuilding';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Una subida puede ser un coste?
+
+Brisa Sensores es una empresa ficticia que fabrica sensores para ahorrar agua. Quiere vender 1000 acciones nuevas a 16 € cada una. Al cierre del primer día, cada acción cotiza a 20 €. Quien recibió acciones en la oferta obtiene una rentabilidad inicial del 25 %. La empresa, sin embargo, cobró el precio de oferta.
+
+La diferencia suma 4000 € para el conjunto de las acciones vendidas. Se suele llamar **dinero dejado sobre la mesa**. No es una factura ni una pérdida contable. Es una comparación con lo que habría recaudado vendiendo esas mismas acciones al cierre observado. Tampoco demuestra que hubiera podido venderlas todas a ese precio.
+
+¿Fue una mala decisión? Antes de responder, separa la financiación de la empresa, el beneficio del comprador y el riesgo de la colocación. La misma subida cuenta una historia distinta para cada participante.
+
+## <span class="section-tag">Intuición</span>Una oferta, varios destinatarios del dinero
+
+Una **oferta pública inicial**, u **OPI** (*IPO*, en inglés), ofrece acciones al público por primera vez. Suele acompañar la admisión a negociación en bolsa. Cotizar permite negociar después; no significa que cada compraventa posterior financie a la empresa.
+
+En España, una **oferta pública de venta**, u **OPV**, vende acciones existentes. El dinero corresponde a los accionistas vendedores. Una **oferta pública de suscripción**, u **OPS**, coloca acciones nuevas. En ese caso, el dinero entra en la empresa. Una salida a bolsa puede combinar ambas. El ejemplo de Brisa es una OPS inicial.
+
+Distingue también una oferta posterior de una compañía que ya cotiza. Se conoce como *seasoned equity offering*, o **SEO**. «Posterior» describe cuándo se hace, no quién cobra: puede incluir acciones nuevas, existentes o ambas. No confundas esta distinción con el mercado secundario, donde los inversores intercambian títulos ya emitidos.
+
+### Qué cambia al salir a bolsa
+
+Brisa busca recursos para instalar equipos y ampliar su actividad. Los socios antiguos también pueden querer liquidez: poder vender su participación con más facilidad. Una cotización pública aporta visibilidad y una referencia de precio. Puede facilitar futuras ampliaciones de capital o adquisiciones pagadas con acciones.
+
+Hay costes. La preparación exige asesoramiento, revisión de cuentas y tiempo de la dirección. Después llegan obligaciones de información y gobierno corporativo. Emitir acciones nuevas reduce el porcentaje de propiedad de los socios que no participan. Vender acciones existentes cambia sus tenedores, sin aportar capital nuevo al negocio.
+
+La liquidez futura tampoco está asegurada. Una acción admitida a negociación puede tener pocos compradores. El acceso al mercado no elimina el riesgo empresarial. Por eso, salir a bolsa no es automáticamente mejor que seguir con financiación privada.
+
+### Del proyecto al primer cruce
+
+El proceso empieza con la preparación de información financiera, la elección de asesores y la revisión del negocio. La empresa y los vendedores fijan qué acciones ofrecen y para qué quieren los fondos. El folleto describe la operación y sus riesgos. Su aprobación verifica requisitos de información; no garantiza la rentabilidad.
+
+El banco colocador presenta la empresa a posibles inversores, en reuniones conocidas como *roadshow*. Recoge indicaciones de interés y ayuda a decidir el precio y el reparto. En un contrato de **aseguramiento firme**, el banco asume el compromiso de compra pactado. En una colocación de **mejores esfuerzos**, intenta vender sin asumir ese mismo compromiso. El riesgo depende del contrato concreto.
+
+Después se fija el precio definitivo y se asignan las acciones. Puede haber un **lock-up**, un compromiso temporal de ciertos socios de no vender. Una cláusula **green shoe** permite comprar acciones adicionales bajo las condiciones pactadas. Puede ayudar a gestionar una sobreasignación y la estabilización. No garantiza un precio mínimo ni elimina la incertidumbre. Nuestro ejemplo prescinde de esa cláusula.
+
+## <span class="section-tag">Formalización</span>Del libro de demanda al ingreso neto
+
+### Métodos de fijación del precio
+
+Con **precio fijo**, el precio se anuncia antes de conocer toda la demanda. Si sobran peticiones, hace falta una regla de reparto. Una posibilidad es la **prorrata**: cada petición recibe la misma proporción de lo solicitado. No todas las ofertas usan esa regla; puede haber tramos y preferencias.
+
+En una **subasta**, los participantes presentan sus ofertas y una regla anunciada determina el precio y la asignación. El resultado depende del diseño. No siempre existe un precio que iguale exactamente cantidades discretas de oferta y demanda.
+
+En el **book-building**, o construcción del libro, el colocador recoge interés a distintos precios. Usa esa información para recomendar un precio y repartir las acciones. Puede valorar la estabilidad de los inversores y la calidad de la información recibida. No está obligado a elegir mecánicamente el máximo precio que cubre la oferta.
+
+Para comprender el mecanismo, aquí usamos una regla más sencilla. Cada petición indica un precio límite y una cantidad. Las peticiones son adicionales, no acumuladas. Una petición sigue activa si el precio elegido no supera su límite. Tratamos estas indicaciones como firmes: en una operación real pueden cambiar.
+
+| Precio límite por acción | Petición adicional | Demanda acumulada a ese precio |
+|---|---|---|
+| 20 € | 200 | 200 |
+| 18 € | 400 | 600 |
+| 16 € | 600 | 1200 |
+| 14 € | 800 | 2000 |
+| 12 € | 1000 | 3000 |
+
+Para colocar 1000 acciones, el máximo precio compatible con este libro es 16 €. A 18 € solo quedan peticiones por 600 acciones. A 16 € hay demanda para 1200. Elegir el precio no resuelve el reparto de ese exceso de demanda. El simulador se centra en el total colocado.
+
+Si $q_j$ es la cantidad solicitada y $p_j$ su límite, la demanda al precio $p$ es:
+
+$$Q(p)=\sum_{j:p_j\ge p}q_j.$$
+
+Nuestra regla busca el precio más alto del libro que cumple $Q(p)\ge n_{\mathrm{of}}$. El símbolo $n_{\mathrm{of}}$ cuenta las acciones ofrecidas. No es el número total de acciones de la empresa. Si ninguna cotización cubre la oferta, la regla no devuelve un precio válido.
+
+### Bruto, comisión y neto
+
+Sea $P_{\mathrm{of}}$ el precio de oferta y $f$ la comisión proporcional de colocación. Para una venta completa:
+
+$$G=n_{\mathrm{of}}P_{\mathrm{of}},\qquad F=fG,\qquad N_{\mathrm{OPI}}=G-F.$$
+
+$G$ es el ingreso bruto; $F$, la comisión; $N_{\mathrm{OPI}}$, el ingreso neto tras esa comisión. Suponemos una comisión del 4 %, elegida para este ejemplo. No es una tarifa general. Ignoramos impuestos y otros gastos.
+
+Brisa recauda 16.000 € brutos, paga 640 € de comisión y recibe 15.360 € netos. Como vende acciones nuevas, ese neto entra en la empresa. Si fueran acciones existentes, correspondería a los vendedores, según los costes que les atribuya el contrato.
+
+### Rentabilidad inicial y dinero sobre la mesa
+
+Usamos $P_c$ para el cierre del primer día. La **infravaloración inicial** (*underpricing*) se mide habitualmente por:
+
+$$u=\frac{P_c}{P_{\mathrm{of}}}-1.$$
+
+Es la rentabilidad de recibir una acción al precio de oferta y valorarla al cierre, sin costes. No es la rentabilidad de comprar después de la apertura. El dinero sobre la mesa es:
+
+$$M=n_{\mathrm{of}}(P_c-P_{\mathrm{of}}).$$
+
+<details>
+<summary>Las cuentas de Brisa, paso a paso</summary>
+
+El ingreso bruto es $1000\cdot16=16{.}000$ €. La comisión es $0{,}04\cdot16{.}000=640$ €. El neto queda en $16{.}000-640=15{.}360$ €.
+
+La rentabilidad inicial es $20/16-1=0{,}25$, es decir, 25 %. La diferencia por acción es $20-16=4$ €. Para toda la oferta, $1000\cdot4=4000$ €.
+
+</details>
+
+<Callout type="warning" title="El cierre no es una tasación del negocio">
+Un rendimiento inicial positivo no prueba que el cierre sea el valor fundamental. Si el cierre fuera 16 €, la rentabilidad inicial sería 0 %. Si fuera 12 €, sería −25 % y la diferencia agregada sería −4000 €. La medida admite resultados negativos: una salida a bolsa no asegura ganancias.
+</Callout>
+
+### Precio de colocación y valoración
+
+La demanda ayuda a colocar acciones, pero no sustituye la valoración del negocio. Vuelve al [capítulo 5: flujos descontados y WACC](/economia-financiera/chapters/05-empresa-wacc/). Allí relacionamos el valor con los flujos futuros y su riesgo. En una empresa joven, los supuestos de ventas, márgenes e inversión pueden cambiar mucho el resultado.
+
+Antes de comparar un valor por acción con la oferta, comprueba la deuda, la caja y el número de acciones tras la emisión. Tampoco sumes los fondos nuevos sin considerar las acciones entregadas a cambio. El precio de oferta y el cierre son observaciones; el valor fundamental es una estimación condicionada a supuestos.
+
+## <span class="section-tag">Zona de juego</span>Sube el precio sin perder compradores
+
+La línea azul representa la demanda acumulada. La línea amarilla discontinua representa las acciones ofrecidas. El punto sigue el precio que eliges. El cierre hipotético es un supuesto independiente: moverlo no altera las peticiones del libro.
+
+<BookBuilding client:visible />
+
+**Prueba esto:**
+
+1. Baja el precio de 16 € a 14 € y conserva el cierre en 20 €. La demanda sube a 2000 acciones. El bruto baja a 14.000 €, la comisión a 560 € y el neto a 13.440 €. La rentabilidad inicial sube al 42,86 % y el dinero sobre la mesa, a 6000 €. Más entusiasmo no implica más financiación.
+2. Sube el precio a 18 €. La demanda baja a 600 acciones. Suponemos que una oferta no cubierta se retira: no se venden acciones, los ingresos son cero y las medidas iniciales no proceden. Pulsa «Precio que cubre la oferta» para volver a la frontera. Después baja el cierre a 12 € y observa la pérdida inicial.
+
+### Por qué puede subir el primer día
+
+Una explicación es la **información asimétrica**: algunos participantes saben más sobre la empresa o la demanda. Para que compartan información, el colocador puede dejarles parte de la ganancia esperada. Otra es la **maldición del ganador**: un comprador poco informado puede recibir más acciones precisamente en las ofertas que otros evitan. Su rentabilidad depende tanto del precio como de qué ofertas le asignan.
+
+También puede haber conflictos de interés entre banco, directivos y accionistas vendedores. Las compras de otros pueden atraer nuevos compradores, formando una cascada de información. O el cierre puede reflejar un optimismo transitorio. Son explicaciones posibles, con predicciones distintas. Una subida aislada no permite elegir entre ellas.
+
+### Ciclos y resultados posteriores
+
+Las salidas a bolsa se agrupan en periodos llamados **calientes**, con mucha actividad, y **fríos**, con pocas operaciones. Pueden cambiar las oportunidades de inversión, la necesidad de financiación o la disposición a asumir riesgo. También puede cambiar el optimismo. Un aumento de ofertas, por sí solo, no identifica la causa ni demuestra que todas estén caras.
+
+El **menor rendimiento a largo plazo** describe resultados inferiores a una referencia después de la colocación en ciertas muestras. Debes especificar el periodo, los dividendos, los costes y el criterio para elegir empresas comparables. Comparar con compañías de tamaño y estilo similares puede dar otro resultado que comparar con un índice amplio.
+
+Separa además la ganancia del adjudicatario del rendimiento de quien compra al cierre. Un salto inicial puede coexistir con resultados posteriores débiles. La evidencia histórica depende de la muestra y del modelo de riesgo. No establece una pérdida futura universal. Las empresas que desaparecen también deben contar: excluirlas puede mejorar artificialmente el resultado observado.
+
+## <span class="section-tag">Compruébalo</span>Comprueba quién cobra y quién gana
+
+<Quiz client:visible
+  question="Brisa vende las acciones nuevas del ejemplo a 16 €. Tras la comisión del 4 %, ¿qué recibe la empresa?"
+  options={['El ingreso bruto sin deducciones', '15.360 €', 'Solo el dinero dejado sobre la mesa']}
+  answer={1}
+  explanation="Son 16.000 € brutos menos 640 € de comisión. Al ser acciones nuevas, los fondos netos entran en Brisa."
+/>
+
+<Quiz client:visible
+  question="Se ofrecen 1000 acciones. ¿Por qué nuestra regla no elige 18 €?"
+  options={['Porque el cierre obliga a elegir otro precio', 'Porque una subasta prohíbe ese precio', 'Porque solo hay demanda para 600 acciones']}
+  answer={2}
+  explanation="A 18 € se suman las peticiones con límite de 20 € y 18 €: 200 más 400. No cubren la oferta."
+/>
+
+<Quiz client:visible
+  question="El cierre hipotético cae a 12 € y el precio de oferta sigue en 16 €. ¿Qué ocurre?"
+  options={['La salida a bolsa garantiza una ganancia', 'La rentabilidad inicial es −25 %', 'La empresa debe devolver todo lo cobrado']}
+  answer={1}
+  explanation="12 dividido entre 16, menos uno, da −25 %. El cierre posterior no cambia lo que recaudó la oferta."
+/>
+
+## <span class="section-tag">Resumen</span>Precio, financiación y evidencia
+
+- Identifica si se venden acciones nuevas o existentes: eso determina quién recibe los fondos.
+- El libro agrega interés a distintos precios. La decisión real puede incluir objetivos distintos de maximizar el precio.
+- Distingue ingreso bruto, comisión y neto. Una colocación no cubierta requiere una hipótesis explícita.
+- La rentabilidad inicial compara oferta y cierre. No mide por sí sola el valor fundamental ni el rendimiento posterior.
+- Los ciclos y el menor rendimiento relativo requieren una referencia y una muestra. No son garantías sobre cada oferta.
+
+**Siguiente:** estudiaremos qué significa que los precios reflejen información, en el capítulo sobre eficiencia de mercado.

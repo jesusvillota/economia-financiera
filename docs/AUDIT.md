@@ -75,6 +75,10 @@ Method: every numeric answer was recomputed in Python (`docs/audit/ps1.py` to `p
 
 The same source, line 448, says repurchasing below the sale price produces profit without qualifying costs. A lower repurchase price produces a gross trading gain; dividend compensation and borrowing fees can erase it. Chapter 13 states this qualification. Regression: `tests/capitulo13.test.ts`, “audit note 05 §3: a lower repurchase price need not yield a net profit”, uses `shortSale(200, 40, 0.5, 39.5, 1)`: the price falls but the own-capital return is −2.5 %, after dividend compensation alone.
 
+### Note 04: underpricing is not universal
+
+`source/class_notes/04_ofertas_publicas_iniciales/04_ofertas_publicas_iniciales.tex:479` calls underpricing a universal phenomenon. A positive sample average does not imply that every offer rises. With 1000 offered shares at 16 € and a first-day close of 16 €, `underpricing` returns zero; at a close of 12 €, it returns −25 % and −4000 € of signed money left. These are original counterexamples, not empirical estimates. Chapter 14 distinguishes sample patterns from guarantees, and the offer price from fundamental value. Regression test: `tests/capitulo14.test.ts`, “audit note 04: zero and negative first-day returns refute universal underpricing; quiz 3”.
+
 ### ps1 (20 differences; Ex 4 and Ex 6 are wrong, Ex 8 PRD is wrong)
 
 | Ex / part | Line | In document | Corrected | Note |
@@ -153,6 +157,10 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 - Notes 03, 06 and 07 give the same derivations three times (same subsection titles). Pick one source per chapter.
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.
 - Notation clashes: see section 3.
+
+### Note 08 §3.1: abnormal returns can be negative
+
+The definition calls abnormal returns only «rendimientos superiores a los esperados». An abnormal return is the signed difference between observed and model-normal return. It can be positive, zero or negative. Chapter 15 keeps this convention and does not identify one realised surprise with expected Jensen alpha. Regression test: `tests/capitulo15.test.ts`, “audit note 08 §3.1”, checks positive 0.015, zero and negative −0.002 market-model residuals. The negative posterior CAR is −0.002, not evidence by itself against semi-strong efficiency.
 
 ## 3. Notation inventory
 

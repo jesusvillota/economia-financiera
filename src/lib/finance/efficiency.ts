@@ -55,6 +55,13 @@ export function logReturns(prices: readonly number[]): number[] {
   return prices.slice(1).map((p, i) => Math.log(p / prices[i]));
 }
 
+/** Simple returns for wealth backtests; log returns must not be compounded as simple returns. */
+export function simpleReturns(prices: readonly number[]): number[] {
+  series(prices, 2);
+  if (prices.some(p => p <= 0)) throw new RangeError('Prices must be positive');
+  return prices.slice(1).map((p, i) => p / prices[i] - 1);
+}
+
 /** Sample autocorrelation at lag k: sum (r_t - m)(r_{t-k} - m) / sum (r_t - m)^2. */
 export function autocorrelation(returns: readonly number[], lag = 1): number {
   series(returns, 2);

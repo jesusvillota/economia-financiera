@@ -224,3 +224,9 @@ export const proRata = (requests: number[], shares: number) => {
   const k = demanded > shares ? shares / demanded : 1;
   return { oversubscription: demanded / shares, allocations: requests.map((x) => x * k) };
 };
+
+/** Book-building demand at a proposed offer price (limit bids at or above that price). */
+export const ipoDemandAtPrice = (demand: Level[], offerPrice: number): number => {
+  check(offerPrice);
+  return depth(demand, [], offerPrice).demand;
+};
