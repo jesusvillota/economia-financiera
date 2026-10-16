@@ -117,6 +117,8 @@ Numbers 5 and 7 are missing. Futures are not covered although the section title 
 
 ### Other inconsistencies
 
+- **Notes 03 §9 and 07 extensions: raw versus excess factor returns.** Note 03's Fama-French equation labels the left side as the raw asset return, while its market regressor is an excess return. Note 07's Carhart equation also uses raw notation, but its explanation specifies excess returns. Use `r_j - r_f` on the left and `r_M - r_f` for the market factor; SMB, HML and UMD are already return differences. Otherwise a constant risk-free rate shifts the estimated intercept and can create spurious alpha. Chapter 11 states the excess-return convention explicitly. Regression test: `tests/capitulo11.test.ts`, “audit note 03 §9 / note 07”, checks full-rank synthetic factors with zero true alpha: excess returns give zero intercept; adding a constant risk-free return shifts the intercept by that rate in both wrappers.
+
 - Notes 03, 06 and 07 give the same derivations three times (same subsection titles). Pick one source per chapter.
 - Note 02 (portfolio return and risk) and note 03 §2 overlap.
 - Notation clashes: see section 3.

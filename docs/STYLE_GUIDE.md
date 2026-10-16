@@ -87,6 +87,12 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Variance | $\sigma^2$ | `\Var` | Write `\Var` only in definitions |
 | Covariance | $\Cov(\cdot,\cdot)$ | `\Cov` | |
 | Beta | $\beta_j$ | | |
+| Market-model intercept / residual / normal prediction | $a_j$, $\varepsilon_{j,t}$, $\widehat r_{j,t}$ | | Raw daily returns in chapter 11; hats mark estimated parameters |
+| Abnormal / cumulative abnormal return | $\mathrm{AR}_{j,t}$, $\mathrm{CAR}_j[T_a,T_b]$ | | Inclusive event window; sum ARs without compounding |
+| Event-window endpoints | $T_a$, $T_b$ | | Relative trading days; announcement at $t=0$ |
+| Factor-model alpha / exposures | $\alpha_j$, $\beta_{j,M}$, $\beta_{j,S}$, $\beta_{j,H}$, $\beta_{j,U}$ | | Excess-return intercept; market, SMB, HML, UMD slopes |
+| Factor returns | $\mathrm{SMB}_t$, $\mathrm{HML}_t$, $\mathrm{UMD}_t$ | | Small minus big, high minus low book-to-market, winners minus losers |
+| APT exposure / premium / factor count | $b_{j,k}$, $\lambda_k$, $K$ | | Factor index $k$; premium is an expectation, not a realised factor return |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |
 | Asset price / dividend | $P_{j,t}$, $D_{j,t}$ | | Asset `j`, date `t`; initial price is $P_{j,t-1}$ |
