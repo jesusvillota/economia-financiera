@@ -2,11 +2,12 @@
 id: TASK-016
 title: 'Plan: decompose M-3'
 milestone: M-3
-state: approved
+state: done
 depends_on: [TASK-015]
 delivery: manual
 kind: plan
 route: {platform: claude, model: sonnet, effort: high}
+reason: Owner asked to mark done; M-3 decomposed into 16 filled tasks, goal check ok, graph shows parallel waves.
 ---
 
 ## Why
