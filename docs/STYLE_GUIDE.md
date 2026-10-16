@@ -87,6 +87,7 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Variance | $\sigma^2$ | `\Var` | Write `\Var` only in definitions |
 | Covariance | $\Cov(\cdot,\cdot)$ | `\Cov` | |
 | Beta | $\beta_j$ | | |
+| Portfolio standard deviation | $\sigma_p$ | | Square root of portfolio variance $\sigma_p^2$ |
 | Correlation | $\rho_{jk}$ | | |
 | Sample mean / population mean | $\bar r$, $\mu$ | | |
 | Asset price / dividend | $P_{j,t}$, $D_{j,t}$ | | Asset `j`, date `t`; initial price is $P_{j,t-1}$ |
