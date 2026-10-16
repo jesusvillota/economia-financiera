@@ -76,7 +76,7 @@ export const sessions = [
   { number: 3, title: 'Sesión 3: carteras y CAPM', chapters: [7, 8, 9, 10] },
   { number: 4, title: 'Sesión 4: mercados, renta fija y derivados', chapters: [11, 13, 17, 18, 19, 20, 21] },
 ];
-export const finalExam = { title: 'Examen final: ejercicios mixtos', chapters: [2, 3, 17] };
+export const finalExam = { title: 'Examen final: práctica por dificultad', slug: 'examen-final', chapters: [2, 3, 4, 5, 7, 10, 17, 19] };
 
 /** Absolute URL path under the configured base (`/economia-financiera`). */
 export function url(path = ''): string {

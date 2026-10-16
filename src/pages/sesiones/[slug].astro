@@ -19,7 +19,7 @@ const relatedChapters = (await getCollection('chapters')).filter((chapter) => ch
   <main id="main" class="ses-page">
     <article class="prose">
       <header class="chapter-header">
-        <p class="eyebrow">Sesión {number} · <Progreso client:load slug={entry.id} total={exercises.length} /></p>
+        <p class="eyebrow">{entry.data.source === 'examen' ? 'Preparación del examen final' : `Sesión ${number}`} · <Progreso client:load slug={entry.id} total={exercises.length} /></p>
         <h1>{title}</h1>
         <p class="summary">{summary}</p>
       </header>
