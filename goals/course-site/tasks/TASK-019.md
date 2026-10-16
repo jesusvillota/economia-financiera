@@ -2,11 +2,12 @@
 id: TASK-019
 title: 'Plan: decompose M-6'
 milestone: M-6
-state: approved
+state: done
 depends_on: [TASK-050, TASK-051]
 delivery: manual
 kind: plan
 route: {platform: claude, model: sonnet, effort: high}
+reason: 'M-6 planned: 8 tasks (glossary, search, a11y, SEO chain; link QA, audit trace, deploy check; owner launch)'
 ---
 
 ## Why
