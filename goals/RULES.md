@@ -1,1 +1,5 @@
 - Ignore GitHub Actions and the PR build check completely. A failing, blocked or unstarted check (including billing errors) is not an acceptance criterion and never a reason to block or leave a PR as draft. Verify locally with the task's ## Verify commands, then mark the PR ready.
+- When a worker hits a rate limit, read the reset time from 'goal pool' and schedule a one-shot cron job (CronCreate) to resume the worker ('goal resume TASK-N --via orca') a few minutes after the reset.
+- When a planning task splits a plan into new tasks, including manual ones, the orchestrator approves them and acts on them (dispatches, or does the manual step itself) without waiting for the owner.
+- When codex is rate limited, you may dispatch tasks to claude, but only while the tommy-shelby claude account has 5h quota left ('goal pool'). When that 5h limit is reached, send new tasks to codex or wait for the codex reset. When the tommy-shelby 5h limit resets, claude dispatch is allowed again, up to the same limit.
+
