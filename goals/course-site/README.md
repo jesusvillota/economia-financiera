@@ -103,6 +103,7 @@ flowchart TD
     TASK_054["TASK-054 Audit trace: every AUDIT.md fix lists its test, checked by a script"]
     TASK_055["TASK-055 Deploy check: clean-checkout build, Pages workflow, base path and content licence"]
     TASK_056["TASK-056 Search: client-side full-text search over chapters, sessions and glossary"]
+    TASK_057["TASK-057 Accessibility pass: axe check on every page, keyboard and focus, contrast, reduced motion"]
   end
   TASK_004 --> DEC_001
   TASK_004 --> DEC_002
@@ -180,6 +181,7 @@ flowchart TD
   TASK_048 --> TASK_050
   TASK_044 --> TASK_051
   TASK_052 --> TASK_056
+  TASK_056 --> TASK_057
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
