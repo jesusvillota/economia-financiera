@@ -1,0 +1,157 @@
+---
+title: "Bonos: precio, TIR y cupón corrido"
+part: 5
+chapter: 17
+difficulty: 2
+prerequisites: [2]
+summary: "Descuenta los pagos de un bono, recupera su rentabilidad y separa cotización, cupón corrido y desembolso."
+sessions: []
+---
+import BondExplorer from '../../components/plots/BondExplorer';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>El cupón no cambia, el precio sí
+
+Imagina un bono de una empresa ficticia, Taller Solar. Promete devolver 1000 € dentro de 3 años. Mientras tanto, paga 40 € al final de cada año. Su cupón anual es del 4 % del nominal. Compras justo después de un pago, cuando empieza un periodo nuevo.
+
+Ahora los compradores exigen una rentabilidad anual del 5 %. El bono sigue prometiendo los mismos pagos. ¿Quién aceptaría pagar el nominal por un cupón menor que la rentabilidad exigida? Su precio debe bajar: vale 972,77 € bajo estos supuestos.
+
+Ese descuento no reduce los pagos prometidos. Cambia lo que entregas hoy para recibirlos. El rendimiento procede tanto de los cupones como de la diferencia entre precio de compra y devolución final. Por eso, leer solo el cupón puede llevarte a comparar mal dos inversiones.
+
+## <span class="section-tag">Intuición</span>Un paquete de pagos con fechas
+
+Un **bono** es un título de deuda. Su emisor promete pagos según un contrato. El **nominal** es la cantidad que usamos para calcular el cupón y, aquí, la devolución final. El **vencimiento** es la fecha del último pago. El **cupón** es el interés periódico prometido; su tasa se aplica al nominal, no al precio que pagas.
+
+Piensa en el bono como un paquete de sobres fechados. Cada sobre contiene un cobro. Comprar el paquete te da derecho a los sobres futuros. El precio del paquete es la suma de lo que vale hoy cada sobre. Es la misma idea del [capítulo 2: valor actual y rentas](/economia-financiera/chapters/02-valor-actual/).
+
+### Dibuja primero los sobres
+
+En Taller Solar, los cobros desde el inicio del periodo son:
+
+| Años hasta el cobro | Cupón | Devolución del nominal | Cobro total |
+|---|---|---|---|
+| 1 | 40 € | 0 € | 40 € |
+| 2 | 40 € | 0 € | 40 € |
+| 3 | 40 € | 1000 € | 1040 € |
+
+El último sobre reúne el cupón y el nominal. No añadas después otra devolución del nominal: ya está incluida. Un **bono cupón cero** no tiene cupones intermedios. Toda su promesa se concentra en la devolución final. Puede dar rendimiento aunque no pague intereses durante su vida.
+
+Si sube el rendimiento exigido, cada sobre vale menos hoy. Por eso, la curva de precio frente a rendimiento baja. Para los cobros positivos de este modelo también es convexa: se curva hacia arriba. No significa que el precio vaya a subir con el tiempo. El eje horizontal cambia la tasa exigida, manteniendo las fechas y los pagos.
+
+### Qué dejamos fijo
+
+Estudiamos bonos de cupón fijo, con devolución completa del nominal al vencimiento. Suponemos que el emisor cumple todos los pagos. No hay impuestos, gastos, periodos sin derecho al próximo cupón ni rescate anticipado. Estos supuestos permiten entender el mecanismo del descuento.
+
+La palabra «fija» describe los pagos contractuales. No garantiza el precio de venta ni elimina el riesgo de impago. En un bono **callable**, el emisor puede devolver el dinero antes bajo ciertas condiciones. La rentabilidad calculada hasta el vencimiento previsto no describe todos esos posibles resultados.
+
+## <span class="section-tag">Formalización</span>Del calendario al precio y del precio a la TIR
+
+### Una tasa para resumir todos los cobros
+
+Sea $F$ el nominal, $c$ el cupón anual en tanto por uno y $T$ el vencimiento en años. Con pagos anuales, cada cupón es $A=Fc$. El precio justo después de pagar un cupón es:
+
+$$P=\sum_{k=1}^{T}\frac{A}{(1+\Rate{y})^k}+\frac{F}{(1+\Rate{y})^T}.$$
+
+Aquí $y$ es la **rentabilidad hasta el vencimiento**, o **YTM** (*yield to maturity*). También es la TIR del calendario prometido: la tasa única que iguala el precio pagado con el valor actual de los cobros pendientes. El vencimiento contiene un número entero de periodos en este calendario regular.
+
+Si conoces $y$, descuentas y obtienes $P$. Si conoces $P$, buscas la tasa que reproduce ese precio. Para cobros futuros no negativos, con algún cobro positivo, el precio disminuye al subir la tasa. Por eso, si existe una solución dentro del dominio considerado, es única.
+
+<details>
+<summary>Las cuentas de Taller Solar, sin saltos</summary>
+
+El cupón es $1000\cdot0{,}04=40$ €. Descontamos cada cobro al 5 %:
+
+$$P=\frac{40}{1{,}05}+\frac{40}{1{,}05^2}+\frac{1040}{1{,}05^3}=972{,}77.$$
+
+El resultado se expresa en euros, redondeado al céntimo. Conservamos más precisión al hacer los cálculos. Para recuperar la TIR, sustituimos el precio sin redondear en la misma suma y buscamos $y$. Obtenemos de nuevo el 5 %.
+
+</details>
+
+Con el mismo calendario, una TIR del 3 % da un precio de 1028,29 €. Si la TIR es el 4 %, el precio es 1000 €. Al inicio de un periodo, el bono está **a la par** cuando precio y nominal coinciden. Está sobre la par cuando el precio es mayor y bajo la par cuando es menor. Para este bono regular, cupón y TIR iguales dan precio a la par.
+
+### Pagos más frecuentes y tasas comparables
+
+Si hay $m$ pagos al año, cada cupón es $A=Fc/m$. Con $n=mT$ periodos pendientes desde un inicio de periodo:
+
+$$P=\sum_{k=1}^{n}\frac{A}{(1+y/m)^k}+\frac{F}{(1+y/m)^n}.$$
+
+En esta fórmula, $c$ e $y$ son tasas nominales anuales con frecuencia $m$. La tasa efectiva anual equivalente a esa YTM es $(1+y/m)^m-1$. Con pagos anuales, nominal y efectiva coinciden. Con otra frecuencia, anuncia siempre la convención antes de comparar tasas.
+
+No confundas la YTM con el cupón dividido por el precio. Ese cociente solo mide el ingreso por cupón respecto al coste actual. Omite la devolución final y el momento de cada cobro. Tampoco confundas la YTM con una curva de tipos: aquí resumimos todo el calendario mediante una sola tasa. Más adelante descontaremos cada fecha con su propio tipo.
+
+### Comprar entre dos cupones
+
+La **liquidación** es la fecha en que intercambias dinero por el bono. Si compras entre pagos, recibirás el próximo cupón completo bajo nuestro supuesto. Pero el vendedor ha mantenido el bono durante parte del periodo. El **cupón corrido**, $CC$, es la parte acumulada desde el último pago.
+
+Usamos **Actual/Actual del periodo de cupón**: días reales transcurridos divididos por días reales de ese periodo. Si $d$ cuenta los primeros y $D$ los segundos:
+
+$$CC=A\frac{d}{D},\qquad P_{\mathrm{sucio}}=P_{\mathrm{limpio}}+CC.$$
+
+El **precio limpio** es la cotización sin cupón corrido. El **precio sucio** es el desembolso antes de gastos. Para calcular la TIR desde la liquidación usa el precio sucio y los plazos que quedan hasta cada pago. Usar el limpio como desembolso haría aparecer una rentabilidad que no corresponde al dinero entregado.
+
+En general, con cobros $C_t$ situados a $t$ años de la liquidación y tasa efectiva anual:
+
+$$P_{\mathrm{sucio}}=\sum_t\frac{C_t}{(1+y)^t},\qquad P_{\mathrm{limpio}}=P_{\mathrm{sucio}}-CC.$$
+
+El widget mantiene intervalos anuales entre pagos futuros y usa la fracción real del periodo actual para acortar todos los plazos. No cambia los importes prometidos. Los días del control pertenecen al periodo entre el 1 de enero de 2026 y el 1 de enero de 2027, de 365 días.
+
+Por ejemplo, después de 146 días ha transcurrido el 40 % del periodo. El cupón corrido es 16 €. Si la TIR sigue al 5 %, el precio sucio es 991,94 € y el limpio es 975,94 €. El vencimiento sigue siendo el del contrato: ahora falta menos tiempo hasta él.
+
+<Callout type="warning" title="Un convenio de días cambia la cuenta">
+PS4 usa fracciones de meses en el ejercicio 9. Aquí contamos días reales. No intercambies ambos convenios dentro de una misma operación. Justo después del pago, el cupón corrido vuelve a cero y comienza otro periodo. Ese reinicio no es una pérdida: el tenedor cobra el cupón.
+</Callout>
+
+### Lo que la YTM no promete
+
+La YTM resume los pagos prometidos al precio de compra. No estima por sí sola la probabilidad de impago. Para convertirla en crecimiento compuesto de toda tu riqueza hasta el vencimiento, necesitas reinvertir los cupones a esa misma tasa. Si los reinviertes a otra tasa, cambia la riqueza final.
+
+Si vendes antes, tu resultado incluye el precio sucio de venta y los cupones cobrados. El precio de salida depende del mercado de ese momento. Calcula entonces la TIR de los cobros que realmente recibes. No uses automáticamente la YTM de compra como rentabilidad realizada.
+
+## <span class="section-tag">Zona de juego</span>Separa contrato, mercado y fecha
+
+<BondExplorer client:visible />
+
+El punto naranja recorre la curva al mover la TIR. Cambiar el cupón modifica los pagos contractuales. Cambiar el vencimiento añade o elimina pagos. Cambiar los días acerca la liquidación al próximo cupón y reduce los plazos pendientes. Las lecturas de precio limpio y sucio se refieren siempre a la misma fecha.
+
+**Prueba esto:**
+
+1. Restablece el ejemplo. Baja la TIR del 5 % al 3 %. Comprueba el cambio de 972,77 € a 1028,29 €. Después iguala la TIR al cupón: recuperas los 1000 €.
+2. Restablece y elige 146 días. Comprueba los 16 € de cupón corrido y los precios anteriores. Vuelve al inicio: limpio y sucio coinciden.
+
+Como segunda exploración, quita el cupón. Desaparecen los pagos de interés y el cupón corrido. El precio sigue cambiando con la TIR porque todavía queda la devolución final. Alargar el vencimiento aplaza ese único cobro; con una tasa positiva, reduce su valor actual.
+
+Estas herramientas preparan los ejercicios 6 y 9 de PS4. El primero distingue precio y tasa de descuento. El segundo añade negociación entre cupones y una venta anterior al vencimiento. Conserva las convenciones de cada enunciado y revisa las correcciones del curso al resolverlos.
+
+## <span class="section-tag">Compruébalo</span>Contrato, precio y desembolso
+
+<Quiz client:visible
+  question="Taller Solar paga un cupón anual del 4 %. Justo después del pago, su TIR es del 5 %. ¿Cómo queda su precio?"
+  options={['Sobre el nominal', 'Bajo el nominal', 'Igual al nominal siempre']}
+  answer={1}
+  explanation="Los cobros de 40 €, 40 € y 1040 € valen 972,77 € al descontarlos al 5 %. El cupón contractual no cambia."
+/>
+
+<Quiz client:visible
+  question="En el ejemplo, tras 146 días, el cupón corrido es 16 € y el precio limpio es 975,94 €. ¿Cuánto entregas, sin gastos?"
+  options={['975,94 €', '991,94 €', '959,94 €']}
+  answer={1}
+  explanation="Sumas el cupón corrido al precio limpio: 975,94 € más 16 € son 991,94 €. El precio sucio es el desembolso."
+/>
+
+<Quiz client:visible
+  question="Compras un bono y lo vendes antes del vencimiento. ¿Su YTM inicial garantiza la rentabilidad realizada?"
+  options={['Sí, porque el cupón es fijo', 'No, también importa el precio de venta', 'Sí, si cotizaba bajo la par']}
+  answer={1}
+  explanation="La TIR realizada utiliza los cupones cobrados y el precio sucio de venta. La YTM de compra utiliza el calendario prometido hasta el vencimiento."
+/>
+
+## <span class="section-tag">Resumen</span>El precio conecta pagos y rendimiento
+
+- El bono reúne pagos fechados. Su valor actual suma el valor de cada cobro pendiente.
+- Cupón y YTM son conceptos distintos. Con pagos y fechas fijos, subir la YTM reduce el precio.
+- El precio sucio suma precio limpio y cupón corrido. Usa el desembolso completo para calcular la TIR.
+- Declara frecuencia, convenio de días y fecha de liquidación. No mezcles tasas nominales y efectivas.
+- La YTM no garantiza la rentabilidad de una venta anticipada ni el cumplimiento de las promesas.
+
+**Siguiente:** la estructura temporal de tipos. Cada fecha puede tener su propio precio del tiempo.

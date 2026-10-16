@@ -129,6 +129,26 @@ export const dirtyPrice = (clean: number, accrued: number): number => {
   nonnegative(clean); nonnegative(accrued);
   return clean + accrued;
 };
+
+/**
+ * Liquida dentro del primer periodo de un calendario regular, sin cupón ex-dividendo.
+ * maturity se mide desde previousCoupon. Fracción Actual/Actual del periodo;
+ * las fechas posteriores conservan intervalos de 1/frequency años.
+ */
+export const bondAtSettlement = (
+  bond: Bond, previousCoupon: Date, settlement: Date, nextCoupon: Date,
+) => {
+  const scheduled = bondCashFlows(bond);
+  const fraction = accruedCoupon(1, previousCoupon, settlement, nextCoupon);
+  if (fraction === 1) throw new RangeError('Tras el pago, inicia el siguiente periodo');
+  const frequency = bond.frequency ?? 1;
+  const coupon = bond.face * bond.couponRate / frequency;
+  return {
+    coupon,
+    accrued: accruedCoupon(coupon, previousCoupon, settlement, nextCoupon),
+    flows: scheduled.map(({ t, amount }) => ({ t: t - fraction / frequency, amount })),
+  };
+};
 export const cleanPrice = (dirty: number, accrued: number): number => {
   nonnegative(dirty); nonnegative(accrued);
   if (accrued > dirty) throw new RangeError('El cupón corrido supera el precio sucio');

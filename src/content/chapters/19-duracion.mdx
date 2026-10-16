@@ -1,0 +1,161 @@
+---
+title: "Duración y riesgo de tipo de interés"
+part: 5
+chapter: 19
+difficulty: 3
+prerequisites: [17]
+summary: "Mide la sensibilidad de un bono con la duración modificada y compara el cambio exacto de precio con las aproximaciones de duración y convexidad."
+sessions: []
+---
+import DurationExplorer from '../../components/plots/DurationExplorer';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>El cupón no cambia, pero tu bono vale menos
+
+Compras un bono de 1000 € de nominal, cupón anual del 4 % y vencimiento a 5 años. Su TIR inicial es del 4 %. Pagas 1000 €. Poco después, el mercado exige un 5 %. El emisor promete los mismos pagos. Sin embargo, el precio cae a 956,71 €.
+
+¿Por qué pierdes valor si nadie ha dejado de pagar? Otros compradores pueden exigir más rendimiento por esperar. Para competir con esa alternativa, tu bono debe ofrecer los pagos prometidos a un precio menor. El **riesgo de tipo de interés** es esta exposición del precio a cambios de los tipos.
+
+La pérdida inmediata es de 43,29 €. No hemos dejado pasar el tiempo ni cobrado un cupón. Solo hemos cambiado la tasa de descuento. Vamos a construir una medida que anticipe esa pérdida sin valorar otra vez todos los pagos. Después veremos cuánto falla esa medida y cómo mejorarla.
+
+## <span class="section-tag">Intuición</span>El centro de gravedad de los cobros
+
+Imagina cada cobro como un peso sobre una regla de tiempo. El peso no es su importe futuro: es su valor actual. Un cobro cercano pesa más que otro igual y lejano. El punto donde equilibras la regla indica el tiempo medio de los cobros, ponderado por su valor actual.
+
+Ese punto es la **duración de Macaulay**. No es necesariamente la fecha de vencimiento. El vencimiento señala el último pago; la duración considera todos. En un bono con cupones positivos anteriores al vencimiento, parte del valor llega antes. Su duración queda por debajo del vencimiento. En un cupón cero todo llega al final y ambas fechas coinciden.
+
+Pero un tiempo medio todavía no es una sensibilidad del precio. Para medirla usamos la **duración modificada**, que ajusta Macaulay por la tasa de descuento. En nuestro bono, Macaulay es 4,630 años y la modificada es 4,452 años. La segunda permite estimar el cambio porcentual del precio ante un cambio pequeño de TIR.
+
+Al aumentar el vencimiento, manteniendo los demás datos del juego, normalmente desplazas el peso hacia cobros más lejanos. Al reducir el cupón, concentras más valor en el pago final. Comprueba ambos efectos por separado. Comparar bonos cambiando a la vez cupón, TIR y vencimiento puede ocultar qué produce la diferencia.
+
+Piensa ahora en una curva de precio frente a TIR. Baja al avanzar hacia tipos mayores y se dobla hacia arriba. La duración dibuja una recta tangente en el punto inicial. Muy cerca, recta y curva casi se tocan. Más lejos aparece una separación visible. La **convexidad** mide esa curvatura y permite añadir una corrección.
+
+En la zona de juego verás la curva exacta en azul, la recta de duración con rayas y la corrección con puntos. Las formas de línea permiten distinguirlas sin depender solo del color. El punto móvil marca el cambio de tasa que estás probando. Ninguna curva representa una predicción del mercado.
+
+## <span class="section-tag">Formalización</span>De un tiempo medio a una sensibilidad
+
+### Precio y pesos
+
+Como en el [capítulo de bonos](/economia-financiera/chapters/17-bonos/), $C_t$ representa el cobro en la fecha $t$. Trabajamos al inicio de un periodo de cupón. Los cupones y la capitalización son anuales. La TIR $\Rate{y}$ es, por tanto, efectiva anual. Los pagos son conocidos, positivos o nulos, y alguno es positivo.
+
+$$
+\VA=P(y)=\sum_{t=1}^{T}\frac{C_t}{(1+\Rate{y})^t},\qquad
+w_t=\frac{C_t/(1+y)^t}{P(y)},\qquad \sum_{t=1}^{T}w_t=1.
+$$
+
+$T$ es el vencimiento en años. Los pesos $w_t$ son fracciones del precio, no probabilidades de impago. Su suma es uno porque el denominador reúne los valores actuales del numerador. Excluimos impago, cambios de cupón y amortización anticipada por decisión del emisor. También omitimos impuestos y costes de negociación.
+
+### Macaulay y duración modificada
+
+$$
+D_{\mathrm{Mac}}=\sum_{t=1}^{T}t\,w_t,\qquad
+D_{\mathrm{mod}}=\frac{D_{\mathrm{Mac}}}{1+y}.
+$$
+
+Ambas se expresan en años bajo esta convención. En nuestro ejemplo hay pagos anuales de 40 € y un último pago de 1040 €. Al descontarlos al 4 %, el precio es el nominal. El tiempo medio es menor que 5 años porque los cupones anteriores ya aportan valor.
+
+<details>
+<summary>Por qué la duración modificada mide la pendiente</summary>
+
+Deriva cada término del precio respecto a la TIR, manteniendo los pagos y las fechas fijos:
+
+$$
+P'(y)=-\sum_{t=1}^{T}\frac{tC_t}{(1+y)^{t+1}}.
+$$
+
+Extrae el factor común y divide por el precio:
+
+$$
+-\frac{P'(y)}{P(y)}=\frac{1}{1+y}\sum_{t=1}^{T}t\frac{C_t/(1+y)^t}{P(y)}
+=\frac{D_{\mathrm{Mac}}}{1+y}=D_{\mathrm{mod}}.
+$$
+
+La variación local del precio es su pendiente multiplicada por el cambio de TIR. Por eso usamos la duración modificada en la aproximación siguiente. No debes sustituirla directamente por Macaulay.
+</details>
+
+$$
+\frac{\Delta P}{P}\approx-D_{\mathrm{mod}}\Delta y.
+$$
+
+$\Delta y$ se escribe en tanto por uno. Subir del 4 % al 5 % significa $\Delta y=0{,}01$: un punto porcentual. No significa aumentar la TIR un 1 % de su propio valor. La duración se calcula antes del cambio y se mantiene fija en esta aproximación.
+
+### La corrección de convexidad
+
+Definimos la convexidad $K$ como la segunda derivada del precio dividida por el precio. Con pagos anuales:
+
+$$
+K=\frac{P''(y)}{P(y)}=\frac{1}{P(y)}\sum_{t=1}^{T}\frac{t(t+1)C_t}{(1+y)^{t+2}}.
+$$
+
+Derivar otra vez convierte el factor $-t$ en $t(t+1)$ y aumenta el exponente del denominador. Los términos son no negativos. La convexidad es positiva bajo nuestros supuestos y se expresa en años cuadrados. Añadir el término cuadrático de Taylor da:
+
+$$
+\frac{\Delta P}{P}\approx-D_{\mathrm{mod}}\Delta y+\frac{1}{2}K(\Delta y)^2.
+$$
+
+Para nuestro bono, $K=25{,}012$ años cuadrados. Con una subida de un punto porcentual, duración estima una pérdida de 44,52 €. Duración más convexidad estima 43,27 €. La valoración exacta pierde 43,29 €. Los errores absolutos son 1,22 € y 0,03 €, respectivamente. Calculamos sin redondeos intermedios; solo redondeamos lo que lees.
+
+La corrección es positiva tanto si sube la TIR como si baja, porque el cambio aparece al cuadrado. Con una bajada del mismo tamaño, el precio exacto aumenta 45,80 €. La ganancia supera la pérdida de la subida simétrica. La recta predice cambios opuestos de igual tamaño; la curva refleja esa asimetría.
+
+<Callout type="warning" title="Una aproximación local tiene límites">
+La convexidad mejora estos ejemplos, pero no hace exacta la fórmula para cualquier cambio. Una amortización anticipada puede cambiar los propios pagos. Un bono con esa opción necesita otro análisis. Para un cambio grande, valora de nuevo todos los cobros y compara el error.
+</Callout>
+
+### Qué comparación exige PS4
+
+El ejercicio 6c de PS4 usa las TIR de compra, no los tipos spot de una curva externa. Para el cupón cero comprado a 925 €, Macaulay es 2 años. Para el bono con cupón anual del 5 %, comprado a 1035 €, es 1,953 años. Ambos tienen nominal de 1000 € y vencimiento a 2 años. No reemplaces los precios de compra por los valores teóricos al calcular esas TIR.
+
+El apartado 6d cambia una curva spot. Un **tipo spot** descuenta el pago de una fecha concreta. Aquí el spot del primer año pasa del 3 % al 3,5 %. Usando el spot final redondeado del enunciado resuelto, el del segundo pasa del 3,5 % al 4 %. El nuevo spot final procede de un forward del 4,5 %; redondearlo antes de valorar explica las cifras impresas.
+
+Con esa convención, el cupón cero pasa de 933,51 € a 924,56 €: pierde 8,95 €, un 0,959 %. El bono con cupón pasa de 1028,73 € a 1019,09 €: pierde 9,64 €, un 0,937 %. El cupón cero pierde más **en porcentaje**, pero el bono con cupón pierde más **euros**. La observación final de la fuente confunde ambas comparaciones. Usamos los importes corregidos de la auditoría.
+
+No atribuyas ese movimiento de una curva a la duración calculada con la TIR de compra como si fuera la misma perturbación. La duración modificada anterior deriva el precio respecto a una tasa única. Para una curva con tipos distintos, una sensibilidad a cambios de cada nodo necesita pesos y descuentos coherentes con esa curva. Aquí revaloramos cada flujo con su propio spot, sin forzar esa equivalencia.
+
+## <span class="section-tag">Zona de juego</span>Cambia el plazo y mira el error
+
+El explorador empieza con el bono del gancho. El nominal queda fijo. El deslizador de vencimiento cambia el calendario y, con él, la duración. El cupón cambia cuánto cobras antes del final. La TIR inicial determina el descuento y el punto donde trazamos las aproximaciones. El último deslizador mueve la TIR desde ese punto.
+
+<DurationExplorer client:visible />
+
+**Prueba esto:**
+
+1. Mantén el ejemplo inicial y lleva el cambio de TIR a cero. Los cambios exacto y aproximados deben anularse. Después compara una subida y una bajada del mismo tamaño. Mira el signo, el importe y el error, sin cambiar los demás parámetros.
+2. Pon el cupón en cero. Macaulay debe coincidir con el vencimiento. Recupera el ejemplo y aumenta el plazo. Compara las pendientes y los errores para el mismo cambio de TIR. Si cambias el cupón también, ya estarías haciendo otra comparación.
+
+El gráfico muestra cambios en euros; las duraciones describen sensibilidad relativa. Un bono de precio mayor puede perder más euros con una sensibilidad relativa menor. La escala vertical se adapta al bono. Para comparar tamaños, lee los ejes y los importes, no solo la altura de una curva en pantalla.
+
+Mantener el bono hasta vencimiento no elimina todos los riesgos económicos. Con pagos ciertos, recibirás los importes prometidos, pero puede cambiar lo que comprarán. Además, reinvertir los cupones a un tipo desconocido añade riesgo de reinversión. La duración de este capítulo mide el efecto inmediato sobre el precio. No garantiza una rentabilidad realizada ni inmuniza por sí sola una cartera.
+
+## <span class="section-tag">Compruébalo</span>Elige la medida correcta
+
+<Quiz client:visible
+  question="El bono del ejemplo tiene Macaulay de 4,630 años y duración modificada de 4,452 años. ¿Cuál estima el cambio relativo del precio?"
+  options={['Macaulay sin ajustar', 'La duración modificada', 'Solo el vencimiento']}
+  answer={1}
+  explanation="La pendiente relativa es −D_mod. Con capitalización anual, divide Macaulay entre uno más la TIR."
+/>
+
+<Quiz client:visible
+  question="Baja la TIR y los pagos siguen fijos. ¿Qué añade la corrección de convexidad positiva?"
+  options={['Resta siempre valor', 'Un término positivo a la estimación lineal', 'Convierte la estimación en una igualdad exacta']}
+  answer={1}
+  explanation="El cambio de TIR aparece al cuadrado. La corrección eleva la estimación tanto en subidas como en bajadas, pero sigue siendo una aproximación."
+/>
+
+<Quiz client:visible
+  question="En PS4, el cupón cero pierde 8,95 € y el bono con cupón pierde 9,64 €. ¿Cuál pierde más euros?"
+  options={['El cupón cero, por tener mayor duración', 'El bono con cupón', 'Ambos pierden lo mismo']}
+  answer={1}
+  explanation="Compara importes para hablar de euros. El cupón cero pierde más en porcentaje porque parte de un precio menor. No confundas ambas medidas."
+/>
+
+## <span class="section-tag">Resumen</span>Tiempo, pendiente y curvatura
+
+- Macaulay es el tiempo medio de los cobros, ponderado por su valor actual. Un cupón cero concentra todo al vencimiento.
+- La duración modificada mide la pendiente relativa del precio frente a la TIR. El cambio de tasa se introduce en tanto por uno.
+- La convexidad añade una corrección cuadrática. Compara siempre la aproximación con una valoración completa cuando el cambio sea relevante.
+- Una caída porcentual y una caída en euros responden a preguntas distintas. Usa el precio inicial adecuado y evita mezclar curvas y TIR de compra.
+- El modelo supone pagos fijos y conocidos. No cubre impago, opciones de amortización ni toda la incertidumbre de reinvertir.
+
+**Siguiente:** forwards y futuros. Pasamos del riesgo de un bono a contratos que fijan condiciones de una operación futura.
