@@ -1,1 +1,1 @@
-- Dispatch every task with --via orca --agent codex --model gpt-6.1-sol --effort high (owner, 2026-10-16). Do not change policy or task routes.
+- Owner override (2026-10-16 16:30 CEST): do NOT dispatch anything before 16:40. From 16:40 to 17:00 dispatch every task with --via orca --agent claude --model sonnet --effort high. From 17:00 dispatch every NEW task with --via orca --agent codex --model gpt-6.1-sol --effort high. Never restart or reroute tasks already running on claude. Do not change policy or task routes.
