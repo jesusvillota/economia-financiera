@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 import katex from 'katex';
@@ -81,6 +81,11 @@ describe('sesión 2: every active source exercise', () => {
     expect(fm.chapters).toEqual(parts[1].chapters.map(c => c.slug));
     expect(fm.number).toBe(2);
     expect(fm.source).toBe('ps2');
+    for (const slug of fm.chapters) {
+      const path = `src/content/chapters/${slug}.mdx`;
+      if (existsSync(path)) expect(parse(readFileSync(path, 'utf8').split('---')[1]).sessions).toContain('02-acciones-empresas-riesgo');
+    }
+    expect(fm.exercises.find(e => e.id === 'ej5')!.parameters.some(p => p.id === 'wacc')).toBe(false);
   });
 
   for (const ex of fm.exercises) {

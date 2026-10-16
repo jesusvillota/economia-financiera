@@ -126,7 +126,6 @@ exercises:
       - { id: c4, label: FCFF año 4, default: 140, unit: millones de €, min: 130, max: 150, step: 5 }
       - { id: c5, label: FCFF año 5, default: 150, unit: millones de €, min: 140, max: 160, step: 5 }
       - { id: g, label: Crecimiento FCFF, default: 3, unit: "%", min: 1, max: 4, step: 1 }
-      - { id: wacc, label: WACC para descontar FCFF, default: 7.52, unit: "%" }
       - { id: f1, label: FCFE año 1, default: 85, unit: millones de €, min: 75, max: 95, step: 5 }
       - { id: f2, label: FCFE año 2, default: 90, unit: millones de €, min: 80, max: 100, step: 5 }
       - { id: f3, label: FCFE año 3, default: 96, unit: millones de €, min: 90, max: 110, step: 2 }
@@ -148,8 +147,8 @@ exercises:
     answers:
       - { id: cost, label: Coste del capital propio (a), unit: "%", value: 10.2, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityCost, args: [ rf, beta, premium ] } }
       - { id: capital_cost, label: WACC (a), unit: "%", value: 7.52, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: capitalCost, args: [ e, debt, rf, beta, premium, kd, tax ] } }
-      - { id: terminal, label: Valor terminal FCFF año 5, unit: millones de €, value: 3418.14, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmTerminal, args: [ c5, wacc, g ] } }
-      - { id: firm_value, label: Valor de empresa (b), unit: millones de €, value: 2871.93, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmValue, args: [ c1, c2, c3, c4, c5, wacc, g ] } }
+      - { id: terminal, label: Valor terminal FCFF año 5, unit: millones de €, value: 3418.14, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmTerminal, args: [ c5, e, debt, rf, beta, premium, kd, tax, g ] } }
+      - { id: firm_value, label: Valor de empresa (b), unit: millones de €, value: 2871.93, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: firmValue, args: [ c1, c2, c3, c4, c5, e, debt, rf, beta, premium, kd, tax, g ] } }
       - { id: third_pv, label: Valor actual del tercer FCFE (c), unit: millones de €, value: 72.13, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: flowPV, args: [ f3, re, t3 ] } }
       - { id: equity_value, label: Capital propio (c), unit: millones de €, value: 1143.39, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityValue, args: [ f1, f2, f3, re, ge ] } }
       - { id: price, label: Precio por acción (c), unit: €, value: 19.06, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: equityPrice, args: [ f1, f2, f3, re, ge, shares ] } }
@@ -187,7 +186,7 @@ exercises:
       - { title: Tasa mayor, body: "Suma un punto porcentual al WACC y repite: {{npv_high}} millones. Compara ambos con {{npv}}." }
       - { title: Interpretación, body: "Los efectos no son simétricos. La relación $1/(WACC-g)$ es convexa, no exponencial; es más sensible cerca de g." }
     answers:
-      - { id: capital_cost, label: WACC, unit: "%", value: 4.912, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: capitalCost, args: [ e, debt, rf, beta, premium, kd, tax ] } }
+      - { id: capital_cost, label: WACC, unit: "%", value: 4.912, tolerance: { kind: abs, value: 0.0005 }, lib: { module: sesion02, fn: capitalCost, args: [ e, debt, rf, beta, premium, kd, tax ] } }
       - { id: npv, label: VAN base, unit: millones de €, value: 1446.29, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, base ] } }
       - { id: npv_low, label: VAN con WACC menor, unit: millones de €, value: 2715.14, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, low ] } }
       - { id: npv_high, label: VAN con WACC mayor, unit: millones de €, value: 826.37, tolerance: { kind: abs, value: 0.01 }, lib: { module: sesion02, fn: projectNPV, args: [ c1, c2, c3, c4, investment, e, debt, rf, beta, premium, kd, tax, g, high ] } }
@@ -276,3 +275,6 @@ Escribe las tasas y rentabilidades en porcentaje; las varianzas y covarianzas us
 
 Las soluciones conservan la precisión hasta el final y corrigen los errores de 5(c) y 7(c).
 Para beta y el coste del capital propio, aplica las ecuaciones dadas en los enunciados.
+
+Aceptamos un error absoluto de 0,01 en importes y porcentajes, salvo el WACC del proyecto: 0,0005 puntos porcentuales.
+En varianzas y covarianza, el margen es 0,00005; en correlación y betas, 0,0001.

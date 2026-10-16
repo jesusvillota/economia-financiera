@@ -22,8 +22,11 @@ export const equityFlow = (income: number, dep: number, capex: number, wc: numbe
 /** CAPM se da como ecuación en el enunciado; no introduce una API nueva en finance. */
 export const equityCost = (rf: number, beta: number, premium: number) => rf + beta * premium;
 export const capitalCost = (equity: number, debt: number, rf: number, beta: number, premium: number, kd: number, tax: number) => 100 * wacc(equity, debt, p(equityCost(rf, beta, premium)), p(kd), p(tax));
-export const firmValue = (c1: number, c2: number, c3: number, c4: number, c5: number, r: number, g: number) => discountedCashFlow([c1, c2, c3, c4, c5], p(r), terminalValue(c5, p(r), p(g)));
-export const firmTerminal = (c5: number, r: number, g: number) => terminalValue(c5, p(r), p(g));
+export const firmValue = (c1: number, c2: number, c3: number, c4: number, c5: number, equity: number, debt: number, rf: number, beta: number, premium: number, kd: number, tax: number, g: number) => {
+  const r = p(capitalCost(equity, debt, rf, beta, premium, kd, tax));
+  return discountedCashFlow([c1, c2, c3, c4, c5], r, terminalValue(c5, r, p(g)));
+};
+export const firmTerminal = (c5: number, equity: number, debt: number, rf: number, beta: number, premium: number, kd: number, tax: number, g: number) => terminalValue(c5, p(capitalCost(equity, debt, rf, beta, premium, kd, tax)), p(g));
 export const equityValue = (c1: number, c2: number, c3: number, r: number, g: number) => discountedCashFlow([c1, c2, c3], p(r), terminalValue(c3, p(r), p(g)));
 export const equityPrice = (c1: number, c2: number, c3: number, r: number, g: number, shares: number) => pricePerShare(equityValue(c1, c2, c3, r, g), shares);
 export const flowPV = (flow: number, r: number, t: number) => discountedCashFlow(Array.from({ length: t }, (_, i) => i === t - 1 ? flow : 0), p(r));

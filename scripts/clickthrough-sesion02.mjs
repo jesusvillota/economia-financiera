@@ -48,7 +48,7 @@ try {
   check('canonical solutions have no KaTeX errors or phone overflow', await page.locator('.katex-error').count() === 0 && await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   // Inspect expanded content in both themes and widths, including long solution formulas.
   mkdirSync('screenshots', { recursive: true });
-  for (const theme of ['dark', 'light']) for (const width of [375, 1280]) {
+  for (const theme of ['dark', 'light']) for (const width of [360, 375, 1280]) {
     await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
     await page.setViewportSize({ width, height: 900 });
     check(`expanded ${theme} ${width}px has no overflow`, await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
@@ -75,6 +75,12 @@ try {
     check(`${exercise.id}: seeded solution resolves`, !(await card.locator('.ses-steps').textContent()).includes('{{'));
   }
   check('all rendered math and browser console are clean', await page.locator('.katex-error').count() === 0 && errors.length === 0);
+  check('all eight exercises are marked solved', (await page.locator('.ses-progress').textContent()).includes('8 de 8 resueltos'));
+  await page.getByRole('navigation', { name: 'Capítulos de esta sesión' }).getByRole('link').first().click();
+  check('PS2 links to chapter 4', page.url().endsWith('/chapters/04-dividendos/'));
+  await page.getByRole('navigation', { name: 'Sesiones para practicar' }).getByRole('link', { name: fm.title, exact: true }).click();
+  check('chapter 4 links back to PS2', page.url().endsWith('/sesiones/02-acciones-empresas-riesgo/'));
+  check('solved progress persists after navigation', (await page.locator('.ses-progress').textContent()).includes('8 de 8 resueltos'));
   if (errors.length) console.error(errors.join('\n'));
 } finally {
   await browser?.close();
