@@ -136,6 +136,11 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Log-return persistence / shock | $\phi$, $z_t$, $\sigma$ | | AR(1) persistence; independent standard-normal shocks; shock standard deviation |
 | Lag-one sample autocorrelation / variance ratio | $\widehat\rho_1$, $\mathrm{VR}(q)$ | | $q$ sessions per overlapping window; daily returns in chapter 15 |
 | Momentum position / switching cost | $w_t$, $c$ | | Position is zero or one; cost deducted from return on each switch |
+| Option terminal price / exercise price | $S_T$, $K$ | | Chapter 21: nonnegative underlying price; European exercise at maturity |
+| Call / put premium | $c$, $p$ | | Chapter 21: per-unit initial premiums, not the tangent fund or scenario probabilities |
+| Option or leg payoff / strategy payoff | $H_C$, $H_P$, $H_j$, $H$ | | Gross terminal payments; include stock liquidation proceeds where present |
+| Strategy profit / signed initial cost | $\Pi$, $C_0$ | | Nominal payoff less initial cost; premiums are not compounded |
+| Signed leg quantity / unit initial cost | $q_j$, $a_j$ | | Positive quantity buys, negative sells; stock costs $S_0$, options cost their premiums |
 | Bond YTM / maturity | $y$, $T$ | `\Rate{y}` | Chapter 19 uses annual coupons and annual effective YTM; $T$ in years |
 | Bond present-value weight | $w_t$ | | $C_t/(1+y)^t$ divided by price; not a portfolio allocation or probability |
 | Macaulay / modified duration | $D_{\mathrm{Mac}}$, $D_{\mathrm{mod}}$ | | Years; annual convention: $D_{\mathrm{mod}}=D_{\mathrm{Mac}}/(1+y)$ |

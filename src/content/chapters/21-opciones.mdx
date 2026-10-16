@@ -1,0 +1,127 @@
+---
+title: "Opciones: pagos y estrategias"
+part: 5
+chapter: 21
+difficulty: 3
+prerequisites: [20]
+summary: "Distingue el pago del beneficio y combina calls, puts y acciones para dar forma al riesgo."
+sessions: []
+---
+import OptionPayoffs from '../../components/plots/OptionPayoffs';
+import Callout from '../../components/ui/Callout.astro';
+import { Quiz } from '../../components/ui/Quiz';
+
+## <span class="section-tag">Gancho</span>¿Pagarías por poder elegir?
+
+Una acción cuesta 100 €. Quieres participar en una subida, pero prefieres limitar cuánto puedes perder. En vez de comprarla, pagas 6 € por el derecho a comprarla a 100 € al vencimiento. Si entonces cotiza a 120 €, tu derecho proporciona 20 €. Tras restar lo pagado, ganas 14 €. Si termina en 80 €, dejas vencer el derecho y pierdes los 6 € iniciales.
+
+Ese contrato es una **opción de compra**, o **call**. Su comprador tiene un derecho, no la obligación de comprar. La decisión tiene un precio: la **prima**, que pagas al contratar. El vendedor recibe esa prima y acepta cumplir si el comprador ejerce su derecho.
+
+En el [capítulo anterior](../20-forwards-futuros/) ambas partes del forward asumían una obligación. Aquí el comprador conserva una elección. Esa diferencia cambia la forma del pago y explica por qué una prima no es un depósito recuperable. Vamos a dibujar esa forma antes de combinar contratos.
+
+## <span class="section-tag">Intuición</span>Una recta que se dobla
+
+Imagina el precio final de la acción en el eje horizontal. En el eje vertical dibujamos el dinero que proporciona la opción. Para la call comprada, la curva permanece plana mientras comprar mediante el contrato resulte peor que comprar en el mercado. Después sube con el precio de la acción. El punto donde cambia la pendiente es el **precio de ejercicio**, también llamado *strike*.
+
+El **pago al vencimiento** (*payoff*) excluye la prima inicial. El **beneficio** resta esa prima. En nuestro ejemplo, ambas curvas tienen la misma forma, pero la del beneficio queda más abajo. Ejercer puede producir un pago positivo y, aun así, dejar una pérdida. El **punto de equilibrio** es el precio final que deja el beneficio en cero.
+
+La **opción de venta**, o **put**, da derecho a vender al precio de ejercicio. Sirve para protegerte de una caída. Una put comprada gana valor de ejercicio cuando el mercado termina por debajo del precio pactado. Por encima, puedes vender en el mercado y dejarla vencer. Su prima también es un coste aunque nunca la ejerzas.
+
+La posición del vendedor tiene el signo contrario a la del comprador. Vender una call sin tener la acción puede generar pérdidas sin límite superior. Que la prima recibida sea pequeña no limita la obligación. Vender una put también implica riesgo: puedes tener que comprar un activo cuyo precio haya caído mucho.
+
+Trabajamos con opciones **europeas**: solo se ejercen al vencimiento. El nombre describe cuándo puedes ejercer; no describe dónde cotiza el contrato. Una opción americana permite ejercer antes y exige analizar esa elección adicional. Aquí no calculamos el precio de mercado antes del vencimiento.
+
+## <span class="section-tag">Formalización</span>Derechos, primas y patas
+
+### Del derecho al beneficio
+
+Sea $S_T$ el precio final del activo y $K$ el precio de ejercicio. Una call comprada permite adquirir algo que vale $S_T$ pagando $K$. Si esa diferencia es negativa, no ejerces. Una put comprada permite entregar algo que vale $S_T$ cobrando $K$. Por tanto:
+
+$$H_C(S_T)=\max(S_T-K,0),\qquad H_P(S_T)=\max(K-S_T,0).$$
+
+Denotamos por $c$ la prima de la call y por $p$ la prima de la put. El beneficio nominal, sin capitalizar la prima, es:
+
+$$\Pi_C(S_T)=H_C(S_T)-c,\qquad \Pi_P(S_T)=H_P(S_T)-p.$$
+
+Para las posiciones vendidas, cambia el signo de todo el beneficio, incluida la prima. Recibes dinero al principio y asumes el pago posterior. No cambies solo el signo del pago y olvides el cobro inicial.
+
+Con $K=100$ y $c=6$, la call paga 20 € si $S_T=120$, y su beneficio es 14 €. Si $S_T=100$ o $S_T=80$, paga cero y pierde 6 €. Su equilibrio está en 106 €. La call vendida pierde 14 € en el escenario de 120 €; su ganancia máxima es la prima de 6 €.
+
+Con $K=100$ y $p=5$, una put comprada paga 20 € si $S_T=80$. Su beneficio es 15 € y su equilibrio está en 95 €. Puede perder como máximo 5 €. Como suponemos precios no negativos, su beneficio máximo es 95 €, cuando el activo termina en cero. La put vendida invierte estos resultados.
+
+<Callout type="warning" title="Convención de beneficio">
+Restamos primas iniciales sin llevarlas al vencimiento. Es una comparación nominal, como en PS4. Para medir riqueza final con financiación, debes incluir intereses. También omitimos comisiones e impuestos. Un pago positivo no es necesariamente un beneficio positivo.
+</Callout>
+
+### Sumar posiciones sin perder los signos
+
+Una **pata** es cada posición que forma la estrategia. Su cantidad $q_j$ es positiva al comprar y negativa al vender. Para una acción, el pago bruto es su precio final y el coste es su precio de compra $S_0$. Para una opción, el pago bruto es su derecho de ejercicio y el coste es su prima.
+
+Llamamos $H_j(S_T)$ al pago de una unidad de la pata y $a_j$ a su coste inicial. La cartera completa cumple:
+
+$$C_0=\sum_j q_j a_j,\qquad H(S_T)=\sum_j q_j H_j(S_T),\qquad \Pi(S_T)=H(S_T)-C_0.$$
+
+Un coste firmado negativo indica un cobro inicial. No significa ausencia de riesgo. El pago bruto de una cartera que incluye acciones incorpora su venta final. Por eso puede ser mucho mayor que su beneficio: todavía tienes que restar lo que costó adquirirlas.
+
+Los puntos de equilibrio resuelven $\Pi(S_T)=0$, con $S_T\geq0$. Cada ejercicio divide la curva en tramos rectos. En cada tramo se suma la pendiente de las patas activas y se busca el cruce con cero. A veces no hay cruce; otras veces todo un tramo tiene beneficio nulo. El explorador distingue puntos aislados y tramos completos.
+
+### Cambiar la forma de las ganancias y pérdidas
+
+Un **spread alcista de calls** compra una call y vende otra con ejercicio mayor. Compras el derecho más amplio y cedes parte de la subida. Con ejercicios de 100 € y 120 €, primas de 6 € y 2 €, pagas 4 €. Pierdes como máximo 4 € y ganas como máximo 16 €. El equilibrio está en 104 €. El beneficio deja de crecer al superar el ejercicio superior.
+
+Un **spread bajista de puts** compra una put con ejercicio alto y vende otra con ejercicio bajo. Participa en una caída, con límites en ambos extremos. El nombre del spread describe su dirección; no convierte el resultado en una ganancia segura. Las primas y la distancia entre ejercicios determinan los límites.
+
+Una **call cubierta** combina una acción comprada con una call vendida. La prima reduce el coste, pero vender la call limita la subida que conservas. La acción sigue expuesta a caídas. Una **put protectora** combina la acción con una put comprada. El derecho a vender establece un suelo al pago conjunto; obtener esa protección cuesta la prima.
+
+Un **collar** añade una put comprada y una call vendida a la acción. La put protege frente a caídas por debajo de su ejercicio. La call cede subidas por encima del suyo. Las primas pueden compensarse, pero eso no elimina el coste de comprar la acción ni su riesgo dentro de la banda.
+
+Un **straddle comprado** combina una call y una put del mismo ejercicio. Con ejercicio 100 €, primas 6 € y 5 €, cuesta 11 €. Pierde 11 € si el activo termina en 100 €. Sus equilibrios están en 89 € y 111 €. Con precio final 120 €, gana 9 €. Necesita un movimiento suficiente para recuperar ambas primas; acertar que habrá movimiento no basta.
+
+Un **strangle comprado** separa los ejercicios: la put queda por debajo de la call. Entre ambos ejercicios ninguna opción paga. Suele comprarse para buscar exposición a movimientos grandes, pero su coste depende de las primas observadas. No afirmamos que siempre sea más barato que cualquier straddle.
+
+## <span class="section-tag">Zona de juego</span>Diseña una curva y explica su coste
+
+<OptionPayoffs client:visible />
+
+**Prueba esto:** restaura el ejemplo. La call tiene ejercicio 100 €, prima 6 € y precio final 120 €. Comprueba pago 20 €, beneficio 14 € y equilibrio 106 €. Cambia a vender call: el beneficio pasa a −14 €. Mira cómo el riesgo sigue fuera del extremo derecho de la gráfica.
+
+**Prueba esto:** elige el spread alcista. Conserva las entradas iniciales y mueve el precio final desde cero hasta 200 €. Observa la pérdida de 4 € antes del ejercicio inferior y la ganancia de 16 € después del superior. Luego selecciona el straddle y coloca el precio final en 100 €: pierde 11 € aunque ambas opciones ofrezcan derechos distintos.
+
+El ejercicio central fija el contrato simple y el ejercicio compartido del straddle. En el spread alcista, la otra call tiene un ejercicio mayor. En el bajista, la otra put tiene uno menor. La distancia entre ejercicios controla esa separación. El strangle y el collar usan ambos ejercicios exteriores. La lista de patas muestra siempre qué contrato has creado.
+
+Puedes modificar las primas de forma independiente. Eso permite estudiar cómo cambia el beneficio sin cambiar el derecho contractual. No es un modelo de valoración ni una lista de cotizaciones disponibles. Algunas combinaciones artificiales pueden violar condiciones de no arbitraje. Para aprender por qué las primas deben guardar ciertas relaciones, continúa en [options-explained](https://jesusvillota.github.io/options-explained/).
+
+PS4, ejercicio 10, combina la valoración de un forward con pagos de opciones. Identifica primero qué pregunta cada apartado. Un valor actual de un contrato existente no es su pago final. Una prima tampoco es ese pago. Este capítulo prepara esa distinción con ejemplos originales; la sesión de problemas desarrollará el ejercicio completo.
+
+## <span class="section-tag">Compruébalo</span>Comprueba pagos y beneficios
+
+<Quiz client:visible
+  question="Compras una call con ejercicio 100 € y prima 6 €. El activo termina en 120 €. ¿Cuál es tu beneficio?"
+  options={['20 €', '14 €', '−6 €']}
+  answer={1}
+  explanation="El derecho paga 120 − 100 = 20 €. Restas la prima de 6 € y obtienes 14 €."
+/>
+
+<Quiz client:visible
+  question="El spread alcista compra la call de ejercicio 100 € por 6 € y vende la de 120 € por 2 €. ¿Cuál es la ganancia máxima?"
+  options={['20 €', '4 €', '16 €']}
+  answer={2}
+  explanation="La diferencia máxima de pagos es 20 €. El coste neto es 4 €. El beneficio máximo es 16 €."
+/>
+
+<Quiz client:visible
+  question="El straddle de ejercicio 100 € cuesta 11 €. El precio final es 100 €. ¿Qué sucede?"
+  options={['Pierdes 11 €', 'Quedas en equilibrio', 'Ganas 11 €']}
+  answer={0}
+  explanation="Ambos derechos pagan cero. Las primas suman 6 + 5 = 11 €, de modo que el beneficio es −11 €."
+/>
+
+## <span class="section-tag">Resumen</span>Separa el derecho de su coste
+
+- Una call da derecho a comprar y una put da derecho a vender. El vendedor asume la obligación correspondiente.
+- El pago depende del precio final y del ejercicio. El beneficio también depende de las primas y del coste de las acciones.
+- Cada estrategia suma patas con signo. Una prima cobrada no elimina las pérdidas posibles.
+- Busca puntos y tramos de beneficio cero. Comprueba también qué ocurre fuera de la ventana dibujada.
+- Las primas del explorador son entradas. Para valoración antes del vencimiento, consulta [options-explained](https://jesusvillota.github.io/options-explained/).
+
+En la sesión PS4 unirás mercados, bonos y derivados. Antes de calcular, identifica el contrato, la fecha y el flujo que debes comparar.
