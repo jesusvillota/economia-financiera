@@ -44,4 +44,6 @@ The plan was implemented as scoped: static index, navigation island, unit tests 
 
 Verified implementation revision: `f7baa48ea2ae66f4aca98ed5a3f809eb5ddad53f`, after a conflict-free rebase onto `origin/main`. This outcome is a subsequent documentation-only commit. Local acceptance checks pass. GitHub Actions and the PR build check were not inspected, as required by the owner rules.
 
+Supplementary visual verification: `npm run screenshots` scanned all 30 pages in dark/light and desktop/phone. It passed 118 combinations and exited 1 for two Chapter 2 asset 404s while the concurrent build replaced `dist`. After the build completed, `npm run screenshots -- 02-valor-actual` exited 0 for all four Chapter 2 combinations. Thus all 120 page/theme/viewport combinations passed either the full scan or the isolated rerun. The required search click-through ran against the completed build and exited 0 without console errors.
+
 PR: https://github.com/jesusvillota/economia-financiera/pull/49 into `main`, labelled `goal:course-site`. No merge performed. No material decisions or follow-ups are needed.
