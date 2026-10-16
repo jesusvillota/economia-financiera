@@ -119,6 +119,11 @@ Use these symbols everywhere. New symbol? Add it here in the same PR. Rows with 
 | Weighted average cost of capital | $\mathrm{WACC}$ | | After corporate tax adjustment on debt only |
 | Terminal value / explicit horizon | $\mathrm{VT}_N$, $N$ | | Value at N of flows from N+1 onward |
 | Share price / number of shares | $P_0$, $n_{\mathrm{acc}}$ | | Equity value divided by shares |
+| Executed shares / fill size and price / average execution | $n_{\mathrm{ej}}$, $q_k$, $p_k$, $\overline P$ | | Chapter 13: level index $k$; weighted average over executed shares only |
+| Execution reference / implicit cost | $P_{\mathrm{ref}}$, $K_{\mathrm{imp}}$ | | Positive for buying above or selling below the stated reference |
+| Margin account capital / margin ratio / maintenance | $E$, $E_0$, $m$, $m_{\mathrm{mant}}$ | | Chapter 13: account capital, not company equity; $m$ is not a target portfolio return here |
+| Account shares / final debt / own-capital return | $n$, $D$, $r_E$ | | Chapter 13: fixed share count; debt includes period interest |
+| Short account assets / call threshold prices | $A_{\mathrm{corto}}$, $P^*_{\mathrm{compra}}$, $P^*_{\mathrm{corto}}$ | | Assets after dividend compensation; strict inequality triggers a call |
 
 Conventions: time `t` in years; rates annual effective unless the text says otherwise; default example 1.000 € at 5 % for 10 years.
 
