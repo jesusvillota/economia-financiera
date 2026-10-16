@@ -20,6 +20,7 @@ Build an interactive, Spanish-language, 3Blue1Brown-style website for the Econom
 flowchart TD
   subgraph M_1["M-1 · Foundation"]
     DEC_001{{"DEC-001 Presentation model for problem sessions"}}
+    DEC_002{{"DEC-002 Course scope: sessions and topics beyond the class notes"}}
     TASK_001["TASK-001 Create GitHub repo, push main, enable Pages (Actions source)"]
     TASK_002["TASK-002 Import own LaTeX sources into source/ with provenance"]
     TASK_003["TASK-003 Scaffold the Astro site from options-explained (Spanish UI)"]
@@ -36,6 +37,7 @@ flowchart TD
   subgraph M_6["M-6 · Polish and launch"]
   end
   TASK_004 --> DEC_001
+  TASK_004 --> DEC_002
   TASK_001 --> TASK_002
   TASK_001 --> TASK_003
   TASK_002 --> TASK_004
@@ -43,6 +45,7 @@ flowchart TD
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
   class DEC_001 decision
+  class DEC_002 decision
 ```
 <!-- goal:graph:end -->
 
