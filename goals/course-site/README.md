@@ -62,6 +62,7 @@ flowchart TD
     TASK_022["TASK-022 Finance maths library: portfolio core (two assets, n assets, frontier)"]
     TASK_023["TASK-023 Finance maths library: CAL, CAPM, SML, event studies"]
     TASK_024["TASK-024 Shared widget: efficient-frontier plot"]
+    TASK_025["TASK-025 Chapter 4: dividend discount model"]
   end
   subgraph M_4["M-4 · Markets"]
     TASK_017["TASK-017 Plan: decompose M-4"]
@@ -106,6 +107,7 @@ flowchart TD
   TASK_016 --> TASK_022
   TASK_022 --> TASK_023
   TASK_022 --> TASK_024
+  TASK_021 --> TASK_025
   classDef draft stroke-dasharray: 4 3
   classDef cancelled opacity:0.45
   classDef decision fill:#f3e8ff,stroke:#7c3aed
