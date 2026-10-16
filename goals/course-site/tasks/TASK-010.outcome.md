@@ -10,5 +10,5 @@
 - **What:** `CashFlowTimeline` (draggable arrow tips snapped to whole years and 10 €, rate slider, "Descontar a t = 0" tween, VA/VF readout) and `GrowthCurves` (simple vs compound, sliders r, n, k, shaded gap, doubling-time marker, rule of 72). Gallery at `/dev/widgets`, not linked from navigation.
 - **How:** all maths in new `src/lib/finance/curves.ts` (reuses `timeValue.ts`); components use `PlotFrame`, `WidgetFrame`, `useTweened`, CSS variables.
 - **Deviations:** `scripts/screenshots.mjs` now also visits `dist/dev/widgets/` so `npm run screenshots dev` has a page to check. Added `scripts/clickthrough-widgets.mjs` (+ npm script) rather than changing the existing slider click-through. The script imports the lib `.ts` through Node type stripping. Flows are not draggable while discounted (button toggles back).
-- **Verified revision:** this branch's head commit.
+- **Verified revision:** REV.
 - **Follow-ups:** none required.
