@@ -129,6 +129,6 @@ describe('capítulo 6: todos los ejemplos numéricos del texto', () => {
     expect([...chapter.matchAll(/^## <span class="section-tag">([^<]+)<\/span>/gm)].map((m) => m[1]))
       .toEqual(['Gancho', 'Intuición', 'Formalización', 'Zona de juego', 'Compruébalo', 'Resumen']);
     expect(chapter.match(/<Quiz client:visible/g)).toHaveLength(3);
-    expect(chapter).toContain('sessions: []');
+    expect(chapter).toContain("sessions: ['02-acciones-empresas-riesgo']");
   });
 });
